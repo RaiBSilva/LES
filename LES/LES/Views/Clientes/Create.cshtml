@@ -1,0 +1,23 @@
+﻿@model LES.Models.Entity.Cliente
+
+
+@{
+    ViewData["Title"] = "Criar";
+}
+
+
+
+<h1>Create</h1>
+
+<form asp-action="Create" asp-controller="Clientes">
+    <div>
+        <label asp-for="nome"></label>
+        <input asp-for="nome" placeholder="YSeu nome aqui" />
+    </div>
+    <div>
+        <label asp-for="documentos[0].codigo"></label>
+        <input asp-for="documentos[0].codigo" placeholder="codigo" />
+    </div>
+    <input type="submit" />
+</form>
+
