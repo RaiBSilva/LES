@@ -8,25 +8,27 @@ namespace LES.Models.Entity
 {
     public class TipoDocumento : EntidadeDominio
     {
-        public String nome { get; set; }
-        public String descricao { get; set; }
+        public string Nome { get; set; }
+        public string Descricao { get; set; }
 
         public TipoDocumento() {}
 
-        private void definirAtributos(String nome, String descricao)
+        public TipoDocumento(int id) : base(id) { }
+
+        private void DefinirAtributos(string nome, string descricao)
         {
-            this.nome = nome;
-            this.descricao = descricao;
+            this.Nome = nome;
+            this.Descricao = descricao;
         }
 
-        public TipoDocumento(String nome, String descricao) 
+        public TipoDocumento(string nome, string descricao) 
         {
-            definirAtributos(nome, descricao);
+            DefinirAtributos(nome, descricao);
         }
 
-        public TipoDocumento(String nome, String descricao, int id, DateTime dtCadastro) : base(id, dtCadastro)
+        public TipoDocumento(string nome, string descricao, int id, DateTime dtCadastro) : base(id, dtCadastro)
         {
-            definirAtributos(nome, descricao);
+            DefinirAtributos(nome, descricao);
         }
 
 

@@ -7,27 +7,30 @@ namespace LES.Models.Entity
 {
     public class Documento : EntidadeDominio
     {
-        public String codigo { get; set; }
-        public DateTime validade { get; set; }
-        public TipoDocumento tipoDocumento { get; set; }
+        public string Codigo { get; set; }
+        public DateTime Validade { get; set; }
+        public TipoDocumento TipoDocumento { get; set; }
 
+        //Construtores
         public Documento() { }
 
-        private void definirAtributos(String codigo, DateTime validade, TipoDocumento tipoDocumento)
+        public Documento(int id) : base(id) { }
+
+        private void DefinirAtributos(string codigo, DateTime validade, TipoDocumento tipoDocumento)
         {
-            this.codigo = codigo;
-            this.validade = validade;
-            this.tipoDocumento = tipoDocumento;
+            this.Codigo = codigo;
+            this.Validade = validade;
+            this.TipoDocumento = tipoDocumento;
         }
 
-        public Documento(String codigo, DateTime validade, TipoDocumento tipoDocumento) 
+        public Documento(string codigo, DateTime validade, TipoDocumento tipoDocumento) 
         {
-            definirAtributos(codigo, validade, tipoDocumento);
+            DefinirAtributos(codigo, validade, tipoDocumento);
         }
 
-        public Documento(int id, DateTime dtCadastro, String codigo, DateTime validade, TipoDocumento tipoDocumento) : base(id, dtCadastro) 
+        public Documento(int id, DateTime dtCadastro, string codigo, DateTime validade, TipoDocumento tipoDocumento) : base(id, dtCadastro) 
         {
-            definirAtributos(codigo, validade, tipoDocumento);
+            DefinirAtributos(codigo, validade, tipoDocumento);
         }
 
 

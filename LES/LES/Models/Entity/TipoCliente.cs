@@ -8,25 +8,28 @@ namespace LES.Models.Entity
 {
     public class TipoCliente : EntidadeDominio
     {
-        public String nome { get; set; }
-        public String descricao { get; set; }
+        public string nome { get; set; }
+        public string descricao { get; set; }
 
+        //Construtores
         public TipoCliente() { }
 
-        private void definirAtributos(String nome, String descricao)
+        public TipoCliente(int id) : base(id) { }
+
+        private void DefinirAtributos(string nome, string descricao)
         {
             this.nome = nome;
             this.descricao = descricao;
         }
 
-        public TipoCliente(String nome, String descricao)
+        public TipoCliente(string nome, string descricao)
         {
-            definirAtributos(nome, descricao);
+            DefinirAtributos(nome, descricao);
         }
 
-        public TipoCliente(String nome, String descricao, int id, DateTime dtCadastro) : base(id, dtCadastro)
+        public TipoCliente(string nome, string descricao, int id, DateTime dtCadastro) : base(id, dtCadastro)
         {
-            definirAtributos(nome, descricao);
+            DefinirAtributos(nome, descricao);
         }
 
 

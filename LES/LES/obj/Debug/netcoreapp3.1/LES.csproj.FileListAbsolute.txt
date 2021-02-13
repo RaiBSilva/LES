@@ -1,6 +1,4 @@
 C:\Programming\LES\LES\LES\obj\Debug\netcoreapp3.1\LES.csprojAssemblyReference.cache
-C:\Programming\LES\LES\LES\obj\Debug\netcoreapp3.1\LES.csproj.CoreCompileInputs.cache
-C:\Programming\LES\LES\LES\obj\Debug\netcoreapp3.1\LES.MvcApplicationPartsAssemblyInfo.cache
 C:\Programming\LES\LES\LES\obj\Debug\netcoreapp3.1\LES.RazorAssemblyInfo.cache
 C:\Programming\LES\LES\LES\obj\Debug\netcoreapp3.1\LES.RazorAssemblyInfo.cs
 C:\Programming\LES\LES\LES\obj\Debug\netcoreapp3.1\LES.AssemblyInfoInputs.cache
@@ -109,3 +107,5 @@ C:\Programming\LES\LES\LES\obj\Debug\netcoreapp3.1\LES.dll
 C:\Programming\LES\LES\LES\obj\Debug\netcoreapp3.1\LES.pdb
 C:\Programming\LES\LES\LES\obj\Debug\netcoreapp3.1\LES.genruntimeconfig.cache
 C:\Programming\LES\LES\LES\obj\Debug\netcoreapp3.1\Razor\Views\Clientes\Create.cshtml.g.cs
+C:\Programming\LES\LES\LES\obj\Debug\netcoreapp3.1\LES.csproj.CoreCompileInputs.cache
+C:\Programming\LES\LES\LES\obj\Debug\netcoreapp3.1\LES.MvcApplicationPartsAssemblyInfo.cache

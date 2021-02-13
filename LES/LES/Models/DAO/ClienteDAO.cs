@@ -13,14 +13,15 @@ namespace LES.DAO
         public string add(EntidadeDominio e)
         {
             Cliente c = (Cliente)e;
+
             StringBuilder str = new StringBuilder();
 
-            str.Append(c.id + "\n");
-            str.Append(c.dtCadastro + "\n");
-            str.Append(c.nome + " ");
-            str.Append(c.documentos[0].tipoDocumento + "\n") ;
-            str.Append(c.documentos[0].codigo + "\n");
-            str.Append(c.enderecos[0].logradouro + "\n");
+            str.Append(c.Id + "\n");
+            str.Append(c.DtCadastro + "\n");
+            str.Append(c.Nome + " ");
+            str.Append(c.Documentos[0].TipoDocumento + "\n") ;
+            str.Append(c.Documentos[0].Codigo + "\n");
+            str.Append(c.Enderecos[0].Logradouro + "\n");
 
             return str.ToString();
         }
@@ -35,12 +36,12 @@ namespace LES.DAO
             Cliente c = (Cliente)e;
             StringBuilder str = new StringBuilder();
 
-            str.Append(c.id + "\n");
-            str.Append(c.dtCadastro + "\n");
-            str.Append(c.nome + " ");
-            str.Append(c.documentos[0].tipoDocumento + "\n");
-            str.Append(c.documentos[0].codigo + "\n");
-            str.Append(c.enderecos[0].logradouro + "\n");
+            str.Append(c.Id + "\n");
+            str.Append(c.DtCadastro + "\n");
+            str.Append(c.Nome + " ");
+            str.Append(c.Documentos[0].TipoDocumento + "\n");
+            str.Append(c.Documentos[0].Codigo + "\n");
+            str.Append(c.Enderecos[0].Logradouro + "\n");
 
             return str.ToString();
         }

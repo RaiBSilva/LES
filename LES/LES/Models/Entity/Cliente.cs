@@ -7,26 +7,27 @@ namespace LES.Models.Entity
 {
     public class Cliente : Pessoa
     {
-        public String nome { get; set; }
-        public IList<Endereco> enderecos { get; set; }
-
+        public string Nome { get; set; }
+        public IList<Endereco> Enderecos { get; set; }
+        
+        //Construtores
         public Cliente() { }
 
         public Cliente(int id) : base(id) { }
 
-        private void definirAtributos(String nome, IList<Endereco> enderecos) {
-            this.nome = nome;
-            this.enderecos = enderecos;
+        private void DefinirAtributos(string nome, IList<Endereco> enderecos) {
+            this.Nome = nome;
+            this.Enderecos = enderecos;
         }
 
-        public Cliente(String nome, IList<Endereco> enderecos) 
+        public Cliente(string nome, IList<Endereco> enderecos) 
         {
-            definirAtributos(nome, enderecos);
+            DefinirAtributos(nome, enderecos);
         }
 
-        public Cliente(int id, DateTime dtCadastro, IList<Documento> documentos, String nome, IList<Endereco> enderecos) : base(id, dtCadastro, documentos) 
+        public Cliente(int id, DateTime dtCadastro, IList<Documento> documentos, string nome, IList<Endereco> enderecos) : base(id, dtCadastro, documentos) 
         {
-            definirAtributos(nome, enderecos);
+            DefinirAtributos(nome, enderecos);
         }
 
     }

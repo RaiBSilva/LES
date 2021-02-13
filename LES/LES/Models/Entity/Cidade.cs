@@ -2,30 +2,34 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
 
 namespace LES.Models.Entity
 {
     public class Cidade : EntidadeDominio
     {
-        public String cidade { get; set; }
-        public Estado estado { get; set; }
+        public string Nome { get; set; }
+        public Estado Estado { get; set; }
 
+        //Construtores
         public Cidade() { }
 
-        private void definirAtributos(String cidade, Estado estado) 
+        public Cidade(int id) : base(id) { }
+
+        private void DefinirAtributos(string nome, Estado estado) 
         {
-            this.cidade = cidade;
-            this.estado = estado;
+            this.Nome = nome;
+            this.Estado = estado;
         }
 
-        public Cidade(String cidade, Estado estado)
+        public Cidade(string nome, Estado estado)
         {
-            definirAtributos(cidade, estado);
+            DefinirAtributos(nome, estado);
         }
 
-        public Cidade(int id, DateTime dtCadastro, String cidade, Estado estado) : base(id, dtCadastro) 
+        public Cidade(int id, DateTime dtCadastro, string nome, Estado estado) : base(id, dtCadastro) 
         {
-            definirAtributos(cidade, estado);
+            DefinirAtributos(nome, estado);
         }
 
 

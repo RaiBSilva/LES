@@ -7,25 +7,27 @@ namespace LES.Models.Entity
 {
     public class TipoEndereco : EntidadeDominio
     {
-        public String nome { get; set; }
-        public String descricao { get; set; }
+        public string Nome { get; set; }
+        public string Descricao { get; set; }
 
         public TipoEndereco() { }
 
-        private void definirAtributos(String nome, String descricao)
+        public TipoEndereco(int id) : base(id) { }
+
+        private void DefinirAtributos(string nome, string descricao)
         {
-            this.nome = nome;
-            this.descricao = descricao;
+            this.Nome = nome;
+            this.Descricao = descricao;
         }
 
-        public TipoEndereco(String nome, String descricao)
+        public TipoEndereco(string nome, string descricao)
         {
-            definirAtributos(nome, descricao);
+            DefinirAtributos(nome, descricao);
         }
 
-        public TipoEndereco(String nome, String descricao, int id, DateTime dtCadastro) : base(id, dtCadastro)
+        public TipoEndereco(string nome, string descricao, int id, DateTime dtCadastro) : base(id, dtCadastro)
         {
-            definirAtributos(nome, descricao);
+            DefinirAtributos(nome, descricao);
         }
 
     }

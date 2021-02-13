@@ -7,20 +7,21 @@ namespace LES.Models.Entity
 {
     public class EntidadeDominio
     {
-        public int id { get; set; }
-        public DateTime dtCadastro { get; set; }
+        public int Id { get; set; }
+        public DateTime DtCadastro { get; set; }
 
+        //Construtores
         public EntidadeDominio() { }
 
         public EntidadeDominio(int id) 
         {
-            this.id = id;
+            this.Id = id;
         }
 
         public EntidadeDominio(int id, DateTime dtCadastro)
         {
-            this.id = id;
-            this.dtCadastro = dtCadastro;
+            this.Id = id;
+            this.DtCadastro = dtCadastro;
         }
     }
 }

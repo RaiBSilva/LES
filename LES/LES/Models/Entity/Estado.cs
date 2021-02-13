@@ -4,22 +4,26 @@ namespace LES.Models.Entity
 {
     public class Estado : EntidadeDominio
     {
-        public String descricao { get; set; }
+        public string Descricao { get; set; }
+
+        //Construtores
         public Estado() { }
 
-        private void definirAtributos(String descricao)
+        public Estado(int id) : base(id) { }
+
+        private void DefinirAtributos(string descricao)
         {
-            this.descricao = descricao;
+            this.Descricao = descricao;
         }
 
-        public Estado(String descricao) 
+        public Estado(string descricao) 
         {
-            definirAtributos(descricao);
+            DefinirAtributos(descricao);
         }
 
-        public Estado(int id, DateTime dtCadastro, String descricao) : base(id, dtCadastro)
+        public Estado(int id, DateTime dtCadastro, string descricao) : base(id, dtCadastro)
         {
-            definirAtributos(descricao);
+            DefinirAtributos(descricao);
         }
 
 

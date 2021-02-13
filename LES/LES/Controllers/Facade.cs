@@ -48,7 +48,7 @@ namespace LES.Controllers
             String nmClasse = e.GetType().Name;
             IDAO dao = _daos[nmClasse];
 
-            return dao.get(e.id);
+            return dao.get(e.Id);
         }
 
         public String cadastrar(EntidadeDominio e) 
@@ -86,7 +86,7 @@ namespace LES.Controllers
             String nmClasse = e.GetType().Name;
             IDAO dao = _daos[nmClasse];
 
-            return dao.delete(e.id);
+            return dao.delete(e.Id);
         }
 
     }

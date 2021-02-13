@@ -7,22 +7,24 @@ namespace LES.Models.Entity
 {
     public class Pessoa : EntidadeDominio
     {
-        public IList<Documento> documentos { get; set; }
+        public IList<Documento> Documentos { get; set; }
+
+        //Construtores
         public Pessoa() { }
 
         public Pessoa(int id) : base(id) { }
 
-        private void definirAtributos (IList<Documento> documentos) {
-            this.documentos = documentos;
+        private void DefinirAtributos (IList<Documento> documentos) {
+            this.Documentos = documentos;
         }
 
         public Pessoa(IList<Documento> documentos) {
-            definirAtributos(documentos);
+            DefinirAtributos(documentos);
         }
 
         public Pessoa(int id, DateTime dtCadastro, IList<Documento> documentos) : base(id, dtCadastro)
         {
-            definirAtributos(documentos);
+            DefinirAtributos(documentos);
         }
     }
 }
