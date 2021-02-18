@@ -19,6 +19,7 @@ namespace LES.Models.Entity
     public class Cliente : EntidadeDominio
     {
         public string Nome { get; set; }
+        public DateTime DtNascimento { get; set; }
         public Genero Genero { get; set; }
         public Login Login { get; set; }
         public string Cpf { get; set; }
@@ -29,24 +30,26 @@ namespace LES.Models.Entity
 
         public Cliente(int id) : base(id) { }
 
-        private void DefinirAtributos(string nome, Genero genero, Login login, string cpf, Telefone telefone) 
+        private void DefinirAtributos(string nome, DateTime dtNascimento, Genero genero, 
+            Login login, string cpf, Telefone telefone) 
         {
             Nome = nome;
+            DtNascimento = dtNascimento;
             Genero = genero;
             Login = login;
             Cpf = cpf;
             Telefone = telefone;
         }
 
-        public Cliente(string nome, Genero genero, Login login, string cpf, Telefone telefone)
+        public Cliente(string nome, DateTime dtNascimento, Genero genero, Login login, string cpf, Telefone telefone)
         {
-            DefinirAtributos(nome, genero, login, cpf, telefone);
+            DefinirAtributos(nome, dtNascimento, genero, login, cpf, telefone);
         }
 
-        public Cliente(int id, DateTime dtCadastro, string nome, Genero genero, 
+        public Cliente(int id, DateTime dtCadastro, string nome, DateTime dtNascimento, Genero genero, 
             Login login, string cpf, Telefone telefone) : base(id, dtCadastro)
         {
-            DefinirAtributos(nome, genero, login, cpf, telefone);
+            DefinirAtributos(nome, dtNascimento, genero, login, cpf, telefone);
         }
     }
 }
