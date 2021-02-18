@@ -1,4 +1,5 @@
-﻿using LES.Models.Entity;
+﻿using LES.Models;
+using LES.Models.Entity;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -10,11 +11,14 @@ namespace LES.DAO
 {
     public class ClienteDAO : IDAO
     {
+
+        private AppDbContext Contexto;
+
         public string add(EntidadeDominio e)
         {
             Cliente c = (Cliente)e;
 
-            StringBuilder str = new StringBuilder();
+            /*StringBuilder str = new StringBuilder();
 
             str.Append(c.Id + "\n");
             str.Append(c.DtCadastro + "\n");
@@ -23,7 +27,9 @@ namespace LES.DAO
             str.Append(c.Documentos[0].Codigo + "\n");
             str.Append(c.EnderecosEntrega[0].Logradouro + "\n");
 
-            return str.ToString();
+            return str.ToString();*/
+
+            Contexto.Clientes.Add(c);
         }
 
         public string delete(int id)

@@ -5,7 +5,6 @@ namespace LES.Models.Entity
     public class Estado : EntidadeDominio
     {
         public string Descricao { get; set; }
-
         public Pais Pais { get; set; }
 
         //Construtores
@@ -15,7 +14,8 @@ namespace LES.Models.Entity
 
         private void DefinirAtributos(string descricao, Pais pais)
         {
-            this.Descricao = descricao;
+            Descricao = descricao;
+            Pais = pais;
         }
 
         public Estado(string descricao, Pais pais) 

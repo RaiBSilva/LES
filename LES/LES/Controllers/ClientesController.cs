@@ -12,7 +12,12 @@ namespace LES.Controllers
     {
         private Facade _facade;
 
-        public ClientesController(Facade facade) : base() => this._facade = facade;
+        //public ClientesController(Facade facade) : base() => this._facade = facade;
+
+        public ClientesController() 
+        {
+            _facade = new Facade();
+        }
 
         // GET: Clientes
         public ActionResult Index()
@@ -41,7 +46,7 @@ namespace LES.Controllers
         {
             try
             {
-                // TODO: Add insert logic here
+                _facade.cadastrar(cliente);
 
                 return RedirectToAction(nameof(Index));
             }
