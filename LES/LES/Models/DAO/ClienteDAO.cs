@@ -21,7 +21,7 @@ namespace LES.DAO
             str.Append(c.Nome + " ");
             str.Append(c.Documentos[0].TipoDocumento + "\n") ;
             str.Append(c.Documentos[0].Codigo + "\n");
-            str.Append(c.Enderecos[0].Logradouro + "\n");
+            str.Append(c.EnderecosEntrega[0].Logradouro + "\n");
 
             return str.ToString();
         }
@@ -41,7 +41,7 @@ namespace LES.DAO
             str.Append(c.Nome + " ");
             str.Append(c.Documentos[0].TipoDocumento + "\n");
             str.Append(c.Documentos[0].Codigo + "\n");
-            str.Append(c.Enderecos[0].Logradouro + "\n");
+            str.Append(c.EnderecosEntrega[0].Logradouro + "\n");
 
             return str.ToString();
         }
