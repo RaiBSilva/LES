@@ -26,13 +26,11 @@ namespace LES.Models
 
         public DbSet<Cidade> Cidades { get; set; }
         public DbSet<Cliente> Clientes { get; set; }
-        public DbSet<Documento> Documentos { get; set; }
         public DbSet<Endereco> Enderecos { get; set; }
         public DbSet<Estado> Estados { get; set; }
-        public DbSet<Pessoa> Pessoas { get; set; }
-        public DbSet<TipoCliente> TipoClientes { get; set; }
-        public DbSet<TipoDocumento> TipoDocumentos { get; set; }
-        public DbSet<TipoEndereco> TipoEnderecos { get; set; }
+        public DbSet<Login> Logins { get; set; }
+        public DbSet<Pais> Pais { get; set; }
+        public DbSet<Telefone> Telefone { get; set; }
 
     }
 }

@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace LES.Models.Entity
 {
-    public class Enderecos : EntidadeDominio
+    public class ColecaoEndereco : EntidadeDominio
     {
 
         public IList<Endereco> EnderecosCobranca { get; set; }
@@ -13,10 +13,10 @@ namespace LES.Models.Entity
         public Endereco EnderecoResidencia { get; set; }
 
         //Construtores
-        public Enderecos() 
+        public ColecaoEndereco() 
         { }
 
-        public Enderecos(int id) : base(id)
+        public ColecaoEndereco(int id) : base(id)
         { }
 
         private void DefinirAtributos(IList<Endereco> enderecosCobranca, IList<Endereco> enderecosEntrega, Endereco enderecoResidencia) 
@@ -26,12 +26,12 @@ namespace LES.Models.Entity
             EnderecoResidencia = enderecoResidencia;
         }
 
-        public Enderecos(IList<Endereco> enderecosCobranca, IList<Endereco> enderecosEntrega, Endereco enderecoResidencia)
+        public ColecaoEndereco(IList<Endereco> enderecosCobranca, IList<Endereco> enderecosEntrega, Endereco enderecoResidencia)
         {
             DefinirAtributos(enderecosCobranca, enderecosEntrega, enderecoResidencia);
         }
 
-        public Enderecos(int id, DateTime dtCadastro, IList<Endereco> enderecosCobranca,
+        public ColecaoEndereco(int id, DateTime dtCadastro, IList<Endereco> enderecosCobranca,
             IList<Endereco> enderecosEntrega, Endereco enderecoResidencia) : base(id, dtCadastro)
         {
             DefinirAtributos(enderecosCobranca, enderecosEntrega, enderecoResidencia);
