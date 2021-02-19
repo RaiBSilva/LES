@@ -1,11 +1,11 @@
 ﻿@model LES.Models.Entity.Cliente
 
 @{
-    ViewData["Title"] = "Details";
+    ViewData["Title"] = "Detalhes";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>Details</h1>
+<h1>Detalhes</h1>
 
 <div>
     <h4>Cliente</h4>
@@ -48,20 +48,19 @@
             @Html.DisplayFor(model => model.DtCadastro)
         </dd>
         <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.ColecaoEndereco.EnderecoResidencia)
+            @Html.DisplayNameFor(model => model.EnderecoResidencia)
         </dt>
         <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.ColecaoEndereco.EnderecoResidencia.Logradouro) @Html.DisplayFor(model => model.ColecaoEndereco.EnderecoResidencia.Numero),
-            - @Html.DisplayFor(model => model.ColecaoEndereco.EnderecoResidencia.Cidade.Estado.Descricao)
-            @Html.DisplayFor(model => model.ColecaoEndereco.EnderecoResidencia.Cidade.Estado.Pais.Descricao)
+            @Html.DisplayFor(model => model.EnderecoResidencia.Logradouro) @Html.DisplayFor(model => model.EnderecoResidencia.Numero),
+            @Html.DisplayFor(model => model.EnderecoResidencia.Cidade.Nome) - @Html.DisplayFor(model => model.EnderecoResidencia.Cidade.Estado.Nome) @Html.DisplayFor(model => model.EnderecoResidencia.Cidade.Estado.Pais.Nome)
         </dd>
         @{int i = 0;}
         <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.ColecaoEndereco.EnderecosEntrega)
+            @Html.DisplayNameFor(model => model.EnderecosEntrega)
         </dt>
         <dd class="col-sm-10">
             <dl class="row">
-                @foreach (var endereco in Model.ColecaoEndereco.EnderecosEntrega)
+                @foreach (var endereco in Model.EnderecosEntrega)
                 {
                     { i++; }
                     <dt class="col-sm-2">
@@ -69,18 +68,18 @@
                     </dt>
                     <dd class="col-sm-10">
                         @endereco.Logradouro @endereco.Numero,
-                        @endereco.Cidade.Nome - @endereco.Cidade.Estado.Descricao, @endereco.Cidade.Estado.Pais.Descricao
+                        @endereco.Cidade.Nome - @endereco.Cidade.Estado.Nome, @endereco.Cidade.Estado.Pais.Nome
                     </dd>
                 }
             </dl>
         </dd>
         @{ i = 0; }
         <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.ColecaoEndereco.EnderecosCobranca)
+            @Html.DisplayNameFor(model => model.EnderecosCobranca)
         </dt>
         <dd class="col-sm-10">
             <dl class="row">
-                @foreach (var endereco in Model.ColecaoEndereco.EnderecosCobranca)
+                @foreach (var endereco in Model.EnderecosCobranca)
                 {
                     { i++; }
                     <dt class="col-sm-2">
@@ -88,7 +87,7 @@
                     </dt>
                     <dd class="col-sm-10">
                         @endereco.Logradouro @endereco.Numero,
-                        @endereco.Cidade.Nome - @endereco.Cidade.Estado.Descricao, @endereco.Cidade.Estado.Pais.Descricao
+                        @endereco.Cidade.Nome - @endereco.Cidade.Estado.Nome, @endereco.Cidade.Estado.Pais.Nome
                     </dd>
                 }
             </dl>
@@ -96,6 +95,6 @@
     </dl>
 </div>
 <div>
-    @Html.ActionLink("Edit", "Edit", new { /* id = Model.PrimaryKey */ }) |
-    <a asp-action="Index">Back to List</a>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+    <a asp-action="Index">De volta a listagem</a>
 </div>

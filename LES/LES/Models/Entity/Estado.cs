@@ -4,7 +4,7 @@ namespace LES.Models.Entity
 {
     public class Estado : EntidadeDominio
     {
-        public string Descricao { get; set; }
+        public string Nome { get; set; }
         public Pais Pais { get; set; }
 
         #region Construtores da Classe
@@ -14,7 +14,7 @@ namespace LES.Models.Entity
 
         private void DefinirAtributos(string descricao, Pais pais)
         {
-            Descricao = descricao;
+            Nome = descricao;
             Pais = pais;
         }
 
