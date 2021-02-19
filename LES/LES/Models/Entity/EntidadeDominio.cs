@@ -12,7 +12,7 @@ namespace LES.Models.Entity
         public int Id { get; set; }
         public DateTime DtCadastro { get; set; }
 
-        //Construtores
+        #region Construtores da Classe
         public EntidadeDominio() { }
 
         public EntidadeDominio(int id) 
@@ -25,5 +25,6 @@ namespace LES.Models.Entity
             this.Id = id;
             this.DtCadastro = dtCadastro;
         }
+        #endregion
     }
 }

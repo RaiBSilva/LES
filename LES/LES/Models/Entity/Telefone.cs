@@ -14,6 +14,7 @@ namespace LES.Models.Entity
 
         public string Numero { get; set; }
 
+        #region Construtores de Classe
         public Telefone() 
         { }
 
@@ -36,5 +37,6 @@ namespace LES.Models.Entity
         {
             DefinirAtributos(tipo, ddd, numero);
         }
+        #endregion
     }
 }

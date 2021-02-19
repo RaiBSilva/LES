@@ -11,7 +11,7 @@ namespace LES.Models.Entity
         public string Nome { get; set; }
         public Estado Estado { get; set; }
 
-        //Construtores
+        #region Construtores da Classe
         public Cidade() { }
 
         public Cidade(int id) : base(id) { }
@@ -31,6 +31,7 @@ namespace LES.Models.Entity
         {
             DefinirAtributos(nome, estado);
         }
+        #endregion
 
 
     }

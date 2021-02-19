@@ -7,15 +7,16 @@ namespace LES.Models.Entity
 {
     public class Pais : EntidadeDominio
     {
-        public string Descricao { get; set; }
+        public string Nome { get; set; }
 
+        #region Construtores da Classe
         public Pais() { }
 
         public Pais(int id) : base(id) { }
 
         private void DefinirAtributos(string descricao)
         {
-            this.Descricao = descricao;
+            this.Nome = descricao;
         }
 
         public Pais(string descricao)
@@ -27,6 +28,6 @@ namespace LES.Models.Entity
         {
             DefinirAtributos(descricao);
         }
-
+        #endregion
     }
 }
