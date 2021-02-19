@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace LES.Models.Entity
 {
-    public class Login
+    public class Login : EntidadeDominio
     {
 
         public string Email { get; set; }

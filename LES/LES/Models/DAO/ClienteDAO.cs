@@ -18,18 +18,13 @@ namespace LES.DAO
         {
             Cliente c = (Cliente)e;
 
-            /*StringBuilder str = new StringBuilder();
+            StringBuilder str = new StringBuilder();
 
             str.Append(c.Id + "\n");
             str.Append(c.DtCadastro + "\n");
             str.Append(c.Nome + " ");
-            str.Append(c.Documentos[0].TipoDocumento + "\n") ;
-            str.Append(c.Documentos[0].Codigo + "\n");
-            str.Append(c.EnderecosEntrega[0].Logradouro + "\n");
 
-            return str.ToString();*/
-
-            Contexto.Clientes.Add(c);
+            return str.ToString();
         }
 
         public string delete(int id)
@@ -45,9 +40,6 @@ namespace LES.DAO
             str.Append(c.Id + "\n");
             str.Append(c.DtCadastro + "\n");
             str.Append(c.Nome + " ");
-            str.Append(c.Documentos[0].TipoDocumento + "\n");
-            str.Append(c.Documentos[0].Codigo + "\n");
-            str.Append(c.EnderecosEntrega[0].Logradouro + "\n");
 
             return str.ToString();
         }

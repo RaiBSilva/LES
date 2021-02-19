@@ -18,20 +18,26 @@ namespace LES.Models.Entity
 
     public class Cliente : EntidadeDominio
     {
+        #region Propriedades
         public string Nome { get; set; }
         public DateTime DtNascimento { get; set; }
         public Genero Genero { get; set; }
         public Login Login { get; set; }
         public string Cpf { get; set; }
         public Telefone Telefone { get; set; }
+        public IList<Endereco> EnderecosCobranca { get; set; }
+        public IList<Endereco> EnderecosEntrega { get; set; }
+        public Endereco EnderecoResidencia { get; set; }
+        #endregion
 
-        //Construtores
+        #region Construtores da Classe
         public Cliente() { }
 
         public Cliente(int id) : base(id) { }
 
         private void DefinirAtributos(string nome, DateTime dtNascimento, Genero genero, 
-            Login login, string cpf, Telefone telefone) 
+            Login login, string cpf, Telefone telefone, IList<Endereco> enderecosCobranca, 
+            IList<Endereco> enderecosEntrega, Endereco enderecoResidencia) 
         {
             Nome = nome;
             DtNascimento = dtNascimento;
@@ -39,17 +45,27 @@ namespace LES.Models.Entity
             Login = login;
             Cpf = cpf;
             Telefone = telefone;
+            EnderecosCobranca = enderecosCobranca;
+            EnderecosEntrega = enderecosEntrega;
+            EnderecoResidencia = enderecoResidencia;
         }
 
-        public Cliente(string nome, DateTime dtNascimento, Genero genero, Login login, string cpf, Telefone telefone)
+        public Cliente(string nome, DateTime dtNascimento, Genero genero, Login login, string cpf,
+            Telefone telefone, IList<Endereco> enderecosCobranca, IList<Endereco> enderecosEntrega, 
+            Endereco enderecoResidencia)
         {
-            DefinirAtributos(nome, dtNascimento, genero, login, cpf, telefone);
+            DefinirAtributos(nome, dtNascimento, genero, login, cpf, telefone, enderecosCobranca, enderecosEntrega, enderecoResidencia);
         }
 
         public Cliente(int id, DateTime dtCadastro, string nome, DateTime dtNascimento, Genero genero, 
-            Login login, string cpf, Telefone telefone) : base(id, dtCadastro)
+            Login login, string cpf, Telefone telefone, IList<Endereco> enderecosCobranca, 
+            IList<Endereco> enderecosEntrega, Endereco enderecoResidencia) : base(id, dtCadastro)
         {
-            DefinirAtributos(nome, dtNascimento, genero, login, cpf, telefone);
+            DefinirAtributos(nome, dtNascimento, genero, login, cpf, telefone, enderecosCobranca, enderecosEntrega, enderecoResidencia);
         }
+
+        #endregion
     }
+
+
 }

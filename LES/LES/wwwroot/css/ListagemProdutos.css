@@ -1,11 +1,4 @@
-﻿header {
-    position: fixed;
-    top: 0;
-    width: 100%;
-    z-index: 100;
-}
-
-input {
+﻿input {
     border-radius: 5px;
     width: 90%;
     align-content: center;
@@ -30,10 +23,6 @@ input.smaller {
 
 .default:hover {
     background: #e7e7e7;
-}
-
-.conteudo {
-    padding: 75px 0px 0px 0px;
 }
 
 .loja {
