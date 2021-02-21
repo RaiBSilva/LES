@@ -32,6 +32,11 @@
     margin-right: 3%;
 }
 
+.estado {
+    width: 30%;
+    float: right;
+}
+
 .btn {
     margin-top:30px;
 }
