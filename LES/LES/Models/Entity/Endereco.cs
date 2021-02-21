@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations;
 
 namespace LES.Models.Entity
 {
@@ -14,6 +15,8 @@ namespace LES.Models.Entity
         #region Propriedades
         public string Logradouro { get; set; }
         public string Numero { get; set; }
+
+        [StringLength(7)]
         public string Cep { get; set; }
         public string Complemento { get; set; }
         public Cidade Cidade { get; set; }
