@@ -34,12 +34,12 @@
                 </div>
                 <div class="form-group">
                     <label asp-for="Login.Email" class="control-label"></label>
-                    <input asp-for="Login.Email" class="form-control"/>
+                    <input asp-for="Login.Email" class="form-control" />
                     <span asp-validation-for="Login.Email" class="text-danger"></span>
                 </div>
                 <div class="form-group">
                     <label asp-for="Login.Senha" class="control-label"></label>
-                    <input asp-for="Login.Senha" class="form-control" id="senha" type="password"/>
+                    <input asp-for="Login.Senha" class="form-control" id="senha" type="password" />
                     <span asp-validation-for="Login.Senha" class="text-danger"></span>
                     <small id="requisitosSenha">A senha deve conter:</small>
                     <ul>
@@ -51,7 +51,7 @@
                 </div>
                 <div class="form-group">
                     <label class="control-label">Confirmação de senha</label>
-                    <input class="form-control" id="senhaConfirmacao" type="password" disabled/>
+                    <input class="form-control" id="senhaConfirmacao" type="password" disabled />
                 </div>
                 <div class="form-group">
                     <label asp-for="Cpf" class="control-label"></label>
@@ -59,210 +59,212 @@
                     <span asp-validation-for="Cpf" class="text-danger"></span>
                 </div>
             </div>
-            
+
             <h2>Endereços</h2>
             <div class="secaoForm enderecos">
                 <div><h3>Endereço de Residencia</h3></div>
-                    <div class="secaoForm">
+                <div class="secaoForm">
+                    <div class="form-group">
+
                         <div class="form-group">
 
+                            <label asp-for="EnderecoResidencia.TipoEndereco" class="control-label"></label>
+                            <select asp-for="EnderecoResidencia.TipoEndereco" class="form-control" asp-items="Html.GetEnumSelectList<LES.Models.Entity.TipoEndereco>()">
+                            </select>
+                            <span asp-validation-for="EnderecoResidencia.TipoEndereco" class="text-danger"></span>
+
+                        </div>
+
+                        <div class="form-group">
+                            <div class="logradouro">
+                                <label asp-for="EnderecoResidencia.Logradouro" class="control-label"></label>
+                                <input asp-for="EnderecoResidencia.Logradouro" class="form-control" />
+                                <span asp-validation-for="EnderecoResidencia.Logradouro" class="text-danger"></span>
+                            </div>
+                            <div class="numero">
+                                <label asp-for="EnderecoResidencia.Numero" class="control-label"></label>
+                                <input asp-for="EnderecoResidencia.Numero" class="form-control" />
+                                <span asp-validation-for="EnderecoResidencia.Numero" class="text-danger"></span>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label asp-for="EnderecoResidencia.Complemento" class="control-label"></label>
+                            <input asp-for="EnderecoResidencia.Complemento" class="form-control" />
+                            <span asp-validation-for="EnderecoResidencia.Complemento" class="text-danger"></span>
+                        </div>
+
+                        <div>
+                            <div class="form-group cidadeCepEstado">
+                                <label asp-for="EnderecoResidencia.Cep" class="control-label"></label>
+                                <input asp-for="EnderecoResidencia.Cep" class="form-control" />
+                                <span asp-validation-for="EnderecoResidencia.Cep" class="text-danger"></span>
+                            </div>
+                            <div class="form-group cidadeCepEstado">
+                                <label asp-for="EnderecoResidencia.Cidade" class="control-label"></label>
+                                <input asp-for="EnderecoResidencia.Cidade.Nome" class="form-control" />
+                                <span asp-validation-for="EnderecoResidencia.Cidade.Nome" class="text-danger"></span>
+                            </div>
+                            <div class="form-group cidadeCepEstado">
+                                <label asp-for="EnderecoResidencia.Cidade.Estado" class="control-label"></label>
+                                <input asp-for="EnderecoResidencia.Cidade.Estado.Nome" class="form-control" />
+                                <span asp-validation-for="EnderecoResidencia.Cidade.Estado.Nome" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="EnderecoResidencia.Cidade.Estado.Pais" class="control-label"></label>
+                                <input asp-for="EnderecoResidencia.Cidade.Estado.Pais.Nome" class="form-control" />
+                                <span asp-validation-for="EnderecoResidencia.Cidade.Estado.Pais.Nome" class="text-danger"></span>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label asp-for="EnderecoResidencia.Observacoes" class="control-label"></label>
+                            <input asp-for="EnderecoResidencia.Observacoes" class="form-control" />
+                            <span asp-validation-for="EnderecoResidencia.Observacoes" class="text-danger"></span>
+                        </div>
+
+                    </div>
+                </div>
+                <div><h3>Endereços de Cobrança</h3></div>
+                <div class="secaoForm">
+                    <div class="form-group" id="cobranca">
+
+                        <div class="endereco">
+                            <h4>Endereço 1</h4>
                             <div class="form-group">
 
-                                <label asp-for="EnderecoResidencia.TipoEndereco" class="control-label"></label>
-                                <select asp-for="EnderecoResidencia.TipoEndereco" class="form-control" asp-items="Html.GetEnumSelectList<LES.Models.Entity.TipoEndereco>()">
+                                <label asp-for="EnderecosCobranca[0].TipoEndereco" class="control-label"></label>
+                                <select asp-for="EnderecosCobranca[0].TipoEndereco" class="form-control" asp-items="Html.GetEnumSelectList<LES.Models.Entity.TipoEndereco>()">
                                 </select>
-                                <span asp-validation-for="EnderecoResidencia.TipoEndereco" class="text-danger"></span>
+                                <span asp-validation-for="EnderecosCobranca[0].TipoEndereco" class="text-danger"></span>
 
                             </div>
 
                             <div class="form-group">
                                 <div class="logradouro">
-                                    <label asp-for="EnderecoResidencia.Logradouro" class="control-label"></label>
-                                    <input asp-for="EnderecoResidencia.Logradouro" class="form-control" />
-                                    <span asp-validation-for="EnderecoResidencia.Logradouro" class="text-danger"></span>
+                                    <label asp-for="EnderecosCobranca[0].Logradouro" class="control-label"></label>
+                                    <input asp-for="EnderecosCobranca[0].Logradouro" class="form-control" />
+                                    <span asp-validation-for="EnderecosCobranca[0].Logradouro" class="text-danger"></span>
                                 </div>
                                 <div class="numero">
-                                    <label asp-for="EnderecoResidencia.Numero" class="control-label"></label>
-                                    <input asp-for="EnderecoResidencia.Numero" class="form-control" />
-                                    <span asp-validation-for="EnderecoResidencia.Numero" class="text-danger"></span>
+                                    <label asp-for="EnderecosCobranca[0].Numero" class="control-label"></label>
+                                    <input asp-for="EnderecosCobranca[0].Numero" class="form-control" />
+                                    <span asp-validation-for="EnderecosCobranca[0].Numero" class="text-danger"></span>
                                 </div>
                             </div>
 
                             <div class="form-group">
-                                <label asp-for="EnderecoResidencia.Complemento" class="control-label"></label>
-                                <input asp-for="EnderecoResidencia.Complemento" class="form-control" />
-                                <span asp-validation-for="EnderecoResidencia.Complemento" class="text-danger"></span>
+                                <label asp-for="EnderecosCobranca[0].Complemento" class="control-label"></label>
+                                <input asp-for="EnderecosCobranca[0].Complemento" class="form-control" />
+                                <span asp-validation-for="EnderecosCobranca[0].Complemento" class="text-danger"></span>
                             </div>
 
                             <div>
                                 <div class="form-group cidadeCepEstado">
-                                    <label asp-for="EnderecoResidencia.Cep" class="control-label"></label>
-                                    <input asp-for="EnderecoResidencia.Cep" class="form-control" />
-                                    <span asp-validation-for="EnderecoResidencia.Cep" class="text-danger"></span>
+                                    <label asp-for="EnderecosCobranca[0].Cep" class="control-label"></label>
+                                    <input asp-for="EnderecosCobranca[0].Cep" class="form-control" />
+                                    <span asp-validation-for="EnderecosCobranca[0].Cep" class="text-danger"></span>
                                 </div>
                                 <div class="form-group cidadeCepEstado">
-                                    <label asp-for="EnderecoResidencia.Cidade" class="control-label"></label>
-                                    <input asp-for="EnderecoResidencia.Cidade.Nome" class="form-control" />
-                                    <span asp-validation-for="EnderecoResidencia.Cidade.Nome" class="text-danger"></span>
+                                    <label asp-for="EnderecosCobranca[0].Cidade" class="control-label"></label>
+                                    <input asp-for="EnderecosCobranca[0].Cidade.Nome" class="form-control" />
+                                    <span asp-validation-for="EnderecosCobranca[0].Cidade.Nome" class="text-danger"></span>
                                 </div>
                                 <div class="form-group cidadeCepEstado">
-                                    <label asp-for="EnderecoResidencia.Cidade.Estado" class="control-label"></label>
-                                    <input asp-for="EnderecoResidencia.Cidade.Estado.Nome" class="form-control" />
-                                    <span asp-validation-for="EnderecoResidencia.Cidade.Estado.Nome" class="text-danger"></span>
+                                    <label asp-for="EnderecosCobranca[0].Cidade.Estado" class="control-label"></label>
+                                    <input asp-for="EnderecosCobranca[0].Cidade.Estado.Nome" class="form-control" />
+                                    <span asp-validation-for="EnderecosCobranca[0].Cidade.Estado.Nome" class="text-danger"></span>
                                 </div>
                                 <div class="form-group">
-                                    <label asp-for="EnderecoResidencia.Cidade.Estado.Pais" class="control-label"></label>
-                                    <input asp-for="EnderecoResidencia.Cidade.Estado.Pais.Nome" class="form-control" />
-                                    <span asp-validation-for="EnderecoResidencia.Cidade.Estado.Pais.Nome" class="text-danger"></span>
+                                    <label asp-for="EnderecosCobranca[0].Cidade.Estado.Pais" class="control-label"></label>
+                                    <input asp-for="EnderecosCobranca[0].Cidade.Estado.Pais.Nome" class="form-control" />
+                                    <span asp-validation-for="EnderecosCobranca[0].Cidade.Estado.Pais.Nome" class="text-danger"></span>
                                 </div>
                             </div>
 
                             <div class="form-group">
-                                <label asp-for="EnderecoResidencia.Observacoes" class="control-label"></label>
-                                <input asp-for="EnderecoResidencia.Observacoes" class="form-control" />
-                                <span asp-validation-for="EnderecoResidencia.Observacoes" class="text-danger"></span>
+                                <label asp-for="EnderecosCobranca[0].Observacoes" class="control-label"></label>
+                                <input asp-for="EnderecosCobranca[0].Observacoes" class="form-control" />
+                                <span asp-validation-for="EnderecosCobranca[0].Observacoes" class="text-danger"></span>
                             </div>
-
                         </div>
+
+                        <button type="button" id="btnAddCobranca" class="btn btn-outline-secondary btn-add">Adicionar novo endereço de cobrança</button>
                     </div>
-                <div><h3>Endereços de Cobrança</h3></div>
-                    <div class="secaoForm">
-                        <div class="form-group">
-
-                            <div class="endereco">
-                                <h4>Endereço 1</h4>
-                                <div class="form-group">
-
-                                    <label asp-for="EnderecosCobranca[0].TipoEndereco" class="control-label"></label>
-                                    <select asp-for="EnderecosCobranca[0].TipoEndereco" class="form-control" asp-items="Html.GetEnumSelectList<LES.Models.Entity.TipoEndereco>()">
-                                    </select>
-                                    <span asp-validation-for="EnderecosCobranca[0].TipoEndereco" class="text-danger"></span>
-
-                                </div>
-
-                                <div class="form-group">
-                                    <div class="logradouro">
-                                        <label asp-for="EnderecosCobranca[0].Logradouro" class="control-label"></label>
-                                        <input asp-for="EnderecosCobranca[0].Logradouro" class="form-control" />
-                                        <span asp-validation-for="EnderecosCobranca[0].Logradouro" class="text-danger"></span>
-                                    </div>
-                                    <div class="numero">
-                                        <label asp-for="EnderecosCobranca[0].Numero" class="control-label"></label>
-                                        <input asp-for="EnderecosCobranca[0].Numero" class="form-control" />
-                                        <span asp-validation-for="EnderecosCobranca[0].Numero" class="text-danger"></span>
-                                    </div>
-                                </div>
-
-                                <div class="form-group">
-                                    <label asp-for="EnderecosCobranca[0].Complemento" class="control-label"></label>
-                                    <input asp-for="EnderecosCobranca[0].Complemento" class="form-control" />
-                                    <span asp-validation-for="EnderecosCobranca[0].Complemento" class="text-danger"></span>
-                                </div>
-
-                                <div>
-                                    <div class="form-group cidadeCepEstado">
-                                        <label asp-for="EnderecosCobranca[0].Cep" class="control-label"></label>
-                                        <input asp-for="EnderecosCobranca[0].Cep" class="form-control" />
-                                        <span asp-validation-for="EnderecosCobranca[0].Cep" class="text-danger"></span>
-                                    </div>
-                                    <div class="form-group cidadeCepEstado">
-                                        <label asp-for="EnderecosCobranca[0].Cidade" class="control-label"></label>
-                                        <input asp-for="EnderecosCobranca[0].Cidade.Nome" class="form-control" />
-                                        <span asp-validation-for="EnderecosCobranca[0].Cidade.Nome" class="text-danger"></span>
-                                    </div>
-                                    <div class="form-group cidadeCepEstado">
-                                        <label asp-for="EnderecosCobranca[0].Cidade.Estado" class="control-label"></label>
-                                        <input asp-for="EnderecosCobranca[0].Cidade.Estado.Nome" class="form-control" />
-                                        <span asp-validation-for="EnderecosCobranca[0].Cidade.Estado.Nome" class="text-danger"></span>
-                                    </div>
-                                    <div class="form-group">
-                                        <label asp-for="EnderecosCobranca[0].Cidade.Estado.Pais" class="control-label"></label>
-                                        <input asp-for="EnderecosCobranca[0].Cidade.Estado.Pais.Nome" class="form-control" />
-                                        <span asp-validation-for="EnderecosCobranca[0].Cidade.Estado.Pais.Nome" class="text-danger"></span>
-                                    </div>
-                                </div>
-
-                                <div class="form-group">
-                                    <label asp-for="EnderecosCobranca[0].Observacoes" class="control-label"></label>
-                                    <input asp-for="EnderecosCobranca[0].Observacoes" class="form-control" />
-                                    <span asp-validation-for="EnderecosCobranca[0].Observacoes" class="text-danger"></span>
-                                </div>
-                            </div>
-                       
-                        </div>
-                    </div>
+                </div>
                 <div><h3>Endereço de Entrega</h3></div>
-                    <div class="secaoForm">
-                        <div class="form-group">
+                <div class="secaoForm">
+                    <div class="form-group" id="entrega">
 
-                            <div class="endereco">
-                                <h4>Endereço 1</h4>
-                                <div class="form-group">
+                        <div class="endereco">
+                            <h4>Endereço 1</h4>
+                            <div class="form-group">
 
-                                    <label asp-for="EnderecosEntrega[0].TipoEndereco" class="control-label"></label>
-                                    <select asp-for="EnderecosEntrega[0].TipoEndereco" class="form-control" asp-items="Html.GetEnumSelectList<LES.Models.Entity.TipoEndereco>()">
-                                    </select>
-                                    <span asp-validation-for="EnderecosEntrega[0].TipoEndereco" class="text-danger"></span>
+                                <label asp-for="EnderecosEntrega[0].TipoEndereco" class="control-label"></label>
+                                <select asp-for="EnderecosEntrega[0].TipoEndereco" class="form-control" asp-items="Html.GetEnumSelectList<LES.Models.Entity.TipoEndereco>()">
+                                </select>
+                                <span asp-validation-for="EnderecosEntrega[0].TipoEndereco" class="text-danger"></span>
 
+                            </div>
+
+                            <div class="form-group">
+                                <div class="logradouro">
+                                    <label asp-for="EnderecosEntrega[0].Logradouro" class="control-label"></label>
+                                    <input asp-for="EnderecosEntrega[0].Logradouro" class="form-control" />
+                                    <span asp-validation-for="EnderecosEntrega[0].Logradouro" class="text-danger"></span>
                                 </div>
-
-                                <div class="form-group">
-                                    <div class="logradouro">
-                                        <label asp-for="EnderecosEntrega[0].Logradouro" class="control-label"></label>
-                                        <input asp-for="EnderecosEntrega[0].Logradouro" class="form-control" />
-                                        <span asp-validation-for="EnderecosEntrega[0].Logradouro" class="text-danger"></span>
-                                    </div>
-                                    <div class="numero">
-                                        <label asp-for="EnderecosEntrega[0].Numero" class="control-label"></label>
-                                        <input asp-for="EnderecosEntrega[0].Numero" class="form-control" />
-                                        <span asp-validation-for="EnderecosEntrega[0].Numero" class="text-danger"></span>
-                                    </div>
-                                </div>
-
-                                <div class="form-group">
-                                    <label asp-for="EnderecosEntrega[0].Complemento" class="control-label"></label>
-                                    <input asp-for="EnderecosEntrega[0].Complemento" class="form-control" />
-                                    <span asp-validation-for="EnderecosEntrega[0].Complemento" class="text-danger"></span>
-                                </div>
-
-                                <div>
-                                    <div class="form-group cidadeCepEstado">
-                                        <label asp-for="EnderecosEntrega[0].Cep" class="control-label"></label>
-                                        <input asp-for="EnderecosEntrega[0].Cep" class="form-control" />
-                                        <span asp-validation-for="EnderecosEntrega[0].Cep" class="text-danger"></span>
-                                    </div>
-                                    <div class="form-group cidadeCepEstado">
-                                        <label asp-for="EnderecosEntrega[0].Cidade" class="control-label"></label>
-                                        <input asp-for="EnderecosEntrega[0].Cidade.Nome" class="form-control" />
-                                        <span asp-validation-for="EnderecosEntrega[0].Cidade.Nome" class="text-danger"></span>
-                                    </div>
-                                    <div class="form-group cidadeCepEstado">
-                                        <label asp-for="EnderecosEntrega[0].Cidade.Estado" class="control-label"></label>
-                                        <input asp-for="EnderecosEntrega[0].Cidade.Estado.Nome" class="form-control" />
-                                        <span asp-validation-for="EnderecosEntrega[0].Cidade.Estado.Nome" class="text-danger"></span>
-                                    </div>
-                                    <div class="form-group">
-                                        <label asp-for="EnderecosEntrega[0].Cidade.Estado.Pais" class="control-label"></label>
-                                        <input asp-for="EnderecosEntrega[0].Cidade.Estado.Pais.Nome" class="form-control" />
-                                        <span asp-validation-for="EnderecosEntrega[0].Cidade.Estado.Pais.Nome" class="text-danger"></span>
-                                    </div>
-                                </div>
-
-                                <div class="form-group">
-                                    <label asp-for="EnderecosEntrega[0].Observacoes" class="control-label"></label>
-                                    <input asp-for="EnderecosEntrega[0].Observacoes" class="form-control" />
-                                    <span asp-validation-for="EnderecosEntrega[0].Observacoes" class="text-danger"></span>
+                                <div class="numero">
+                                    <label asp-for="EnderecosEntrega[0].Numero" class="control-label"></label>
+                                    <input asp-for="EnderecosEntrega[0].Numero" class="form-control" />
+                                    <span asp-validation-for="EnderecosEntrega[0].Numero" class="text-danger"></span>
                                 </div>
                             </div>
 
+                            <div class="form-group">
+                                <label asp-for="EnderecosEntrega[0].Complemento" class="control-label"></label>
+                                <input asp-for="EnderecosEntrega[0].Complemento" class="form-control" />
+                                <span asp-validation-for="EnderecosEntrega[0].Complemento" class="text-danger"></span>
+                            </div>
+
+                            <div>
+                                <div class="form-group cidadeCepEstado">
+                                    <label asp-for="EnderecosEntrega[0].Cep" class="control-label"></label>
+                                    <input asp-for="EnderecosEntrega[0].Cep" class="form-control" />
+                                    <span asp-validation-for="EnderecosEntrega[0].Cep" class="text-danger"></span>
+                                </div>
+                                <div class="form-group cidadeCepEstado">
+                                    <label asp-for="EnderecosEntrega[0].Cidade" class="control-label"></label>
+                                    <input asp-for="EnderecosEntrega[0].Cidade.Nome" class="form-control" />
+                                    <span asp-validation-for="EnderecosEntrega[0].Cidade.Nome" class="text-danger"></span>
+                                </div>
+                                <div class="form-group cidadeCepEstado">
+                                    <label asp-for="EnderecosEntrega[0].Cidade.Estado" class="control-label"></label>
+                                    <input asp-for="EnderecosEntrega[0].Cidade.Estado.Nome" class="form-control" />
+                                    <span asp-validation-for="EnderecosEntrega[0].Cidade.Estado.Nome" class="text-danger"></span>
+                                </div>
+                                <div class="form-group">
+                                    <label asp-for="EnderecosEntrega[0].Cidade.Estado.Pais" class="control-label"></label>
+                                    <input asp-for="EnderecosEntrega[0].Cidade.Estado.Pais.Nome" class="form-control" />
+                                    <span asp-validation-for="EnderecosEntrega[0].Cidade.Estado.Pais.Nome" class="text-danger"></span>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label asp-for="EnderecosEntrega[0].Observacoes" class="control-label"></label>
+                                <input asp-for="EnderecosEntrega[0].Observacoes" class="form-control" />
+                                <span asp-validation-for="EnderecosEntrega[0].Observacoes" class="text-danger"></span>
+                            </div>
                         </div>
+
+                        <button type="button" id="btnAddEntrega" class="btn btn-outline-secondary btn-add">Adicionar novo endereço de entrega</button>
                     </div>
                 </div>
+            </div>
 
-                <div class="form-group">
-                    <input type="submit" value="Cadastrar" class="btn btn-primary" id="btn" disabled/>
-                </div>
-</form>
+            <div class="form-group">
+                <input type="submit" value="Cadastrar" class="btn btn-primary" id="btn" disabled />
+            </div>
+        </form>
     </div>
 </div>
 
@@ -271,6 +273,7 @@
 </div>
 
 @section Scripts
-{ 
+{
+    <script src="~/js/GerenciadorEnderecos.js"></script>
     <script src="~/js/ValSenhaCliente.js"></script>
 }
