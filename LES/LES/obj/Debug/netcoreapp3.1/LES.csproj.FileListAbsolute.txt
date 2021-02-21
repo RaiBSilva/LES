@@ -106,7 +106,6 @@ C:\Programming\LES\LES\LES\obj\Debug\netcoreapp3.1\LES.csproj.CopyComplete
 C:\Programming\LES\LES\LES\obj\Debug\netcoreapp3.1\LES.dll
 C:\Programming\LES\LES\LES\obj\Debug\netcoreapp3.1\LES.pdb
 C:\Programming\LES\LES\LES\obj\Debug\netcoreapp3.1\LES.genruntimeconfig.cache
-C:\Programming\LES\LES\LES\obj\Debug\netcoreapp3.1\Razor\Views\Clientes\Create.cshtml.g.cs
 C:\Programming\LES\LES\LES\bin\Debug\netcoreapp3.1\Microsoft.EntityFrameworkCore.dll
 C:\Programming\LES\LES\LES\bin\Debug\netcoreapp3.1\Microsoft.EntityFrameworkCore.Abstractions.dll
 C:\Programming\LES\LES\LES\bin\Debug\netcoreapp3.1\Microsoft.Extensions.Caching.Abstractions.dll
@@ -153,3 +152,4 @@ C:\Programming\LES\LES\LES\obj\Debug\netcoreapp3.1\LES.MvcApplicationPartsAssemb
 C:\Programming\LES\LES\LES\obj\Debug\netcoreapp3.1\Razor\Views\Prototipo\Loja.cshtml.g.cs
 C:\Programming\LES\LES\LES\obj\Debug\netcoreapp3.1\Razor\Views\Clientes\Details.cshtml.g.cs
 C:\Programming\LES\LES\LES\obj\Debug\netcoreapp3.1\Razor\Views\Clientes\Index.cshtml.g.cs
+C:\Programming\LES\LES\LES\obj\Debug\netcoreapp3.1\Razor\Views\Clientes\Cadastro.cshtml.g.cs

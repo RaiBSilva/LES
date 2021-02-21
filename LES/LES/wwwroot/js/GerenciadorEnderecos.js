@@ -97,6 +97,7 @@ function adicionarEndereco(e, tipo) {
 
     var btnApagar = document.createElement("button");
     btnApagar.innerHTML = "Apagar endereço";
+    btn.className = "btn btn-rmv";
     btnApagar.addEventListener("click", function (e2) {
         apagarEndereco(e2);
     })
@@ -276,4 +277,8 @@ document.getElementById("btnAddCobranca").addEventListener("click", function (e)
 
 document.getElementById("btnAddEntrega").addEventListener("click", function (e) {
     adicionarEndereco(e, "Entrega");
+})
+
+document.getElementsByName("ApagarEndereco").addEventListener("click", function (e) {
+    apagarEndereco(e);
 })

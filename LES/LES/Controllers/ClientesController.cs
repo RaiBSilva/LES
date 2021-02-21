@@ -27,22 +27,29 @@ namespace LES.Controllers
         }
 
         // GET: Clientes/Details/5
-        public ActionResult Details(int id)
+        public ActionResult Detalhes(int id)
         {
             ViewBag.Entidade = _facade.getEntidade(new Cliente(id));
             return View();
         }
 
         // GET: Clientes/Create
-        public ActionResult Create()
+        public ActionResult Cadastro(int? id)
         {
-            return View();
+            if (id is null)
+            {
+                return View(new Cliente());
+            }
+
+
+
+            return View(new Cliente());
         }
 
         // POST: Clientes/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(Cliente cliente)
+        public ActionResult Cadastro(Cliente cliente)
         {
             try
             {
