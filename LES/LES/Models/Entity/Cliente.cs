@@ -2,6 +2,7 @@
 using Microsoft.CodeAnalysis;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Globalization;
 using System.Linq;
 using System.Security.Cryptography.X509Certificates;
@@ -19,14 +20,24 @@ namespace LES.Models.Entity
     public class Cliente : EntidadeDominio
     {
         #region Propriedades
+
+        [Required]
         public string Nome { get; set; }
+        [Required]
         public DateTime DtNascimento { get; set; }
+        [Required]
         public Genero Genero { get; set; }
+        [Required]
         public Login Login { get; set; }
+        [Required]
         public string Cpf { get; set; }
+        [Required]
         public Telefone Telefone { get; set; }
+        [Required]
         public IList<Endereco> EnderecosCobranca { get; set; }
+        [Required]
         public IList<Endereco> EnderecosEntrega { get; set; }
+        [Required]
         public Endereco EnderecoResidencia { get; set; }
         #endregion
 
