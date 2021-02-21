@@ -68,7 +68,7 @@
 
                         <div class="form-group">
 
-                            <label asp-for="EnderecoResidencia.TipoEndereco" class="control-label"></label>
+                            <label asp-for="EnderecoResidencia.TipoEndereco" id="labelTipo" class="control-label"></label>
                             <select asp-for="EnderecoResidencia.TipoEndereco" class="form-control" asp-items="Html.GetEnumSelectList<LES.Models.Entity.TipoEndereco>()">
                             </select>
                             <span asp-validation-for="EnderecoResidencia.TipoEndereco" class="text-danger"></span>
@@ -77,48 +77,48 @@
 
                         <div class="form-group">
                             <div class="logradouro">
-                                <label asp-for="EnderecoResidencia.Logradouro" class="control-label"></label>
+                                <label asp-for="EnderecoResidencia.Logradouro" id="labelLogradouro" class="control-label"></label>
                                 <input asp-for="EnderecoResidencia.Logradouro" class="form-control" />
                                 <span asp-validation-for="EnderecoResidencia.Logradouro" class="text-danger"></span>
                             </div>
                             <div class="numero">
-                                <label asp-for="EnderecoResidencia.Numero" class="control-label"></label>
+                                <label asp-for="EnderecoResidencia.Numero" id="labelNumero" class="control-label"></label>
                                 <input asp-for="EnderecoResidencia.Numero" class="form-control" />
                                 <span asp-validation-for="EnderecoResidencia.Numero" class="text-danger"></span>
                             </div>
                         </div>
 
                         <div class="form-group">
-                            <label asp-for="EnderecoResidencia.Complemento" class="control-label"></label>
+                            <label asp-for="EnderecoResidencia.Complemento" id="labelComplemento" class="control-label"></label>
                             <input asp-for="EnderecoResidencia.Complemento" class="form-control" />
                             <span asp-validation-for="EnderecoResidencia.Complemento" class="text-danger"></span>
                         </div>
 
                         <div>
                             <div class="form-group cidadeCepEstado">
-                                <label asp-for="EnderecoResidencia.Cep" class="control-label"></label>
+                                <label asp-for="EnderecoResidencia.Cep" id="labelCep" class="control-label"></label>
                                 <input asp-for="EnderecoResidencia.Cep" class="form-control" />
                                 <span asp-validation-for="EnderecoResidencia.Cep" class="text-danger"></span>
                             </div>
                             <div class="form-group cidadeCepEstado">
-                                <label asp-for="EnderecoResidencia.Cidade" class="control-label"></label>
+                                <label asp-for="EnderecoResidencia.Cidade" id="labelCidade" class="control-label"></label>
                                 <input asp-for="EnderecoResidencia.Cidade.Nome" class="form-control" />
                                 <span asp-validation-for="EnderecoResidencia.Cidade.Nome" class="text-danger"></span>
                             </div>
                             <div class="form-group cidadeCepEstado">
-                                <label asp-for="EnderecoResidencia.Cidade.Estado" class="control-label"></label>
+                                <label asp-for="EnderecoResidencia.Cidade.Estado" id="labelEstado" class="control-label"></label>
                                 <input asp-for="EnderecoResidencia.Cidade.Estado.Nome" class="form-control" />
                                 <span asp-validation-for="EnderecoResidencia.Cidade.Estado.Nome" class="text-danger"></span>
                             </div>
                             <div class="form-group">
-                                <label asp-for="EnderecoResidencia.Cidade.Estado.Pais" class="control-label"></label>
+                                <label asp-for="EnderecoResidencia.Cidade.Estado.Pais" id="labelPais" class="control-label"></label>
                                 <input asp-for="EnderecoResidencia.Cidade.Estado.Pais.Nome" class="form-control" />
                                 <span asp-validation-for="EnderecoResidencia.Cidade.Estado.Pais.Nome" class="text-danger"></span>
                             </div>
                         </div>
 
                         <div class="form-group">
-                            <label asp-for="EnderecoResidencia.Observacoes" class="control-label"></label>
+                            <label asp-for="EnderecoResidencia.Observacoes" id="labelObservacoes" class="control-label"></label>
                             <input asp-for="EnderecoResidencia.Observacoes" class="form-control" />
                             <span asp-validation-for="EnderecoResidencia.Observacoes" class="text-danger"></span>
                         </div>
@@ -127,15 +127,14 @@
                 </div>
                 <div><h3>Endereços de Cobrança</h3></div>
                 <div class="secaoForm">
-                    <div class="form-group" id="cobranca">
+                    <div class="form-group" id="Cobranca">
 
                         <div class="endereco">
                             <h4>Endereço 1</h4>
                             <div class="form-group">
 
                                 <label asp-for="EnderecosCobranca[0].TipoEndereco" class="control-label"></label>
-                                <select asp-for="EnderecosCobranca[0].TipoEndereco" class="form-control" asp-items="Html.GetEnumSelectList<LES.Models.Entity.TipoEndereco>()">
-                                </select>
+                                <select asp-for="EnderecosCobranca[0].TipoEndereco" class="form-control" asp-items="Html.GetEnumSelectList<LES.Models.Entity.TipoEndereco>()"/>
                                 <span asp-validation-for="EnderecosCobranca[0].TipoEndereco" class="text-danger"></span>
 
                             </div>
@@ -194,7 +193,7 @@
                 </div>
                 <div><h3>Endereço de Entrega</h3></div>
                 <div class="secaoForm">
-                    <div class="form-group" id="entrega">
+                    <div class="form-group" id="Entrega">
 
                         <div class="endereco">
                             <h4>Endereço 1</h4>
