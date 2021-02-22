@@ -150,6 +150,7 @@ C:\Programming\LES\LES\LES\bin\Debug\netcoreapp3.1\runtimes\win\lib\netstandard2
 C:\Programming\LES\LES\LES\obj\Debug\netcoreapp3.1\LES.csproj.CoreCompileInputs.cache
 C:\Programming\LES\LES\LES\obj\Debug\netcoreapp3.1\LES.MvcApplicationPartsAssemblyInfo.cache
 C:\Programming\LES\LES\LES\obj\Debug\netcoreapp3.1\Razor\Views\Prototipo\Loja.cshtml.g.cs
-C:\Programming\LES\LES\LES\obj\Debug\netcoreapp3.1\Razor\Views\Clientes\Details.cshtml.g.cs
 C:\Programming\LES\LES\LES\obj\Debug\netcoreapp3.1\Razor\Views\Clientes\Index.cshtml.g.cs
 C:\Programming\LES\LES\LES\obj\Debug\netcoreapp3.1\Razor\Views\Clientes\Cadastro.cshtml.g.cs
+C:\Programming\LES\LES\LES\obj\Debug\netcoreapp3.1\Razor\Views\Clientes\Delete.cshtml.g.cs
+C:\Programming\LES\LES\LES\obj\Debug\netcoreapp3.1\Razor\Views\Clientes\Detalhes.cshtml.g.cs

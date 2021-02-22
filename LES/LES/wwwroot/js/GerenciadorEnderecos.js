@@ -3,8 +3,8 @@
     e.preventDefault();
 
     var btnApagar = e.target;
-    var divEndereco = btnApagar.parentNode;
-    var divTodosEnderecos = divEndereco.parentNode;
+    var divEndereco = btnApagar.parentElement ;
+    var divTodosEnderecos = divEndereco.parentElement ;
     var index = Array.prototype.indexOf.call(divTodosEnderecos.children, divEndereco);
 
     var tipo = divTodosEnderecos.id;
@@ -12,71 +12,71 @@
     divEndereco.remove();
 
     var numChildNodes = divTodosEnderecos.childElementCount;
+    if (index < numChildNodes-1){
+        for (i = index; i < numChildNodes - 1; i++) {
+            var div = divTodosEnderecos.children[parseInt(i)];
 
-    for (i = index; i < numChildNodes; i++) {
-        var div = divTodosEnderecos.children[i];
+            //HeaderID
+            div.firstElementChild.id = "header" + tipo + (i + 1);
+            //HeaderInnerHTML
+            div.firstElementChild.innerHTML = "Endereço " + (i + 1);
 
-        //HeaderID
-        div.firstChild.id = "header" + tipo + (i + 1);;
-        //HeaderInnerHTML
-        div.firstChild.innerHTML = "Endereço " + (i + 1);
+            //Label TipoEndereco
+            div.children[2].firstElementChild.setAttribute("for", "Enderecos" + tipo + "_" + (i) + "__TipoEndereco");
+            //Select TipoEndereco
+            div.children[2].children[1].setAttribute("name", "Enderecos" + tipo + "[" + (i) + "].TipoEndereco");
+            div.children[2].children[1].id = "Enderecos" + tipo + "_" + (i) + "__TipoEndereco";
 
-        //Label TipoEndereco
-        div.children[2].firstChild.setAttribute("for", "Enderecos" + tipo + "_" + (i) + "__TipoEndereco");
-        //Select TipoEndereco
-        div.children[2].children[1].setAttribute("name", "Enderecos" + tipo + "[" + (i) + "].TipoEndereco");
-        div.children[2].children[1].id = "Enderecos" + tipo + "_" + (i) + "__TipoEndereco";
+            //Label Logradouro
+            div.children[3].firstElementChild.firstElementChild.setAttribute("for", "Enderecos" + tipo + "_" + (i) + "__Logradouro");
+            //Input Logradouro
+            div.children[3].firstElementChild.children[1].id = "Enderecos" + tipo + "_" + (i) + "__Logradouro";
+            div.children[3].firstElementChild.children[1].setAttribute("name", "Enderecos" + tipo + "[" + (i) + "].Logradouro");
 
-        //Label Logradouro
-        div.children[3].firstChild.firstChild.setAttribute("for", "Enderecos" + tipo + "_" + (i) + "__Logradouro");
-        //Input Logradouro
-        div.children[3].firstChild.children[1].id = "Enderecos" + tipo + "_" + (i) + "__Logradouro";
-        div.children[3].firstChild.children[1].setAttribute("name", "Enderecos" + tipo + "[" + (i) + "].Logradouro");
+            //Label Numero
+            div.children[3].children[1].firstElementChild.setAttribute("for", "Enderecos" + tipo + "_" + (i) + "__Numero");
+            //Input Numero
+            div.children[3].children[1].children[1].id = "Enderecos" + tipo + "_" + (i) + "__Numero";
+            div.children[3].children[1].children[1].setAttribute("name", "Enderecos" + tipo + "[" + (i) + "].Numero");
 
-        //Label Numero
-        div.children[3].children[1].firstChild.setAttribute("for", "Enderecos" + tipo + "_" + (i) + "__Numero");
-        //Input Numero
-        div.children[3].children[1].children[1].id = "Enderecos" + tipo + "_" + (i) + "__Numero";
-        div.children[3].children[1].children[1].setAttribute("name", "Enderecos" + tipo + "[" + (i) + "].Numero");
+            //Label Complemento
+            div.children[4].firstElementChild.setAttribute("for", "Enderecos" + tipo + "_" + (i) + "__Complemento");
+            //Input Complemento
+            div.children[4].children[1].setAttribute("name", "Enderecos" + tipo + "[" + (i) + "].Complemento");
+            div.children[4].children[1].id = "Enderecos" + tipo + "_" + (i) + "__Complemento";
 
-        //Label Complemento
-        div.children[4].firstChild.setAttribute("for", "Enderecos" + tipo + "_" + (i) + "__Complemento");
-        //Input Complemento
-        div.children[4].children[1].setAttribute("name", "Enderecos" + tipo + "[" + (i) + "].Complemento");
-        div.children[4].children[1].id = "Enderecos" + tipo + "_" + (i) + "__Complemento";
+            //Label Cep
+            div.children[5].firstElementChild.firstElementChild.setAttribute("for", "Enderecos" + tipo + "_" + (i) + "__Cep");
+            //Input Cep
+            div.children[5].firstElementChild.children[1].setAttribute("name", "Enderecos" + tipo + "[" + (i) + "].Cep");
+            div.children[5].firstElementChild.children[1].id = "Enderecos" + tipo + "_" + (i) + "__Cep";
 
-        //Label Cep
-        div.children[5].firstChild.firstChild.setAttribute("for", "Enderecos" + tipo + "_" + (i) + "__Cep");
-        //Input Cep
-        div.children[5].firstChild.children[1].setAttribute("name", "Enderecos" + tipo + "[" + (index) + "].Cep");
-        div.children[5].firstChild.children[1].id = "Enderecos" + tipo + "_" + (i) + "__Cep";
+            //Label Cidade
+            div.children[5].children[1].firstElementChild.setAttribute("for", "Enderecos" + tipo + "_" + (i) + "__Cidade");
+            //Input Cidade
+            div.children[5].children[1].children[1].setAttribute("name", "Enderecos" + tipo + "[" + (i) + "].Cidade.Nome");
+            div.children[5].children[1].children[1].id = "Enderecos" + tipo + "_" + (i) + "__Cidade_Nome";
 
-        //Label Cidade
-        div.children[5].children[1].firstChild.setAttribute("for", "Enderecos" + tipo + "_" + (i) + "__Cidade");
-        //Input Cidade
-        div.children[5].children[1].children[1].setAttribute("name", "Enderecos" + tipo + "[" + (index) + "].Cidade.Nome");
-        div.children[5].children[1].children[1].id = "Enderecos" + tipo + "_" + (i) + "__Cidade_Nome";
+            //Label Estado
+            div.children[5].children[2].firstElementChild.setAttribute("for", "Enderecos" + tipo + "_" + (i) + "__Cidade_Estado");
+            //Input Estado
+            div.children[5].children[2].children[1].setAttribute("name", "Enderecos" + tipo + "[" + (i) + "].Cidade.Estado.Nome");
+            div.children[5].children[2].children[1].id = "Enderecos" + tipo + "_" + (i) + "__Cidade_Estado_Nome";
 
-        //Label Estado
-        div.children[5].children[2].firstChild.setAttribute("for", "Enderecos" + tipo + "_" + (i) + "__Cidade_Estado");
-        //Input Estado
-        div.children[5].children[2].children[1].setAttribute("name", "Enderecos" + tipo + "[" + (index) + "].Cidade.Estado.Nome");
-        div.children[5].children[2].children[1].id = "Enderecos" + tipo + "_" + (i) + "__Cidade_Estado_Nome";
+            //Label Pais
+            div.children[5].children[3].firstElementChild.setAttribute("for", "Enderecos" + tipo + "_" + (i) + "__Cep");
+            //Input Pais
+            div.children[5].children[3].children[1].setAttribute("name", "Enderecos" + tipo + "[" + (i) + "].Cep");
+            div.children[5].children[3].children[1].id = "Enderecos" + tipo + "_" + (i) + "__Cep";
 
-        //Label Pais
-        div.children[5].children[3].firstChild.setAttribute("for", "Enderecos" + tipo + "_" + (i) + "__Cep");
-        //Input Pais
-        div.children[5].children[3].children[1].setAttribute("name", "Enderecos" + tipo + "[" + (index) + "].Cep");
-        div.children[5].children[3].children[1].id = "Enderecos" + tipo + "_" + (i) + "__Cep";
+            //Label Observacoes
+            div.children[6].firstElementChild.setAttribute("for", "Enderecos" + tipo + "_" + (i) + "__Observacoes");
+            //Select Observacoes
+            div.children[6].children[1].setAttribute("name", "Enderecos" + tipo + "[" + (i) + "].Observacoes");
+            div.children[6].children[1].id = "Enderecos" + tipo + "_" + (i) + "__Observacoes";
 
-        //Label Observacoes
-        div.children[6].firstChild.setAttribute("for", "Enderecos" + tipo + "_" + (i) + "__Observacoes");
-        //Select Observacoes
-        div.children[6].children[1].setAttribute("name", "Enderecos" + tipo + "[" + (i) + "].Observacoes");
-        div.children[6].children[1].id = "Enderecos" + tipo + "_" + (i) + "__Observacoes";
-
+        }
     }
-
 }
 
 function adicionarEndereco(e, tipo) {
@@ -97,7 +97,7 @@ function adicionarEndereco(e, tipo) {
 
     var btnApagar = document.createElement("button");
     btnApagar.innerHTML = "Apagar endereço";
-    btn.className = "btn btn-rmv";
+    btn.className = "btn-rmv";
     btnApagar.addEventListener("click", function (e2) {
         apagarEndereco(e2);
     })
@@ -279,6 +279,10 @@ document.getElementById("btnAddEntrega").addEventListener("click", function (e) 
     adicionarEndereco(e, "Entrega");
 })
 
-document.getElementsByName("ApagarEndereco").addEventListener("click", function (e) {
-    apagarEndereco(e);
-})
+var btnsApagar = document.getElementsByName("ApagarEndereco");
+
+for (i = 0; i < btnsApagar.length; i++) {
+    btnsApagar[i].addEventListener("click", function (e) {
+        apagarEndereco(e);
+    });
+}

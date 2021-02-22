@@ -12,5 +12,10 @@ namespace LES.Models.Entity
 
         public string Senha { get; set; }
 
+        public Login(string email, string senha)
+        {
+            Email = email;
+            Senha = senha;
+        }
     }
 }

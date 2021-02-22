@@ -17,20 +17,68 @@ namespace LES.Controllers
         public ClientesController() 
         {
             _facade = new Facade();
+
+            Endereco a = new Endereco(
+                    "Rua tal",
+                    "Numero tal",
+                    "Cep Tal",
+                    "Complemento tal",
+                    new Cidade(
+                        "Mogi",
+                        new Estado(
+                            "São Paulo",
+                            new Pais(
+                                "Brasil"
+                                )
+                            )
+                        ),
+                    "",
+                    (TipoEndereco)0
+                    );
+
+            Cliente1 = new Cliente(
+                1,
+                new DateTime(),
+                "Fernanda",
+                new DateTime(),
+                (Genero)1,
+                new Login(
+                    "aeaeo@hotmail.com",
+                    "MXmx@@@@"),
+                "12345678901",
+                new Telefone(
+                    (TipoTelefone)0,
+                    "011",
+                    "912345678"
+                    ),
+                new List<Endereco>(),
+                new List<Endereco>(),
+                a
+                );
+
+            Cliente1.EnderecosCobranca.Add(a);
+            Cliente1.EnderecosCobranca.Add(a);
+            Cliente1.EnderecosCobranca.Add(a);
+            Cliente1.EnderecosCobranca.Add(a);
+            Cliente1.EnderecosEntrega.Add(a);
         }
+
+        public Cliente Cliente1 { get; set; }
 
         // GET: Clientes
         public ActionResult Index()
         {
-            ViewBag.Entidades = _facade.listar(new Cliente());
-            return View();
+            IList<Cliente> Entidades = new List<Cliente>();
+            Entidades.Add(Cliente1);
+            //ViewBag.Entidades = _facade.listar(new Cliente());
+            return View(Entidades);
         }
 
         // GET: Clientes/Details/5
         public ActionResult Detalhes(int id)
         {
-            ViewBag.Entidade = _facade.getEntidade(new Cliente(id));
-            return View();
+            //ViewBag.Entidade = _facade.getEntidade(new Cliente(id));
+            return View(Cliente1);
         }
 
         // GET: Clientes/Create
@@ -43,7 +91,7 @@ namespace LES.Controllers
 
 
 
-            return View(new Cliente());
+            return View(Cliente1);
         }
 
         // POST: Clientes/Create
@@ -54,30 +102,6 @@ namespace LES.Controllers
             try
             {
                 _facade.cadastrar(cliente);
-
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }
-
-        // GET: Clientes/Edit/5
-        public ActionResult Edit(int id)
-        {
-
-            return View();
-        }
-
-        // POST: Clientes/Edit/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
-        {
-            try
-            {
-                // TODO: Add update logic here
 
                 return RedirectToAction(nameof(Index));
             }

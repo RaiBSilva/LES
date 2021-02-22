@@ -190,16 +190,18 @@
                             </div>
 
                         </div>
+
                         @if (Model.EnderecosCobranca != null)
                         {
                             @if (Model.EnderecosCobranca.Count() > 1)
                             {
 
-                                for (int i = 1; i <= Model.EnderecosCobranca.Count(); i++)
+                                for (int i = 1; i < Model.EnderecosCobranca.Count(); i++)
                                 {
                                     <div class="endereco">
+
                                         <h4>Endereço @(i+1)</h4>
-                                        <button name="ApagarEndereco" class="btn btn-rmv">Apagar endereço</button>
+                                        <button name="ApagarEndereco" class="btn-rmv">Apagar endereço</button>
 
                                         <div class="form-group">
 
@@ -213,8 +215,8 @@
                                         <div class="form-group">
                                             <div class="logradouro">
                                                 <label asp-for="EnderecosCobranca[i].Logradouro" class="control-label"></label>
-                                                <input asp-for="EnderecosCobranca[0].Logradouro" class="form-control" />
-                                                <span asp-validation-for="EnderecosCobranca[0].Logradouro" class="text-danger"></span>
+                                                <input asp-for="EnderecosCobranca[i].Logradouro" class="form-control" />
+                                                <span asp-validation-for="EnderecosCobranca[i].Logradouro" class="text-danger"></span>
                                             </div>
                                             <div class="numero">
                                                 <label asp-for="EnderecosCobranca[i].Numero" class="control-label"></label>
@@ -253,9 +255,9 @@
                                         </div>
 
                                         <div class="form-group">
-                                            <label asp-for="EnderecosCobranca[0].Observacoes" class="control-label"></label>
-                                            <input asp-for="EnderecosCobranca[0].Observacoes" class="form-control" />
-                                            <span asp-validation-for="EnderecosCobranca[0].Observacoes" class="text-danger"></span>
+                                            <label asp-for="EnderecosCobranca[i].Observacoes" class="control-label"></label>
+                                            <input asp-for="EnderecosCobranca[i].Observacoes" class="form-control" />
+                                            <span asp-validation-for="EnderecosCobranca[i].Observacoes" class="text-danger"></span>
                                         </div>
                                     </div>
 
@@ -263,7 +265,6 @@
 
                             }
                         }
-
 
                         <button type="button" id="btnAddCobranca" class="btn btn-outline-secondary btn-add">Adicionar novo endereço de cobrança</button>
                     </div>
@@ -341,7 +342,7 @@
                                 {
 
                                     <h4>Endereço @(i+1)</h4>
-                                    <button name="ApagarEndereco" class="btn btn-rmv">Apagar endereço</button>
+                                    <button name="ApagarEndereco" class="btn-rmv">Apagar endereço</button>
 
                                     <div class="form-group">
                                         <label asp-for="EnderecosEntrega[i].TipoEndereco" class="control-label"></label>

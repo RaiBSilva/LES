@@ -5,10 +5,14 @@ using System.Threading.Tasks;
 
 namespace LES.Models.Entity
 {
+    public enum TipoTelefone { 
+        Celular,
+        Fixo
+    }
     public class Telefone : EntidadeDominio
     {
 
-        public string Tipo { get; set; }
+        public TipoTelefone TipoTelefone { get; set; }
 
         public string Ddd { get; set; }
 
@@ -21,19 +25,19 @@ namespace LES.Models.Entity
         public Telefone(int id) : base(id) 
         { }
 
-        public void DefinirAtributos(string tipo, string ddd, string numero) 
+        public void DefinirAtributos(TipoTelefone tipo, string ddd, string numero) 
         {
-            Tipo = tipo;
+            TipoTelefone = tipo;
             Ddd = ddd;
             Numero = numero;
         }
 
-        public Telefone(string tipo, string ddd, string numero)
+        public Telefone(TipoTelefone tipo, string ddd, string numero)
         {
             DefinirAtributos(tipo, ddd, numero);
         }
 
-        public Telefone(int id, DateTime dtCadastro, string tipo, string ddd, string numero) : base(id, dtCadastro)
+        public Telefone(int id, DateTime dtCadastro, TipoTelefone tipo, string ddd, string numero) : base(id, dtCadastro)
         {
             DefinirAtributos(tipo, ddd, numero);
         }
