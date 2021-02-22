@@ -39,7 +39,7 @@ namespace LES.Controllers
             Cliente1 = new Cliente(
                 1,
                 new DateTime(),
-                "Fernanda",
+                "Judiscréia",
                 new DateTime(),
                 (Genero)1,
                 new Login(
@@ -114,7 +114,7 @@ namespace LES.Controllers
         // GET: Clientes/Delete/5
         public ActionResult Delete(int id)
         {
-            return View();
+            return View(Cliente1);
         }
 
         // POST: Clientes/Delete/5
