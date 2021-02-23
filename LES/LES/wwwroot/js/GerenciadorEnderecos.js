@@ -1,4 +1,16 @@
-﻿function apagarEndereco(e) {
+﻿function correctSelect(div, i, string) {
+    div.children[0].setAttribute("for", "Enderecos" + "_" + (i) + "__" + string);
+    div.children[1].setAttribute("name", "Enderecos" + "[" + (i) + "]." + "__" + string);
+    div.children[1].id = "Enderecos" + "_" + (i) + "__" + string;
+}
+
+function correctInput(div, i, string) {
+    div.children[0].setAttribute("for", "Enderecos" + "_" + (i) + "__" + string);
+    div.children[1].id = "Enderecos" + "_" + (i) + "__" + string;
+    div.children[1].setAttribute("name", "Enderecos" + "[" + (i) + "]." + string);
+}
+
+function apagarEndereco(e) {
 
     e.preventDefault();
 
@@ -21,69 +33,72 @@
             //HeaderInnerHTML
             div.firstElementChild.innerHTML = "Endereço " + (i + 1);
 
-            //Label TipoEndereco
-            div.children[2].firstElementChild.setAttribute("for", "Enderecos" + tipo + "_" + (i) + "__TipoEndereco");
-            //Select TipoEndereco
-            div.children[2].children[1].setAttribute("name", "Enderecos" + tipo + "[" + (i) + "].TipoEndereco");
-            div.children[2].children[1].id = "Enderecos" + tipo + "_" + (i) + "__TipoEndereco";
+            //TipoEndereco
+            correctSelect(div.children[2].children[0], i, "TipoEmdereco");
 
-            //Label Logradouro
-            div.children[3].firstElementChild.firstElementChild.setAttribute("for", "Enderecos" + tipo + "_" + (i) + "__Logradouro");
-            //Input Logradouro
-            div.children[3].firstElementChild.children[1].id = "Enderecos" + tipo + "_" + (i) + "__Logradouro";
-            div.children[3].firstElementChild.children[1].setAttribute("name", "Enderecos" + tipo + "[" + (i) + "].Logradouro");
+            //EEntrega
+            correctInput(div.children[2].children[1].children[0], i, "EEntrega");
 
-            //Label Numero
-            div.children[3].children[1].firstElementChild.setAttribute("for", "Enderecos" + tipo + "_" + (i) + "__Numero");
-            //Input Numero
-            div.children[3].children[1].children[1].id = "Enderecos" + tipo + "_" + (i) + "__Numero";
-            div.children[3].children[1].children[1].setAttribute("name", "Enderecos" + tipo + "[" + (i) + "].Numero");
+            //ECobranca
+            correctInput(div.children[2].children[1].children[1], i, "ECobranca");
 
-            //Label Complemento
-            div.children[4].firstElementChild.setAttribute("for", "Enderecos" + tipo + "_" + (i) + "__Complemento");
-            //Input Complemento
-            div.children[4].children[1].setAttribute("name", "Enderecos" + tipo + "[" + (i) + "].Complemento");
-            div.children[4].children[1].id = "Enderecos" + tipo + "_" + (i) + "__Complemento";
+            //Logradouro
+            correctInput(div.children[3].children[0], i, "Logradouro");
 
-            //Label Cep
-            div.children[5].firstElementChild.firstElementChild.setAttribute("for", "Enderecos" + tipo + "_" + (i) + "__Cep");
-            //Input Cep
-            div.children[5].firstElementChild.children[1].setAttribute("name", "Enderecos" + tipo + "[" + (i) + "].Cep");
-            div.children[5].firstElementChild.children[1].id = "Enderecos" + tipo + "_" + (i) + "__Cep";
+            //Numero
+            correctInput(div.children[3].children[1], i, "Numero");
 
-            //Label Cidade
-            div.children[5].children[1].firstElementChild.setAttribute("for", "Enderecos" + tipo + "_" + (i) + "__Cidade");
-            //Input Cidade
-            div.children[5].children[1].children[1].setAttribute("name", "Enderecos" + tipo + "[" + (i) + "].Cidade.Nome");
-            div.children[5].children[1].children[1].id = "Enderecos" + tipo + "_" + (i) + "__Cidade_Nome";
+            //Complemento
+            correctInput(div.children[4], i, "Complemento");
 
-            //Label Estado
-            div.children[5].children[2].firstElementChild.setAttribute("for", "Enderecos" + tipo + "_" + (i) + "__Cidade_Estado");
-            //Input Estado
-            div.children[5].children[2].children[1].setAttribute("name", "Enderecos" + tipo + "[" + (i) + "].Cidade.Estado.Nome");
-            div.children[5].children[2].children[1].id = "Enderecos" + tipo + "_" + (i) + "__Cidade_Estado_Nome";
+            //Cep
+            correctInput(div.children[5].children[0], i, "Cep");
 
-            //Label Pais
-            div.children[5].children[3].firstElementChild.setAttribute("for", "Enderecos" + tipo + "_" + (i) + "__Cep");
-            //Input Pais
-            div.children[5].children[3].children[1].setAttribute("name", "Enderecos" + tipo + "[" + (i) + "].Cep");
-            div.children[5].children[3].children[1].id = "Enderecos" + tipo + "_" + (i) + "__Cep";
+            //Cidade
+            correctInput(div.children[5].children[1], i, "Cidade");
 
-            //Label Observacoes
-            div.children[6].firstElementChild.setAttribute("for", "Enderecos" + tipo + "_" + (i) + "__Observacoes");
-            //Select Observacoes
-            div.children[6].children[1].setAttribute("name", "Enderecos" + tipo + "[" + (i) + "].Observacoes");
-            div.children[6].children[1].id = "Enderecos" + tipo + "_" + (i) + "__Observacoes";
+            //Estado
+            correctInput(div.children[5].children[2], i, "Estado");
+
+            //Pais
+            correctInput(div.children[5].children[3], i, "Pais");
+
+            //Observacoes
+            correctInput(div.children[6], i, "Observacoes");
 
         }
     }
+}
+
+function setLabel(label, id, innerHtml, index) {
+
+    label.className = "control-label";
+    label.setAttribute("for", "Enderecos" + "_" + (index) + "__" + id);
+    label.innerHTML = innerHtml;
+    return label;
+
+}
+
+function setSelect(select, id, index) {
+    select.className = "form-control";
+    select.setAttribute("name", "Enderecos" + "[" + (index) + "]." + id);
+    select.id = "Enderecos" + "_" + (index) + "__" + id;
+    select.innerHTML = document.getElementById("Enderecos_0__" + id).innerHTML;
+    return select;
+}
+
+function setInput(input, id, index) {
+    input.className = "form-control";
+    input.setAttribute("name", "Enderecos" + "[" + (index) + "]." + id);
+    input.id = "Enderecos" + "_" + (index) + "__" + id;
+    return input;
 }
 
 function adicionarEndereco(e, tipo) {
 
     e.preventDefault();
 
-    var div = document.getElementById(tipo);
+    var div = document.getElementById("enderecos");
     var index = div.childElementCount - 1;
 
     //DIV GERAL
@@ -103,23 +118,54 @@ function adicionarEndereco(e, tipo) {
     })
     newDivEndereco.appendChild(btnApagar);
 
+    //TIPO DE ENDEREÇO E BOOLEANAS
+    var newDivTipoEBooleanas = document.createElement("div");
+    newDivTipoEBooleanas.className = "form-group";
+    newDivEndereco.appendChild(newDivTipoEBooleanas);
+
     //TIPO ENDEREÇO
     var newDivTipoEndereco = document.createElement("div");
     newDivTipoEndereco.className = "form-group";
-    newDivEndereco.appendChild(newDivTipoEndereco);
+    newDivTipoEBooleanas.appendChild(newDivTipoEndereco);
 
     var labelTipoEndereco = document.createElement("label");
-    labelTipoEndereco.className = "control-label";
-    labelTipoEndereco.setAttribute("for", "Enderecos" + tipo + "_" + (index) + "__TipoEndereco");
-    labelTipoEndereco.innerHTML = document.getElementById("labelTipo").innerHTML;
+    labelTipoEndereco = setLabel(labelTipoEndereco, "TipoEndereco", "Tipo de Endereço", index)
     newDivTipoEndereco.appendChild(labelTipoEndereco);
 
     var selectTipoEndereco = document.createElement("select");
-    selectTipoEndereco.className = "form-control";
-    selectTipoEndereco.setAttribute("name", "Enderecos" + tipo + "[" + (index) + "].TipoEndereco");
-    selectTipoEndereco.id = "Enderecos" + tipo + "_" + (index) + "__TipoEndereco";
-    selectTipoEndereco.innerHTML = document.getElementById("EnderecoResidencia_TipoEndereco").innerHTML;
+    selectTipoEndereco = setSelect(selectTipoEndereco, "TipoEndereco", index)
     newDivTipoEndereco.appendChild(selectTipoEndereco);
+
+    //BOOLEANAS
+    var newDivBooleanas = document.createElement("div");
+    newDivBooleanas.className = "form-group";
+    newDivEndereco.appendChild(newDivBooleanas);
+
+    //É ENTREGA
+    var newDivEEntrega = document.createElement("div");
+    newDivBooleanas.appendChild(newDivEEntrega);
+
+    var newLabelEEntrega = document.createElement("label");
+    newLabelEEntrega = setLabel(newLabelEEntrega, "EEntrega", "É endereço de entrega?", index)
+    newDivEEntrega.appendChild(newLabelEEntrega);
+
+    var newInputEEntrega = document.createElement("input");
+    newInputEEntrega = setInput(newInputEEntrega, "EEntrega", index);
+    newInputEEntrega.setAttribute("type", "checkbox");
+    newDivEEntrega.appendChild(newInputEEntrega);
+
+    //É COBRANÇA
+    var newDivECobranca = document.createElement("div");
+    newDivBooleanas.appendChild(newDivECobranca);
+
+    var newLabelECobranca = document.createElement("label");
+    newLabelECobranca = setLabel(newLabelECobranca, "ECobranca", "É endereço de cobrança?", index)
+    newDivECobranca.appendChild(newLabelECobranca);
+
+    var newInputECobranca = document.createElement("input");
+    newInputECobranca = setInput(newInputECobranca, "ECobranca", index);
+    newInputECobranca.setAttribute("type", "checkbox");
+    newDivECobranca.appendChild(newInputECobranca);
 
     //LOGRADOURO E NUMERO
     var newDivLogradouroNumero = document.createElement("div");
@@ -132,15 +178,11 @@ function adicionarEndereco(e, tipo) {
     newDivLogradouroNumero.appendChild(newDivLogradouro);
 
     var labelLogradouro = document.createElement("label");
-    labelLogradouro.className = "control-label";
-    labelLogradouro.setAttribute("for", "Enderecos" + tipo + "_" + (index) + "__Logradouro");
-    labelLogradouro.innerHTML = document.getElementById("labelLogradouro").innerHTML;
+    labelLogradouro = setLabel(labelLogradouro, "Logradouro", "Logradouro", index)
     newDivLogradouro.appendChild(labelLogradouro);
 
     var inputLogradouro = document.createElement("input");
-    inputLogradouro.className = "form-control";
-    inputLogradouro.setAttribute("name", "Enderecos" + tipo + "[" + (index) + "].Logradouro");
-    inputLogradouro.id = "Enderecos" + tipo + "_" + (index) + "__Logradouro";
+    inputLogradouro = setInput(inputLogradouro, "Logradouro", index)
     newDivLogradouro.appendChild(inputLogradouro);
 
     //NUMERO
@@ -149,15 +191,11 @@ function adicionarEndereco(e, tipo) {
     newDivLogradouroNumero.appendChild(newDivNumero);
 
     var labelNumero = document.createElement("label");
-    labelNumero.className = "control-label";
-    labelNumero.setAttribute("for", "Enderecos" + tipo + "_" + (index) + "__Numero");
-    labelNumero.innerHTML = document.getElementById("labelNumero").innerHTML;
+    labelNumero = setLabel(labelNumero, "Numero", "Nº", index);
     newDivNumero.appendChild(labelNumero);
 
     var inputNumero = document.createElement("input");
-    inputNumero.className = "form-control";
-    inputNumero.setAttribute("name", "Enderecos" + tipo + "[" + (index) + "].Numero");
-    inputNumero.id = "Enderecos" + tipo + "_" + (index) + "__Numero";
+    inputNumero = setInput(inputNumero, "Numero", index)
     newDivNumero.appendChild(inputNumero);
 
     //COMPLEMENTO
@@ -166,15 +204,11 @@ function adicionarEndereco(e, tipo) {
     newDivEndereco.appendChild(newDivComplemento);
 
     var labelComplemento = document.createElement("label");
-    labelComplemento.className = "control-label";
-    labelComplemento.setAttribute("for", "Enderecos" + tipo + "_" + (index) + "__Complemento");
-    labelComplemento.innerHTML = document.getElementById("labelComplemento").innerHTML;
+    labelComplemento = setLabel(labelComplemento, "Complemento", "Complemento", index);
     newDivComplemento.appendChild(labelComplemento);
 
     var inputComplemento = document.createElement("input");
-    inputComplemento.className = "form-control";
-    inputComplemento.setAttribute("name", "Enderecos" + tipo + "[" + (index) + "].Complemento");
-    inputComplemento.id = "Enderecos" + tipo + "_" + (index) + "__Complemento";
+    inputComplemento = setInput(inputComplemento, "Complemento", index)
     newDivComplemento.appendChild(inputComplemento);
 
     //CEP CIDADE ESTADO PAIS
@@ -188,15 +222,11 @@ function adicionarEndereco(e, tipo) {
     newDivCepCidadeEstadoPais.appendChild(newDivCep);
 
     var labelCep = document.createElement("label");
-    labelCep.className = "control-label";
-    labelCep.setAttribute("for", "Enderecos" + tipo + "_" + (index) + "__Cep");
-    labelCep.innerHTML = document.getElementById("labelCep").innerHTML;
+    labelComplemento = setLabel(labelComplemento, "Cep", "CEP", index);
     newDivCep.appendChild(labelCep);
 
     var inputCep = document.createElement("input");
-    inputCep.className = "form-control";
-    inputCep.setAttribute("name", "Enderecos" + tipo + "[" + (index) + "].Cep");
-    inputCep.id = "Enderecos" + tipo + "_" + (index) + "__Cep";
+    inputComplemento = setInput(inputComplemento, "Cep", index);
     newDivCep.appendChild(inputCep);
 
     //CIDADE
@@ -205,15 +235,11 @@ function adicionarEndereco(e, tipo) {
     newDivCepCidadeEstadoPais.appendChild(newDivCidade);
 
     var labelCidade = document.createElement("label");
-    labelCidade.className = "control-label";
-    labelCidade.setAttribute("for", "Enderecos" + tipo + "_" + (index) + "__Cidade");
-    labelCidade.innerHTML = document.getElementById("labelCidade").innerHTML;
+    labelCidade = setLabel(labelCidade, "Cidade", "Cidade", index);
     newDivCidade.appendChild(labelCidade);
 
     var inputCidade = document.createElement("input");
-    inputCidade.className = "form-control";
-    inputCidade.setAttribute("name", "Enderecos" + tipo + "[" + (index) + "].Cidade.Nome");
-    inputCidade.id = "Enderecos" + tipo + "_" + (index) + "__Cidade_Nome";
+    inputComplemento = setInput(inputComplemento, "Cidade", index);
     newDivCidade.appendChild(inputCidade);
 
     //ESTADO
@@ -222,15 +248,11 @@ function adicionarEndereco(e, tipo) {
     newDivCepCidadeEstadoPais.appendChild(newDivEstado);
 
     var labelEstado = document.createElement("label");
-    labelEstado.className = "control-label";
-    labelEstado.setAttribute("for", "Enderecos" + tipo + "_" + (index) + "__Cidade_Estado");
-    labelEstado.innerHTML = document.getElementById("labelEstado").innerHTML;
+    labelEstado = setLabel(labelEstado, "Estado", "Estado", index);
     newDivEstado.appendChild(labelEstado);
 
     var inputEstado = document.createElement("input");
-    inputEstado.className = "form-control";
-    inputEstado.setAttribute("name", "Enderecos" + tipo + "[" + (index) + "].Cidade.Estado.Nome");
-    inputEstado.id = "Enderecos" + tipo + "_" + (index) + "__Cidade_Estado_Nome";
+    inputEstado = setInput(inputEstado, "Estado", index);
     newDivEstado.appendChild(inputEstado);
 
     //PAIS
@@ -239,44 +261,31 @@ function adicionarEndereco(e, tipo) {
     newDivCepCidadeEstadoPais.appendChild(newDivPais);
 
     var labelPais = document.createElement("label");
-    labelPais.className = "control-label";
-    labelPais.setAttribute("for", "Enderecos" + tipo + "_" + (index) + "__Cidade_Estado_Pais");
-    labelPais.innerHTML = document.getElementById("labelEstado").innerHTML;
+    labelPais = setLabel(labelPais, "Pais", "País", index);
     newDivPais.appendChild(labelPais);
 
     var inputPais = document.createElement("input");
-    inputPais.className = "form-control";
-    inputPais.setAttribute("name", "Enderecos" + tipo + "[" + (index) + "].Cidade.Estado.Pais.Nome");
-    inputPais.id = "Enderecos" + tipo + "_" + (index) + "__Cidade_Estado_Pais_Nome";
+    inputPais = setInput(inputPais, "Pais", index);
     newDivPais.appendChild(inputPais);
 
     //OBSERVACOES
-
     var newDivObservacoes = document.createElement("div");
     newDivObservacoes.className = "form-group";
     newDivEndereco.appendChild(newDivObservacoes);
 
     var labelObservacoes = document.createElement("label");
-    labelObservacoes.className = "control-label";
-    labelObservacoes.setAttribute("for", "Enderecos" + tipo + "_" + (index) + "__Observacoes");
-    labelObservacoes.innerHTML = document.getElementById("labelObservacoes").innerHTML;
+    labelObservacoes = setLabel(labelObservacoes, "Observacoes", "Observações", index);
     newDivObservacoes.appendChild(labelObservacoes);
 
     var inputObservacoes = document.createElement("input");
-    inputObservacoes.className = "form-control";
-    inputObservacoes.setAttribute("name", "Enderecos" + tipo + "[" + (index) + "].Observacoes");
-    inputObservacoes.id = "Enderecos" + tipo + "_" + (index) + "__Observacoes";
+    inputObservacoes = setInput(inputObservacoes, "Observacoes", index);
     newDivObservacoes.appendChild(inputObservacoes);
 
     div.insertBefore(newDivEndereco, div.children[(index)]);
 }
 
-document.getElementById("btnAddCobranca").addEventListener("click", function (e) {
+document.getElementById("btnAddEndereco").addEventListener("click", function (e) {
     adicionarEndereco(e, "Cobranca");
-})
-
-document.getElementById("btnAddEntrega").addEventListener("click", function (e) {
-    adicionarEndereco(e, "Entrega");
 })
 
 var btnsApagar = document.getElementsByName("ApagarEndereco");

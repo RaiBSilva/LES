@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using LES.Models.ViewModel;
 using LES.Models.Entity;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -18,57 +19,47 @@ namespace LES.Controllers
         {
             _facade = new Facade();
 
-            Endereco a = new Endereco(
+            EnderecoCadastro a = new EnderecoCadastro(
                     "Rua tal",
                     "Numero tal",
                     "Cep Tal",
                     "Complemento tal",
-                    new Cidade(
-                        "Mogi",
-                        new Estado(
-                            "São Paulo",
-                            new Pais(
-                                "Brasil"
-                                )
-                            )
-                        ),
+                    "Mogi",
+                    "São Paulo",
+                    "Brasil",
                     "",
-                    (TipoEndereco)0
+                    (TipoEndereco)0,
+                    true,
+                    true
                     );
 
-            Cliente1 = new Cliente(
+            Cliente1 = new ClienteCadastro(
                 1,
-                new DateTime(),
                 "Judiscréia",
                 new DateTime(),
                 (Genero)1,
-                new Login(
-                    "aeaeo@hotmail.com",
-                    "MXmx@@@@"),
+                "aeaeo@hotmail.com",
+                "MXmx@@@@",
                 "12345678901",
-                new Telefone(
-                    (TipoTelefone)0,
-                    "011",
-                    "912345678"
-                    ),
-                new List<Endereco>(),
-                new List<Endereco>(),
-                a
+                (TipoTelefone)0,
+                "011",
+                "912345678",
+                new List<EnderecoCadastro>()
                 );
 
-            Cliente1.EnderecosCobranca.Add(a);
-            Cliente1.EnderecosCobranca.Add(a);
-            Cliente1.EnderecosCobranca.Add(a);
-            Cliente1.EnderecosCobranca.Add(a);
-            Cliente1.EnderecosEntrega.Add(a);
+            Cliente1.Enderecos.Add(a);
+            Cliente1.Enderecos.Add(a);
+            Cliente1.Enderecos.Add(a);
+            Cliente1.Enderecos.Add(a);
+
         }
 
-        public Cliente Cliente1 { get; set; }
+        public ClienteCadastro Cliente1 { get; set; }
 
         // GET: Clientes
         public ActionResult Index()
         {
-            IList<Cliente> Entidades = new List<Cliente>();
+            IList<ClienteCadastro> Entidades = new List<ClienteCadastro>();
             Entidades.Add(Cliente1);
             //ViewBag.Entidades = _facade.listar(new Cliente());
             return View(Entidades);
@@ -86,7 +77,7 @@ namespace LES.Controllers
         {
             if (id is null)
             {
-                return View(new Cliente());
+                return View(new ClienteCadastro());
             }
 
 
@@ -97,11 +88,10 @@ namespace LES.Controllers
         // POST: Clientes/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Cadastro(Cliente cliente)
+        public ActionResult Cadastro(ClienteCadastro cliente)
         {
             try
             {
-                _facade.cadastrar(cliente);
 
                 return RedirectToAction(nameof(Index));
             }
