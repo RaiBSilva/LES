@@ -6,6 +6,7 @@ using LES.Models.ViewModel;
 using LES.Models.Entity;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.IdentityModel.Tokens;
 
 namespace LES.Controllers
 {
@@ -44,13 +45,13 @@ namespace LES.Controllers
                 (TipoTelefone)0,
                 "011",
                 "912345678",
-                new List<EnderecoCadastro>()
+                new Dictionary<int, EnderecoCadastro>()
                 );
 
-            Cliente1.Enderecos.Add(a);
-            Cliente1.Enderecos.Add(a);
-            Cliente1.Enderecos.Add(a);
-            Cliente1.Enderecos.Add(a);
+            Cliente1.Enderecos[0] = a;
+            Cliente1.Enderecos[1] = a;
+            Cliente1.Enderecos[2] = a;
+            Cliente1.Enderecos[3] = a;
 
         }
 
@@ -122,6 +123,12 @@ namespace LES.Controllers
             {
                 return View();
             }
+
+        }
+
+        private Cliente ViewModelToModel()
+        {
+            return new Cliente();
         }
     }
 }

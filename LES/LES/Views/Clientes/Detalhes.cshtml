@@ -47,7 +47,7 @@
         <dd class="col-sm-10">
             <dl class="row">
                 @{ int i = 0;}
-                @foreach (var endereco in Model.Enderecos)
+                @foreach (var endereco in Model.Enderecos.Values)
                 {
                     { i++; }
                     <dt class="col-sm-2">

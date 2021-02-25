@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -9,13 +11,17 @@ namespace LES.Models.Entity
         Celular,
         Fixo
     }
+
+    [Table("TELEFONES")]
     public class Telefone : EntidadeDominio
     {
-
+        [Required, Column("tel_tipo")]
         public TipoTelefone TipoTelefone { get; set; }
 
+        [Required, Column("tel_ddd")]
         public string Ddd { get; set; }
 
+        [Required, Column("tel_numero")]
         public string Numero { get; set; }
 
         #region Construtores de Classe

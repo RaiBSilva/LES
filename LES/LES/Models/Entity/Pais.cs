@@ -1,12 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
 
 namespace LES.Models.Entity
 {
+    [Table("PAISES")]
     public class Pais : EntidadeDominio
     {
+        [Required, Column("pai_nome")]
         public string Nome { get; set; }
 
         #region Construtores da Classe

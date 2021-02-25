@@ -1,11 +1,16 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace LES.Models.Entity
 {
+    [Table("ESTADOS")]
     public class Estado : EntidadeDominio
     {
+        [Required, Column("est_nome")]
         public string Nome { get; set; }
-        public Pais Pais { get; set; }
+        [Required, Column("est_pai_id"), ForeignKey("FK_EST_PAI")]
+        public virtual Pais Pais { get; set; }
 
         #region Construtores da Classe
         public Estado() { }

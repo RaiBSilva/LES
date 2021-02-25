@@ -73,10 +73,15 @@
                 {
                     <div class="endereco">
 
-                        <h4>Endereço @(i + 1)</h4>
+                        
                         @if (i >= 1)
                         {
+                            <h4>Endereço @(i + 1)</h4>
                             <button name="ApagarEndereco" class="btn-danger">Apagar endereço</button>
+                        }
+                        else
+                        {
+                            <h4>Endereço de residência: </h4>
                         }
 
                         <div>

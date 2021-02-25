@@ -7,7 +7,7 @@ function containsUpperCase(str) {
 }
 
 function containsSpecialChar(str) {
-    var format = /[ `!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~]/;
+    var format = /[ `!@#$%^&*()_+\-=\[\]{};':\\|,.<>\/?~]/;
     return format.test(str);
 }
 

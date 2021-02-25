@@ -10,17 +10,42 @@ namespace LES.Models.ViewModel
     public class EnderecoCadastro
     {
 
+        [Required]
         public string Logradouro { get; set; }
+
+        [Required]
+        [Display(Name = "Nº")]
         public string Numero { get; set; }
-        [StringLength(7)]
+
+        [Required]
+        [StringLength(7, MinimumLength = 7, ErrorMessage = "Insira um CEP de sete dígitos.")]
+        [Display(Name = "CEP")]
         public string Cep { get; set; }
+
+        [Required]
         public string Complemento { get; set; }
+
+        [Required]
         public string Cidade { get; set; }
+
+        [Required]
         public string Estado { get; set; }
+
+        [Required]
+        [Display(Name = "País")]
         public string Pais { get; set; }
+
+        [Required]
+        [Display(Name = "Observações")]
         public string Observacoes { get; set; }
+
+        [Required]
         public TipoEndereco TipoEndereco { get; set; }
+
+        [Display(Name = "É entrega")]
         public Boolean EEntrega { get; set; }
+
+        [Display(Name = "É cobrança")]
         public Boolean ECobranca { get; set; }
 
         public EnderecoCadastro(string logradouro, string numero, 

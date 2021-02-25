@@ -4,14 +4,16 @@ using LES.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace LES.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210225022337_testeModelo")]
+    partial class testeModelo
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -163,7 +165,7 @@ namespace LES.Migrations
 
                     b.HasIndex("FK_END_CID");
 
-                    b.ToTable("ENDERECOS");
+                    b.ToTable("EMDERECOS");
                 });
 
             modelBuilder.Entity("LES.Models.Entity.Estado", b =>
