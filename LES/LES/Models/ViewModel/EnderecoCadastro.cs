@@ -9,6 +9,7 @@ namespace LES.Models.ViewModel
 {
     public class EnderecoCadastro
     {
+        public EnderecoCadastro() { }
 
         [Required]
         public string Logradouro { get; set; }

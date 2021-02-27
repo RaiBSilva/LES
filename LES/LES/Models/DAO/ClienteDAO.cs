@@ -18,18 +18,21 @@ namespace LES.DAO
         {
             Cliente c = (Cliente)e;
 
-            StringBuilder str = new StringBuilder();
+            Contexto.Clientes.Add(c);
 
-            str.Append(c.Id + "\n");
-            str.Append(c.DtCadastro + "\n");
-            str.Append(c.Nome + " ");
+            foreach (var end in c.Enderecos)
+            {
+                Contexto.Enderecos.Add(end);
+            }
 
-            return str.ToString();
+            Contexto.SaveChanges();
+
+            return "";
         }
 
         public string delete(int id)
         {
-            return "Elemento com id" + id + "removido.\n";
+            return "Elemento com id " + id + " removido.\n";
         }
 
         public string edit(EntidadeDominio e)

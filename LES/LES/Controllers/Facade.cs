@@ -1,5 +1,6 @@
 ﻿using LES.DAO;
 using LES.Models.Entity;
+using LES.Models.Strategy;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,18 +13,25 @@ namespace LES.Controllers
     {
 
         private Dictionary<String, IDAO> _daos;
+        private Dictionary<String, ICollection<IStrategy>> _strategies;
 
         public Facade() 
         {
-            definirDAO();
-            definirStrategies();
+            DefinirDAO();
+            DefinirStrategies();
         }
 
-        private void definirDAO() { }
+        private void DefinirDAO() {
+            _daos = new Dictionary<string, IDAO>();
+            _daos[typeof(Cliente).Name] = new ClienteDAO();
+        }
 
-        private void definirStrategies() { }
+        private void DefinirStrategies() {
+            _strategies = new Dictionary<String, ICollection<IStrategy>>();
+            _strategies[typeof(Cliente).Name] = new List<IStrategy>();
+        }
 
-        private String executarRegras(EntidadeDominio e) 
+        private String ExecutarRegras(EntidadeDominio e) 
         {
             String nmClasse = e.GetType().Name;
             StringBuilder msgBuilder = new StringBuilder();
@@ -34,7 +42,7 @@ namespace LES.Controllers
 
         }
 
-        public IEnumerable<EntidadeDominio> listar(EntidadeDominio e) 
+        public IEnumerable<EntidadeDominio> Listar(EntidadeDominio e) 
         {
             String nmClasse = e.GetType().Name;
             IDAO dao = _daos[nmClasse];
@@ -43,7 +51,7 @@ namespace LES.Controllers
             return entidades;
         }
 
-        public EntidadeDominio getEntidade(EntidadeDominio e) 
+        public EntidadeDominio GetEntidade(EntidadeDominio e) 
         {
             String nmClasse = e.GetType().Name;
             IDAO dao = _daos[nmClasse];
@@ -51,12 +59,12 @@ namespace LES.Controllers
             return dao.get(e.Id);
         }
 
-        public String cadastrar(EntidadeDominio e) 
+        public String Cadastrar(EntidadeDominio e) 
         {
             String nmClasse = e.GetType().Name;
             IDAO dao = _daos[nmClasse];
 
-            String msg = executarRegras(e);
+            String msg = ExecutarRegras(e);
 
             if (msg != "")
             {
@@ -66,12 +74,12 @@ namespace LES.Controllers
             return msg;
         }
 
-        public String editar(EntidadeDominio e)
+        public String Editar(EntidadeDominio e)
         {
             String nmClasse = e.GetType().Name;
             IDAO dao = _daos[nmClasse];
 
-            String msg = executarRegras(e);
+            String msg = ExecutarRegras(e);
 
             if (msg != "")
             {
@@ -81,7 +89,7 @@ namespace LES.Controllers
             return msg;
         }
 
-        public String deletar(EntidadeDominio e) 
+        public String Deletar(EntidadeDominio e) 
         {
             String nmClasse = e.GetType().Name;
             IDAO dao = _daos[nmClasse];

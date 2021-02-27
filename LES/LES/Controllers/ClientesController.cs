@@ -14,8 +14,7 @@ namespace LES.Controllers
     {
         private Facade _facade;
 
-        //public ClientesController(Facade facade) : base() => this._facade = facade;
-
+       
         public ClientesController() 
         {
             _facade = new Facade();
@@ -93,6 +92,7 @@ namespace LES.Controllers
         {
             try
             {
+                _facade.Cadastrar(ClienteViewParaModel(cliente));
 
                 return RedirectToAction(nameof(Index));
             }
@@ -126,9 +126,78 @@ namespace LES.Controllers
 
         }
 
-        private Cliente ViewModelToModel()
+        private Cliente ClienteViewParaModel(ClienteCadastro clienteCadastro)
         {
-            return new Cliente();
+            Cliente cliente = new Cliente();
+
+            cliente.Nome = clienteCadastro.Nome;
+
+            cliente.DtNascimento = clienteCadastro.DtNascimento;
+
+            cliente.Genero = clienteCadastro.Genero;
+
+            cliente.Email = clienteCadastro.Email;
+
+            cliente.Senha = clienteCadastro.Senha;
+
+            cliente.Cpf = clienteCadastro.Cpf;
+
+            cliente.Telefone = new Telefone();
+
+            cliente.Telefone.TipoTelefone = clienteCadastro.TipoTelefone;
+
+            cliente.Telefone.Ddd = clienteCadastro.Ddd;
+
+            cliente.Telefone.Numero = clienteCadastro.Telefone;
+
+            cliente.Enderecos = new List<Endereco>();
+
+            foreach (KeyValuePair<int, EnderecoCadastro> entry in clienteCadastro.Enderecos)
+            {
+                Endereco endereco = new Endereco();
+                endereco.EResidencia = (entry.Key == 0);
+
+                endereco = EnderecoViewParaModel(entry.Value);
+
+                cliente.Enderecos.Add(endereco);
+            }
+
+            return cliente;
+        }
+
+        private Endereco EnderecoViewParaModel(EnderecoCadastro enderecoCadastro)
+        {
+            Endereco endereco = new Endereco();
+
+            endereco.Logradouro = enderecoCadastro.Logradouro;
+
+            endereco.Numero = enderecoCadastro.Numero;
+
+            endereco.Cep = enderecoCadastro.Cep;
+
+            endereco.Complemento = enderecoCadastro.Complemento;
+
+            endereco.Cidade = new Cidade();
+
+            endereco.Cidade.Estado = new Estado();
+
+            endereco.Cidade.Estado.Pais = new Pais();
+
+            endereco.Cidade.Nome = enderecoCadastro.Cidade;
+
+            endereco.Cidade.Estado.Nome = enderecoCadastro.Estado;
+
+            endereco.Cidade.Estado.Pais.Nome = enderecoCadastro.Pais;
+
+            endereco.Observacoes = enderecoCadastro.Observacoes;
+
+            endereco.TipoEndereco = enderecoCadastro.TipoEndereco;
+
+            endereco.EEntrega = enderecoCadastro.EEntrega;
+
+            endereco.ECobranca = enderecoCadastro.ECobranca;
+
+            return endereco;
         }
     }
 }
