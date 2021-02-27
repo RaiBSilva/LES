@@ -8,23 +8,6 @@ using System.Runtime.CompilerServices;
 
 namespace LES.Models.ViewModel
 {
-    public class EmailRegEx : RegularExpressionAttribute{
-
-        public EmailRegEx() : base(@" ^[\w!#$%&'*+\-/=?\^_`{|}~]+(\.[\w!#$%&'*+\-/=?\^_`{|}~]+)*"
-                                   + "@"
-                                   + @"((([\-\w]+\.)+[a-zA-Z]{2,4})|(([0-9]{1,3}\.){3}[0-9]{1,3}))\z") {
-        
-        }
-
-    }
-
-    public class PasswordRegEx : RegularExpressionAttribute {
-
-        public PasswordRegEx() : base(@"(?=.*[a-z])(?=.*[A-Z])(?=.*\[ `!@#$%^&*()_+\-=\[\]{};':\\|,.<>\/? ~])") { 
-        
-        }
-
-    }
 
     public class NumeroRegEx : RegularExpressionAttribute
     {
@@ -51,12 +34,10 @@ namespace LES.Models.ViewModel
         public Genero Genero { get; set; }
 
         [Display(Name = "e-Mail")]
-        [EmailRegEx(ErrorMessage = "Por favor insira um e-mail válido.")]
         public string Email { get; set; }
 
         [Required]
         [StringLength(32, MinimumLength = 8, ErrorMessage = "A senha deve ter 8 no caracteres no mínimo.")]
-        [PasswordRegEx(ErrorMessage = "A senha deve conter no mínimo uma letra mínuscula, uma maíuscula e um caractere especial.")]
         public string Senha { get; set; }
 
         [Required]
@@ -72,7 +53,6 @@ namespace LES.Models.ViewModel
         [Required]
         [Display(Name = "DDD")]
         [StringLength(3, MinimumLength = 3, ErrorMessage = "Insira os três digitos do DDD.")]
-        [NumeroRegEx(ErrorMessage = "Insira somente os valores numéricos.")]
         public string Ddd { get; set; }
 
         [Required]
@@ -99,6 +79,12 @@ namespace LES.Models.ViewModel
             TipoTelefone = tipoTelefone;
             Ddd = ddd;
             Telefone = telefone;
+            Enderecos = enderecos;
+        }
+
+        public ClienteCadastro(DateTime dtNascimento, IDictionary<int, EnderecoCadastro> enderecos)
+        {
+            DtNascimento = dtNascimento;
             Enderecos = enderecos;
         }
     }

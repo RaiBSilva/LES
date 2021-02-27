@@ -36,11 +36,11 @@ namespace LES.Models.ViewModel
         [Display(Name = "País")]
         public string Pais { get; set; }
 
-        [Required]
         [Display(Name = "Observações")]
         public string Observacoes { get; set; }
 
         [Required]
+        [Display(Name = "Tipo de endereço")]
         public TipoEndereco TipoEndereco { get; set; }
 
         [Display(Name = "É entrega")]

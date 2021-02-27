@@ -9,11 +9,11 @@ namespace LES.DAO
     interface IDAO
     {
 
-        public IList<EntidadeDominio> list();
-        public EntidadeDominio get(int id);
-        public String add(EntidadeDominio e);
-        public String edit(EntidadeDominio e);
-        public String delete(int id);
+        public IList<EntidadeDominio> List();
+        public EntidadeDominio Get(int id);
+        public String Add(EntidadeDominio e);
+        public String Edit(EntidadeDominio e);
+        public String Delete(int id);
 
 
     }

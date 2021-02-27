@@ -1,4 +1,5 @@
 ﻿using LES.DAO;
+using LES.Models;
 using LES.Models.Entity;
 using LES.Models.Strategy;
 using System;
@@ -9,21 +10,24 @@ using System.Threading.Tasks;
 
 namespace LES.Controllers
 {
-    public class Facade
+    public class Facade : IFacadeCrud
     {
+       
+        AppDbContext Contexto;
 
-        private Dictionary<String, IDAO> _daos;
-        private Dictionary<String, ICollection<IStrategy>> _strategies;
-
-        public Facade() 
+        public Facade(AppDbContext contexto)
         {
+            Contexto = contexto;
             DefinirDAO();
             DefinirStrategies();
         }
 
+        private Dictionary<String, IDAO> _daos;
+        private Dictionary<String, ICollection<IStrategy>> _strategies;
+
         private void DefinirDAO() {
             _daos = new Dictionary<string, IDAO>();
-            _daos[typeof(Cliente).Name] = new ClienteDAO();
+            _daos[typeof(Cliente).Name] = new ClienteDAO(Contexto);
         }
 
         private void DefinirStrategies() {
@@ -38,7 +42,7 @@ namespace LES.Controllers
 
             String msg = msgBuilder.ToString();
 
-            return msg;
+            return "a";
 
         }
 
@@ -47,7 +51,7 @@ namespace LES.Controllers
             String nmClasse = e.GetType().Name;
             IDAO dao = _daos[nmClasse];
 
-            IEnumerable<EntidadeDominio> entidades = dao.list();
+            IEnumerable<EntidadeDominio> entidades = dao.List();
             return entidades;
         }
 
@@ -56,7 +60,7 @@ namespace LES.Controllers
             String nmClasse = e.GetType().Name;
             IDAO dao = _daos[nmClasse];
 
-            return dao.get(e.Id);
+            return dao.Get(e.Id);
         }
 
         public String Cadastrar(EntidadeDominio e) 
@@ -68,7 +72,7 @@ namespace LES.Controllers
 
             if (msg != "")
             {
-                return dao.add(e);
+                return dao.Add(e);
             }
 
             return msg;
@@ -83,7 +87,7 @@ namespace LES.Controllers
 
             if (msg != "")
             {
-                return dao.edit(e);
+                return dao.Edit(e);
             }
 
             return msg;
@@ -94,7 +98,7 @@ namespace LES.Controllers
             String nmClasse = e.GetType().Name;
             IDAO dao = _daos[nmClasse];
 
-            return dao.delete(e.Id);
+            return dao.Delete(e.Id);
         }
 
     }

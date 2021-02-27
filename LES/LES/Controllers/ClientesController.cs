@@ -12,12 +12,11 @@ namespace LES.Controllers
 {
     public class ClientesController : Controller
     {
-        private Facade _facade;
-
+        private IFacadeCrud _facade;
        
-        public ClientesController() 
+        public ClientesController(IFacadeCrud facade) 
         {
-            _facade = new Facade();
+            _facade = facade;
 
             EnderecoCadastro a = new EnderecoCadastro(
                     "Rua tal",
@@ -77,7 +76,10 @@ namespace LES.Controllers
         {
             if (id is null)
             {
-                return View(new ClienteCadastro());
+                ClienteCadastro clienteVazio = new ClienteCadastro(new DateTime(DateTime.Now.Ticks), new Dictionary<int, EnderecoCadastro>());
+                clienteVazio.Enderecos[0] = new EnderecoCadastro();
+
+                return View(clienteVazio);
             }
 
 
@@ -90,16 +92,29 @@ namespace LES.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Cadastro(ClienteCadastro cliente)
         {
-            try
+            if (ModelState.IsValid)
             {
-                _facade.Cadastrar(ClienteViewParaModel(cliente));
+                try
+                {
+                    string msg = _facade.Cadastrar(ClienteViewParaModel(cliente));
+                    if (msg != "")
+                    {
+                        return RedirectToAction(nameof(Erro), msg);
+                    }
+                    return RedirectToAction(nameof(Index));
+                }
+                catch
+                {
+                    return View(cliente);
+                }
+            }
+            return View(cliente);
+        }
 
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
+        public ActionResult Erro(string str) {
+            ViewBag.String = str;
+            
+            return View();
         }
 
         // GET: Clientes/Delete/5

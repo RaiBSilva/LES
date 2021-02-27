@@ -124,7 +124,7 @@ namespace LES.Models
         public DbSet<Endereco> Enderecos { get; set; }
         public DbSet<Estado> Estados { get; set; }
         public DbSet<Pais> Pais { get; set; }
-        public DbSet<Telefone> Telefone { get; set; }
+        public DbSet<Telefone> Telefones { get; set; }
 
     }
 }

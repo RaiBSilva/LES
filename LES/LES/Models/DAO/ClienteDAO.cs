@@ -1,9 +1,12 @@
 ﻿using LES.Models;
 using LES.Models.Entity;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.VisualStudio.Web.CodeGeneration;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -14,10 +17,19 @@ namespace LES.DAO
 
         private AppDbContext Contexto;
 
-        public string add(EntidadeDominio e)
+
+        public ClienteDAO(AppDbContext contexto)
         {
+            Contexto = contexto;
+        }
+
+        public string Add(EntidadeDominio e)
+        {
+
             Cliente c = (Cliente)e;
 
+            Contexto.Telefones.Add(c.Telefone);
+            c.DtCadastro = DateTime.Now;
             Contexto.Clientes.Add(c);
 
             foreach (var end in c.Enderecos)
@@ -25,17 +37,23 @@ namespace LES.DAO
                 Contexto.Enderecos.Add(end);
             }
 
-            Contexto.SaveChanges();
+            try
+            {
+                Contexto.SaveChanges();
+            }
+            catch (DbUpdateException ex) {
+                return ex.Message;
+            }
 
             return "";
         }
 
-        public string delete(int id)
+        public string Delete(int id)
         {
             return "Elemento com id " + id + " removido.\n";
         }
 
-        public string edit(EntidadeDominio e)
+        public string Edit(EntidadeDominio e)
         {
             Cliente c = (Cliente)e;
             StringBuilder str = new StringBuilder();
@@ -47,12 +65,12 @@ namespace LES.DAO
             return str.ToString();
         }
 
-        public EntidadeDominio get(int id)
+        public EntidadeDominio Get(int id)
         {
             return new EntidadeDominio();
         }
 
-        public IList<EntidadeDominio> list()
+        public IList<EntidadeDominio> List()
         {
             return new List<EntidadeDominio>();
         }
