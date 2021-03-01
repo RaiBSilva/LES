@@ -35,13 +35,13 @@ namespace LES.Models.Entity
         public TipoEndereco TipoEndereco { get; set; }
 
         [Required, Column("end_e_entrega")]
-        public Boolean EEntrega { get; set; }
+        public bool EEntrega { get; set; }
 
         [Required, Column("end_e_cobranca")]
-        public Boolean ECobranca { get; set; }
+        public bool ECobranca { get; set; }
 
         [Required, Column("end_e_residencia")]
-        public Boolean EResidencia { get; set; }
+        public bool EResidencia { get; set; }
 
         [Required, Column("end_cid_id"), ForeignKey("FK_END_CID")]
         public virtual Cidade Cidade { get; set; }
@@ -50,8 +50,10 @@ namespace LES.Models.Entity
         #region Construtores da Classe
         public Endereco() { }
 
+        public Endereco(int id) : base(id) { }
+
         private void DefinirAtributos(String logradouro, String numero, String cep, String complemento, string observacoes, 
-            TipoEndereco tipoEndereco, Boolean eEntrega, Boolean eCobranca, Boolean eResidencia, Cidade cidade)
+            TipoEndereco tipoEndereco, bool eEntrega, bool eCobranca, bool eResidencia, Cidade cidade)
         {
             Logradouro = logradouro;
             Numero = numero;
@@ -66,7 +68,7 @@ namespace LES.Models.Entity
         }
 
         public Endereco(string logradouro, string numero, string cep, string complemento,string observacoes, 
-            TipoEndereco tipoEndereco, Boolean eEntrega, Boolean eCobranca, Boolean eResidencia, Cidade cidade)
+            TipoEndereco tipoEndereco, bool eEntrega, bool eCobranca, bool eResidencia, Cidade cidade)
         {
             DefinirAtributos(logradouro, numero, cep, complemento, observacoes, tipoEndereco,
                 eEntrega, eCobranca, eResidencia, cidade);
@@ -74,7 +76,7 @@ namespace LES.Models.Entity
 
         public Endereco(int id, DateTime dtCadastro, string logradouro, string numero, string cep,
             string complemento, string observacoes, TipoEndereco tipoEndereco,
-             Boolean eEntrega, Boolean eCobranca, Boolean eResidencia, Cidade cidade) : base(id, dtCadastro)
+             bool eEntrega, bool eCobranca, bool eResidencia, Cidade cidade) : base(id, dtCadastro)
         {
             DefinirAtributos(logradouro, numero, cep, complemento, observacoes, tipoEndereco,
                 eEntrega, eCobranca, eResidencia, cidade);

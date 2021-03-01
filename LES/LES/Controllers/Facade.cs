@@ -1,5 +1,6 @@
 ﻿using LES.DAO;
 using LES.Models;
+using LES.Models.DAO;
 using LES.Models.Entity;
 using LES.Models.Strategy;
 using System;
@@ -28,6 +29,7 @@ namespace LES.Controllers
         private void DefinirDAO() {
             _daos = new Dictionary<string, IDAO>();
             _daos[typeof(Cliente).Name] = new ClienteDAO(Contexto);
+            _daos[typeof(Endereco).Name] = new EnderecoDAO(Contexto);
         }
 
         private void DefinirStrategies() {
@@ -42,7 +44,7 @@ namespace LES.Controllers
 
             String msg = msgBuilder.ToString();
 
-            return "a";
+            return "";
 
         }
 
@@ -70,7 +72,7 @@ namespace LES.Controllers
 
             String msg = ExecutarRegras(e);
 
-            if (msg != "")
+            if (msg == "")
             {
                 return dao.Add(e);
             }
@@ -85,7 +87,7 @@ namespace LES.Controllers
 
             String msg = ExecutarRegras(e);
 
-            if (msg != "")
+            if (msg == "")
             {
                 return dao.Edit(e);
             }

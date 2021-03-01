@@ -1,44 +1,38 @@
-﻿using LES.Models;
+﻿using LES.DAO;
 using LES.Models.Entity;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.VisualStudio.Web.CodeGeneration;
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Linq;
-using System.Linq.Expressions;
-using System.Text;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 
-namespace LES.DAO
+namespace LES.Models.DAO
 {
-    public class ClienteDAO : IDAO
+    public class EnderecoDAO : IDAO
     {
 
         private AppDbContext _contexto;
 
 
-        public ClienteDAO(AppDbContext contexto)
+        public EnderecoDAO(AppDbContext contexto)
         {
             _contexto = contexto;
         }
 
+
         public string Add(EntidadeDominio e)
         {
+            Endereco end = (Endereco)e;
 
-            Cliente c = (Cliente)e;
-
-            c.DtCadastro = DateTime.Now;
-            foreach (var end in c.Enderecos) end.DtCadastro = DateTime.Now;
-
-            _contexto.Add(c);
+            end.DtCadastro = DateTime.Now;
+            _contexto.Enderecos.Add(end);
 
             try
             {
                 _contexto.SaveChanges();
             }
-            catch (DbUpdateException ex) {
+            catch (DbUpdateException ex)
+            {
                 string str = "Erro no banco:\n" + ex.Message;
                 System.Console.WriteLine(str);
                 return str;
@@ -49,11 +43,11 @@ namespace LES.DAO
 
         public string Delete(int id)
         {
-            Cliente cliente = (Cliente)Get(id);
+            Endereco e = (Endereco)Get(id);
 
-            if (cliente is object)
+            if (e is object)
             {
-                _contexto.Clientes.Remove(cliente);
+                _contexto.Enderecos.Remove(e);
 
                 try
                 {
@@ -75,10 +69,19 @@ namespace LES.DAO
 
         public string Edit(EntidadeDominio e)
         {
-            Cliente clienteNovo = (Cliente)e;
+            Endereco enderecoNovo = (Endereco)e;
 
-            var clienteVelho = (Cliente)Get(clienteNovo.Id);
-            clienteVelho = clienteNovo;
+            var enderecoVelho = (Endereco)Get(enderecoNovo.Id);
+
+            enderecoVelho.TipoEndereco = enderecoNovo.TipoEndereco;
+            enderecoVelho.Logradouro = enderecoNovo.Logradouro;
+            enderecoVelho.Numero = enderecoNovo.Numero;
+            enderecoVelho.Cep = enderecoNovo.Cep;
+            enderecoVelho.Complemento = enderecoNovo.Complemento;
+            enderecoVelho.Observacoes = enderecoNovo.Observacoes;
+            enderecoVelho.Cidade = enderecoNovo.Cidade;
+            enderecoVelho.Cidade.Estado = enderecoNovo.Cidade.Estado;
+            enderecoVelho.Cidade.Estado.Pais = enderecoNovo.Cidade.Estado.Pais;
 
             try
             {
@@ -96,20 +99,12 @@ namespace LES.DAO
 
         public EntidadeDominio Get(int id)
         {
-            Cliente cliente = new Cliente();
+            Endereco endereco = new Endereco();
 
-            try
+            try 
             {
-                cliente = _contexto.Clientes.Where(c => c.Id == id)
-                    .Include
-                    (
-                        c => c.Telefone
-                    )
-                    .Include
-                    (
-                        c => c.Enderecos
-                    )
-                        .ThenInclude
+                endereco = _contexto.Enderecos.Where(e => e.Id == id)
+                        .Include
                         (
                             e => e.Cidade
                         )
@@ -121,7 +116,7 @@ namespace LES.DAO
                                 (
                                     e => e.Pais
                                 )
-                    .FirstOrDefault();
+                                .SingleOrDefault();
             }
             catch (ArgumentNullException ex)
             {
@@ -136,26 +131,17 @@ namespace LES.DAO
                 return null;
             }
 
-            return cliente;
+            return endereco;
         }
 
         public IList<EntidadeDominio> List()
         {
-
-            IList<Cliente> clientes;
+            IList<Endereco> enderecos;
 
             try
             {
-                clientes = _contexto.Clientes
-                    .Include
-                    (
-                        c => c.Telefone
-                    )
-                    .Include
-                    (
-                        c => c.Enderecos
-                    )
-                        .ThenInclude
+                enderecos = _contexto.Enderecos
+                        .Include
                         (
                             e => e.Cidade
                         )
@@ -167,23 +153,24 @@ namespace LES.DAO
                                 (
                                     e => e.Pais
                                 )
-                    .ToList();
+                        .ToList();
             }
             catch (ArgumentNullException ex)
             {
-                string str = "Não há tabela: \n" + ex.Message;
+                string str = "Argumento nulo\n" + ex.Message;
                 System.Console.WriteLine(str);
                 return null;
             }
 
             IList<EntidadeDominio> entidades = new List<EntidadeDominio>();
 
-            foreach(var c in clientes)
+            foreach (var e in enderecos)
             {
-                entidades.Add((EntidadeDominio)c);
+                entidades.Add((EntidadeDominio)e);
             }
 
             return entidades;
+
         }
     }
 }

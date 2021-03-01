@@ -1,0 +1,28 @@
+﻿@model LES.Models.ViewModel.EnderecoCadastro
+
+@{
+    ViewData["Title"] = "EditarEndereco";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Editar Endereço</h1>
+
+<form asp-action="EditarEndereco" asp-controller="Clientes">
+
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <h2>Informações Pessoais</h2>
+    <div class=" col-md-6">
+        @Html.Partial("_EditarEnderecoPartial", Model)
+
+        <div class="form-group">
+            <input type="submit" value="Editar" class="btn btn-primary" id="btn" />
+        </div>
+    </div>
+
+
+</form>
+
+@section Scripts{
+    <script src="~/js/PrevenirCadastro.js"></script>
+    <script src="~/js/ValRequired.js"></script>
+}

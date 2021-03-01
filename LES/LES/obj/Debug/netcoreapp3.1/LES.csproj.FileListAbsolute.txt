@@ -312,3 +312,10 @@ D:\DEVELOPMENT\LES\LES\LES\obj\Debug\netcoreapp3.1\LES.pdb
 D:\DEVELOPMENT\LES\LES\LES\obj\Debug\netcoreapp3.1\LES.genruntimeconfig.cache
 C:\Programming\LES\LES\LES\obj\Debug\netcoreapp3.1\Razor\Views\Home\Error.cshtml.g.cs
 C:\Programming\LES\LES\LES\obj\Debug\netcoreapp3.1\Razor\Views\Clientes\Erro.cshtml.g.cs
+C:\Programming\LES\LES\LES\obj\Debug\netcoreapp3.1\Razor\Views\Clientes\_EnderecoPartial.cshtml.g.cs
+C:\Programming\LES\LES\LES\obj\Debug\netcoreapp3.1\Razor\Views\Clientes\Editar.cshtml.g.cs
+C:\Programming\LES\LES\LES\obj\Debug\netcoreapp3.1\Razor\Views\Clientes\EditarEndereco.cshtml.g.cs
+C:\Programming\LES\LES\LES\obj\Debug\netcoreapp3.1\Razor\Views\Clientes\EditarSenha.cshtml.g.cs
+C:\Programming\LES\LES\LES\obj\Debug\netcoreapp3.1\Razor\Views\Clientes\_EditarEnderecoPartial.cshtml.g.cs
+C:\Programming\LES\LES\LES\obj\Debug\netcoreapp3.1\Razor\Views\Clientes\_InfoClientePartial.cshtml.g.cs
+C:\Programming\LES\LES\LES\obj\Debug\netcoreapp3.1\Razor\Views\Clientes\_SenhaPartial.cshtml.g.cs

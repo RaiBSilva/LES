@@ -45,7 +45,7 @@ namespace LES.Models.Entity
         public virtual Telefone Telefone { get; set; }
 
         [Required, Column("cli_enderecos"), ForeignKey("FK_CLI_END")]
-        public virtual ICollection<Endereco> Enderecos { get; set; }
+        public virtual IList<Endereco> Enderecos { get; set; }
         #endregion
 
         #region Construtores da Classe
@@ -54,7 +54,7 @@ namespace LES.Models.Entity
         public Cliente(int id) : base(id) { }
 
         private void DefinirAtributos(string nome, DateTime dtNascimento, Genero genero, string email,
-            string senha, string cpf, Telefone telefone, ICollection<Endereco> enderecos) 
+            string senha, string cpf, Telefone telefone, IList<Endereco> enderecos) 
         {
             Nome = nome;
             DtNascimento = dtNascimento;
@@ -67,13 +67,13 @@ namespace LES.Models.Entity
         }
 
         public Cliente(string nome, DateTime dtNascimento, Genero genero, string email,
-            string senha, string cpf, Telefone telefone, ICollection<Endereco> enderecos)
+            string senha, string cpf, Telefone telefone, IList<Endereco> enderecos)
         {
             DefinirAtributos(nome, dtNascimento, genero, email, senha, cpf, telefone, enderecos);
         }
 
         public Cliente(int id, DateTime dtCadastro, string nome, DateTime dtNascimento, Genero genero, string email,
-            string senha, string cpf, Telefone telefone, ICollection<Endereco> enderecos) : base(id, dtCadastro)
+            string senha, string cpf, Telefone telefone, IList<Endereco> enderecos) : base(id, dtCadastro)
         {
             DefinirAtributos(nome, dtNascimento, genero, email, senha, cpf, telefone, enderecos);
         }

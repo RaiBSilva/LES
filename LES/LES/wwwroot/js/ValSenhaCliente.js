@@ -20,13 +20,11 @@ function confirmaSenha() {
     var senhaValor = senhaInput.value;
     var confirmaValor = confirmaInput.value;
 
-    if (senhaValor == confirmaValor) {
-        confirmaInput.style.borderColor = "green";
-        btn.disabled = false;
-    } else {
-        confirmaInput.style.borderColor = "red";
-        btn.disabled = true;
-    }
+        if (senhaValor == confirmaValor) {
+            return true;
+        } else {
+            return false;
+        }
 
 }
 
@@ -88,6 +86,4 @@ document.getElementById("senha").addEventListener("input", function (e) {
 
 });
 
-
-
-document.getElementById("senhaConfirmacao").addEventListener("input", confirmaSenha);
+//document.getElementById("senhaConfirmacao").addEventListener("input", confirmaSenha);

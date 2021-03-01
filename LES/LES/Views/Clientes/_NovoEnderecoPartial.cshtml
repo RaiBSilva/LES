@@ -1,0 +1,72 @@
+﻿@model Int32
+
+<div>
+    <div>
+        <div class="form-group">
+            <label for="Enderecos_@(Model)__TipoEndereco" class="control-label">Tipo de endereço</label>
+            <select name="Enderecos[@Model].TipoEndereco" data-val="true" data-val-required="Tipo de endereço é obrigatório." id="Enderecos_@(Model)__TipoEndereco" class="form-control" asp-items="Html.GetEnumSelectList<LES.Models.Entity.TipoEndereco>()">
+            </select>
+            <span class="text-danger field-validation-valid" data-valmsg-for="Enderecos_@(Model)__TipoEndereco" data-valmsg-replace="true"></span>
+        </div>
+
+        <div class="form-group">
+            <div>
+                <label for="Enderecos_@(Model)__EEntrega" class="control-label">É endereço de entrega?</label>
+                <input name="Enderecos[@Model].EEntrega " id="Enderecos_@(Model)__EEntrega" type="checkbox" />
+            </div>
+            <div>
+                <label for="Enderecos_@(Model)__ECobranca" class="control-label">É endereço de cobrança?</label>
+                <input name="Enderecos[@Model].ECobranca" id="Enderecos_@(Model)__ECobranca" type="checkbox" />
+            </div>
+        </div>
+
+    </div>
+
+    <div class="form-group">
+        <div class="logradouro">
+            <label for="Enderecos_@(Model)__Logradouro" class="control-label"></label>
+            <input name="Enderecos[@Model].Logradouro" data-val="true" data-val-required="Logradouro é obrigatório" id="Enderecos_@(Model)__Logradouro"  class="form-control" />
+            <span class="text-danger field-validation-valid" data-valmsg-for="Enderecos_@(Model)__Logradouro" data-valmsg-replace="true"></span>
+        </div>
+        <div class="numero">
+            <label for="Enderecos_@(Model)__Numero" class="control-label">Nº</label>
+            <input name="Enderecos[@Model].Numero" data-val="true" data-val-required="Nº é obrigatório" id="Enderecos_@(Model)__Numero"  class="form-control" />
+            <span class="text-danger field-validation-valid" data-valmsg-for="Numero" data-valmsg-replace="true"></span>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label for="Enderecos_@(Model)__Complemento" class="control-label">Complemento</label>
+        <input name="Enderecos[@Model].Complemento" data-val="true" data-val-required="Complemento é obrigatório" id="Enderecos_@(Model)__Complemento" class="form-control" />
+        <span class="text-danger field-validation-valid" data-valmsg-for="Enderecos_@(Model)__Complemento" data-valmsg-replace="true"></span>
+    </div>
+
+    <div>
+        <div class="form-group cidadeCepEstado">
+            <label for="Enderecos_@(Model)__Cep" class="control-label">CEP</label>
+            <input name="Enderecos[@Model].Cep" data-val="true" data-val-length="Insira um CEP de sete dígitos." data-val-length-max="7" data-val-length-min="7" data-val-required="CEP é obrigatório" maxlength="7" id="Enderecos_@(Model)__Cep" class="form-control" />
+            <span class="text-danger field-validation-valid" data-valmsg-for="Enderecos_@(Model)__Cep" data-valmsg-replace="true"></span>
+        </div>
+        <div class="form-group cidadeCepEstado">
+            <label for="Enderecos_@(Model)__Cidade" class="control-label">Cidade</label>
+            <input name="Enderecos[@Model].Cidade" data-val="true" data-val-required="Cidade é obrigatório." id="Enderecos_@(Model)__Cidade" class="form-control" />
+            <span class="text-danger field-validation-valid" data-valmsg-for="Enderecos_@(Model)__Cidade" data-valmsg-replace="true"></span>
+        </div>
+        <div class="form-group estado">
+            <label for="Enderecos_@(Model)__Estado" class="control-label">Estado</label>
+            <input name="Enderecos[@Model].Estado" data-val="true" data-val-required="Estado é obrigatório." id="Enderecos_@(Model)__Estado" class="form-control" />
+            <span class="text-danger field-validation-valid" data-valmsg-for="Enderecos_@(Model)__Estado" data-valmsg-replace="true"></span>
+        </div>
+        <div class="form-group">
+            <label for="Enderecos_@(Model)__Pais" class="control-label">País</label>
+            <input name="Enderecos[@Model].Pais" data-val="true" data-val-required="País é obrigatório." id="Enderecos_@(Model)__Pais" class="form-control" />
+            <span class="text-danger field-validation-valid" data-valmsg-for="Enderecos_@(Model)__Pais" data-valmsg-replace="true"></span>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label name="Enderecos[@Model].Observacoes" class="control-label">Observações</label>
+        <input name="Enderecos[@Model].Observacoes" id="Enderecos_@(Model)__Observacoes" class="form-control" />
+    </div>
+
+</div>

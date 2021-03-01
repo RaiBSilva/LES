@@ -1,0 +1,80 @@
+﻿@model LES.Models.ViewModel.EnderecoExistente   
+
+@*
+    For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
+*@
+
+<div>
+    <div>
+
+        <div class="form-group">
+            <label asp-for="Enderecos[Model.Id].TipoEndereco" class="control-label"></label>
+            <select asp-for="Enderecos[Model.Id].TipoEndereco" class="form-control required" asp-items="Html.GetEnumSelectList<LES.Models.Entity.TipoEndereco>()">
+            </select>
+            <span asp-validation-for="Enderecos[Model.Id].TipoEndereco" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <div>
+                <label asp-for="Enderecos[Model.Id].EEntrega" class="control-label"></label>
+                <input asp-for="Enderecos[Model.Id].EEntrega" type="checkbox" class="required"/>
+                <span asp-validation-for="Enderecos[Model.Id].EEntrega" class="text-danger"></span>
+            </div>
+            <div>
+                <label asp-for="Enderecos[Model.Id].ECobranca" class="control-label"></label>
+                <input asp-for="Enderecos[Model.Id].ECobranca" type="checkbox" class="required"/>
+                <span asp-validation-for="Enderecos[Model.Id].ECobranca" class="text-danger"></span>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="form-group">
+        <div class="logradouro">
+            <label asp-for="Enderecos[Model.Id].Logradouro" class="control-label"></label>
+            <input asp-for="Enderecos[Model.Id].Logradouro" class="form-control required" />
+            <span asp-validation-for="Enderecos[Model.Id].Logradouro" class="text-danger required"></span>
+        </div>
+        <div class="numero">
+            <label asp-for="Enderecos[Model.Id].Numero" class="control-label"></label>
+            <input asp-for="Enderecos[Model.Id].Numero" class="form-control required" />
+            <span asp-validation-for="Enderecos[Model.Id].Numero" class="text-danger"></span>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Enderecos[Model.Id].Complemento" class="control-label"></label>
+        <input asp-for="Enderecos[Model.Id].Complemento" class="form-control required" />
+        <span asp-validation-for="Enderecos[Model.Id].Complemento" class="text-danger"></span>
+    </div>
+
+    <div>
+        <div class="form-group cidadeCepEstado">
+            <label asp-for="Enderecos[Model.Id].Cep" class="control-label"></label>
+            <input asp-for="Enderecos[Model.Id].Cep" class="form-control required" />
+            <span asp-validation-for="Enderecos[Model.Id].Cep" class="text-danger"></span>
+        </div>
+        <div class="form-group cidadeCepEstado">
+            <label asp-for="Enderecos[Model.Id].Cidade" class="control-label"></label>
+            <input asp-for="Enderecos[Model.Id].Cidade" class="form-control required" />
+            <span asp-validation-for="Enderecos[Model.Id].Cidade" class="text-danger"></span>
+        </div>
+        <div class="form-group estado">
+            <label asp-for="Enderecos[Model.Id].Estado" class="control-label"></label>
+            <input asp-for="Enderecos[Model.Id].Estado" class="form-control required" />
+            <span asp-validation-for="Enderecos[Model.Id].Estado" class="text-danger"></span>
+        </div>
+        <div class="form-group pais">
+            <label asp-for="Enderecos[Model.Id].Pais" class="control-label"></label>
+            <input asp-for="Enderecos[Model.Id].Pais" class="form-control required" />
+            <span asp-validation-for="Enderecos[Model.Id].Pais" class="text-danger"></span>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Enderecos[Model.Id].Observacoes" class="control-label"></label>
+        <input asp-for="Enderecos[Model.Id].Observacoes" class="form-control" />
+        <span asp-validation-for="Enderecos[Model.Id].Observacoes" class="text-danger"></span>
+    </div>
+
+</div>

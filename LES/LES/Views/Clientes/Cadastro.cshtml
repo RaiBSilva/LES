@@ -11,170 +11,27 @@
 <h4>Cliente</h4>
 <hr />
 <div class="row">
-    <div class="col-md-9">
+    <div class="col-md-7">
+
         <form asp-action="Cadastro" asp-controller="Clientes">
+
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <h2>Informações Pessoais</h2>
             <div class=" col-md-6">
-                <div class="form-group">
-                    <label asp-for="Nome" class="control-label"></label>
-                    <input asp-for="Nome" class="form-control" />
-                    <span asp-validation-for="Nome" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label asp-for="DtNascimento" class="control-label"></label>
-                    <input asp-for="DtNascimento" class="form-control" type="date" />
-                    <span asp-validation-for="DtNascimento" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label asp-for="Genero" class="control-label"></label>
-                    <select asp-for="Genero" class="form-control" asp-items="Html.GetEnumSelectList<LES.Models.Entity.Genero>()">
-                    </select>
-                    <span asp-validation-for="Genero" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label asp-for="Email" class="control-label"></label>
-                    <input asp-for="Email" class="form-control" />
-                    <span asp-validation-for="Email" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label asp-for="Senha" class="control-label"></label>
-                    <input asp-for="Senha" class="form-control" id="senha" type="password" />
-                    <span asp-validation-for="Senha" class="text-danger"></span>
-                    <small id="requisitosSenha">A senha deve conter:</small>
-                    <ul>
-                        <li id="caracteres"> <small>Pelo menos 8 caracteres.</small></li>
-                        <li id="maiusculas"> <small>Letras maiúsculas.</small></li>
-                        <li id="minusculas"> <small>Letras minúsculas.</small></li>
-                        <li id="especiais"> <small>Símbolos especiais.</small></li>
-                    </ul>
-                </div>
-                <div class="form-group">
-                    <label class="control-label">Confirmação de senha</label>
-                    <input class="form-control" id="senhaConfirmacao" type="password" disabled />
-                </div>
-                <div class="form-group">
-                    <label asp-for="Cpf" class="control-label"></label>
-                    <input asp-for="Cpf" class="form-control" />
-                    <span asp-validation-for="Cpf" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label asp-for="TipoTelefone" class="control-label"></label>
-                    <select asp-for="TipoTelefone" class="form-control" asp-items="Html.GetEnumSelectList<LES.Models.Entity.TipoTelefone>()">
-                    </select>
-                    <span asp-validation-for="TipoTelefone" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label asp-for="Ddd" class="control-label"></label>
-                    <input asp-for="Ddd" class="form-control" />
-                    <span asp-validation-for="Ddd" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label asp-for="Telefone" class="control-label"></label>
-                    <input asp-for="Telefone" class="form-control" />
-                    <span asp-validation-for="Telefone" class="text-danger"></span>
-                </div>
+                @Html.Partial("_InfoClientePartial", Model)
+                @Html.Partial("_SenhaPartial", Model)
             </div>
 
             <h2>Endereços</h2>
             <div class="secaoForm enderecos" id="enderecos">
 
-                @{ int i = 0;
-                    int EnderecosCont = 0; }
-                @if (Model.Enderecos is object)
-                {
-                    { EnderecosCont = Model.Enderecos.Count; }
-                }
-                @do
-                {
-                    <div class="endereco">
-
-                        
-                        @if (i >= 1)
-                        {
-                            <h4>Endereço @(i + 1)</h4>
-                            <button name="ApagarEndereco" class="btn-danger">Apagar endereço</button>
-                        }
-                        else
-                        {
-                            <h4>Endereço de residência: </h4>
-                        }
-
-                        <div>
-
-                            <div class="form-group">
-                                <label asp-for="Enderecos[i].TipoEndereco" class="control-label"></label>
-                                <select asp-for="Enderecos[i].TipoEndereco" class="form-control" asp-items="Html.GetEnumSelectList<LES.Models.Entity.TipoEndereco>()">
-                                </select>
-                                <span asp-validation-for="Enderecos[i].TipoEndereco" class="text-danger"></span>
-                            </div>
-
-                            <div class="form-group">
-                                <div>
-                                    <label asp-for="Enderecos[i].EEntrega" class="control-label"></label>
-                                    <input asp-for="Enderecos[i].EEntrega" type="checkbox" />
-                                    <span asp-validation-for="Enderecos[i].EEntrega" class="text-danger"></span>
-                                </div>
-                                <div>
-                                    <label asp-for="Enderecos[i].ECobranca" class="control-label"></label>
-                                    <input asp-for="Enderecos[i].ECobranca" type="checkbox" />
-                                    <span asp-validation-for="Enderecos[i].ECobranca" class="text-danger"></span>
-                                </div>
-                            </div>
-
-                        </div>
-
-                        <div class="form-group">
-                            <div class="logradouro">
-                                <label asp-for="Enderecos[i].Logradouro" class="control-label"></label>
-                                <input asp-for="Enderecos[i].Logradouro" class="form-control" />
-                                <span asp-validation-for="Enderecos[i].Logradouro" class="text-danger"></span>
-                            </div>
-                            <div class="numero">
-                                <label asp-for="Enderecos[i].Numero" class="control-label"></label>
-                                <input asp-for="Enderecos[i].Numero" class="form-control" />
-                                <span asp-validation-for="Enderecos[i].Numero" class="text-danger"></span>
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <label asp-for="Enderecos[i].Complemento" class="control-label"></label>
-                            <input asp-for="Enderecos[i].Complemento" class="form-control" />
-                            <span asp-validation-for="Enderecos[i].Complemento" class="text-danger"></span>
-                        </div>
-
-                        <div>
-                            <div class="form-group cidadeCepEstado">
-                                <label asp-for="Enderecos[i].Cep" class="control-label"></label>
-                                <input asp-for="Enderecos[i].Cep" class="form-control" />
-                                <span asp-validation-for="Enderecos[i].Cep" class="text-danger"></span>
-                            </div>
-                            <div class="form-group cidadeCepEstado">
-                                <label asp-for="Enderecos[i].Cidade" class="control-label"></label>
-                                <input asp-for="Enderecos[i].Cidade" class="form-control" />
-                                <span asp-validation-for="Enderecos[i].Cidade" class="text-danger"></span>
-                            </div>
-                            <div class="form-group estado">
-                                <label asp-for="Enderecos[i].Estado" class="control-label"></label>
-                                <input asp-for="Enderecos[i].Estado" class="form-control" />
-                                <span asp-validation-for="Enderecos[i].Estado" class="text-danger"></span>
-                            </div>
-                            <div class="form-group">
-                                <label asp-for="Enderecos[i].Pais" class="control-label"></label>
-                                <input asp-for="Enderecos[i].Pais" class="form-control" />
-                                <span asp-validation-for="Enderecos[i].Pais" class="text-danger"></span>
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <label asp-for="Enderecos[i].Observacoes" class="control-label"></label>
-                            <input asp-for="Enderecos[i].Observacoes" class="form-control" />
-                            <span asp-validation-for="Enderecos[i].Observacoes" class="text-danger"></span>
-                        </div>
-
+                <div class="endereco">
+                    <h4>Endereço de residência: </h4>
+                    <div>
+                        @Html.Partial("_EnderecoPartial", new LES.Models.ViewModel.EnderecoExistente(Model.Enderecos, 0))
                     </div>
-                    { i++; }
-                } while (i < EnderecosCont);
+
+                </div>
 
                 <button type="button" id="btnAddEndereco" class="btn btn-outline-secondary btn-add">Adicionar novo endereço</button>
             </div>
@@ -193,6 +50,17 @@
 
 @section Scripts
 {
-    <script src="~/js/GerenciadorEnderecos.js"></script>
+    <script type="text/javascript">
+
+        var cadastro = cadastro || {};
+        cadastro.urls = cadastro.urls || {};
+        cadastro.urls.endereco = '@Url.Action("_EnderecoPartial", "Clientes")' ;
+
+
+    </script>
     <script src="~/js/ValSenhaCliente.js"></script>
+    <script src="~/js/ClientePrevenirCadastro.js"></script>
+    <script src="~/js/ValRequired.js"></script>
+    <script src="~/js/GerenciadorEnderecos.js"></script>
+
 }

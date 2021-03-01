@@ -7,6 +7,10 @@ using LES.Models.Entity;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
+using Microsoft.AspNetCore.Mvc.Formatters;
+using System.Reflection.Metadata;
+using System.Text.Json;
 
 namespace LES.Controllers
 {
@@ -18,109 +22,82 @@ namespace LES.Controllers
         {
             _facade = facade;
 
-            EnderecoCadastro a = new EnderecoCadastro(
-                    "Rua tal",
-                    "Numero tal",
-                    "Cep Tal",
-                    "Complemento tal",
-                    "Mogi",
-                    "São Paulo",
-                    "Brasil",
-                    "",
-                    (TipoEndereco)0,
-                    true,
-                    true
-                    );
-
-            Cliente1 = new ClienteCadastro(
-                1,
-                "Judiscréia",
-                new DateTime(),
-                (Genero)1,
-                "aeaeo@hotmail.com",
-                "MXmx@@@@",
-                "12345678901",
-                (TipoTelefone)0,
-                "011",
-                "912345678",
-                new Dictionary<int, EnderecoCadastro>()
-                );
-
-            Cliente1.Enderecos[0] = a;
-            Cliente1.Enderecos[1] = a;
-            Cliente1.Enderecos[2] = a;
-            Cliente1.Enderecos[3] = a;
-
         }
-
-        public ClienteCadastro Cliente1 { get; set; }
 
         // GET: Clientes
         public ActionResult Index()
         {
-            IList<ClienteCadastro> Entidades = new List<ClienteCadastro>();
-            Entidades.Add(Cliente1);
-            //ViewBag.Entidades = _facade.listar(new Cliente());
-            return View(Entidades);
+            IEnumerable<EntidadeDominio> Entidades = _facade.Listar(new Cliente());
+            IList <ClienteCadastro> EntidadesView = new List<ClienteCadastro>();
+
+            foreach (var e in Entidades) 
+            {
+                Cliente c = (Cliente)e;
+                EntidadesView.Add(ClienteModelParaView(c));
+            }
+;
+            return View(EntidadesView);
         }
 
         // GET: Clientes/Details/5
         public ActionResult Detalhes(int id)
         {
-            //ViewBag.Entidade = _facade.getEntidade(new Cliente(id));
-            return View(Cliente1);
+            Cliente cliente = (Cliente)_facade.GetEntidade(new Cliente(id));
+
+            ClienteCadastro clienteCadastro = ClienteModelParaView(cliente);
+
+            return View(clienteCadastro);
         }
 
         // GET: Clientes/Create
-        public ActionResult Cadastro(int? id)
+        public ActionResult Cadastro()
         {
-            if (id is null)
-            {
-                ClienteCadastro clienteVazio = new ClienteCadastro(new DateTime(DateTime.Now.Ticks), new Dictionary<int, EnderecoCadastro>());
-                clienteVazio.Enderecos[0] = new EnderecoCadastro();
+            ClienteCadastro clienteVazio = new ClienteCadastro(new DateTime(DateTime.Now.Ticks), new List<EnderecoCadastro>());
 
-                return View(clienteVazio);
-            }
+            for (int i = 0; i < 10; i++) clienteVazio.Enderecos.Add(new EnderecoCadastro());
 
+            return View(clienteVazio);
 
-
-            return View(Cliente1);
         }
 
         // POST: Clientes/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Cadastro(ClienteCadastro cliente)
+        public ActionResult Cadastro(ClienteCadastro clienteCadastro)
         {
+            /*for(int i = 0; i < clienteCadastro.Enderecos.Count; i++)
+            {
+                ModelState.Remove("Enderecos.[" + i + "].EEntrega");
+                ModelState.Remove("Enderecos.[" + i + "].ECobranca");
+            }*/
+
             if (ModelState.IsValid)
             {
+                Cliente cliente = ClienteViewParaModel(clienteCadastro);
                 try
                 {
-                    string msg = _facade.Cadastrar(ClienteViewParaModel(cliente));
+                    string msg = _facade.Cadastrar(cliente);
                     if (msg != "")
                     {
-                        return RedirectToAction(nameof(Erro), msg);
                     }
                     return RedirectToAction(nameof(Index));
                 }
                 catch
                 {
-                    return View(cliente);
+                    return View(clienteCadastro);
                 }
             }
-            return View(cliente);
-        }
-
-        public ActionResult Erro(string str) {
-            ViewBag.String = str;
-            
-            return View();
+            return View(clienteCadastro);
         }
 
         // GET: Clientes/Delete/5
         public ActionResult Delete(int id)
         {
-            return View(Cliente1);
+            Cliente cliente = (Cliente)_facade.GetEntidade(new Cliente(id));
+
+            ClienteCadastro clienteCadastro = ClienteModelParaView(cliente);
+
+            return View(clienteCadastro);
         }
 
         // POST: Clientes/Delete/5
@@ -130,20 +107,137 @@ namespace LES.Controllers
         {
             try
             {
-                // TODO: Add delete logic here
-
-                return RedirectToAction(nameof(Index));
+                _facade.Deletar(new Cliente(id));
             }
-            catch
+            catch(Exception ex)
             {
-                return View();
             }
+
+            return RedirectToAction(nameof(Index));
 
         }
 
+        public ActionResult Editar(int id)
+        {
+            Cliente cliente = (Cliente)_facade.GetEntidade(new Cliente(id));
+            ClienteCadastro clienteCadastro = ClienteModelParaView(cliente);
+            return View(clienteCadastro);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Editar(ClienteCadastro clienteCadastro) 
+        {
+
+            ModelState.Remove("Senha");
+
+            if (ModelState.IsValid)
+            {
+                Cliente clienteEdit = ClienteViewParaModel(clienteCadastro);
+
+                Cliente cliente = (Cliente)_facade.GetEntidade(clienteEdit);
+
+                cliente.Nome = clienteEdit.Nome;
+                cliente.DtNascimento = clienteEdit.DtNascimento;
+                cliente.Genero = clienteEdit.Genero;
+                cliente.Cpf = clienteEdit.Cpf;
+                cliente.Email = clienteEdit.Email;
+                cliente.Telefone = clienteEdit.Telefone;
+
+                try
+                {
+                    _facade.Editar(cliente);
+                }
+                catch
+                {
+                    return View(clienteCadastro);
+                }
+            }
+
+            return RedirectToAction(nameof(Index));
+        }
+
+        public ActionResult EditarSenha(int id)
+        {
+            Cliente cliente = (Cliente)_facade.GetEntidade(new Cliente(id));
+            ClienteCadastro clienteCadastro = ClienteModelParaView(cliente);
+            return View(clienteCadastro);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult EditarSenha(ClienteCadastro clienteCadastro)
+        {
+            ModelState.Remove("Nome");
+            ModelState.Remove("Ddd");
+            ModelState.Remove("Genero");
+            ModelState.Remove("Email");
+            ModelState.Remove("Telefone");
+            ModelState.Remove("Cpf");
+
+            if (ModelState.IsValid)
+            {
+                Cliente clienteEdit = ClienteViewParaModel(clienteCadastro);
+
+                Cliente cliente = (Cliente)_facade.GetEntidade(clienteEdit);
+
+                cliente.Senha = clienteEdit.Senha;
+
+                try
+                {
+                    _facade.Editar(cliente);
+                }
+                catch
+                {
+                    return View(clienteCadastro);
+                }
+            }
+
+            return RedirectToAction(nameof(Index));
+        }
+
+        public ActionResult EditarEndereco(int id) 
+        {
+            Endereco endereco = (Endereco)_facade.GetEntidade(new Endereco(id));
+            EnderecoCadastro enderecoCadastro = EnderecoModelParaView(endereco);
+            return View(enderecoCadastro);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult EditarEndereco(EnderecoCadastro enderecoCadastro)
+        {
+            if (ModelState.IsValid)
+            {
+                Endereco enderecoEdit = EnderecoViewParaModel(enderecoCadastro);
+
+                try
+                {
+                    _facade.Editar(enderecoEdit);
+                }
+                catch
+                {
+                    return View(enderecoCadastro);
+                }
+            }
+
+            return RedirectToAction(nameof(Index));
+        }
+
+        public ActionResult _EnderecoPartial(int id) {
+
+            List<EnderecoCadastro> enderecos = new List<EnderecoCadastro>();
+            for (int i = 0; i <= id; i++) enderecos.Add(new EnderecoCadastro());
+
+            return PartialView(new EnderecoExistente(enderecos, id));
+        }
+
+        #region Metodos de conversão
         private Cliente ClienteViewParaModel(ClienteCadastro clienteCadastro)
         {
             Cliente cliente = new Cliente();
+
+            cliente.Id = clienteCadastro.Id;
 
             cliente.Nome = clienteCadastro.Nome;
 
@@ -167,14 +261,16 @@ namespace LES.Controllers
 
             cliente.Enderecos = new List<Endereco>();
 
-            foreach (KeyValuePair<int, EnderecoCadastro> entry in clienteCadastro.Enderecos)
-            {
-                Endereco endereco = new Endereco();
-                endereco.EResidencia = (entry.Key == 0);
+            if (clienteCadastro.Enderecos != null) 
+            { 
+                foreach (var end in clienteCadastro.Enderecos)
+                {
+                    Endereco endereco = new Endereco();
 
-                endereco = EnderecoViewParaModel(entry.Value);
-
-                cliente.Enderecos.Add(endereco);
+                    endereco = EnderecoViewParaModel(end);
+                    if (end.Logradouro is object && end.Logradouro != "")
+                        cliente.Enderecos.Add(endereco);
+                } 
             }
 
             return cliente;
@@ -183,6 +279,8 @@ namespace LES.Controllers
         private Endereco EnderecoViewParaModel(EnderecoCadastro enderecoCadastro)
         {
             Endereco endereco = new Endereco();
+
+            if (enderecoCadastro.Id > 0) endereco.Id = enderecoCadastro.Id;  
 
             endereco.Logradouro = enderecoCadastro.Logradouro;
 
@@ -214,5 +312,72 @@ namespace LES.Controllers
 
             return endereco;
         }
+
+        private ClienteCadastro ClienteModelParaView(Cliente cliente)
+        {
+            ClienteCadastro clienteCadastro = new ClienteCadastro();
+
+            clienteCadastro.Id = cliente.Id;
+
+            clienteCadastro.Nome = cliente.Nome;
+
+            clienteCadastro.DtNascimento = cliente.DtNascimento;
+
+            clienteCadastro.Genero = cliente.Genero;
+
+            clienteCadastro.Email = cliente.Email;
+
+            clienteCadastro.Senha = cliente.Senha;
+
+            clienteCadastro.Cpf = cliente.Cpf;
+
+            clienteCadastro.TipoTelefone = cliente.Telefone.TipoTelefone;
+
+            clienteCadastro.Ddd = cliente.Telefone.Ddd;
+
+            clienteCadastro.Telefone = cliente.Telefone.Numero;
+
+            clienteCadastro.Enderecos = new List<EnderecoCadastro>();
+
+            foreach(var end in cliente.Enderecos)
+            {
+                clienteCadastro.Enderecos.Add(EnderecoModelParaView(end));
+            }
+
+            return clienteCadastro;
+        }
+
+        private EnderecoCadastro EnderecoModelParaView(Endereco endereco)
+        {
+            EnderecoCadastro enderecoCadastro = new EnderecoCadastro();
+
+            if (endereco.Id > 0) enderecoCadastro.Id = endereco.Id;
+
+            enderecoCadastro.Logradouro = endereco.Logradouro;
+
+            enderecoCadastro.Numero = endereco.Numero;
+
+            enderecoCadastro.Cep = endereco.Cep;
+
+            enderecoCadastro.Complemento = endereco.Complemento;
+
+            enderecoCadastro.Cidade = endereco.Cidade.Nome;
+
+            enderecoCadastro.Estado = endereco.Cidade.Estado.Nome;
+
+            enderecoCadastro.Pais = endereco.Cidade.Estado.Pais.Nome;
+
+            enderecoCadastro.Observacoes = endereco.Observacoes;
+
+            enderecoCadastro.TipoEndereco = endereco.TipoEndereco;
+
+            enderecoCadastro.EEntrega = endereco.EEntrega;
+
+            enderecoCadastro.ECobranca = endereco.ECobranca;
+
+            return enderecoCadastro;
+        }
+        #endregion
+
     }
 }

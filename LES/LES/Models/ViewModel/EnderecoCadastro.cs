@@ -11,6 +11,10 @@ namespace LES.Models.ViewModel
     {
         public EnderecoCadastro() { }
 
+        public int Id { get; set; }
+
+        public DateTime DtCadastro { get; set; }
+
         [Required]
         public string Logradouro { get; set; }
 
@@ -42,12 +46,12 @@ namespace LES.Models.ViewModel
         [Required]
         [Display(Name = "Tipo de endereço")]
         public TipoEndereco TipoEndereco { get; set; }
+            
+        [Display(Name = "É endereço de entrega?")]
+        public bool EEntrega { get; set; }
 
-        [Display(Name = "É entrega")]
-        public Boolean EEntrega { get; set; }
-
-        [Display(Name = "É cobrança")]
-        public Boolean ECobranca { get; set; }
+        [Display(Name = "É endereço de cobrança?")]
+        public bool ECobranca { get; set; }
 
         public EnderecoCadastro(string logradouro, string numero, 
             string cep, string complemento, string cidade, 

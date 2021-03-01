@@ -61,13 +61,13 @@ namespace LES.Models.ViewModel
         [NumeroRegEx(ErrorMessage = "Insira somente os valores numéricos.")]
         public string Telefone { get; set; }
 
-        public IDictionary<int, EnderecoCadastro> Enderecos { get; set; }
+        public List<EnderecoCadastro> Enderecos { get; set; }
 
         public ClienteCadastro() { }
 
         public ClienteCadastro(int id, string nome, DateTime dtNascimento, Genero genero, 
             string email, string senha, string cpf, TipoTelefone tipoTelefone, 
-            string ddd, string telefone, IDictionary<int, EnderecoCadastro> enderecos)
+            string ddd, string telefone, List<EnderecoCadastro> enderecos)
         {
             Id = id;
             Nome = nome;
@@ -82,7 +82,7 @@ namespace LES.Models.ViewModel
             Enderecos = enderecos;
         }
 
-        public ClienteCadastro(DateTime dtNascimento, IDictionary<int, EnderecoCadastro> enderecos)
+        public ClienteCadastro(DateTime dtNascimento, List<EnderecoCadastro> enderecos)
         {
             DtNascimento = dtNascimento;
             Enderecos = enderecos;
