@@ -1,4 +1,4 @@
-﻿@model LES.Models.ViewModel.Conta.RegistroModelEndereco   
+﻿@model LES.Models.ViewModel.Conta.EnderecoBaseModel   
 
 @*
     For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
@@ -12,19 +12,6 @@
             <select asp-for="TipoEndereco" class="form-control required" asp-items="Html.GetEnumSelectList<LES.Models.Entity.TipoEndereco>()">
             </select>
             <span asp-validation-for="TipoEndereco" class="text-danger"></span>
-        </div>
-
-        <div class="form-group">
-            <div>
-                <label asp-for="EEntrega" class="control-label"></label>
-                <input asp-for="EEntrega" type="checkbox" class="required"/>
-                <span asp-validation-for="EEntrega" class="text-danger"></span>
-            </div>
-            <div>
-                <label asp-for="ECobranca" class="control-label"></label>
-                <input asp-for="ECobranca" type="checkbox" class="required"/>
-                <span asp-validation-for="ECobranca" class="text-danger"></span>
-            </div>
         </div>
 
     </div>
