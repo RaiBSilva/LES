@@ -1,0 +1,7 @@
+﻿.tab {
+    transition: visibility 0s, opacity 1s linear;
+}
+
+.tablink {
+    width: 100%;
+}
