@@ -9,10 +9,19 @@ namespace LES.Models.ViewModel.Conta
     public class DetalhesModel
     {
         public InfoBaseModel InfoUsuario { get; set; }
+        public int NotaUsuario { get; set; }
         public IList<DetalhesEnderecoModel> Enderecos { get;set; }
         public IList<DetalhesTelefoneModel> Telefones { get; set; }
         public IList<DetalhesCartaoModel> Cartoes { get; set; }
 
+        public DetalhesModel()
+        {
+            InfoUsuario = new InfoBaseModel();
+            NotaUsuario = 0;
+            Enderecos = new List<DetalhesEnderecoModel>();
+            Telefones = new List<DetalhesTelefoneModel>();
+            Cartoes = new List<DetalhesCartaoModel>();
+        }
     }
 
     public class DetalhesEnderecoModel : EnderecoBaseModel

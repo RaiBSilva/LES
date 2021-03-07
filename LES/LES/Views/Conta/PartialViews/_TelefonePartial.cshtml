@@ -1,0 +1,23 @@
+﻿@model LES.Models.ViewModel.Conta.TelefoneBaseModel
+@*
+    For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
+*@
+
+    <div id="divTelefone">
+        <div id="divTipoTelefone" class="form-group">
+            <label asp-for="TipoTelefone" class="control-label"></label>
+            <select asp-for="TipoTelefone" class="form-control required" asp-items="Html.GetEnumSelectList<LES.Models.Entity.TipoTelefone>()">
+            </select>
+            <span asp-validation-for="TipoTelefone" class="text-danger"></span>
+        </div>
+        <div id="divDdd" class="form-group">
+            <label asp-for="Ddd" class="control-label"></label>
+            <input asp-for="Ddd" class="form-control required" />
+            <span asp-validation-for="Ddd" class="text-danger"></span>
+        </div>
+        <div id="divNumTel" class="form-group">
+            <label asp-for="NumeroTelefone" class="control-label"></label>
+            <input asp-for="NumeroTelefone" class="form-control required" />
+            <span asp-validation-for="NumeroTelefone" class="text-danger"></span>
+        </div>
+    </div>

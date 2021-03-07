@@ -327,3 +327,6 @@ C:\Programming\LES\LES\LES\obj\Debug\netcoreapp3.1\Razor\Views\Conta\PartialView
 C:\Programming\LES\LES\LES\obj\Debug\netcoreapp3.1\Razor\Views\Conta\PartialViews\_SenhaPartial.cshtml.g.cs
 C:\Programming\LES\LES\LES\obj\Debug\netcoreapp3.1\Razor\Views\Conta\Registro.cshtml.g.cs
 C:\Programming\LES\LES\LES\obj\Debug\netcoreapp3.1\Razor\Views\Shared\_ContaPartial.cshtml.g.cs
+C:\Programming\LES\LES\LES\obj\Debug\netcoreapp3.1\Razor\Views\Conta\Detalhes.cshtml.g.cs
+C:\Programming\LES\LES\LES\obj\Debug\netcoreapp3.1\Razor\Views\Conta\PartialViews\_TelefonePartial.cshtml.g.cs
+C:\Programming\LES\LES\LES\obj\Debug\netcoreapp3.1\Razor\Views\Conta\PartialViews\_DlInfoPessoais.cshtml.g.cs
