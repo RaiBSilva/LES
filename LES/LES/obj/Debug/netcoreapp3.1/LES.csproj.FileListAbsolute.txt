@@ -176,3 +176,7 @@ C:\Programming\LES\LES\LES\obj\Debug\netcoreapp3.1\staticwebassets\LES.StaticWeb
 C:\Programming\LES\LES\LES\obj\Debug\netcoreapp3.1\LES.genruntimeconfig.cache
 C:\Programming\LES\LES\LES\obj\Debug\netcoreapp3.1\Razor\Views\Conta\PartialViews\_DlEnderecoPartial.cshtml.g.cs
 C:\Programming\LES\LES\LES\obj\Debug\netcoreapp3.1\Razor\Views\Conta\PartialViews\_ListaEnderecosPartial.cshtml.g.cs
+C:\Programming\LES\LES\LES\obj\Debug\netcoreapp3.1\Razor\Views\Shared\_ListaLivrosCardPartial.cshtml.g.cs
+C:\Programming\LES\LES\LES\obj\Debug\netcoreapp3.1\Razor\Views\Shared\_LivroCardPartial.cshtml.g.cs
+C:\Programming\LES\LES\LES\obj\Debug\netcoreapp3.1\Razor\Views\Livros\Loja.cshtml.g.cs
+C:\Programming\LES\LES\LES\obj\Debug\netcoreapp3.1\Razor\Views\Livros\PartialViews\_LojaFiltroSidebarPartial.cshtml.g.cs

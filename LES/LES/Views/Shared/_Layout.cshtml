@@ -4,20 +4,23 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - SóRaiva</title>
+    <link href="~/css/Shared/Normalize.css" rel="stylesheet" />
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" />
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" crossorigin="anonymous" />
 </head>
 <body>
     <header>
-        <nav class="navbar navbar-expand-lg navbar-verde">
+        <nav class="navbar-verde navbar navbar-expand-lg">
             <a class="navbar-brand brand-name" asp-area="" asp-controller="Home" asp-action="Index">SóRaiva</a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
                 <ul class="navbar-nav flex-grow-1">
-                    <partial name="_ContaPartial">
-
+                    <li class="nav-item">
+                        <a class="nav-link navbar-item" asp-action="Loja" asp-controller="Livros">Pesquisa</a>
+                    </li>
                     <!-- Itens do nav-->
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle navbar-item" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -33,6 +36,7 @@
                     <li class="nav-item">
                         <a class="nav-link navbar-item" href="#">Disabled</a>
                     </li>
+                    <partial name="_ContaPartial">
                 </ul>
                 <!-- BARRA DE PESQUISA -->
                 <form class="form-inline my-2 my-lg-0">
@@ -48,11 +52,11 @@
         </main>
     </div>
 
-    <footer class="footer">
+    <!--<footer class="footer">
         <div class="container text-footer align-content-lg-start">
             &copy; 2021 - LES - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
         </div>
-    </footer>
+    </footer>-->
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>

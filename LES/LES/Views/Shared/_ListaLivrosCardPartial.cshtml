@@ -1,0 +1,17 @@
+﻿@model IList<LES.Models.ViewModel.Shared.LivroCardModel>
+
+@*
+    For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
+*@
+
+    <div class="container mb-5 mt-5">
+        <div class="row">
+            @if (Model != null)
+            {
+                @foreach (var livro in Model)
+                {
+                    <partial name="_LivroCardPartial" for="@livro" />
+                }
+            }
+        </div>
+    </div>

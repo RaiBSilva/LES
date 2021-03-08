@@ -23,22 +23,23 @@
             <button class="btn btn-light tablink" onclick="changeTab(event, 'Cartao')" style="width:100%">Cartões de Crédito</button>
         </div>
     </div>
-    <h1>Minha conta</h1>
-    <div id="Info" class="tab">     
-        <partial name="../Conta/PartialViews/_DlInfoPessoais.cshtml" for="InfoUsuario" />">
-    </div>
-    <div id="Telefone" class="tab" style="display:none">
+    <div class="col-md-5" style="margin-left:20%">
+        <h1>Minha conta</h1>
+        <div id="Info" class="tab">
+            <partial name="../Conta/PartialViews/_DlInfoPessoais.cshtml" for="InfoUsuario" />">
+        </div>
+        <div id="Telefone" class="tab" style="display:none">
 
+        </div>
+        <div id="Endereco" class="tab" style="display:none">
+            <partial name="..Conta/PartialViews/_ListaEnderecosPartial.cshtml" for="Enderecos">
+        </div>
+        <div id="Cartao" class="tab" style="display:none">
+        </div>
+        <div class="form-group">
+            <input type="submit" value="Logar" class="btn btn-primary" style="margin-left:0px 0px 10px 15px" id="btn" />
+        </div>
     </div>
-    <div id="Endereco" class="tab" style="display:none">
-        <partial name="..Conta/PartialViews/_ListaEnderecosPartial.cshtml" for="Enderecos">
-    </div>
-    <div id="Cartao" class="tab" style="display:none">
-    </div>
-    <div class="form-group">
-        <input type="submit" value="Logar" class="btn btn-primary" style="margin-left:0px 0px 10px 15px" id="btn" />
-    </div>
-
 
 </div>
 
