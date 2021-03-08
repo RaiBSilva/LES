@@ -24,12 +24,14 @@
         </div>
     </div>
     <h1>Minha conta</h1>
-    <div id="Info" class="tab">
+    <div id="Info" class="tab">     
         <partial name="../Conta/PartialViews/_DlInfoPessoais.cshtml" for="InfoUsuario" />">
     </div>
     <div id="Telefone" class="tab" style="display:none">
+
     </div>
     <div id="Endereco" class="tab" style="display:none">
+        <partial name="..Conta/PartialViews/_ListaEnderecosPartial.cshtml" for="Enderecos">
     </div>
     <div id="Cartao" class="tab" style="display:none">
     </div>

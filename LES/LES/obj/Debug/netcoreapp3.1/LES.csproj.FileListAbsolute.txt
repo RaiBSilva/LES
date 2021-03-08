@@ -174,3 +174,5 @@ C:\Programming\LES\LES\LES\obj\Debug\netcoreapp3.1\LES.csproj.CopyComplete
 C:\Programming\LES\LES\LES\obj\Debug\netcoreapp3.1\staticwebassets\LES.StaticWebAssets.Manifest.cache
 C:\Programming\LES\LES\LES\obj\Debug\netcoreapp3.1\staticwebassets\LES.StaticWebAssets.xml
 C:\Programming\LES\LES\LES\obj\Debug\netcoreapp3.1\LES.genruntimeconfig.cache
+C:\Programming\LES\LES\LES\obj\Debug\netcoreapp3.1\Razor\Views\Conta\PartialViews\_DlEnderecoPartial.cshtml.g.cs
+C:\Programming\LES\LES\LES\obj\Debug\netcoreapp3.1\Razor\Views\Conta\PartialViews\_ListaEnderecosPartial.cshtml.g.cs

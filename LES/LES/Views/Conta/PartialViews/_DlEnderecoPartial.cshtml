@@ -1,0 +1,39 @@
+﻿@model LES.Models.ViewModel.Conta.DetalhesEnderecoModel
+@*
+    For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
+*@
+
+@{ string classe = Model.EPreferencial ? "preferencial" : "";
+    }
+
+<dd class="col-sm-2 @classe">
+    @Html.DisplayNameFor(model => model.NomeEndereco)
+</dd>
+<dt class="col-sm-2 @classe">
+    @Html.DisplayFor(model => model.NomeEndereco)
+</dt>
+<dd class="col-sm-2 @classe">
+    @Html.DisplayNameFor(model => model.TipoEndereco)
+</dd>
+<dt class="col-sm-2 @classe">
+    @Html.DisplayFor(model => model.TipoEndereco)
+</dt>
+<dd class="col-sm-2 @classe">
+    @Html.DisplayNameFor(model => model.Logradouro) e @Html.DisplayNameFor(model => model.Numero)
+</dd>
+<dt class="col-sm-2 @classe">
+    @Html.DisplayFor(model => model.Logradouro) e @Html.DisplayFor(model => model.Numero)
+</dt>
+<dd class="col-sm-2 @classe">
+    @Html.DisplayNameFor(model => model.Cep)
+</dd>
+<dt class="col-sm-2 @classe">
+    @Html.DisplayFor(model => model.Cep)
+</dt>
+<dd class="col-sm-2 @classe">
+    @Html.DisplayNameFor(model => model.Cidade) - @Html.DisplayNameFor(model => model.Estado), @Html.DisplayNameFor(model => model.Pais)
+</dd>
+<dt class="col-sm-2 @classe">
+    @Html.DisplayFor(model => model.Cidade) - @Html.DisplayFor(model => model.Estado), @Html.DisplayFor(model => model.Pais)
+</dt>
+
