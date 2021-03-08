@@ -2,10 +2,31 @@
     ViewData["Title"] = "Home Page";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Livraria SóRaiva.</h1>
-    <h5>Em homenagem à Faculdade de Tecnologia de Mogi das Cruzes.</h5>
-    <div class="container mb-5 mt-5">
+<div class="container-fluid">
+    <nav class="sidebar1">
+        <ul>
+            <button class="dropdown-btn active">
+                Categoria
+                <i class="fa fa-caret-down"></i>
+            </button>
+            <div class="dropdown-container">
+                <a href="#">Terror</a>
+                <a href="#">Fantasia</a>
+                <a href="#">Aventura</a>
+            </div>
+            <button class="dropdown-btn active">
+                Autor
+                <i class="fa fa-caret-down"></i>
+            </button>
+            <div class="dropdown-container">
+                <a href="#">George R. R. Martin</a>
+                <a href="#">J. R. R. Tolkien</a>
+                <a href="#">J. K. Rowling</a>
+                <a href="#">Stephen King</a>
+            </div>
+        </ul>
+    </nav>
+    <div class="container-fluid">
         <div class="row">
             <div class="col-md-3">
                 <div class="card mt-3">
@@ -146,5 +167,21 @@
 
         </div>
     </div>
+    <script>
+        var dropdown = document.getElementsByClassName("dropdown-btn");
+        var i;
+
+        for (i = 0; i < dropdown.length; i++) {
+            dropdown[i].addEventListener("click", function () {
+                this.classList.toggle("active");
+                var dropdownContent = this.nextElementSibling;
+                if (dropdownContent.style.display === "block") {
+                    dropdownContent.style.display = "none";
+                } else {
+                    dropdownContent.style.display = "block";
+                }
+            });
+        }
+    </script>
 </div>
 

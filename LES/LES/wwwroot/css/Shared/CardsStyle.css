@@ -13,10 +13,9 @@ body {
     outline: none;
     background-color:#fff;
     border-radius: 20px;
-    transition: transform .3s;
 }
 
-.card:hover{
+.card1:hover{
     transform: translateY(-15px);
     transition: transform .3s;
 }
@@ -35,11 +34,27 @@ body {
 }
 
 .cost span{
-    color: #fb3531;
+    color: black;
     font-weight: bold;
     font-size: 20px;
 }
 
-.shoe {
-    background: #496b49;
+.btn-descricao {
+    border: 2px solid black;
+    background-color: white;
+    color: black;
+    padding: 14px 28px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.descricao {
+    border-color: #496b49;
+    color: #496b49;
+}
+
+.descricao:hover {
+    border-color: #496b49;
+    background-color: #496b49;
+    color: white;
 }
