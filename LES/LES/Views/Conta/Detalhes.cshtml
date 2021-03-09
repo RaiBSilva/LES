@@ -30,6 +30,7 @@
         </div>
         <div id="Telefone" class="tab" style="display:none">
             <partial name="../Conta/PartialViews/_ListaTelefonesPartial.cshtml" for="Telefones" />
+            <a id="addNovoTelefoneLink" href="#myModal" data-toggle="modal" data-target="#myModal">Adicionar Telefone</a>
         </div>
         <div id="Endereco" class="tab" style="display:none">
             <partial name="../Conta/PartialViews/_ListaEnderecosPartial.cshtml" for="Enderecos" />
@@ -37,6 +38,7 @@
         </div>
         <div id="Cartao" class="tab" style="display:none">
             <partial name="../Conta/PartialViews/_ListaCartoesPartial.cshtml" for="Cartoes" />
+            <a id="addNovoCartaoLink" href="#myModal" data-toggle="modal" data-target="#myModal">Adicionar Cartão de Crédito</a>
         </div>
     </div>
 
@@ -51,6 +53,9 @@
     <script type="text/javascript">
         var urls = urls || {};
         urls.novoEndereco = '@Url.Action("_AdicionarNovoEnderecoPartial", "Conta", Model.InfoUsuario.Codigo)';
+        urls.novoTelefone = '@Url.Action("_AdicionarNovoTelefonePartial", "Conta", Model.InfoUsuario.Codigo)';
+        urls.novoCartao = '@Url.Action("_AdicionarNovoCartaoPartial", "Conta", Model.InfoUsuario.Codigo)';
+
     </script>
     <script src="~/js/Conta/CarregadorPartialViewsDetalhes.js"></script>
     <script src="~/js/Conta/Tabs.js"></script>

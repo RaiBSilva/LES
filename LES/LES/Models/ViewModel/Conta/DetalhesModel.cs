@@ -60,4 +60,14 @@ namespace LES.Models.ViewModel.Conta
     {
         public string CodigoCliente { get; set; }
     }
+
+    public class AdicionarNovoTelefoneModel : DetalhesTelefoneModel
+    {
+        public string CodigoCliente { get; set; }
+    }
+
+    public class AdicionarNovoCartaoModel : DetalhesCartaoModel
+    {
+        public string CodigoCliente { get; set; }
+    }
 }

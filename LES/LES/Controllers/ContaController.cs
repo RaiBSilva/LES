@@ -130,5 +130,27 @@ namespace LES.Views.Conta
             return RedirectToAction(nameof(Detalhes));
         }
 
+        public IActionResult _AdicionarNovoTelefonePartial(int id)
+        {
+            return PartialView("../Conta/PartialViews/_AdicionarNovoTelefonePartial");
+        }
+
+        [HttpPost]
+        public IActionResult AdicionarNovoTelefone(AdicionarNovoTelefoneModel novoTelefone)
+        {
+            return RedirectToAction(nameof(Detalhes));
+        }
+
+        public IActionResult _AdicionarNovoCartaoPartial(int id)
+        {
+            return PartialView("../Conta/PartialViews/_AdicionarNovoCartaoPartial");
+        }
+
+        [HttpPost]
+        public IActionResult AdicionarNovoCartao(AdicionarNovoTelefoneModel novoTelefone)
+        {
+            return RedirectToAction(nameof(Detalhes));
+        }
+
     }
 }

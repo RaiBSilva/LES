@@ -2,7 +2,7 @@
 
     var divModal = document.getElementById("myModal");
     var newDivForm = document.createElement("div");
-    newDivForm.className = "modal-dialog modal-sm";
+    newDivForm.className = "modal-dialog modal-lg";
 
     $(newDivForm).load(endereco);
     divModal.appendChild(newDivForm);
@@ -14,10 +14,26 @@ function carregarNovoEndereco() {
 
 }
 
+function carregarNovoTelefone() {
+    carregarPartialView(urls.novoTelefone);
+}
+
+function carregarNovoCartao() {
+    carregarPartialView(urls.novoCartao);
+}
+
 $('#myModal').on('hidden.bs.modal', function () {
     $(this).empty();
 })
 
 document.getElementById("addNovoEnderecoLink").addEventListener("click", function (e) {
     carregarNovoEndereco();
+});
+
+document.getElementById("addNovoTelefoneLink").addEventListener("click", function (e) {
+    carregarNovoTelefone();
+});
+
+document.getElementById("addNovoCartaoLink").addEventListener("click", function (e) {
+    carregarNovoCartao();
 });
