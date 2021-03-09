@@ -1,8 +1,18 @@
 ﻿@model IList<DetalhesEnderecoModel>
 
-    <dl>
-        @foreach (var end in Model)
-        {
-            <partial name="../Conta/PartialViews/_DlEnderecoPartial.cshtml" for="@end" />
-        }
-    </dl>
+
+    <div>
+        <div class="row">
+            @foreach (var end in Model)
+            {
+                <dl class="col-lg card">
+                    <partial name="../PartialViews/_DlEnderecoPartial.cshtml" for="@end" />
+                    <dd>
+                        <button class="btn btn-secondary botaoEndereco" type="button" data-toggle="modal" data-target="#myModal" value="@end.Id">
+                            Editar este endereço.
+                        </button>
+                    </dd>
+                </dl>
+            }
+        </div>
+    </div>

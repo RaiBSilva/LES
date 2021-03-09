@@ -1,54 +1,62 @@
 ﻿@model LES.Models.ViewModel.Conta.DetalhesEnderecoModel
 
-@{ string classe = Model.EPreferencial ? "preferencial" : "";
+@{ string classePreferencial = Model.EPreferencial ? "preferencial" : "";
+    string classDt = "col-sm-12";
+    string classDd = "col-sm-12";
 }
 
-<dd class="col-sm-2 @classe">
+<dt class="@classDt @classePreferencial">
     @Html.DisplayNameFor(model => model.NomeEndereco)
-</dd>
-<dt class="col-sm-2 @classe">
+</dt>
+<dd class="@classDd @classePreferencial">
     @Html.DisplayFor(model => model.NomeEndereco)
-</dt>
-<dd class="col-sm-2 @classe">
+</dd>
+<dt class="@classDt @classePreferencial">
     @Html.DisplayNameFor(model => model.TipoEndereco)
-</dd>
-<dt class="col-sm-2 @classe">
+</dt>
+<dd class="@classDd @classePreferencial">
     @Html.DisplayFor(model => model.TipoEndereco)
-</dt>
-<dd class="col-sm-2 @classe">
+</dd>
+<dt class="@classDt @classePreferencial">
     @Html.DisplayNameFor(model => model.Logradouro)
-</dd>
-<dt class="col-sm-2 @classe">
+</dt>
+<dd class="@classDd @classePreferencial">
     @Html.DisplayFor(model => model.Logradouro)
-</dt>
-<dd class="col-sm-2 @classe">
+</dd>
+<dt class="@classDt @classePreferencial">
     @Html.DisplayNameFor(model => model.Numero)
-</dd>
-<dt class="col-sm-2 @classe">
+</dt>
+<dd class="@classDd @classePreferencial">
     @Html.DisplayFor(model => model.Numero)
+</dd>
+<dt class="@classDt @classePreferencial">
+    @Html.DisplayNameFor(model => model.Complemento)
 </dt>
-<dd class="col-sm-2 @classe">
+<dd class="@classDd @classePreferencial">
+    @Html.DisplayFor(model => model.Complemento)
+</dd>
+<dt class="@classDt @classePreferencial">
     @Html.DisplayNameFor(model => model.Cep)
-</dd>
-<dt class="col-sm-2 @classe">
+</dt>
+<dd class="@classDd @classePreferencial">
     @Html.DisplayFor(model => model.Cep)
-</dt>
-<dd class="col-sm-2 @classe">
+</dd>
+<dt class="@classDt @classePreferencial">
     @Html.DisplayNameFor(model => model.Cidade)
-</dd>
-<dt class="col-sm-2 @classe">
+</dt>
+<dd class="@classDd @classePreferencial">
     @Html.DisplayFor(model => model.Cidade)
-</dt>
-<dd class="col-sm-2 @classe">
+</dd>
+<dt class="@classDt @classePreferencial">
     @Html.DisplayNameFor(model => model.Estado)
-</dd>
-<dt class="col-sm-2 @classe">
+</dt>
+<dd class="@classDd @classePreferencial">
     @Html.DisplayFor(model => model.Estado)
-</dt>
-<dd class="col-sm-2 @classe">
-    @Html.DisplayNameFor(model => model.Pais)
 </dd>
-<dt class="col-sm-2 @classe">
-    @Html.DisplayFor(model => model.Pais)
+<dt class="@classDt @classePreferencial">
+    @Html.DisplayNameFor(model => model.Pais)
 </dt>
+<dd class="@classDd @classePreferencial">
+    @Html.DisplayFor(model => model.Pais)
+</dd>
 

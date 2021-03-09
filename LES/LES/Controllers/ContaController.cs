@@ -13,12 +13,39 @@ namespace LES.Views.Conta
 
         DetalhesModel ClienteDemo = new DetalhesModel();
 
-        public ContaController() 
+        public ContaController()
         {
-            ClienteDemo.InfoUsuario = new DetalhesInfoModel();
-            ClienteDemo.Enderecos = new List<DetalhesEnderecoModel>();
-            ClienteDemo.Telefones = new List<DetalhesTelefoneModel>();
-            ClienteDemo.Cartoes = new List<DetalhesCartaoModel>();
+            ClienteDemo.InfoUsuario.Codigo = "1";
+            ClienteDemo.InfoUsuario.Cpf = "1111111111";
+            ClienteDemo.InfoUsuario.DtNascimento = DateTime.Now;
+            ClienteDemo.InfoUsuario.Email = "ninguemvailerisso@dacueba.com";
+            ClienteDemo.InfoUsuario.Genero = (Genero)1;
+            ClienteDemo.InfoUsuario.Nome = "Kevin Man'mar";
+            ClienteDemo.InfoUsuario.NotaUsuario = 0;
+
+            DetalhesEnderecoModel end = new DetalhesEnderecoModel();
+            end.Id = "1";
+            end.NomeEndereco = "Tortura";
+            end.TipoEndereco = (TipoEndereco)0;
+            end.Logradouro = "Rua Carlos Barattino Vila Nova";
+            end.Numero = "908";
+            end.Complemento = "Vila Mogilar";
+            end.Cep = "08773-600";
+            end.Cidade = "Mogi das Cruzes";
+            end.Estado = "São Paulo";
+            end.Pais = "Brasil";
+            end.Observacoes = "Bora cumpade";
+            end.ECobranca = true;
+            end.EEntrega = true;
+            end.EPreferencial = false;
+
+            ClienteDemo.Enderecos.Add(end);
+
+            end.ECobranca = false;
+            end.EEntrega = false;
+            end.EPreferencial = true;
+
+            ClienteDemo.Enderecos.Add(end);
         }
 
         //GET /Conta/Login
@@ -81,9 +108,9 @@ namespace LES.Views.Conta
 
 
         //GET Conta/EditarEndereco
-        public IActionResult EditarEndereco(int id)
+        public IActionResult _EditarEnderecoPartial(int id)
         {
-            return View();
+            return PartialView("../Conta/PartialViews/_EditarEnderecoPartial", ClienteDemo.Enderecos[0]);
         }
 
         //POST
@@ -94,9 +121,9 @@ namespace LES.Views.Conta
         }
 
         //GET Conta/EditarEndereco
-        public IActionResult EditarTelefone(int id)
+        public IActionResult _EditarTelefonePartial(int id)
         {
-            return View();
+            return PartialView("../Conta/PartialViews/_EditarTelefonePartial");
         }
 
         //POST
@@ -107,9 +134,9 @@ namespace LES.Views.Conta
         }
 
         //GET Conta/EditarCartao
-        public IActionResult EditarCartao(int id)
+        public IActionResult _EditarCartaoPartial(int id)
         {
-            return View();
+            return PartialView("../Conta/PartialViews/_EditarCartaoPartial");
         }
 
         //POST
