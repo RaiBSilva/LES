@@ -1,5 +1,4 @@
-﻿using LES.Model.Entity;
-using LES.Models.Entity;
+﻿using LES.Models.Entity;
 using System;
 using System.Collections.Generic;
 using System.Linq;

@@ -1,0 +1,8 @@
+﻿@model IList<DetalhesCartaoModel>
+
+<dl>
+    @foreach (var cart in Model)
+    {
+        <partial name="../Conta/PartialViews/_DlCartoesPartial.cshtml" for="@cart" />
+    }
+</dl>

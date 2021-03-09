@@ -9,6 +9,8 @@ namespace LES.Models.ViewModel.Conta
 {
     public class CartaoBaseModel
     {
+        public string Id { get; set; }
+
         //[Required]
         [Display(Name = "Nome Impresso no Cartão")]
         public string Nome { get; set; }

@@ -12,6 +12,8 @@ namespace LES.Models.ViewModel.Conta
         //[Required]
         public string Logradouro { get; set; }
 
+        public string Id { get; set; }
+
         //[Required]
         [Display(Name = "Nº")]
         public string Numero { get; set; }

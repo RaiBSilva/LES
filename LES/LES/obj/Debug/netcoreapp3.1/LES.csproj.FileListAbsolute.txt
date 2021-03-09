@@ -363,3 +363,10 @@ D:\DEVELOPMENT\LES\LES\LES\obj\Debug\netcoreapp3.1\LES.dll
 D:\DEVELOPMENT\LES\LES\LES\obj\Debug\netcoreapp3.1\LES.pdb
 D:\DEVELOPMENT\LES\LES\LES\obj\Debug\netcoreapp3.1\LES.genruntimeconfig.cache
 D:\DEVELOPMENT\LES\LES\LES\obj\Debug\netcoreapp3.1\Razor\Views\Livros\Descricao.cshtml.g.cs
+C:\Programming\LES\LES\LES\obj\Debug\netcoreapp3.1\Razor\Views\Conta\PartialViews\_AdicionarNovoEnderecoPartial.cshtml.g.cs
+C:\Programming\LES\LES\LES\obj\Debug\netcoreapp3.1\Razor\Views\Conta\PartialViews\_DlCartoesPartial.cshtml.g.cs
+C:\Programming\LES\LES\LES\obj\Debug\netcoreapp3.1\Razor\Views\Conta\PartialViews\_DlTelefonePartial.cshtml.g.cs
+C:\Programming\LES\LES\LES\obj\Debug\netcoreapp3.1\Razor\Views\Conta\PartialViews\_ListaCartoesPartial.cshtml.g.cs
+C:\Programming\LES\LES\LES\obj\Debug\netcoreapp3.1\Razor\Views\Conta\PartialViews\_ListaTelefonesPartial.cshtml.g.cs
+C:\Programming\LES\LES\LES\obj\Debug\netcoreapp3.1\Razor\Views\Livros\Descricao.cshtml.g.cs
+C:\Programming\LES\LES\LES\obj\Debug\netcoreapp3.1\Razor\Views\Shared\_LayoutDeslogado.cshtml.g.cs

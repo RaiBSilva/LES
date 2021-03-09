@@ -19,7 +19,7 @@
             <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
                 <ul class="navbar-nav flex-grow-1">
                     <li class="nav-item">
-                        <a class="nav-link navbar-item" asp-action="Loja" asp-controller="Livros">Pesquisa</a>
+                        <a class="nav-link navbar-item" asp-action="Loja" asp-controller="Livros">Livros</a>
                     </li>
                     <!-- Itens do nav-->
                     <li class="nav-item dropdown">
@@ -36,7 +36,9 @@
                     <li class="nav-item">
                         <a class="nav-link navbar-item" href="#">Disabled</a>
                     </li>
-                    <partial name="_ContaPartial">
+                    <li class="nav-item">
+                        <a class="nav-link navbar-item" asp-action="Detalhes" asp-controller="Conta">Minha Conta</a>
+                    </li>
                 </ul>
                 <!-- BARRA DE PESQUISA -->
                 <form class="form-inline my-2 my-lg-0">

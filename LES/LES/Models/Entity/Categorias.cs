@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace LES.Model.Entity
+namespace LES.Models.Entity
 {
     public enum Categorias
     {

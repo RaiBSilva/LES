@@ -13,6 +13,8 @@ namespace LES.Models.ViewModel.Conta
         [Display(Name = "Nome")]
         public string Nome { get; set; }
 
+        public string Codigo { get; set; }
+
         //[Required]
         [Display(Name = "Data de nascimento")]
         public DateTime DtNascimento { get; set; }
