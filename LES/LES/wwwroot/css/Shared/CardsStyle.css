@@ -9,10 +9,6 @@ body {
     background: #efefef;
 }
 
-.container{
-    margin-top: 110px !important;
-}
-
 .card{
     border:none;
     outline: none;
