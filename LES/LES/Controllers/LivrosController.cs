@@ -33,5 +33,10 @@ namespace LES.Controllers
 
             return View(LojaModel);
         }
+
+        public IActionResult Descricao()
+        {
+            return View();
+        }
     }
 }
