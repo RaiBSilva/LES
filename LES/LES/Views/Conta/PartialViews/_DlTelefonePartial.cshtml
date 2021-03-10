@@ -1,23 +1,25 @@
 ﻿@model LES.Models.ViewModel.Conta.DetalhesTelefoneModel
 
-@{ string classe = Model.EPreferencial ? "preferencial" : "";
+@{ string classePreferencial = Model.EPreferencial ? "preferencial" : "";
+    string classDt = "col-sm-12";
+    string classDd = "col-sm-12";
 }
 
-<dd class="col-sm-2 @classe">
+<dt class="@classDt @classePreferencial">
     @Html.DisplayNameFor(model => model.TipoTelefone)
-</dd>
-<dt class="col-sm-2 @classe">
+</dt>
+<dd class="@classDd @classePreferencial">
     @Html.DisplayFor(model => model.TipoTelefone)
-</dt>
-<dd class="col-sm-2 @classe">
+</dd>
+<dt class="@classDt @classePreferencial">
     @Html.DisplayNameFor(model => model.Ddd)
-</dd>
-<dt class="col-sm-2 @classe">
+</dt>
+<dd class="@classDd @classePreferencial">
     @Html.DisplayFor(model => model.Ddd)
-</dt>
-<dd class="col-sm-2 @classe">
-    @Html.DisplayNameFor(model => model.NumeroTelefone)
 </dd>
-<dt class="col-sm-2 @classe">
-    @Html.DisplayFor(model => model.NumeroTelefone)
+<dt class="@classDt @classePreferencial">
+    @Html.DisplayNameFor(model => model.NumeroTelefone)
 </dt>
+<dd class="@classDd @classePreferencial">
+    @Html.DisplayFor(model => model.NumeroTelefone)
+</dd>

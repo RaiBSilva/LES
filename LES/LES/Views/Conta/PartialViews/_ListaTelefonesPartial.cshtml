@@ -1,8 +1,17 @@
 ﻿@model IList<DetalhesTelefoneModel>
 
-<dl>
-    @foreach (var tel in Model)
-    {
-        <partial name="../PartialViews/_DlTelefonePartial.cshtml" for="@tel" />
-    }
-</dl>
+    <div>
+        <div class="row">
+            @foreach (var tel in Model)
+            {
+            <dl class="col-lg card">
+                <partial name="../PartialViews/_DlTelefonePartial.cshtml" for="@tel" />
+                <dd>
+                    <button class="btn btn-secondary botaoTelefone" type="button" data-toggle="modal" data-target="#myModal" value="@tel.Id">
+                        Editar este telefone.
+                    </button>
+                </dd>
+            </dl>
+            }
+        </div>
+    </div>

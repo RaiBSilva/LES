@@ -46,6 +46,34 @@ namespace LES.Views.Conta
             end.EPreferencial = true;
 
             ClienteDemo.Enderecos.Add(end);
+
+            DetalhesTelefoneModel tel = new DetalhesTelefoneModel();
+
+            tel.Id = "1";
+            tel.TipoTelefone = (TipoTelefone)0;
+            tel.Ddd = "011";
+            tel.NumeroTelefone = "40028922";
+            tel.EPreferencial = true;
+
+            ClienteDemo.Telefones.Add(tel);
+
+            tel.EPreferencial = false;
+
+            ClienteDemo.Telefones.Add(tel);
+
+            DetalhesCartaoModel card = new DetalhesCartaoModel();
+
+            card.Bandeira = (BandeiraCartaoCredito)0;
+            card.Codigo = "1234567812345678";
+            card.Cvv = "255";
+            card.EPreferencial = true;
+            card.Id = "1";
+            card.Nome = "KEVIN MANMAR";
+            card.Vencimento = DateTime.Today;
+
+            ClienteDemo.Cartoes.Add(card);
+            ClienteDemo.Cartoes.Add(card);
+
         }
 
         //GET /Conta/Login
@@ -123,7 +151,7 @@ namespace LES.Views.Conta
         //GET Conta/EditarEndereco
         public IActionResult _EditarTelefonePartial(int id)
         {
-            return PartialView("../Conta/PartialViews/_EditarTelefonePartial");
+            return PartialView("../Conta/PartialViews/_EditarTelefonePartial", ClienteDemo.Telefones[0]);
         }
 
         //POST
@@ -136,7 +164,7 @@ namespace LES.Views.Conta
         //GET Conta/EditarCartao
         public IActionResult _EditarCartaoPartial(int id)
         {
-            return PartialView("../Conta/PartialViews/_EditarCartaoPartial");
+            return PartialView("../Conta/PartialViews/_EditarCartaoPartial", ClienteDemo.Cartoes[0]);
         }
 
         //POST

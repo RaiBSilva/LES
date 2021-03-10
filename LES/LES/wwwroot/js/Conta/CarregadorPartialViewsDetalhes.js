@@ -27,6 +27,16 @@ function carregarEditarEndereco(id) {
     carregarPartialView(endereco);
 }
 
+function carregarEditarTelefone(id) {
+    var endereco = urls.EditarTelefone + "/" + id;
+    carregarPartialView(endereco);
+}
+
+function carregarEditarCartao(id) {
+    var endereco = urls.EditarCartao + "/" + id;
+    carregarPartialView(endereco);
+}
+
 $('#myModal').on('hidden.bs.modal', function () {
     $(this).empty();
 })
@@ -46,4 +56,14 @@ document.getElementById("addNovoCartaoLink").addEventListener("click", function 
 $(".botaoEndereco").on("click", function (e) {
     var id = $(this).val(); 
     carregarEditarEndereco(id);
+});
+
+$(".botaoTelefone").on("click", function (e) {
+    var id = $(this).val();
+    carregarEditarTelefone(id);
+});
+
+$(".botaoCartao").on("click", function (e) {
+    var id = $(this).val();
+    carregarEditarCartao(id);
 });

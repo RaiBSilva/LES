@@ -1,8 +1,17 @@
 ﻿@model IList<DetalhesCartaoModel>
 
-<dl>
-    @foreach (var cart in Model)
-    {
-        <partial name="../PartialViews/_DlCartoesPartial.cshtml" for="@cart" />
-    }
-</dl>
+<div>
+    <div class="row">
+        @foreach (var card in Model)
+        {
+        <dl class="col-lg card">
+            <partial name="../PartialViews/_DlCartoesPartial.cshtml" for="@card" />
+            <dd>
+                <button class="btn btn-secondary botaoCartao" type="button" data-toggle="modal" data-target="#myModal" value="@card.Id">
+                    Editar este cartão.
+                </button>
+            </dd>
+        </dl>
+        }
+    </div>
+</div>

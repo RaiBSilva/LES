@@ -1,23 +1,25 @@
 ﻿@model DetalhesCartaoModel
 
 @{ string classe = Model.EPreferencial ? "preferencial" : "";
+    string classDt = "col-sm-12";
+    string classDd = "col-sm-12";
 }
 
-<dd class="col-sm-2 @classe">
+<dt class="@classDt @classe">
     @Html.DisplayNameFor(model => model.Nome)
-</dd>
-<dt class="col-sm-2 @classe">
+</dt>
+<dd class="@classDd @classe">
     @Html.DisplayFor(model => model.Nome)
-</dt>
-<dd class="col-sm-2 @classe">
+</dd>
+<dt class="@classDt @classe">
     @Html.DisplayNameFor(model => model.Bandeira)
-</dd>
-<dt class="col-sm-2 @classe">
+</dt>
+<dd class="@classDd @classe">
     @Html.DisplayFor(model => model.Bandeira)
-</dt>
-<dd class="col-sm-2 @classe">
-    @Html.DisplayNameFor(model => model.Codigo)
 </dd>
-<dt class="col-sm-2 @classe">
-    @(Model.Codigo.Substring(0,4))-****-****-****
+<dt class="@classDt @classe">
+    @Html.DisplayNameFor(model => model.Codigo)
 </dt>
+<dd class="@classDd @classe">
+    @(Model.Codigo.Substring(0,4))-****-****-****
+</dd>
