@@ -22,6 +22,14 @@ function carregarNovoCartao() {
     carregarPartialView(urls.novoCartao);
 }
 
+function carregarEditarInfo(){
+    carregarPartialView(urls.editarInfoPessoal);
+}
+
+function carregarEditarSenha() {
+    carregarPartialView(urls.editarSenha);
+}
+
 function carregarEditarEndereco(id) {
     var endereco = urls.EditarEndereco + "/" + id;
     carregarPartialView(endereco);
@@ -53,6 +61,14 @@ document.getElementById("addNovoCartaoLink").addEventListener("click", function 
     carregarNovoCartao();
 });
 
+$("#btnEditarInfo").on("click", function (e) {
+    carregarEditarInfo();
+});
+
+$("#btnEditarSenha").on("click", function (e) {
+    carregarEditarSenha();
+});
+
 $(".botaoEndereco").on("click", function (e) {
     var id = $(this).val(); 
     carregarEditarEndereco(id);
@@ -67,3 +83,4 @@ $(".botaoCartao").on("click", function (e) {
     var id = $(this).val();
     carregarEditarCartao(id);
 });
+

@@ -109,9 +109,9 @@ namespace LES.Views.Conta
         }
 
         //GET Conta/EditarInfo
-        public IActionResult EditarInfo(int id)
+        public IActionResult _EditarInfoPessoalPartial(int id)
         {
-            return View();
+            return PartialView("../Conta/PartialViews/_EditarInfoPartial", ClienteDemo.InfoUsuario);
         }
 
         //POST
@@ -124,7 +124,7 @@ namespace LES.Views.Conta
         //GET Conta/EditarSenha
         public IActionResult EditarSenha(int id) 
         {
-            return View();
+            return PartialView("../Conta/PartialViews/_EditarSenhaPartial", ClienteDemo.InfoUsuario);
         }
 
         //POST
