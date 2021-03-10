@@ -2,20 +2,23 @@
 @*
     For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
 *@
-
-<div class="form-group">
-    <label asp-for="Senha" class="control-label"></label>
-    <input asp-for="Senha" class="form-control required" id="senha" type="password" />
-    <span asp-validation-for="Senha" class="text-danger"></span>
-    <small id="requisitosSenha">A senha deve conter:</small>
-    <ul>
-        <li id="caracteres"> <small>Pelo menos 8 caracteres.</small></li>
-        <li id="maiusculas"> <small>Letras maiúsculas.</small></li>
-        <li id="minusculas"> <small>Letras minúsculas.</small></li>
-        <li id="especiais"> <small>Símbolos especiais.</small></li>
-    </ul>
-</div>
-<div class="form-group">
-    <label class="control-label">Confirmação de senha</label>
-    <input class="form-control required" id="senhaConfirmacao" type="password" disabled />
-</div>
+    <div class="container">
+        <div class="row">
+            <div class="form-group col-6">
+                <label asp-for="Senha" class="control-label"></label>
+                <input asp-for="Senha" class="form-control required" id="senha" type="password" />
+                <span asp-validation-for="Senha" class="text-danger"></span>
+                <small id="requisitosSenha">A senha deve conter:</small>
+                <ul>
+                    <li id="caracteres"> <small>Pelo menos 8 caracteres.</small></li>
+                    <li id="maiusculas"> <small>Letras maiúsculas.</small></li>
+                    <li id="minusculas"> <small>Letras minúsculas.</small></li>
+                    <li id="especiais"> <small>Símbolos especiais.</small></li>
+                </ul>
+            </div>
+            <div class="form-group col-6">
+                <label class="control-label">Confirmação de senha</label>
+                <input class="form-control required" id="senhaConfirmacao" type="password" disabled />
+            </div>
+        </div>
+    </div>

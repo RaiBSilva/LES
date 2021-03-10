@@ -47,6 +47,8 @@ namespace LES.Views.Conta
             end.EPreferencial = true;
 
             ClienteDemo.Enderecos.Add(end);
+            ClienteDemo.Enderecos.Add(end);
+            ClienteDemo.Enderecos.Add(end);
 
             DetalhesTelefoneModel tel = new DetalhesTelefoneModel();
 

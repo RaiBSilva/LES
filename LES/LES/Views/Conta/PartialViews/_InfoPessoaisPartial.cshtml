@@ -4,31 +4,38 @@
     For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
 *@
 
-    <div id="divInformacoesPessoaisPartial">
-        <div id="divNome" class="form-group">
-            <label asp-for="Nome" class="control-label"></label>
-            <input asp-for="Nome" class="form-control required" />
-            <span asp-validation-for="Nome" class="text-danger"></span>
+    <div id="divInformacoesPessoaisPartial" class="container">
+        <div id="divNome" class="form-group row">
+            <div class="col-12">
+                <label asp-for="Nome" class="control-label"></label>
+                <input asp-for="Nome" class="form-control required" />
+                <span asp-validation-for="Nome" class="text-danger"></span>
+            </div>
         </div>
-        <div id="divDtNascimento" class="form-group">
-            <label asp-for="DtNascimento" class="control-label"></label>
-            <input asp-for="DtNascimento" class="form-control required" type="date" />
-            <span asp-validation-for="DtNascimento" class="text-danger"></span>
+        <div id="divDtNascimento" class="form-group row">
+            <div class="col-md-4">
+                <label asp-for="DtNascimento" class="control-label"></label>
+                <input asp-for="DtNascimento" class="form-control required" type="date" />
+                <span asp-validation-for="DtNascimento" class="text-danger"></span>
+            </div>
+            <div class="col-md-4 align-self-center">
+                <label asp-for="Genero" class="control-label"></label>
+                <select asp-for="Genero" class="form-select" required asp-items="Html.GetEnumSelectList<LES.Models.Entity.Genero>()">
+                </select>
+                <span asp-validation-for="Genero" class="text-danger"></span>
+            </div>
+            <div class="col-md-4">
+                <label asp-for="Cpf" class="control-label"></label>
+                <input asp-for="Cpf" class="form-control required" />
+                <span asp-validation-for="Cpf" class="text-danger"></span>
+            </div>
         </div>
-        <div id="divGenero" class="form-group">
-            <label asp-for="Genero" class="control-label"></label>
-            <select asp-for="Genero" class="form-control required" asp-items="Html.GetEnumSelectList<LES.Models.Entity.Genero>()">
-            </select>
-            <span asp-validation-for="Genero" class="text-danger"></span>
-        </div>
-        <div id="divEmail" class="form-group">
-            <label asp-for="Email" class="control-label"></label>
-            <input asp-for="Email" class="form-control required" />
-            <span asp-validation-for="Email" class="text-danger"></span>
-        </div>
-        <div id="divCpf" class="form-group">
-            <label asp-for="Cpf" class="control-label"></label>
-            <input asp-for="Cpf" class="form-control required" />
-            <span asp-validation-for="Cpf" class="text-danger"></span>
+            
+        <div id="divEmail" class="form-group row">
+            <div class="col-md-12">
+                <label asp-for="Email" class="control-label"></label>
+                <input asp-for="Email" class="form-control required" />
+                <span asp-validation-for="Email" class="text-danger"></span>
+            </div>
         </div>
     </div>

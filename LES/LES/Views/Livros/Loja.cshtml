@@ -8,27 +8,17 @@
 <link rel="stylesheet" href="~/css/Shared/CardsStyle.css" />
 
 <div class="conteudo container-fluid">
-    <div class="sidebar">
-        <partial name="../Livros/PartialViews/_LojaFiltroSidebarPartial.cshtml" for="Filtros">
-    </div>
-    <div style="margin-left:20%">
-        <partial name="_ListaLivrosCardPartial" for="Livros">
+    <div class="row">
+        <div id="sidebar" class="col-md-4 sticky-top" style="height:6rem; top:10%">
+            <partial name="../Livros/PartialViews/_LojaFiltroSidebarPartial.cshtml" for="Filtros">
+        </div>
+
+        <div class="col-md-8">
+            <partial name="_ListaLivrosCardPartial" for="Livros">
+        </div>
     </div>
 </div>
 
-<script>
-    var dropdown = document.getElementsByClassName("dropdown-btn");
-    var i;
+@section Scripts{
 
-    for (i = 0; i < dropdown.length; i++) {
-        dropdown[i].addEventListener("click", function () {
-            this.classList.toggle("active");
-            var dropdownContent = this.nextElementSibling;
-            if (dropdownContent.style.display === "block") {
-                dropdownContent.style.display = "none";
-            } else {
-                dropdownContent.style.display = "block";
-            }
-        });
-    }
-</script>
+}

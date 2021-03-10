@@ -9,34 +9,50 @@
 
 
 <div id="conteudo">
-    <div class="sidebar">
-        <div>
-            <button class="btn btn-success tablink" onclick="changeTab(event, 'Info')" style="width:100%">Informações</button>
-        </div>
-        <div>
-            <button class="btn btn-light tablink" onclick="changeTab(event, 'Endereco')" style="width:100%">Endereço</button>
-        </div>
-        <div>
-            <button class="btn btn-light tablink" onclick="changeTab(event, 'Cartao')" style="width:100%">Cartão de Crédito</button>
+    <div class="container">
+        <div class="row">
+            <div id="sidebar" class="col-md-3 sticky-top" style="height:6rem; top:10%">
+                <div>
+                    <button class="btn btn-success tablink" onclick="changeTab(event, 'Info')" style="width:100%">Informações</button>
+                </div>
+                <div>
+                    <button class="btn btn-light tablink" onclick="changeTab(event, 'Endereco')" style="width:100%">Endereço</button>
+                </div>
+                <div>
+                    <button class="btn btn-light tablink" onclick="changeTab(event, 'Cartao')" style="width:100%">Cartão de Crédito</button>
+                </div>
+            </div>
+            <div class="col-md-9">
+                <form asp-action="Registrar">
+                    <h1>Registre-se!</h1>
+                    <div id="Info" class="tab">
+                        <partial name="../Conta/PartialViews/_InfoPessoaisPartial.cshtml" for="InfoUsuario" />
+                        <partial name="../Conta/PartialViews/_SenhaPartial.cshtml" for="Senha" />
+                        <partial name="../Conta/PartialViews/_TelefonePartial.cshtml" for="Telefone" />
+                    </div>
+                    <div id="Endereco" class="tab" style="display:none">
+                        <div class="container">
+                            <div class="form-group row">
+                                <div class="col-12">
+                                    <label asp-for="Endereco.TipoEndereco" class="control-label"></label>
+                                    <select asp-for="Endereco.TipoEndereco" class="form-control required" asp-items="Html.GetEnumSelectList<LES.Models.Entity.TipoEndereco>()">
+                                    </select>
+                                    <span asp-validation-for="Endereco.TipoEndereco" class="text-danger"></span>
+                                </div>
+                            </div>
+                        </div>
+                        <partial name="../Conta/PartialViews/_EnderecoPartial.cshtml" for="Endereco" />
+                    </div>
+                    <div id="Cartao" class="tab" style="display:none">
+                        <partial name="../Conta/PartialViews/_CartaoPartial.cshtml" for="Cartao" />
+                    </div>
+                    <div class="form-group">
+                        <input type="submit" value="Logar" class="btn btn-primary" style="margin-left:0px 0px 10px 15px" id="btn" />
+                    </div>
+                </form>
+            </div>
         </div>
     </div>
-    <form asp-action="Registrar" class="col-md-5" style="margin-left:20%">
-        <h1>Registre-se!</h1>
-        <div id="Info" class="tab">
-            <partial name="../Conta/PartialViews/_InfoPessoaisPartial.cshtml" for="InfoUsuario" />
-            <partial name="../Conta/PartialViews/_SenhaPartial.cshtml" for="Senha" />
-            <partial name="../Conta/PartialViews/_TelefonePartial.cshtml" for="Telefone" />
-        </div>
-        <div id="Endereco" class="tab" style="display:none">
-            <partial name="../Conta/PartialViews/_EnderecoPartial.cshtml" for="Endereco" />
-        </div>
-        <div id="Cartao" class="tab" style="display:none">
-            <partial name="../Conta/PartialViews/_CartaoPartial.cshtml" for="Cartao" />
-        </div>
-        <div class="form-group">
-            <input type="submit" value="Logar" class="btn btn-primary" style="margin-left:0px 0px 10px 15px" id="btn" />
-        </div>
-    </form>
 </div>
 @section Scripts{
 

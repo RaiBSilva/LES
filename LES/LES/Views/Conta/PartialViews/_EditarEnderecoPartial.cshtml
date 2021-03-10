@@ -15,35 +15,51 @@
                     <input asp-for="Id" class="form-control required" readonly />
                     <span asp-validation-for="Id" class="text-danger required"></span>
                 </div>
+                <div class="container">
+                    <div class="row">
+                        <div class="col-6">
+                            <label asp-for="NomeEndereco" class="control-label"></label>
+                            <input asp-for="NomeEndereco" class="form-control required" />
+                            <span asp-validation-for="NomeEndereco" class="text-danger required"></span>
+                        </div>
 
-                <div>
-                    <label asp-for="NomeEndereco" class="control-label"></label>
-                    <input asp-for="NomeEndereco" class="form-control required" />
-                    <span asp-validation-for="NomeEndereco" class="text-danger required"></span>
+                        <div class="form-group col-6">
+                            <label asp-for="TipoEndereco" class="control-label"></label>
+                            <select asp-for="TipoEndereco" class="form-control required" asp-items="Html.GetEnumSelectList<LES.Models.Entity.TipoEndereco>()">
+                            </select>
+                            <span asp-validation-for="TipoEndereco" class="text-danger"></span>
+                        </div>
+                    </div>
                 </div>
 
                 <partial name="../PartialViews/_EnderecoPartial.cshtml" for="@Model" />
 
-                <div>
-                    <label asp-for="EPreferencial" class="control-label"></label>
-                    <input asp-for="EPreferencial" class="form-control required" />
-                    <span asp-validation-for="EPreferencial" class="text-danger required"></span>
-                </div>
+                <div class="container">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="form-check form-switch form-check-inline">
+                                <input asp-for="EPreferencial" class="form-check-input required" />
+                                <label asp-for="EPreferencial" class="form-check-label"></label>
+                                <span asp-validation-for="EPreferencial" class="text-danger required"></span>
+                            </div>
 
-                <div>
-                    <label asp-for="ECobranca" class="control-label"></label>
-                    <input asp-for="ECobranca" class="form-control required" />
-                    <span asp-validation-for="ECobranca" class="text-danger required"></span>
-                </div>
+                            <div class="form-check form-switch form-check-inline">
+                                <input asp-for="ECobranca" class="form-check-input required " />
+                                <label asp-for="ECobranca" class="form-check-label"></label>
+                                <span asp-validation-for="ECobranca" class="text-danger required"></span>
+                            </div>
 
-                <div>
-                    <label asp-for="EEntrega" class="control-label"></label>
-                    <input asp-for="EEntrega" class="form-control required" />
-                    <span asp-validation-for="EEntrega" class="text-danger required"></span>
-                </div>
+                            <div class="form-check form-switch form-check-inline">
+                                <input asp-for="EEntrega" class="form-check-input required" />
+                                <label asp-for="EEntrega" class="form-check-label"></label>
+                                <span asp-validation-for="EEntrega" class="text-danger required"></span>
+                            </div>
+                        </div>
 
-                <div class="form-group">
-                    <input type="submit" value="Editar" class="btn btn-primary" id="btn" />
+                        <div class="form-group">
+                            <input type="submit" value="Editar" class="btn btn-primary" id="btn" />
+                        </div>
+                    </div>
                 </div>
 
             </form>

@@ -18,9 +18,9 @@
 
                 <partial name="../PartialViews/_CartaoPartial.cshtml" for="@Model" />
 
-                <div>
-                    <label asp-for="EPreferencial" class="control-label"></label>
-                    <input asp-for="EPreferencial" class="form-control required" />
+                <div class="form-check form-switch">
+                    <input asp-for="EPreferencial" class="form-check-input required" />
+                    <label asp-for="EPreferencial" class="form-check-label"></label>
                     <span asp-validation-for="EPreferencial" class="text-danger required"></span>
                 </div>
 

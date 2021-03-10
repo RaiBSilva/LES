@@ -1,62 +1,84 @@
 ﻿@model LES.Models.ViewModel.Conta.DetalhesEnderecoModel
 
 @{ string classePreferencial = Model.EPreferencial ? "preferencial" : "";
-    string classDt = "col-sm-12";
-    string classDd = "col-sm-12";
+    string classDt = "";
+    string classDd = "";
 }
 
-<dt class="@classDt @classePreferencial">
-    @Html.DisplayNameFor(model => model.NomeEndereco)
-</dt>
-<dd class="@classDd @classePreferencial">
-    @Html.DisplayFor(model => model.NomeEndereco)
-</dd>
-<dt class="@classDt @classePreferencial">
-    @Html.DisplayNameFor(model => model.TipoEndereco)
-</dt>
-<dd class="@classDd @classePreferencial">
-    @Html.DisplayFor(model => model.TipoEndereco)
-</dd>
-<dt class="@classDt @classePreferencial">
-    @Html.DisplayNameFor(model => model.Logradouro)
-</dt>
-<dd class="@classDd @classePreferencial">
-    @Html.DisplayFor(model => model.Logradouro)
-</dd>
-<dt class="@classDt @classePreferencial">
-    @Html.DisplayNameFor(model => model.Numero)
-</dt>
-<dd class="@classDd @classePreferencial">
-    @Html.DisplayFor(model => model.Numero)
-</dd>
-<dt class="@classDt @classePreferencial">
-    @Html.DisplayNameFor(model => model.Complemento)
-</dt>
-<dd class="@classDd @classePreferencial">
-    @Html.DisplayFor(model => model.Complemento)
-</dd>
-<dt class="@classDt @classePreferencial">
-    @Html.DisplayNameFor(model => model.Cep)
-</dt>
-<dd class="@classDd @classePreferencial">
-    @Html.DisplayFor(model => model.Cep)
-</dd>
-<dt class="@classDt @classePreferencial">
-    @Html.DisplayNameFor(model => model.Cidade)
-</dt>
-<dd class="@classDd @classePreferencial">
-    @Html.DisplayFor(model => model.Cidade)
-</dd>
-<dt class="@classDt @classePreferencial">
-    @Html.DisplayNameFor(model => model.Estado)
-</dt>
-<dd class="@classDd @classePreferencial">
-    @Html.DisplayFor(model => model.Estado)
-</dd>
-<dt class="@classDt @classePreferencial">
-    @Html.DisplayNameFor(model => model.Pais)
-</dt>
-<dd class="@classDd @classePreferencial">
-    @Html.DisplayFor(model => model.Pais)
-</dd>
+<dl class="row">
+    <dt class="@classDt @classePreferencial col-12">
+        @Html.DisplayNameFor(model => model.NomeEndereco)
+    </dt>
+    <dd class="@classDd @classePreferencial col-12">
+        @Html.DisplayFor(model => model.NomeEndereco)
+    </dd>
+</dl>
+<dl class="row">
+    <dt class="@classDt @classePreferencial col-12">
+        @Html.DisplayNameFor(model => model.TipoEndereco)
+    </dt>
+    <dd class="@classDd @classePreferencial col-12">
+        @Html.DisplayFor(model => model.TipoEndereco)
+    </dd>
+</dl>
+<dl class="row">
+    <dt class="@classDt @classePreferencial col-9">
+        @Html.DisplayNameFor(model => model.Logradouro)
+    </dt>
+    <dt class="@classDt @classePreferencial col-3">
+        @Html.DisplayNameFor(model => model.Numero)
+    </dt>
+    <dd class="@classDd @classePreferencial col-9">
+        @Html.DisplayFor(model => model.Logradouro)
+    </dd>
+    <dd class="@classDd @classePreferencial col-3">
+        @Html.DisplayFor(model => model.Numero)
+    </dd>
+</dl>
+<dl class="row">
+    <dt class="@classDt @classePreferencial col-6">
+        @Html.DisplayNameFor(model => model.Complemento)
+    </dt>
+    <dt class="@classDt @classePreferencial col-6">
+        @Html.DisplayNameFor(model => model.Cep)
+    </dt>
+    <dd class="@classDd @classePreferencial col-6">
+        @Html.DisplayFor(model => model.Complemento)
+    </dd>
+    <dd class="@classDd @classePreferencial col-6">
+        @Html.DisplayFor(model => model.Cep)
+    </dd>
+</dl>
+<dl class="row">
+    <dt class="@classDt @classePreferencial col-4">
+        @Html.DisplayNameFor(model => model.Cidade)
+    </dt>
+    <dt class="@classDt @classePreferencial col-4">
+        @Html.DisplayNameFor(model => model.Estado)
+    </dt>
+    <dt class="@classDt @classePreferencial col-4">
+        @Html.DisplayNameFor(model => model.Pais)
+    </dt>
+    <dd class="@classDd @classePreferencial col-4">
+        @Html.DisplayFor(model => model.Cidade)
+    </dd>
+    <dd class="@classDd @classePreferencial col-4">
+        @Html.DisplayFor(model => model.Estado)
+    </dd>
+    <dd class="@classDd @classePreferencial col-4">
+        @Html.DisplayFor(model => model.Pais)
+    </dd>
+</dl>
+
+    @if (Model.Observacoes != "")
+    {
+        <dl class="row">
+            <dt class="@classDt @classePreferencial col-12">
+                @Html.DisplayNameFor(model => model.Pais)
+            </dt>
+            <dd class="@classDd @classePreferencial col-12">
+                @Html.DisplayFor(model => model.Pais)
+            </dd>
+        </dl>
+    }
 
