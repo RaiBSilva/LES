@@ -12,6 +12,7 @@ namespace LES.Views.Conta
     {
 
         DetalhesModel ClienteDemo = new DetalhesModel();
+        AlterarSenhaModel Senha = new AlterarSenhaModel();
 
         public ContaController()
         {
@@ -74,6 +75,10 @@ namespace LES.Views.Conta
             ClienteDemo.Cartoes.Add(card);
             ClienteDemo.Cartoes.Add(card);
 
+            Senha.Codigo = "1";
+            Senha.VelhaSenha = "";
+            Senha.Senha = "";
+
         }
 
         //GET /Conta/Login
@@ -108,7 +113,7 @@ namespace LES.Views.Conta
             return View(ClienteDemo);
         }
 
-        //GET Conta/EditarInfo
+        //GET Conta/_EditarInfoPessoalPartial
         public IActionResult _EditarInfoPessoalPartial(int id)
         {
             return PartialView("../Conta/PartialViews/_EditarInfoPartial", ClienteDemo.InfoUsuario);
@@ -121,21 +126,21 @@ namespace LES.Views.Conta
             return RedirectToAction(nameof(Detalhes));
         }
 
-        //GET Conta/EditarSenha
-        public IActionResult EditarSenha(int id) 
+        //GET Conta/_EditarSenhaPartial
+        public IActionResult _EditarSenhaPartial(int id) 
         {
-            return PartialView("../Conta/PartialViews/_EditarSenhaPartial", ClienteDemo.InfoUsuario);
+            return PartialView("../Conta/PartialViews/_EditarSenhaPartial", Senha);
         }
 
         //POST
         [HttpPost]
-        public IActionResult EditarSenha(EditarSenhaModel senha)
+        public IActionResult EditarSenha(AlterarSenhaModel senha)
         {
             return RedirectToAction(nameof(Detalhes));
         }
 
 
-        //GET Conta/EditarEndereco
+        //GET Conta/_EditarEnderecoPartial
         public IActionResult _EditarEnderecoPartial(int id)
         {
             return PartialView("../Conta/PartialViews/_EditarEnderecoPartial", ClienteDemo.Enderecos[0]);
@@ -148,7 +153,7 @@ namespace LES.Views.Conta
             return RedirectToAction(nameof(Detalhes));
         }
 
-        //GET Conta/EditarEndereco
+        //GET Conta/_EditarTelefonePartial
         public IActionResult _EditarTelefonePartial(int id)
         {
             return PartialView("../Conta/PartialViews/_EditarTelefonePartial", ClienteDemo.Telefones[0]);
@@ -161,7 +166,7 @@ namespace LES.Views.Conta
             return RedirectToAction(nameof(Detalhes));
         }
 
-        //GET Conta/EditarCartao
+        //GET Conta/_EditarCartaoPartial
         public IActionResult _EditarCartaoPartial(int id)
         {
             return PartialView("../Conta/PartialViews/_EditarCartaoPartial", ClienteDemo.Cartoes[0]);

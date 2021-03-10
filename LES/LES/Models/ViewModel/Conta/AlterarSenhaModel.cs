@@ -6,11 +6,11 @@ using System.Threading.Tasks;
 
 namespace LES.Models.ViewModel.Conta
 {
-    public class EditarSenhaModel : SenhaBaseModel
+    public class AlterarSenhaModel : SenhaBaseModel
     {
-        //[Required]
-        [Display(Name = "Senha antiga")]
-        public string AntigaSenha { get; set; }
+        public string Codigo { get; set; }
+        [Display(Name ="Senha antiga")]
+        public string VelhaSenha { get; set; }
 
     }
 }
