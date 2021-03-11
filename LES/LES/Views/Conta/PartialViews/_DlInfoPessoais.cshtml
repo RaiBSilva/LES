@@ -7,46 +7,52 @@
     string classDt = "col-sm-6";
     string classDd = "col-sm-10";}
 
-    <dl class="row">
-        <dt class="@classDt">
-            @Html.DisplayNameFor(model => model.Nome)
-        </dt>
-        <dd class="@classDd">
-            <div></div>
-            @Html.DisplayFor(model => model.Nome)
-        </dd>
-        <dt class="@classDt">
-            @Html.DisplayNameFor(model => model.NotaUsuario)
-        </dt>
-        <dd class="@classDd">
-            <div class="container">
-                <div class="progress">
-                    <div class="progress-bar" role="progressbar" aria-valuenow="@notaUsuario" aria-valuemin="0" aria-valuemax="5">@notaUsuario/5</div>
-                </div>
+<div class="row">
+    <h2 class="font-weight-light col-sm-12">
+        Informações Pessoais
+    </h2>
+</div>
+
+<dl class="row">
+    <dt class="@classDt">
+        @Html.DisplayNameFor(model => model.Nome)
+    </dt>
+    <dd class="@classDd">
+        <div></div>
+        @Html.DisplayFor(model => model.Nome)
+    </dd>
+    <dt class="@classDt">
+        @Html.DisplayNameFor(model => model.NotaUsuario)
+    </dt>
+    <dd class="@classDd">
+        <div class="container">
+            <div class="progress">
+                <div class="progress-bar" role="progressbar" aria-valuenow="@notaUsuario" aria-valuemin="0" aria-valuemax="5">@notaUsuario/5</div>
             </div>
-        </dd>
-        <dt class="@classDt">
-            @Html.DisplayNameFor(model => model.Cpf)
-        </dt>
-        <dd class="@classDd">
-            @Html.DisplayFor(model => model.Cpf)
-        </dd>
-        <dt class="@classDt">
-            @Html.DisplayNameFor(model => model.DtNascimento)
-        </dt>
-        <dd class="@classDd">
-            @Html.DisplayFor(model => model.DtNascimento)
-        </dd>
-        <dt class="@classDt">
-            @Html.DisplayNameFor(model => model.Genero)
-        </dt>
-        <dd class="@classDd">
-            @Html.DisplayFor(model => model.Genero)
-        </dd>
-        <dt class="@classDt">
-            @Html.DisplayNameFor(model => model.Email)
-        </dt>
-        <dd class="@classDd">
-            @Html.DisplayFor(model => model.Email)
-        </dd>
-    </dl>
+        </div>
+    </dd>
+    <dt class="@classDt">
+        @Html.DisplayNameFor(model => model.Cpf)
+    </dt>
+    <dd class="@classDd">
+        @Html.DisplayFor(model => model.Cpf)
+    </dd>
+    <dt class="@classDt">
+        @Html.DisplayNameFor(model => model.DtNascimento)
+    </dt>
+    <dd class="@classDd">
+        @Html.DisplayFor(model => model.DtNascimento)
+    </dd>
+    <dt class="@classDt">
+        @Html.DisplayNameFor(model => model.Genero)
+    </dt>
+    <dd class="@classDd">
+        @Html.DisplayFor(model => model.Genero)
+    </dd>
+    <dt class="@classDt">
+        @Html.DisplayNameFor(model => model.Email)
+    </dt>
+    <dd class="@classDd">
+        @Html.DisplayFor(model => model.Email)
+    </dd>
+</dl>

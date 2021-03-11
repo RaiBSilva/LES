@@ -8,3 +8,7 @@
     border-color:white;
     border-radius: 20%;
 }
+
+.btn-pedido:focus, .btn-pedido:active {
+    outline: none !important;
+}

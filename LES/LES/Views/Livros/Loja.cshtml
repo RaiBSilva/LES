@@ -2,21 +2,26 @@
 
 @{
     ViewData["Title"] = "SóRaiva Livros";
+    Layout = "~/Views/Shared/_LayoutLoja.cshtml";
 }
 
 <link rel="stylesheet" href="~/css/Shared/Sidebar.css" />
 <link rel="stylesheet" href="~/css/Shared/CardsStyle.css" />
+<link href="~/css/Livros/Livros.css" rel="stylesheet" />
 
-<div class="conteudo container-fluid">
-    <div class="row">
-        <div id="sidebar" class="col-md-4 sticky-top" style="height:6rem; top:10%">
-            <partial name="../Livros/PartialViews/_LojaFiltroSidebarPartial.cshtml" for="Filtros">
-        </div>
+<div class="row no-gutters">
+    <div class="container-fluid">
+        <div class="row">
+            <div id="sidebar" class="col-md-2 sticky-top" style="height:6rem; top:10%">
+                <partial name="../Livros/PartialViews/_LojaFiltroSidebarPartial.cshtml" for="Filtros">
+            </div>
 
-        <div class="col-md-8">
-            <partial name="_ListaLivrosCardPartial" for="Livros">
+            <div class="col-md-10">
+                <partial name="_ListaLivrosCardPartial" for="Livros">
+            </div>
         </div>
     </div>
+
 </div>
 
 @section Scripts{

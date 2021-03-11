@@ -5,11 +5,7 @@ using System.Threading.Tasks;
 
 namespace LES.Models.ViewModel.Shared
 {
-    public class LivroCardModel
+    public class LivroCardModel : LivroBaseModel
     {
-        public string Titulo { get; set; }
-        public string Descricao { get; set; }
-        public float Preco { get; set; }
-        public int Codigo { get; set; }
     }
 }

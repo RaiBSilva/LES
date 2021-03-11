@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using LES.Models.Entity;
 using LES.Models.ViewModel.Conta;
+using LES.Models.ViewModel.Shared;
 using Microsoft.AspNetCore.Mvc;
 
 namespace LES.Views.Conta
@@ -83,10 +84,35 @@ namespace LES.Views.Conta
 
             PedidoModel ped = new PedidoModel();
             ped.Codigo = "11";
+            ped.DtPedido = DateTime.Today;
+            ped.Status = (StatusPedidos)1;
             PedidoModel ped2 = new PedidoModel();
             ped2.Codigo = "12";
+            ped2.DtPedido = DateTime.Today;
+            ped2.Status = (StatusPedidos)6;
             PedidoModel ped3 = new PedidoModel();
             ped3.Codigo = "13";
+            ped3.DtPedido = DateTime.Today;
+            ped3.Status = (StatusPedidos)7;
+
+            var livro = new PedidoLivroModel();
+
+            livro.Codigo = 1;
+            livro.Descricao = "The Winds of Winter (Os Ventos do Inverno) é o sexto livro de As Crônicas de Gelo e Fogo, de George R. R. Martin.";
+            livro.Preco = 100;
+            livro.Titulo = "The Winds of Winter";
+
+            ped.Livros.Add(livro);
+            ped.Livros.Add(livro);
+            ped.Livros.Add(livro);
+
+            ped2.Livros.Add(livro);
+            ped2.Livros.Add(livro);
+
+            ped3.Livros.Add(livro);
+            ped3.Livros.Add(livro);
+            ped3.Livros.Add(livro);
+            ped3.Livros.Add(livro);
 
             ClienteDemo.Pedidos.Add(ped);
             ClienteDemo.Pedidos.Add(ped2);
