@@ -12,6 +12,7 @@ namespace LES.Models.ViewModel.Conta
         public IList<DetalhesEnderecoModel> Enderecos { get;set; }
         public IList<DetalhesTelefoneModel> Telefones { get; set; }
         public IList<DetalhesCartaoModel> Cartoes { get; set; }
+        public IList<PedidoModel> Pedidos { get; set; }
 
         public DetalhesModel()
         {
@@ -20,6 +21,7 @@ namespace LES.Models.ViewModel.Conta
             Enderecos = new List<DetalhesEnderecoModel>();
             Telefones = new List<DetalhesTelefoneModel>();
             Cartoes = new List<DetalhesCartaoModel>();
+            Pedidos = new List<PedidoModel>();
         }
     }
 

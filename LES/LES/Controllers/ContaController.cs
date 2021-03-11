@@ -81,6 +81,17 @@ namespace LES.Views.Conta
             Senha.VelhaSenha = "";
             Senha.Senha = "";
 
+            PedidoModel ped = new PedidoModel();
+            ped.Codigo = "11";
+            PedidoModel ped2 = new PedidoModel();
+            ped2.Codigo = "12";
+            PedidoModel ped3 = new PedidoModel();
+            ped3.Codigo = "13";
+
+            ClienteDemo.Pedidos.Add(ped);
+            ClienteDemo.Pedidos.Add(ped2);
+            ClienteDemo.Pedidos.Add(ped3);
+
         }
 
         //GET /Conta/Login
