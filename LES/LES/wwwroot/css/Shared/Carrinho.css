@@ -2,13 +2,17 @@
     background-color: #efefef;
 }
 
-.img-config{
-    width:50px;
-    height:50px;
+.back-color1 {
+    background-color: #fff;
+}
+
+.img-config {
+    width: 50px;
+    height: 50px;
 }
 
 .text1 {
-    font-size: 50px;
+    font-size: 30px;
     color: #000000;
 }
 
@@ -41,12 +45,12 @@
     cursor: pointer;
 }
 
-.carrinho {
+.btn-remover {
     border-color: #496b49;
     color: #496b49;
 }
 
-.carrinho:hover {
+.btn-remover:hover {
     border-color: #496b49;
     background-color: #496b49;
     color: white;
