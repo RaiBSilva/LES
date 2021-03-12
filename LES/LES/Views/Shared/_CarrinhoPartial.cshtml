@@ -15,8 +15,8 @@
         </div>
         <div class="dropdown-divider"></div>
         <div class="container">
-            <div class="row justify-content-end">
-                <h6 class="text-muted col-4">Preço:</h6><h5 class="text-left mr-3">R$ @Model.PrecoTotal.ToString("0.00")</h5>
+            <div class="row justify-content-end mx-3">
+                <h6 class="text-muted col-4">Preço:</h6><h5 class="text-left col-3">R$ @Model.PrecoTotal.ToString("0.00")</h5>
             </div>
             <div class="row justify-content-center">
                 <button type="button" class="btn btn-outline-success col-11" onclick="window.location.href='@Url.Action("Comprar","Livros")'" style="font-size:0.75rem">Confirmar compra</button>

@@ -6,15 +6,15 @@
 
     <div class="col-md-2">
         <div class="card mt-3">
-            <div class="product-1 align-items-center p-2 text-center">
+            <div class="align-items-center p-2 text-center">
                 <img src="~/img/the-Winds-of-Winter-cover.jpg" class="img-fluid img-thumbnail" />
                 <h5>@(Model.Titulo)</h5>
-                <div class="mt-3 info">
-                    <span class="text1 d-block">
-                        @(Model.Descricao)
+                <div class="mt-3">
+                    <span class="font-weight-light">
+                        <small>@(Model.Descricao)</small>
                     </span>
-                    <div class="cost mt-3 text-dark">
-                        <span>R$ @(Model.Preco)</span>
+                    <div class="mt-3 text-dark">
+                        <h4>R$ @(Model.Preco)</h4>
                     </div>
                 </div>
             </div>

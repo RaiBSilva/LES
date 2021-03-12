@@ -5,33 +5,36 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<link rel="stylesheet" href="~/css/Shared/Descricao.css" />
-<div class="container back-color">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+<div class="container ">
     <div class="row">
-        <div class="col-5 back-color text-center">
-            <img src="~/img/the-Winds-of-Winter-cover.jpg" class="img-fluid"/>
+        <div class="col-4 text-center pr-3 border-right border-secondary">
+            <img src="~/img/the-Winds-of-Winter-cover.jpg" class="img-fluid" />
         </div>
         <div class="col-7 mt-lg-3">
             <div class="container">
-                <div class="row row-title">
+                <div class="row">
                     <div class="col-12 align-content-lg-start">
-                        <span class="text1">The Winds of Winter</span>
+                        <h3>The Winds of Winter</h3>
                     </div>
                 </div>
-                <div class="row row-title">
-                    <div class="col-12 back-color2 align-content-lg-start">
-                        <span class="text2">George R.R Martin</span>
+                <div class="row">
+                    <div class="col-8 align-content-lg-start border-bottom">
+                        <h4 class="font-weight-light">George R.R Martin</h4>
+                    </div>
+                    <div class="col-4 align-content-lg-end border-bottom">
+                        <h4 class="font-weight-bold text-right">R$ 100,00</h4>
                     </div>
                 </div>
-                <div class="row row-texto">
-                    <div class="col-12">
+                <div class="row">
+                    <div class="col-12 text-justify border-bottom mb-2">
                         Em um novo post do blog pessoal, George R. R. Martin, autor de As Crônicas de Gelo e Fogo, refletiu sobre o ano que se passou, a pandemia, perdas pessoais, eleições americanas e também comentou sobre The Winds of Winter (Os Ventos do Inverno em tradução livre; o título oficial ainda não foi anunciado no Brasil), o sexto livro da saga.
                     </div>
                 </div>
-                <div class="row row-btn">
-                    <div class="col-12 text-center">
-                        <button type="button" class="btn-carrinho carrinho" onclick="window.location.href='@Url.Action("Carrinho","Carrinho")'">COLOCAR NO CARRINHO</button>
-                    </div>
+                <div class="row justify-content-center">
+                    <button type="button" class="btn btn-success col-7 mr-1 text-center" onclick="window.location.href='@Url.Action("FinalizarCompra","Carrinho")'">COMPRAR AGORA</button>
+                    <button type="button" class="btn btn-outline-success col-4 text-center" onclick="window.location.href='@Url.Action("Livros","Loja")'"><i class="fa fa-shopping-cart"></i></button>
                 </div>
             </div>
         </div>
