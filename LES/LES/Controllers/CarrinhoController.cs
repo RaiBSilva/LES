@@ -12,5 +12,15 @@ namespace LES.Views.Carrinho
         {
             return View();
         }
+
+        public IActionResult EscolheEndereco()
+        {
+            return View();
+        }
+        
+        public IActionResult EscolhePagamento()
+        {
+            return View();
+        }
     }
 }
