@@ -5,12 +5,10 @@
     string classDd = "";
 }
 
-<dl class="row">
-    <dt class="@classDt @classePreferencial col-12">
-        @Html.DisplayNameFor(model => model.NomeEndereco)
-    </dt>
-    <dd class="@classDd @classePreferencial col-12">
-        @Html.DisplayFor(model => model.NomeEndereco)
+<dl class="row mb-0 text-info">
+    <dd class="@classDd @classePreferencial col-sm-12">
+        <h5>@Html.DisplayFor(model => model.NomeEndereco)@if (Model.EPreferencial) {@: <span class="text-warning">&#9733;</span> 
+    }</h5>
     </dd>
 </dl>
 <dl class="row">

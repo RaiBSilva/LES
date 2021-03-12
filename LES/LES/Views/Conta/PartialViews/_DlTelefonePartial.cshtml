@@ -6,7 +6,8 @@
 }
 
 <dt class="@classDt @classePreferencial">
-    @Html.DisplayNameFor(model => model.TipoTelefone)
+    @Html.DisplayNameFor(model => model.TipoTelefone) @if (Model.EPreferencial) {@: <span class="text-warning">&#9733;</span> 
+    }
 </dt>
 <dd class="@classDd @classePreferencial">
     @Html.DisplayFor(model => model.TipoTelefone)
