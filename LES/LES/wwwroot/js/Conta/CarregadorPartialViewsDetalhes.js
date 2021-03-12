@@ -45,20 +45,28 @@ function carregarEditarCartao(id) {
     carregarPartialView(endereco);
 }
 
+function carregarRemoverEndereco(id) {
+    var endereco = urls.RemoverEndereco + "/" + id;
+    carregarPartialView(endereco);
+}
+
+function carregarRemoverTelefone(id) {
+    var endereco = urls.RemoverTelefone + "/" + id;
+    carregarPartialView(endereco);
+}
+
+function carregarRemoverCartao(id) {
+    var endereco = urls.RemoverCartao + "/" + id;
+    carregarPartialView(endereco);
+}
+
+function carregarRealizarTroca(id) {
+    var endereco = urls.RealizarTroca + "/" + id;
+    carregarPartialView(endereco);
+}
+
 $('#myModal').on('hidden.bs.modal', function () {
     $(this).empty();
-})
-
-document.getElementById("addNovoEnderecoLink").addEventListener("click", function (e) {
-    carregarNovoEndereco();
-});
-
-document.getElementById("addNovoTelefoneLink").addEventListener("click", function (e) {
-    carregarNovoTelefone();
-});
-
-document.getElementById("addNovoCartaoLink").addEventListener("click", function (e) {
-    carregarNovoCartao();
 });
 
 $("#btnEditarInfo").on("click", function (e) {
@@ -67,6 +75,18 @@ $("#btnEditarInfo").on("click", function (e) {
 
 $("#btnEditarSenha").on("click", function (e) {
     carregarEditarSenha();
+});
+
+$("#addNovoEnderecoLink").on("click", function (e) {
+    carregarNovoEndereco();
+});
+
+$("#addNovoTelefoneLink").on("click", function (e) {
+    carregarNovoTelefone();
+});
+
+$("#addNovoCartaoLink").on("click", function (e) {
+    carregarNovoCartao();
 });
 
 $(".botaoEndereco").on("click", function (e) {
@@ -83,4 +103,26 @@ $(".botaoCartao").on("click", function (e) {
     var id = $(this).val();
     carregarEditarCartao(id);
 });
+
+$(".botaoRemoverEndereco").on("click", function (e) {
+    var id = $(this).val();
+    carregarRemoverEndereco(id);
+});
+
+$(".botaoRemoverTelefone").on("click", function (e) {
+    var id = $(this).val();
+    carregarRemoverTelefone(id);
+});
+
+$(".botaoRemoverCartao").on("click", function (e) {
+    var id = $(this).val();
+    carregarRemoverCartao(id);
+});
+
+$(".btnTroca").on("click", function (e) {
+    var id = $(this).val();
+    carregarRealizarTroca(id);
+});
+
+
 

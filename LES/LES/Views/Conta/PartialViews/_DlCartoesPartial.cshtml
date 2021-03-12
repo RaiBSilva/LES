@@ -5,8 +5,10 @@
     string classDd = "col-sm-12";
 }
 
+
 <dt class="@classDt @classe">
-    @Html.DisplayNameFor(model => model.Nome)
+    @Html.DisplayNameFor(model => model.Nome) @if (Model.EPreferencial) {@: <span class="text-warning">&#9733;</span> 
+    }
 </dt>
 <dd class="@classDd @classe">
     @Html.DisplayFor(model => model.Nome)

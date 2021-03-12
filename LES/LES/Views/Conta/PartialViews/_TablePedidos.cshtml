@@ -25,7 +25,7 @@
                     <td>
                         @if (elegivelTroca)
                         {
-                            <button class="btn btn-info" onclick="window.location.href='@Url.Action(" Troca", "Conta", livro.Codigo)'">Solicitar</button>
+                            <button class="btn btn-info btnTroca" value="@livro.Codigo" data-toggle="modal" data-target="#myModal">Solicitar</button>
                         }
                         else
                         {
