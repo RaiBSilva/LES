@@ -36,5 +36,15 @@ namespace LES.Views.Carrinho
         {
             return PartialView("_CarrinhoPartial", Model);
         }
+
+        public IActionResult EscolheEndereco()
+        {
+            return View();
+        }
+        
+        public IActionResult EscolhePagamento()
+        {
+            return View();
+        }
     }
 }
