@@ -345,7 +345,6 @@ D:\DEVELOPMENT\LES\LES\LES\obj\Debug\netcoreapp3.1\Razor\Views\Home\Index.cshtml
 D:\DEVELOPMENT\LES\LES\LES\obj\Debug\netcoreapp3.1\Razor\Views\Home\Privacy.cshtml.g.cs
 D:\DEVELOPMENT\LES\LES\LES\obj\Debug\netcoreapp3.1\Razor\Views\Livros\Loja.cshtml.g.cs
 D:\DEVELOPMENT\LES\LES\LES\obj\Debug\netcoreapp3.1\Razor\Views\Livros\PartialViews\_LojaFiltroSidebarPartial.cshtml.g.cs
-D:\DEVELOPMENT\LES\LES\LES\obj\Debug\netcoreapp3.1\Razor\Views\Prototipo\Loja.cshtml.g.cs
 D:\DEVELOPMENT\LES\LES\LES\obj\Debug\netcoreapp3.1\Razor\Views\Shared\Error.cshtml.g.cs
 D:\DEVELOPMENT\LES\LES\LES\obj\Debug\netcoreapp3.1\Razor\Views\Shared\_ContaPartial.cshtml.g.cs
 D:\DEVELOPMENT\LES\LES\LES\obj\Debug\netcoreapp3.1\Razor\Views\Shared\_Layout.cshtml.g.cs
@@ -389,7 +388,6 @@ D:\DEVELOPMENT\LES\LES\LES\obj\Debug\netcoreapp3.1\Razor\Views\Conta\PartialView
 D:\DEVELOPMENT\LES\LES\LES\obj\Debug\netcoreapp3.1\Razor\Views\Conta\PartialViews\_ListaCartoesPartial.cshtml.g.cs
 D:\DEVELOPMENT\LES\LES\LES\obj\Debug\netcoreapp3.1\Razor\Views\Conta\PartialViews\_ListaTelefonesPartial.cshtml.g.cs
 D:\DEVELOPMENT\LES\LES\LES\obj\Debug\netcoreapp3.1\Razor\Views\Shared\_LayoutDeslogado.cshtml.g.cs
-D:\DEVELOPMENT\LES\LES\LES\obj\Debug\netcoreapp3.1\Razor\Views\Carrinho\Carrinho.cshtml.g.cs
 C:\Programming\LES\LES\LES\obj\Debug\netcoreapp3.1\Razor\Views\Conta\PartialViews\_ListaPedidosPartial.cshtml.g.cs
 C:\Programming\LES\LES\LES\obj\Debug\netcoreapp3.1\Razor\Views\Conta\PartialViews\_TablePedidos.cshtml.g.cs
 C:\Programming\LES\LES\LES\obj\Debug\netcoreapp3.1\Razor\Views\Shared\_LayoutLoja.cshtml.g.cs
@@ -403,3 +401,16 @@ C:\Programming\LES\LES\LES\obj\Debug\netcoreapp3.1\Razor\Views\Carrinho\Finaliza
 C:\Programming\LES\LES\LES\obj\Debug\netcoreapp3.1\Razor\Views\Carrinho\PartialViews\_ListaCardsCartaoPartial.cshtml.g.cs
 C:\Programming\LES\LES\LES\obj\Debug\netcoreapp3.1\Razor\Views\Carrinho\PartialViews\_ListaCardsEnderecoPartial.cshtml.g.cs
 C:\Programming\LES\LES\LES\obj\Debug\netcoreapp3.1\Razor\Views\Conta\PartialViews\_ListaCuponsPartial.cshtml.g.cs
+D:\DEVELOPMENT\LES\LES\LES\obj\Debug\netcoreapp3.1\Razor\Views\Carrinho\FinalizarCompra.cshtml.g.cs
+D:\DEVELOPMENT\LES\LES\LES\obj\Debug\netcoreapp3.1\Razor\Views\Carrinho\PartialViews\_ListaCardsCartaoPartial.cshtml.g.cs
+D:\DEVELOPMENT\LES\LES\LES\obj\Debug\netcoreapp3.1\Razor\Views\Carrinho\PartialViews\_ListaCardsEnderecoPartial.cshtml.g.cs
+D:\DEVELOPMENT\LES\LES\LES\obj\Debug\netcoreapp3.1\Razor\Views\Conta\PartialViews\_ListaCuponsPartial.cshtml.g.cs
+D:\DEVELOPMENT\LES\LES\LES\obj\Debug\netcoreapp3.1\Razor\Views\Conta\PartialViews\_ListaPedidosPartial.cshtml.g.cs
+D:\DEVELOPMENT\LES\LES\LES\obj\Debug\netcoreapp3.1\Razor\Views\Conta\PartialViews\_RealizarTrocaPartial.cshtml.g.cs
+D:\DEVELOPMENT\LES\LES\LES\obj\Debug\netcoreapp3.1\Razor\Views\Conta\PartialViews\_RemoverCartaoPartial.cshtml.g.cs
+D:\DEVELOPMENT\LES\LES\LES\obj\Debug\netcoreapp3.1\Razor\Views\Conta\PartialViews\_RemoverEnderecoPartial.cshtml.g.cs
+D:\DEVELOPMENT\LES\LES\LES\obj\Debug\netcoreapp3.1\Razor\Views\Conta\PartialViews\_RemoverTelefonePartial.cshtml.g.cs
+D:\DEVELOPMENT\LES\LES\LES\obj\Debug\netcoreapp3.1\Razor\Views\Conta\PartialViews\_TablePedidos.cshtml.g.cs
+D:\DEVELOPMENT\LES\LES\LES\obj\Debug\netcoreapp3.1\Razor\Views\Shared\_CarrinhoPartial.cshtml.g.cs
+D:\DEVELOPMENT\LES\LES\LES\obj\Debug\netcoreapp3.1\Razor\Views\Shared\_ItemCarrinhoPartial.cshtml.g.cs
+D:\DEVELOPMENT\LES\LES\LES\obj\Debug\netcoreapp3.1\Razor\Views\Shared\_LayoutLoja.cshtml.g.cs
