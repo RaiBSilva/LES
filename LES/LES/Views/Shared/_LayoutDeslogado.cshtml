@@ -11,45 +11,36 @@
 </head>
 <body>
     <header>
-        <nav class="navbar-verde navbar navbar-expand-lg">
-            <a class="navbar-brand brand-name" asp-area="" asp-controller="Home" asp-action="Index">SóRaiva</a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
-                <partial name="_ContaPartial">
-                    <div class="dropdown dropleft carrinho-update">
-                        <a class="nav-link dropdown-toggle navbar-item carrinho-update" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            Carrinho
-                        </a>
-                        <div id="dropdown" class="dropdown-menu " aria-labelledby="navbarDropdown" style="max-width:600px"></div>
-                    </div>
-                    <ul class="navbar-nav flex-grow-1">
+        <nav class=" navbar navbar-dark navbar-toggleable-sm navbar-expand-xl fixed-top box-shadow mb-3 navbar-verde">
+            <div class="container">
+                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">SóRaiva</a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div id="navbarSupportedContent" class="collapse navbar-collapse flex-sm-row-reverse">
+                    <partial name="_ContaPartial" />
+                    <ul class="navbar-nav">
                         <li class="nav-item">
                             <a class="nav-link navbar-item" asp-action="Loja" asp-controller="Livros">Livros</a>
                         </li>
-                        <!-- Itens do nav
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle navbar-item" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                Dropdown
-                            </a>
-                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <a class="dropdown-item" href="#">Action</a>
-                                <a class="dropdown-item" href="#">Another action</a>
-                                <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="#">Something else here</a>
+                        <li class="nav-item">
+                            <div class="dropdown carrinho-update">
+                                <a class="nav-link dropdown-toggle navbar-item carrinho-update" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    Carrinho
+                                </a>
+                                <div id="dropdown" class="dropdown-menu " aria-labelledby="navbarDropdown" style="max-width:600px"></div>
                             </div>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link navbar-item" href="#">Disabled</a>
-                        </li>
-                        -->
                     </ul>
-                    <!-- BARRA DE PESQUISA -->
-                    <form class="form-inline my-2 my-lg-0">
-                        <input class="form-control mr-sm-2" type="Pesquisar" placeholder="Pesquisar" aria-label="Pesquisar">
-                        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Pesquisar</button>
-                    </form>
+                    <ul class="navbar-nav">
+                        <li class="nav-item">
+                            <form class="form-inline my-2 my-lg-0">
+                                <input class="form-control mr-sm-2" type="Pesquisar" placeholder="Pesquisar" aria-label="Pesquisar">
+                                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Pesquisar</button>
+                            </form>
+                        </li>
+                    </ul>
+                </div>
             </div>
         </nav>
     </header>

@@ -24,7 +24,7 @@ namespace LES.Views.Conta
             ClienteDemo.InfoUsuario.Email = "ninguemvailerisso@dacueba.com";
             ClienteDemo.InfoUsuario.Genero = (Genero)1;
             ClienteDemo.InfoUsuario.Nome = "Kevin Man'mar";
-            ClienteDemo.InfoUsuario.NotaUsuario = 0;
+            ClienteDemo.InfoUsuario.NotaUsuario = 5;
 
             DetalhesEnderecoModel end = new DetalhesEnderecoModel();
             end.Id = "1";
@@ -55,7 +55,7 @@ namespace LES.Views.Conta
             end2.Cidade = "Mogi das Cruzes";
             end2.Estado = "São Paulo";
             end2.Pais = "Brasil";
-            end2.Observacoes = "Bora cumpade";
+            end2.Observacoes = "";
             end2.ECobranca = false;
             end2.EEntrega = false;
             end2.EPreferencial = false;

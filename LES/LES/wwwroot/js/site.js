@@ -9,9 +9,11 @@ function carregarCarrinho(endereco) {
     var divDropdown = document.getElementById("dropdown");
 
     $(divDropdown).load(endereco);
+
 }
 
 $(".carrinho-update").on("click", function (e) {
+    e.preventDefault();
     carregarCarrinho(carrinhoUrl);
 });
 

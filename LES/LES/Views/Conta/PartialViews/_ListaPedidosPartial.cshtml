@@ -24,7 +24,7 @@
     <div class="container">
     
         <div id="accordion" class="row justify-content-center">
-            @{ int i = 1;} 
+            @{ int i = 1;}
             @foreach (var pedido in Model)
             {
                 string classeStatus = statusInfo[pedido.Status][0];
@@ -46,7 +46,7 @@
                                 </div>
                             </button>
                         </h5>
-                        
+
                     </div>
 
                     <div id="collapse_@i" class="collapse" aria-labelledby="heading_@i" data-parent="#accordion">
@@ -60,7 +60,23 @@
                 i++;
             }
 
-
+            <nav aria-label="Paginação" class="mt-3">
+                <ul class="pagination">
+                    <li class="page-item">
+                        <a class="page-link" href="#" aria-label="Previous">
+                            <span aria-hidden="true">&laquo;</span>
+                            <span class="sr-only">Previous</span>
+                        </a>
+                    </li>
+                    <li class="page-item"><a class="page-link" href="#">1</a></li>
+                    <li class="page-item">
+                        <a class="page-link" href="#" aria-label="Next">
+                            <span aria-hidden="true">&raquo;</span>
+                            <span class="sr-only">Next</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
 
         </div>
     </div>

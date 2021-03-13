@@ -5,7 +5,17 @@
 
 @{ string notaUsuario = Model.NotaUsuario.ToString();
     string classDt = "col-sm-6";
-    string classDd = "col-sm-10";}
+    string classDd = "col-sm-10";
+    int prcntUsuario = Model.NotaUsuario *20 ;
+
+    IDictionary<int, string> cores = new Dictionary<int, string>();
+    cores[1] = "bg-danger";
+    cores[2] = "bg-warning";
+    cores[3] = "bg-success";
+    cores[4] = "bg-info";
+    cores[5] = "bg-primary";
+
+    }
 
 <div class="row">
     <h2 class="font-weight-light col-sm-12">
@@ -27,7 +37,7 @@
     <dd class="@classDd">
         <div class="container">
             <div class="progress">
-                <div class="progress-bar" role="progressbar" aria-valuenow="@notaUsuario" aria-valuemin="0" aria-valuemax="5">@notaUsuario/5</div>
+                <div class="progress-bar @cores[Model.NotaUsuario]" role="progressbar" style="width:@(prcntUsuario)%" aria-valuenow=" @notaUsuario " aria-valuemin="0" aria-valuemax="5">@notaUsuario/5</div>
             </div>
         </div>
     </dd>

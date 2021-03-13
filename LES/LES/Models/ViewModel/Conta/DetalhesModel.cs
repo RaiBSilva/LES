@@ -13,6 +13,7 @@ namespace LES.Models.ViewModel.Conta
         public IList<DetalhesTelefoneModel> Telefones { get; set; }
         public IList<DetalhesCartaoModel> Cartoes { get; set; }
         public IList<PedidoModel> Pedidos { get; set; }
+        public IList<CupomModel> Cupons { get; set; }
 
         public DetalhesModel()
         {
@@ -22,11 +23,13 @@ namespace LES.Models.ViewModel.Conta
             Telefones = new List<DetalhesTelefoneModel>();
             Cartoes = new List<DetalhesCartaoModel>();
             Pedidos = new List<PedidoModel>();
+            Cupons = new List<CupomModel>();
         }
     }
 
     public class DetalhesInfoModel : InfoBaseModel 
     {
+        [Display(Name ="Sua nota de cliente SóRaiva:")]
         public int NotaUsuario { get; set; }
     }
 
