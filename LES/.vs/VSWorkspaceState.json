@@ -1,6 +1,8 @@
 {
   "ExpandedNodes": [
-    ""
+    "",
+    "\\LES",
+    "\\LES\\Views"
   ],
   "SelectedNode": "\\LES.sln",
   "PreviewInSolutionExplorer": false

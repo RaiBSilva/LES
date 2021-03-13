@@ -38,4 +38,139 @@
     <Folder Include="wwwroot\img\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Content Update="Views\Administrador\PartialViews\_DlInfoPessoais.cshtml">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="Views\Administrador\PartialViews\_ListaCuponsPartial.cshtml">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="Views\Administrador\PartialViews\_ListaTelefonesPartial.cshtml">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="Views\Administrador\PartialViews\_LoginFormPartial.cshtml">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="Views\Administrador\PartialViews\_RealizarTrocaPartial.cshtml">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="Views\Administrador\PartialViews\_RemoverCartaoPartial.cshtml">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="Views\Administrador\PartialViews\_RemoverEnderecoPartial.cshtml">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="Views\Administrador\PartialViews\_RemoverTelefonePartial.cshtml">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="Views\Administrador\PartialViews\_SenhaPartial.cshtml">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="Views\Administrador\PartialViews\_TablePedidos.cshtml">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="Views\Administrador\PartialViews\_TelefonePartial.cshtml">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
+    <UpToDateCheckInput Remove="Views\Administrador\PartialViews\_AdicionarNovoCartaoPartial.cshtml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <_ContentIncludedByDefault Remove="Views\Administrador\PartialViews\_AdicionarNovoCartaoPartial.cshtml" />
+    <_ContentIncludedByDefault Remove="Views\Administrador\PartialViews\_AdicionarNovoEnderecoPartial.cshtml" />
+    <_ContentIncludedByDefault Remove="Views\Administrador\PartialViews\_AdicionarNovoTelefonePartial.cshtml" />
+    <_ContentIncludedByDefault Remove="Views\Administrador\PartialViews\_CartaoPartial.cshtml" />
+    <_ContentIncludedByDefault Remove="Views\Administrador\PartialViews\_DlCartoesPartial.cshtml" />
+    <_ContentIncludedByDefault Remove="Views\Administrador\PartialViews\_DlEnderecoPartial.cshtml" />
+    <_ContentIncludedByDefault Remove="Views\Administrador\PartialViews\_DlTelefonePartial.cshtml" />
+    <_ContentIncludedByDefault Remove="Views\Administrador\PartialViews\_EditarCartaoPartial.cshtml" />
+    <_ContentIncludedByDefault Remove="Views\Administrador\PartialViews\_EditarEnderecoPartial.cshtml" />
+    <_ContentIncludedByDefault Remove="Views\Administrador\PartialViews\_EditarInfoPartial.cshtml" />
+    <_ContentIncludedByDefault Remove="Views\Administrador\PartialViews\_EditarSenhaPartial.cshtml" />
+    <_ContentIncludedByDefault Remove="Views\Administrador\PartialViews\_EditarTelefonePartial.cshtml" />
+    <_ContentIncludedByDefault Remove="Views\Administrador\PartialViews\_EnderecoPartial.cshtml" />
+    <_ContentIncludedByDefault Remove="Views\Administrador\PartialViews\_InfoPessoaisPartial.cshtml" />
+    <_ContentIncludedByDefault Remove="Views\Administrador\PartialViews\_ListaCartoesPartial.cshtml" />
+    <_ContentIncludedByDefault Remove="Views\Administrador\PartialViews\_ListaEnderecosPartial.cshtml" />
+    <_ContentIncludedByDefault Remove="Views\Administrador\PartialViews\_ListaPedidosPartial.cshtml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <UpToDateCheckInput Remove="Views\Administrador\PartialViews\_AdicionarNovoEnderecoPartial.cshtml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <UpToDateCheckInput Remove="Views\Administrador\PartialViews\_AdicionarNovoTelefonePartial.cshtml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <UpToDateCheckInput Remove="Views\Administrador\PartialViews\_CartaoPartial.cshtml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <UpToDateCheckInput Remove="Views\Administrador\PartialViews\_DlCartoesPartial.cshtml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <UpToDateCheckInput Remove="Views\Administrador\PartialViews\_DlEnderecoPartial.cshtml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <UpToDateCheckInput Remove="Views\Administrador\PartialViews\_DlTelefonePartial.cshtml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <UpToDateCheckInput Remove="Views\Administrador\PartialViews\_EditarCartaoPartial.cshtml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <UpToDateCheckInput Remove="Views\Administrador\PartialViews\_EditarEnderecoPartial.cshtml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <UpToDateCheckInput Remove="Views\Administrador\PartialViews\_EditarInfoPartial.cshtml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <UpToDateCheckInput Remove="Views\Administrador\PartialViews\_EditarSenhaPartial.cshtml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <UpToDateCheckInput Remove="Views\Administrador\PartialViews\_EditarTelefonePartial.cshtml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <UpToDateCheckInput Remove="Views\Administrador\PartialViews\_EnderecoPartial.cshtml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <UpToDateCheckInput Remove="Views\Administrador\PartialViews\_InfoPessoaisPartial.cshtml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <UpToDateCheckInput Remove="Views\Administrador\PartialViews\_ListaCartoesPartial.cshtml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <UpToDateCheckInput Remove="Views\Administrador\PartialViews\_ListaEnderecosPartial.cshtml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <UpToDateCheckInput Remove="Views\Administrador\PartialViews\_ListaPedidosPartial.cshtml" />
+  </ItemGroup>
+
 </Project>
