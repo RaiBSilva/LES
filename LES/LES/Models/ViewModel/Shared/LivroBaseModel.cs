@@ -10,6 +10,11 @@ namespace LES.Models.ViewModel.Shared
         public string Titulo { get; set; }
         public string Descricao { get; set; }
         public float Preco { get; set; }
-        public int Codigo { get; set; }
+        public int CodigoBarras { get; set; }
+        public int Paginas { get; set; }
+        public int Comprimento { get; set; }
+        public int Altura { get; set; }
+        public int Largura { get; set; }
+
     }
 }

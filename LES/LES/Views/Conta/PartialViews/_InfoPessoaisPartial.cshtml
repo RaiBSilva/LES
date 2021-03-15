@@ -20,7 +20,7 @@
             </div>
             <div class="col-md-4 align-self-center">
                 <label asp-for="Genero" class="control-label"></label>
-                <select asp-for="Genero" class="form-select" required asp-items="Html.GetEnumSelectList<LES.Models.Entity.Genero>()">
+                <select asp-for="Genero" class="form-control" required asp-items="Html.GetEnumSelectList<LES.Models.Entity.Genero>()">
                 </select>
                 <span asp-validation-for="Genero" class="text-danger"></span>
             </div>
