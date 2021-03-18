@@ -18,18 +18,38 @@
 
                         @if (Model.Count > 1)
                         {
-                        <button class="btn btn-danger botaoRemoverCartao col-2 mx-3" type="button" data-toggle="modal" data-target="#myModal" value="@card.Id">
-                            &times;
-                        </button>
+                            <button class="btn btn-danger botaoRemoverCartao col-2 mx-3" type="button" data-toggle="modal" data-target="#myModal" value="@card.Id">
+                                &times;
+                            </button>
                         }
 
-                        @if (!card.EPreferencial){
-                        <button class="btn btn-outline-warning col-2 ml-3" type="button" value="@card.Id">
-                            &#9733;
-                        </button>
+                        @if (!card.EPreferencial)
+                        {
+                            <button class="btn btn-outline-warning col-2 ml-3" type="button" value="@card.Id">
+                                &#9733;
+                            </button>
                         }
                     </dd>
                 </dl>
             }
+        </div>
+        <div class="row justify-content-center">
+            <nav aria-label="Paginação" class="mt-3">
+                <ul class="pagination">
+                    <li class="page-item">
+                        <a class="page-link" href="#" aria-label="Previous">
+                            <span aria-hidden="true">&laquo;</span>
+                            <span class="sr-only">Previous</span>
+                        </a>
+                    </li>
+                    <li class="page-item"><a class="page-link" href="#">1</a></li>
+                    <li class="page-item">
+                        <a class="page-link" href="#" aria-label="Next">
+                            <span aria-hidden="true">&raquo;</span>
+                            <span class="sr-only">Next</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
         </div>
     </div>

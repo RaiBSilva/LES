@@ -21,6 +21,10 @@ function carregarCalcularFrete() {
     carregarPartialView(urls.calcularFrete);
 }
 
+function carregarUsarCupom(){
+    carregarPartialView(urls.usarCupom);
+}
+
 $('#myModal').on('hidden.bs.modal', function () {
     $(this).empty();
 });
@@ -36,3 +40,8 @@ $(".btnCartao").on("click", function (e) {
 $(".btnFrete").on("click", function (e) {
     carregarCalcularFrete();
 });
+
+$(".btnUsarCupom").on("click", function (e) {
+    carregarUsarCupom();
+});
+

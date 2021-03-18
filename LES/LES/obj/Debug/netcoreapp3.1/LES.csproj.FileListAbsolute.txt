@@ -471,3 +471,5 @@ C:\Programming\LES\LES\LES\obj\Debug\netcoreapp3.1\Razor\Views\Carrinho\PartialV
 C:\Programming\LES\LES\LES\obj\Debug\netcoreapp3.1\Razor\Views\Carrinho\PartialViews\_CartaoPartial.cshtml.g.cs
 C:\Programming\LES\LES\LES\obj\Debug\netcoreapp3.1\Razor\Views\Carrinho\PartialViews\_EnderecoPartial.cshtml.g.cs
 C:\Programming\LES\LES\LES\obj\Debug\netcoreapp3.1\Razor\Views\Carrinho\PartialViews\_CalcularFretePartial.cshtml.g.cs
+C:\Programming\LES\LES\LES\obj\Debug\netcoreapp3.1\Razor\Views\Carrinho\PartialViews\_ListaCupomPartial.cshtml.g.cs
+C:\Programming\LES\LES\LES\obj\Debug\netcoreapp3.1\Razor\Views\Carrinho\PartialViews\_UsarCupomPartial.cshtml.g.cs

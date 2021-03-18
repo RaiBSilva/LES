@@ -106,7 +106,7 @@ namespace LES.Views.Conta
             card2.Nome = "KEVIN MANMAR";
             card2.Vencimento = DateTime.Today;
 
-            //ClienteDemo.Cartoes.Add(card2);
+            ClienteDemo.Cartoes.Add(card2);
 
             Senha.Codigo = "1";
             Senha.VelhaSenha = "";
@@ -147,6 +147,18 @@ namespace LES.Views.Conta
             ClienteDemo.Pedidos.Add(ped);
             ClienteDemo.Pedidos.Add(ped2);
             ClienteDemo.Pedidos.Add(ped3);
+
+            CupomModel c1 = new CupomModel();
+            CupomModel c2 = new CupomModel();
+
+            c1.Codigo = "142";
+            c1.Valor = 10.30F;
+
+            c2.Codigo = "1444";
+            c2.Valor = 20.30F;
+
+            ClienteDemo.Cupons.Add(c1);
+            ClienteDemo.Cupons.Add(c2);
 
             #endregion
 

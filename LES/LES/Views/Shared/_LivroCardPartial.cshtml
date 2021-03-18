@@ -14,7 +14,7 @@
                         <small>@(Model.Descricao)</small>
                     </span>
                     <div class="mt-3 text-dark">
-                        <h5>R$ @(Model.Preco)</h5>
+                        <h5>R$ @(Model.Preco.ToString("0.00").Replace('.',','))</h5>
                     </div>
                 </div>
             </div>
