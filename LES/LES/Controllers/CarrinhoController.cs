@@ -95,14 +95,47 @@ namespace LES.Views.Carrinho
 
         }
 
-        public IActionResult _CarrinhoPartial() 
+        public IActionResult FinalizarCompra() {
+            return View(FCModel); 
+        }
+
+        public IActionResult _CarrinhoPartial()
         {
             return PartialView("_CarrinhoPartial", CarrinhoModel);
         }
 
-        public IActionResult FinalizarCompra() {
-            return View(FCModel); 
+        #region Adicionar Endereço e Cartão
+        public IActionResult _AdicionarNovoEnderecoPartial()
+        {
+            return PartialView("../Carrinho/PartialViews/_AdicionarNovoEnderecoPartial");
         }
+
+        [HttpPost]
+        public IActionResult AdicionarNovoEndereco(DetalhesEnderecoModel novoEndereco)
+        {
+            return RedirectToAction(nameof(FinalizarCompra));
+        }
+
+        public IActionResult _AdicionarNovoCartaoPartial()
+        {
+            return PartialView("../Carrinho/PartialViews/_AdicionarNovoCartaoPartial");
+        }
+
+        [HttpPost]
+        public IActionResult AdicionarNovoCartao(DetalhesCartaoModel novoEndereco)
+        {
+            return RedirectToAction(nameof(FinalizarCompra));
+        }
+        #endregion
+
+        #region Calcular Frete
+
+        public IActionResult _CalcularFrete()
+        {
+            return PartialView("../Carrinho/PartialViews/_CalcularFretePartial");
+        }
+
+        #endregion
 
     }
 }

@@ -68,3 +68,18 @@
         <h3>Comprar</h3>
     </button>
 </div>
+
+<div id="myModal" class="modal fade" role="dialog">
+
+</div>
+
+@section Scripts{ 
+
+    <script type="text/javascript">
+        var urls = urls || {};
+        urls.novoEndereco = '@Url.Action("_AdicionarNovoEnderecoPartial", "Carrinho")';
+        urls.novoCartao = '@Url.Action("_AdicionarNovoCartaoPartial", "Carrinho")';
+        urls.calcularFrete = '@Url.Action("_CalcularFrete", "Carrinho")';
+    </script>
+    <script src="~/js/Carrinho/CarregadorPartialViewsFinalizarCompra.js"></script>
+}

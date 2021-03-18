@@ -264,7 +264,7 @@ namespace LES.Views.Conta
         }
 
         [HttpPost]
-        public IActionResult AdicionarNovoEndereco(AdicionarNovoEnderecoModel novoEndereco) 
+        public IActionResult AdicionarNovoEndereco(DetalhesEnderecoModel novoEndereco) 
         {
             return RedirectToAction(nameof(Detalhes));
         }
@@ -275,7 +275,7 @@ namespace LES.Views.Conta
         }
 
         [HttpPost]
-        public IActionResult AdicionarNovoTelefone(AdicionarNovoTelefoneModel novoTelefone)
+        public IActionResult AdicionarNovoTelefone(DetalhesTelefoneModel novoTelefone)
         {
             return RedirectToAction(nameof(Detalhes));
         }
@@ -286,7 +286,7 @@ namespace LES.Views.Conta
         }
 
         [HttpPost]
-        public IActionResult AdicionarNovoCartao(AdicionarNovoTelefoneModel novoTelefone)
+        public IActionResult AdicionarNovoCartao(DetalhesCartaoModel novoCartao)
         {
             return RedirectToAction(nameof(Detalhes));
         }

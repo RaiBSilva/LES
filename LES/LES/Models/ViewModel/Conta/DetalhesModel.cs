@@ -60,19 +60,4 @@ namespace LES.Models.ViewModel.Conta
         [Display(Name = "É preferencial?")]
         public bool EPreferencial { get; set; }
     }
-
-    public class AdicionarNovoEnderecoModel : DetalhesEnderecoModel 
-    {
-        public string CodigoCliente { get; set; }
-    }
-
-    public class AdicionarNovoTelefoneModel : DetalhesTelefoneModel
-    {
-        public string CodigoCliente { get; set; }
-    }
-
-    public class AdicionarNovoCartaoModel : DetalhesCartaoModel
-    {
-        public string CodigoCliente { get; set; }
-    }
 }
