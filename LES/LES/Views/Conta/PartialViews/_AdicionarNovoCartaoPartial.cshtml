@@ -1,4 +1,4 @@
-﻿@model AdicionarNovoCartaoModel
+﻿@model DetalhesCartaoModel
 <div class="modal-content">
 
     <!-- Modal content-->
@@ -8,12 +8,6 @@
     </div>
     <div class="modal-body">
         <form asp-action="AdicionarNovoCartao" asp-controller="Conta">
-
-            <div hidden>
-                <label asp-for="CodigoCliente" class="control-label"></label>
-                <input asp-for="CodigoCliente" class="form-control required" readonly />
-                <span asp-validation-for="CodigoCliente" class="text-danger required"></span>
-            </div>
 
             <partial name="../PartialViews/_CartaoPartial.cshtml" for="@Model" />
 

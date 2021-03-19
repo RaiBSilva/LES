@@ -17,18 +17,9 @@
     <div class="col-12 text-center">
         <h6 class="font-weight-light">Preço total:</h6><h5>R$ @Model.Pedido.PrecoTotal.ToString("0.00")</h5>
     </div>
-    <div class="col-1"></div>
-    <div class="col-10 text-center my-1">Cupom #433: R$ -30,00</div>
-    <button class="btn btn-danger botaoRemoverCupom col-1 my-1">
-        &times;
-    </button>
-    <div class="col-1"></div>
-    <div class="col-10 text-center my-1">Cupom #434: R$ -15,00</div>
-    <button class="btn btn-danger botaoRemoverCupom col-1 my-1">
-        &times;
-    </button>
+    <partial name="../Carrinho/PartialViews/_ListaCupomPartial.cshtml" for="Cupons">
     <div class="col-3 mb-2"></div>
-    <button type="submit" class="btn btn-outline-info col-6 text-center mb-2">
+    <button type="submit" class="btn btn-outline-info col-6 btnUsarCupom text-center mb-2" data-toggle="modal" data-target="#myModal">
         <h5>
             Adicionar cupom
         </h5>
@@ -68,3 +59,19 @@
         <h3>Comprar</h3>
     </button>
 </div>
+
+<div id="myModal" class="modal fade" role="dialog">
+
+</div>
+
+@section Scripts{ 
+
+    <script type="text/javascript">
+        var urls = urls || {};
+        urls.novoEndereco = '@Url.Action("_AdicionarNovoEnderecoPartial", "Carrinho")';
+        urls.novoCartao = '@Url.Action("_AdicionarNovoCartaoPartial", "Carrinho")';
+        urls.calcularFrete = '@Url.Action("_CalcularFretePartial", "Carrinho")';
+        urls.usarCupom = '@Url.Action("_UsarCupomPartial", "Carrinho")';
+    </script>
+    <script src="~/js/Carrinho/CarregadorPartialViewsFinalizarCompra.js"></script>
+}

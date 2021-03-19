@@ -18,6 +18,8 @@ namespace LES.Views.Carrinho
 
         public CarrinhoController()
         {
+            #region Carrinho Demo
+
             CarrinhoModel.Livros = new List<CarrinhoLivroModel>();
 
             CarrinhoLivroModel livro = new CarrinhoLivroModel();
@@ -28,7 +30,11 @@ namespace LES.Views.Carrinho
             livro.Quantia = 3;
 
             CarrinhoModel.Livros.Add(livro);
+            CarrinhoModel.Livros.Add(livro);
 
+            #endregion
+
+            #region Finalizar Compra Demo
             DetalhesEnderecoModel end = new DetalhesEnderecoModel();
             end.Id = "1";
             end.NomeEndereco = "Tortura";
@@ -89,20 +95,79 @@ namespace LES.Views.Carrinho
 
             FCModel.Cartoes.Add(card2);
 
+            CupomModel c1 = new CupomModel();
+            CupomModel c2 = new CupomModel();
+
+            c1.Codigo = "142";
+            c1.Valor = 10.30F;
+
+            c2.Codigo = "1444";
+            c2.Valor = 20.30F;
+
+            FCModel.Cupons.Add(c1);
+            FCModel.Cupons.Add(c2);
+
             FCModel.Pedido = CarrinhoModel;
 
             FCModel.Pedido.PrecoTotal = 250.50F;
 
-        }
+            #endregion
 
-        public IActionResult _CarrinhoPartial() 
-        {
-            return PartialView("_CarrinhoPartial", CarrinhoModel);
         }
 
         public IActionResult FinalizarCompra() {
             return View(FCModel); 
         }
+
+        public IActionResult _CarrinhoPartial()
+        {
+            return PartialView("_CarrinhoPartial", CarrinhoModel);
+        }
+
+        #region Adicionar Endereço e Cartão
+        public IActionResult _AdicionarNovoEnderecoPartial()
+        {
+            return PartialView("../Carrinho/PartialViews/_AdicionarNovoEnderecoPartial");
+        }
+
+        [HttpPost]
+        public IActionResult AdicionarNovoEndereco(DetalhesEnderecoModel novoEndereco)
+        {
+            return RedirectToAction(nameof(FinalizarCompra));
+        }
+
+        public IActionResult _AdicionarNovoCartaoPartial()
+        {
+            return PartialView("../Carrinho/PartialViews/_AdicionarNovoCartaoPartial");
+        }
+
+        [HttpPost]
+        public IActionResult AdicionarNovoCartao(DetalhesCartaoModel novoEndereco)
+        {
+            return RedirectToAction(nameof(FinalizarCompra));
+        }
+        #endregion
+
+        #region Calcular Frete
+
+        public IActionResult _CalcularFretePartial()
+        {
+            return PartialView("../Carrinho/PartialViews/_CalcularFretePartial");
+        }
+
+        #endregion
+
+        #region Usar Cupom
+        public IActionResult _UsarCupomPartial()
+        {
+            return PartialView("../Carrinho/PartialViews/_UsarCupomPartial", FCModel.Cupons);
+        }
+
+        public IActionResult UsarCupom(int id) 
+        {
+            return RedirectToAction(nameof(FinalizarCompra));
+        }
+        #endregion
 
     }
 }

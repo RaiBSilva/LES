@@ -9,24 +9,48 @@
         <div class="row">
             @foreach (var tel in Model)
             {
-            <dl class="col-lg card">
-                <partial name="../PartialViews/_DlTelefonePartial.cshtml" for="@tel" />
-                <dd class="row justify-content-start">
-                    <button class="btn btn-secondary botaoTelefone col-6 mr-3" type="button" data-toggle="modal" data-target="#myModal" value="@tel.Id">
-                        Editar este telefone
-                    </button>
-                    @if(Model.Count > 1) { 
-                    <button class="btn btn-danger botaoRemoverTelefone col-2  mx-3" type="button" data-toggle="modal" data-target="#myModal" value="@tel.Id">
-                        &times;
-                    </button>
-                    }
-                    @if (!tel.EPreferencial) { 
-                    <button class="btn btn-outline-warning col-2 ml-3" type="button" value="@tel.Id">
-                        &#9733;
-                    </button>
-                    }
-                </dd>
-            </dl>
+                <div class="col-lg-6 my-1 card">
+                    <partial name="../PartialViews/_DlTelefonePartial.cshtml" for="@tel" />
+                    <dl>
+                        <dd class="row justify-content-start mx-1">
+                            <button class="btn btn-secondary botaoTelefone col-6 mr-3" type="button" data-toggle="modal" data-target="#myModal" value="@tel.Id">
+                                Editar este telefone
+                            </button>
+                            @if (Model.Count > 1)
+                            {
+                                <button class="btn btn-danger botaoRemoverTelefone col-2  mx-3" type="button" data-toggle="modal" data-target="#myModal" value="@tel.Id">
+                                    &times;
+                                </button>
+                            }
+
+                            @if (!tel.EPreferencial)
+                            {
+                                <button class="btn btn-outline-warning col-2 ml-3" type="button" value="@tel.Id">
+                                    &#9733;
+                                </button>
+                            }
+                        </dd>
+                    </dl>
+                </div>
             }
+        </div>
+        <div class="row justify-content-center">
+            <nav aria-label="Paginação" class="mt-3">
+                <ul class="pagination">
+                    <li class="page-item">
+                        <a class="page-link" href="#" aria-label="Previous">
+                            <span aria-hidden="true">&laquo;</span>
+                            <span class="sr-only">Previous</span>
+                        </a>
+                    </li>
+                    <li class="page-item"><a class="page-link" href="#">1</a></li>
+                    <li class="page-item">
+                        <a class="page-link" href="#" aria-label="Next">
+                            <span aria-hidden="true">&raquo;</span>
+                            <span class="sr-only">Next</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
         </div>
     </div>

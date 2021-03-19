@@ -1,4 +1,5 @@
-﻿using LES.Models.ViewModel.Conta;
+﻿using LES.Models.Entity;
+using LES.Models.ViewModel.Conta;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,12 +11,14 @@ namespace LES.Models.ViewModel.Carrinho
     {
         public IList<DetalhesEnderecoModel> Enderecos { get; set; }
         public IList<DetalhesCartaoModel> Cartoes { get; set; }
+        public IList<CupomModel> Cupons { get; set; }
         public CarrinhoModel Pedido {get;set;}
 
         public FinalizarCompraModel()
         {
             Enderecos = new List<DetalhesEnderecoModel>();
             Cartoes = new List<DetalhesCartaoModel>();
+            Cupons = new List<CupomModel>();
         }
     }
 }
