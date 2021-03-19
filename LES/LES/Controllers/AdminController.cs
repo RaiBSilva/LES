@@ -187,7 +187,7 @@ namespace LES.Controllers
             ClientesDemo.Clientes.Add((AdminClienteModel)ClienteDemo);
             ClientesDemo.Clientes.Add((AdminClienteModel)ClienteDemo);
 
-            ClientesDemo.Clientes[0].Inativo = true;
+            ClientesDemo.Clientes[0].Inativo = false;
 
             #endregion
         }
@@ -201,11 +201,6 @@ namespace LES.Controllers
         {
             return View(ClientesDemo);
             
-        }
-
-        public IActionResult Cliente(int id) {
-
-            return View("DetalhesCliente", ClienteDemo);
         }
 
         public IActionResult Pedidos()
@@ -264,6 +259,12 @@ namespace LES.Controllers
         public IActionResult InativarReativarCliente(int id)
         {
             return RedirectToAction(nameof(Pedidos));
+        }
+
+        public IActionResult _VisualizarClientePartial(int id)
+        {
+
+            return PartialView("../Admin/PartialViews/_VisualizarClientePartial", ClienteDemo);
         }
 
         #endregion

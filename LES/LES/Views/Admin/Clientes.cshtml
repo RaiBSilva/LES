@@ -21,6 +21,13 @@
                 <th scope="col">Detalhes</th>
                 <th scope="col">Inativar</th>
             </tr>
+            <tr>
+                <th scope="col"><input id="filtroId" class="form-control" placeholder="1..." /></th>
+                <th scope="col"><input id="filtroNome" class="form-control" placeholder="José..." /></th>
+                <th scope="col"><input id="filtroEmail" class="form-control" type="email" placeholder="Jose@hotmail.com..." /></th>
+                <th scope="col"><button class="btn btn-primary btnBuscar">Buscar</button></th>
+                <th scope="col"></th>
+            </tr>
         </thead>
         <tbody>
             @foreach (var cliente in Model.Clientes)
@@ -29,14 +36,14 @@
                     <th scope="row">@cliente.InfoUsuario.Codigo</th>
                     <td>@cliente.InfoUsuario.Nome</td>
                     <td>@cliente.InfoUsuario.Email</td>
-                    <td><button type="button" class="btn btn-outline-info" onclick="window.location.href='@Url.Action("Cliente", "Admin", cliente.InfoUsuario.Codigo)'">Visualizar</button></td>
+                    <td><button type="button" class="btn btn-outline-info btnVisualizar" data-toggle="modal" data-target="#myModal" value="@cliente.InfoUsuario.Codigo">Visualizar</button></td>
                     @if (cliente.Inativo)
                     {
-                        <td><button type="button" class="btn btn-success btnInativar" href="#myModal" data-toggle="modal" data-target="#myModal" value="@cliente.InfoUsuario.Codigo">Reativar</button></td>
-                    } 
+                        <td><button type="button" class="btn btn-success btnInativar" data-toggle="modal" data-target="#myModal" value="@cliente.InfoUsuario.Codigo">Reativar</button></td>
+                    }
                     else
-                    { 
-                        <td><button type="button" class="btn btn-danger btnInativar" href="#myModal" data-toggle="modal" data-target="#myModal" value="@cliente.InfoUsuario.Codigo">Inativar</button></td>
+                    {
+                        <td><button type="button" class="btn btn-danger btnInativar" data-toggle="modal" data-target="#myModal" value="@cliente.InfoUsuario.Codigo">Inativar</button></td>
                     }
                 </tr>
             }
@@ -69,9 +76,12 @@
 {
 
     <script type="text/javascript">
+
         var urls = urls || {};
         urls.InativarReativarCliente = '@Url.Action("_InativarReativarClientePartial", "Admin")';
+        urls.VisualizarCliente = '@Url.Action("_VisualizarClientePartial", "Admin")';
 
     </script>
     <script src="~/js/Admin/CarregadorPartialViewClientes.js"></script>
+    <script src="~/js/Conta/Tabs.js"></script>
 }

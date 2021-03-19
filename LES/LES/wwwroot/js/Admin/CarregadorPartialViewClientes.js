@@ -13,7 +13,21 @@ function carregarInativarCliente(id) {
     carregarPartialView(endereco);
 }
 
+function carregarVisualizarCliente(id) {
+    var endereco = urls.VisualizarCliente + "/" + id;
+    carregarPartialView(endereco);
+}
+
+$('#myModal').on('hidden.bs.modal', function () {
+    $(this).empty();
+});
+
 $(".btnInativar").on("click", function (e) {
     var id = $(this).val();
     carregarInativarCliente(id);
+});
+
+$(".btnVisualizar").on("click", function (e) {
+    var id = $(this).val();
+    carregarVisualizarCliente(id);
 });
