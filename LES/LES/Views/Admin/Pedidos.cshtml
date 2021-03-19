@@ -1,4 +1,6 @@
-﻿@{
+﻿@model LES.Models.ViewModel.Admin.PedidosPaginaModel
+
+@{
     ViewData["Title"] = "Livros";
     Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
 }
@@ -19,16 +21,33 @@
                 <th scope="col">Status</th>
                 <th scope="col">Detalhes</th>
             </tr>
-        </thead>
-        <tbody>
             <tr>
-                <th scope="row">1</th>
-                <td>Osmar</td>
-                <td>12/03/2077</td>
-                <td>R$67,38</td>
-                <td>Em processamento.</td>
-                <td><button type="button" class="btn btn-outline-info" href="#modalDetalhes" data-toggle="modal" data-target="#modalDetalhes">Visualizar</button></td>
+                <th scope="col"><input id="filtroId" class="form-control" placeholder="1..."/></th>
+                <th scope="col"><input id="filtroCliente" class="form-control" placeholder="José..."/></th>
+                <th scope="col">
+                    De <input id="filtroDataMin" class="form-control" type="date" placeholder="Data mínima..."/>
+                    Até <input id="filtroDataMax" class="form-control" type="date" placeholder="Data máxima..." />
+                </th>
+                <th scope="col">
+                    De <input id="filtroValorMin" class="form-control" type="number" step="0.01" min="0" placeholder="R$ 13,40..."/>
+                    Até <input id="filtroValorMax" class="form-control" type="number" step="0.01" min="0" placeholder="R$ 13,40..." />
+                </th>
+                <th scope="col">
+                    <select class="form-control" asp-items="Html.GetEnumSelectList<LES.Models.Entity.StatusPedidos>()">
+                        <option label=" "></option>
+                    </select>
+                </th>
+                <th scope="col">
+                    <button class="btn btn-primary btnBuscar">Buscar</button>
+                </th>
             </tr>
+        </thead>
+        <tbody id="corpoTabela">
+            
+            @foreach (var pedido in Model.Pedidos) { 
+                <partial name="../Admin/PartialViews/_TabelaPedidosPartial.cshtml" for="@pedido" />
+            }
+
         </tbody>
     </table>
     <nav aria-label="Paginação">
@@ -50,89 +69,22 @@
     </nav>
 </div>
 
-<div class="modal fade" id="modalDetalhes">
+<div class="modal fade" id="myModal">
     <div class="modal-dialog modal-xl">
-        <div class="modal-content">
-            <!-- Modal content-->
-            <div class="modal-header">
-                <h4 class="modal-title">Detalhes da Compra.</h4>
-                <button type="button" class="close" data-dismiss="modal">&times;</button>
-            </div>
-            <div class="modal-body">
-                <div class="container justify-content-center">
-                    <table class="table table-sm table-borderless table-hover">
-                        <thead class="thead-dark">
-                            <tr>
-                                <th scope="col">Id</th>
-                                <th scope="col">Livro</th>
-                                <th scope="col">Quantidade</th>
-                                <th scope="col">Valor Total</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <th scope="row">85</th>
-                                <td>O Senhor dos Anéis: A Sociedade do Anel</td>
-                                <td>1</td>
-                                <td>R$42,69</td>
-                            </tr>
-                            <tr>
-                                <th scope="row">82</th>
-                                <td>A Arte da Guerra</td>
-                                <td>1</td>
-                                <td>R$24,69</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                    <span>Total da compra:</span>
-                    <span>R$ 67,38</span>
-                    <div class="m-3"></div>
-
-                    <div class="row justify-content-center">
-                        <div class="col-6">
-                            <h5 class="modal-title">Cupons Utilizados.</h5>
-                            <table class="table table-borderless table-sm table-hover">
-                                <thead class="thead-dark">
-                                    <tr>
-                                        <th scope="col">Código</th>
-                                        <th scope="col">Valor</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <th scope="row">8518575</th>
-                                        <td>R$2,69</td>
-                                    </tr>
-                                    <tr>
-                                        <th scope="row">83385458</th>
-                                        <td>R$8,69</td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                            <span>Total dos cupons:</span>
-                            <span>R$ 11,38</span>
-                        </div>
-                        <div class="col-6">
-                            <h5 class="modal-title">Status do Pedido.</h5>
-                            <select class="form-control" aria-label="Selecione um status...">
-                                <option selected>Selecione um status...</option>
-                                <option value="1">Em processamento.</option>
-                                <option value="2">Em trânsito...</option>
-                                <option value="3">Troca em processamento...</option>
-                                <option value="4">Troca autorizada!</option>
-                                <option value="5">Aprovado!</option>
-                                <option value="6">Trocado!</option>
-                                <option value="7">Entregue!</option>
-                                <option value="8">Negado.</option>
-                            </select>
-                        </div>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-outline-info">Salvar</button>
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
-                </div>
-            </div>
-        </div>
+        
     </div>
 </div>
+
+@section Scripts
+{
+
+    <script type="text/javascript">
+        var urls = urls || {};
+        urls.VisualizarPedido = '@Url.Action("_VisualizarPedidoPartial", "Admin")';
+        urls.AprovarPedido = '@Url.Action("_AprovarPedidoPartial", "Admin")';
+        urls.NegarPedido = '@Url.Action("_NegarPedidoPartial", "Admin")';
+        urls.CancelarPedido = '@Url.Action("_CancelarPedidoPartial", "Admin")';
+
+    </script>
+    <script src="~/js/Admin/CarregadorPartialViewPedidos.js"></script>
+}

@@ -1,0 +1,17 @@
+﻿@model LES.Models.ViewModel.Admin.AdminPedidoModel
+
+
+<div class="modal-content">
+    <!-- Modal content-->
+    <div class="modal-header">
+        <h4 class="modal-title">Cancelar Pedido?</h4>
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+    </div>
+    <div class="modal-body">
+        <partial name="../PartialViews/_InfoPedidoPartial.cshtml" for="@Model" />
+        <div class="modal-footer">
+            <button type="button" class="btn btn-outline-danger" onclick="window.location.href='@Url.Action("CancelarPedido","Admin", Model.Codigo)">Cancelar</button>
+            <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+        </div>
+    </div>
+</div>

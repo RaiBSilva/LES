@@ -15,10 +15,12 @@ namespace LES.Models.ViewModel.Conta
         public IList<PedidoLivroModel> Livros { get; set; }
         public float PreçoTotal { get; set; }
         public StatusPedidos Status {get;set;}
+        public IList<CupomModel> Cupons { get; set; }
 
         public PedidoModel()
         {
             Livros = new List<PedidoLivroModel>();
+            Cupons = new List<CupomModel>();
         }
     }
 

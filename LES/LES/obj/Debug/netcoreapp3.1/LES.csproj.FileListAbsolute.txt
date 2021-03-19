@@ -445,7 +445,6 @@ D:\DEVELOPMENT\LES\LES\LES\obj\Debug\netcoreapp3.1\Razor\Views\Administrador\Par
 D:\DEVELOPMENT\LES\LES\LES\obj\Debug\netcoreapp3.1\Razor\Views\Administrador\PartialViews\_TelefonePartial.cshtml.g.cs
 D:\DEVELOPMENT\LES\LES\LES\obj\Debug\netcoreapp3.1\Razor\Views\Administrador\ListaTransacoes.cshtml.g.cs
 C:\Programming\LES\LES\LES\obj\Debug\netcoreapp3.1\Razor\Views\Admin\DetalhesCliente.cshtml.g.cs
-C:\Programming\LES\LES\LES\obj\Debug\netcoreapp3.1\Razor\Views\Admin\Login.cshtml.g.cs
 C:\Programming\LES\LES\LES\obj\Debug\netcoreapp3.1\Razor\Views\Admin\PartialViews\_CartaoPartial.cshtml.g.cs
 C:\Programming\LES\LES\LES\obj\Debug\netcoreapp3.1\Razor\Views\Admin\PartialViews\_DlCartoesPartial.cshtml.g.cs
 C:\Programming\LES\LES\LES\obj\Debug\netcoreapp3.1\Razor\Views\Admin\PartialViews\_DlEnderecoPartial.cshtml.g.cs
@@ -458,9 +457,7 @@ C:\Programming\LES\LES\LES\obj\Debug\netcoreapp3.1\Razor\Views\Admin\PartialView
 C:\Programming\LES\LES\LES\obj\Debug\netcoreapp3.1\Razor\Views\Admin\PartialViews\_ListaEnderecosPartial.cshtml.g.cs
 C:\Programming\LES\LES\LES\obj\Debug\netcoreapp3.1\Razor\Views\Admin\PartialViews\_ListaPedidosPartial.cshtml.g.cs
 C:\Programming\LES\LES\LES\obj\Debug\netcoreapp3.1\Razor\Views\Admin\PartialViews\_ListaTelefonesPartial.cshtml.g.cs
-C:\Programming\LES\LES\LES\obj\Debug\netcoreapp3.1\Razor\Views\Admin\PartialViews\_LoginFormPartial.cshtml.g.cs
 C:\Programming\LES\LES\LES\obj\Debug\netcoreapp3.1\Razor\Views\Admin\PartialViews\_SenhaPartial.cshtml.g.cs
-C:\Programming\LES\LES\LES\obj\Debug\netcoreapp3.1\Razor\Views\Admin\PartialViews\_TablePedidos.cshtml.g.cs
 C:\Programming\LES\LES\LES\obj\Debug\netcoreapp3.1\Razor\Views\Admin\PartialViews\_TelefonePartial.cshtml.g.cs
 C:\Programming\LES\LES\LES\obj\Debug\netcoreapp3.1\Razor\Views\Admin\Clientes.cshtml.g.cs
 C:\Programming\LES\LES\LES\obj\Debug\netcoreapp3.1\Razor\Views\Admin\Pedidos.cshtml.g.cs
@@ -473,3 +470,10 @@ C:\Programming\LES\LES\LES\obj\Debug\netcoreapp3.1\Razor\Views\Carrinho\PartialV
 C:\Programming\LES\LES\LES\obj\Debug\netcoreapp3.1\Razor\Views\Carrinho\PartialViews\_CalcularFretePartial.cshtml.g.cs
 C:\Programming\LES\LES\LES\obj\Debug\netcoreapp3.1\Razor\Views\Carrinho\PartialViews\_ListaCupomPartial.cshtml.g.cs
 C:\Programming\LES\LES\LES\obj\Debug\netcoreapp3.1\Razor\Views\Carrinho\PartialViews\_UsarCupomPartial.cshtml.g.cs
+C:\Programming\LES\LES\LES\obj\Debug\netcoreapp3.1\Razor\Views\Admin\PartialViews\_CardTabelaPedidos.cshtml.g.cs
+C:\Programming\LES\LES\LES\obj\Debug\netcoreapp3.1\Razor\Views\Admin\PartialViews\_TabelaPedidosPartial.cshtml.g.cs
+C:\Programming\LES\LES\LES\obj\Debug\netcoreapp3.1\Razor\Views\Admin\PartialViews\_VisualizarPedidoPartial.cshtml.g.cs
+C:\Programming\LES\LES\LES\obj\Debug\netcoreapp3.1\Razor\Views\Admin\PartialViews\_AprovarPedidoPartial.cshtml.g.cs
+C:\Programming\LES\LES\LES\obj\Debug\netcoreapp3.1\Razor\Views\Admin\PartialViews\_CancelarPedidoPartial.cshtml.g.cs
+C:\Programming\LES\LES\LES\obj\Debug\netcoreapp3.1\Razor\Views\Admin\PartialViews\_InfoPedidoPartial.cshtml.g.cs
+C:\Programming\LES\LES\LES\obj\Debug\netcoreapp3.1\Razor\Views\Admin\PartialViews\_NegarPedidoPartial.cshtml.g.cs

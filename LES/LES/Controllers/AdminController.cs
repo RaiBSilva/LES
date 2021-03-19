@@ -1,4 +1,5 @@
 ﻿using LES.Models.Entity;
+using LES.Models.ViewModel.Admin;
 using LES.Models.ViewModel.Conta;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -12,6 +13,7 @@ namespace LES.Controllers
     {
         DetalhesModel ClienteDemo = new DetalhesModel();
         AlterarSenhaModel Senha = new AlterarSenhaModel();
+        PedidosPaginaModel PedidosDemo = new PedidosPaginaModel();
 
         public AdminController()
         {
@@ -146,6 +148,39 @@ namespace LES.Controllers
             ClienteDemo.Pedidos.Add(ped2);
             ClienteDemo.Pedidos.Add(ped3);
 
+            AdminPedidoModel aped = new AdminPedidoModel();
+            aped.Codigo = "11";
+            aped.DtPedido = DateTime.Today;
+            aped.Status = (StatusPedidos)1;
+            AdminPedidoModel aped2 = new AdminPedidoModel();
+            aped2.Codigo = "12";
+            aped2.DtPedido = DateTime.Today;
+            aped2.Status = (StatusPedidos)6;
+            AdminPedidoModel aped3 = new AdminPedidoModel();
+            aped3.Codigo = "13";
+            aped3.DtPedido = DateTime.Today;
+            aped3.Status = (StatusPedidos)0;
+
+            aped.Livros.Add(livro);
+            aped.Livros.Add(livro);
+            aped.Livros.Add(livro);
+
+            aped2.Livros.Add(livro);
+            aped2.Livros.Add(livro);
+
+            aped3.Livros.Add(livro);
+            aped3.Livros.Add(livro);
+            aped3.Livros.Add(livro);
+            aped3.Livros.Add(livro);
+
+            PedidosDemo.Pedidos.Add(aped);
+            PedidosDemo.Pedidos.Add((aped2));
+            PedidosDemo.Pedidos.Add((aped3));
+
+            PedidosDemo.Pedidos[0].Cliente = ClienteDemo;
+            PedidosDemo.Pedidos[1].Cliente = ClienteDemo;
+            PedidosDemo.Pedidos[2].Cliente = ClienteDemo;
+
             #endregion
         }
 
@@ -167,12 +202,54 @@ namespace LES.Controllers
 
         public IActionResult Pedidos()
         {
-            return View();
+            return View(PedidosDemo);
         }
 
         public IActionResult ConfigLoja() {
             return View();
         }
+
+        #region Pedidos
+        public IActionResult _AprovarPedidoPartial(int id) 
+        {
+            return PartialView("../Admin/PartialViews/_AprovarPedidoPartial", PedidosDemo.Pedidos[0]);
+        }
+
+        public IActionResult AdicionarPedido(int id)
+        {
+            return RedirectToAction(nameof(Pedidos));
+        }
+
+        public IActionResult _NegarPedidoPartial(int id)
+        {
+            return PartialView("../Admin/PartialViews/_NegarPedidoPartial", PedidosDemo.Pedidos[0]);
+        }
+
+        public IActionResult NegarPedido(int id)
+        {
+            return RedirectToAction(nameof(Pedidos));
+        }
+
+        public IActionResult _CancelarPedidoPartial(int id)
+        {
+            return PartialView("../Admin/PartialViews/_CancelarPedidoPartial", PedidosDemo.Pedidos[0]);
+        }
+
+        public IActionResult CancelarPedido(int id)
+        {
+            return RedirectToAction(nameof(Pedidos));
+        }
+
+        public IActionResult _VisualizarPedidoPartial(int id)
+        {
+            return PartialView("../Admin/PartialViews/_VisualizarPedidoPartial", PedidosDemo.Pedidos[0]);
+        }
+
+        public IActionResult VisualizarPedido(int id)
+        {
+            return RedirectToAction(nameof(Pedidos));
+        }
+        #endregion
 
     }
 }
