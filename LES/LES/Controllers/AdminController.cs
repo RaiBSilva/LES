@@ -11,9 +11,10 @@ namespace LES.Controllers
 {
     public class AdminController : Controller
     {
-        DetalhesModel ClienteDemo = new DetalhesModel();
-        AlterarSenhaModel Senha = new AlterarSenhaModel();
-        PedidosPaginaModel PedidosDemo = new PedidosPaginaModel();
+        public AdminClienteModel ClienteDemo = new AdminClienteModel();
+        public AlterarSenhaModel Senha = new AlterarSenhaModel();
+        public PedidosPaginaModel PedidosDemo = new PedidosPaginaModel();
+        public ClientesPaginaModel ClientesDemo = new ClientesPaginaModel();
 
         public AdminController()
         {
@@ -25,6 +26,7 @@ namespace LES.Controllers
             ClienteDemo.InfoUsuario.Genero = (Genero)1;
             ClienteDemo.InfoUsuario.Nome = "Kevin Man'mar";
             ClienteDemo.InfoUsuario.NotaUsuario = 5;
+            ClienteDemo.Inativo = false;
 
             DetalhesEnderecoModel end = new DetalhesEnderecoModel();
             end.Id = "1";
@@ -181,6 +183,12 @@ namespace LES.Controllers
             PedidosDemo.Pedidos[1].Cliente = ClienteDemo;
             PedidosDemo.Pedidos[2].Cliente = ClienteDemo;
 
+            ClientesDemo.Clientes.Add((AdminClienteModel)ClienteDemo);
+            ClientesDemo.Clientes.Add((AdminClienteModel)ClienteDemo);
+            ClientesDemo.Clientes.Add((AdminClienteModel)ClienteDemo);
+
+            ClientesDemo.Clientes[0].Inativo = true;
+
             #endregion
         }
 
@@ -191,7 +199,7 @@ namespace LES.Controllers
 
         public IActionResult Clientes()
         {
-            return View();
+            return View(ClientesDemo);
             
         }
 
@@ -245,10 +253,19 @@ namespace LES.Controllers
             return PartialView("../Admin/PartialViews/_VisualizarPedidoPartial", PedidosDemo.Pedidos[0]);
         }
 
-        public IActionResult VisualizarPedido(int id)
+        #endregion
+
+        #region Clientes
+
+        public IActionResult _InativarReativarClientePartial(int id) {
+            return PartialView("../Admin/PartialViews/_InativarReativarClientePartial", ClienteDemo);
+        }
+
+        public IActionResult InativarReativarCliente(int id)
         {
             return RedirectToAction(nameof(Pedidos));
         }
+
         #endregion
 
     }
