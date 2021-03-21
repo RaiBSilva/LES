@@ -2,12 +2,12 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="c0d7995a-6b7e-41c8-b5ab-66cca9a3f012" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/../LES/.vs/LES/DesignTimeBuild/.dtbcache.v2" beforeDir="false" afterPath="$PROJECT_DIR$/../LES/.vs/LES/DesignTimeBuild/.dtbcache.v2" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../LES/.vs/LES/config/applicationhost.config" beforeDir="false" afterPath="$PROJECT_DIR$/../LES/.vs/LES/config/applicationhost.config" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../LES/.vs/LES/v16/.suo" beforeDir="false" afterPath="$PROJECT_DIR$/../LES/.vs/LES/v16/.suo" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../LES/.vs/VSWorkspaceState.json" beforeDir="false" afterPath="$PROJECT_DIR$/../LES/.vs/VSWorkspaceState.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../LES/.vs/slnx.sqlite" beforeDir="false" afterPath="$PROJECT_DIR$/../LES/.vs/slnx.sqlite" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../LES/LES/Views/Livros/Descricao.cshtml" beforeDir="false" afterPath="$PROJECT_DIR$/../LES/LES/Views/Livros/Descricao.cshtml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../LES/LES/Views/Carrinho/FinalizarCompra.cshtml" beforeDir="false" afterPath="$PROJECT_DIR$/../LES/LES/Views/Carrinho/FinalizarCompra.cshtml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../LES/LES/Views/Carrinho/PartialViews/_ListaCardsCartaoPartial.cshtml" beforeDir="false" afterPath="$PROJECT_DIR$/../LES/LES/Views/Carrinho/PartialViews/_ListaCardsCartaoPartial.cshtml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../LES/LES/Views/Carrinho/PartialViews/_ListaCardsEnderecoPartial.cshtml" beforeDir="false" afterPath="$PROJECT_DIR$/../LES/LES/Views/Carrinho/PartialViews/_ListaCardsEnderecoPartial.cshtml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../LES/LES/Views/Shared/_LayoutDeslogado.cshtml" beforeDir="false" afterPath="$PROJECT_DIR$/../LES/LES/Views/Shared/_LayoutDeslogado.cshtml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../LES/LES/bin/Debug/netcoreapp3.1/LES.Views.dll" beforeDir="false" afterPath="$PROJECT_DIR$/../LES/LES/bin/Debug/netcoreapp3.1/LES.Views.dll" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../LES/LES/bin/Debug/netcoreapp3.1/LES.Views.pdb" beforeDir="false" afterPath="$PROJECT_DIR$/../LES/LES/bin/Debug/netcoreapp3.1/LES.Views.pdb" afterDir="false" />
@@ -29,28 +29,49 @@
       <change beforePath="$PROJECT_DIR$/../LES/LES/obj/Debug/netcoreapp3.1/LES.pdb" beforeDir="false" afterPath="$PROJECT_DIR$/../LES/LES/obj/Debug/netcoreapp3.1/LES.pdb" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../LES/LES/obj/Debug/netcoreapp3.1/Razor/Views/Admin/Clientes.cshtml.g.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../LES/LES/obj/Debug/netcoreapp3.1/Razor/Views/Admin/Clientes.cshtml.g.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../LES/LES/obj/Debug/netcoreapp3.1/Razor/Views/Admin/ConfigLoja.cshtml.g.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../LES/LES/obj/Debug/netcoreapp3.1/Razor/Views/Admin/ConfigLoja.cshtml.g.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../LES/LES/obj/Debug/netcoreapp3.1/Razor/Views/Admin/DetalhesCliente.cshtml.g.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../LES/LES/obj/Debug/netcoreapp3.1/Razor/Views/Admin/DetalhesCliente.cshtml.g.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../LES/LES/obj/Debug/netcoreapp3.1/Razor/Views/Admin/Login.cshtml.g.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../LES/LES/obj/Debug/netcoreapp3.1/Razor/Views/Admin/Login.cshtml.g.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../LES/LES/obj/Debug/netcoreapp3.1/Razor/Views/Admin/PartialViews/_CardTabelaPedidos.cshtml.g.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../LES/LES/obj/Debug/netcoreapp3.1/Razor/Views/Admin/PartialViews/_CardTabelaPedidos.cshtml.g.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../LES/LES/obj/Debug/netcoreapp3.1/Razor/Views/Admin/PartialViews/_CartaoPartial.cshtml.g.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../LES/LES/obj/Debug/netcoreapp3.1/Razor/Views/Admin/PartialViews/_CartaoPartial.cshtml.g.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../LES/LES/obj/Debug/netcoreapp3.1/Razor/Views/Admin/PartialViews/_ConfigCategoriaPartial.cshtml.g.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../LES/LES/obj/Debug/netcoreapp3.1/Razor/Views/Admin/PartialViews/_ConfigCategoriaPartial.cshtml.g.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../LES/LES/obj/Debug/netcoreapp3.1/Razor/Views/Admin/PartialViews/_ConfigLivroPartial.cshtml.g.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../LES/LES/obj/Debug/netcoreapp3.1/Razor/Views/Admin/PartialViews/_ConfigLivroPartial.cshtml.g.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../LES/LES/obj/Debug/netcoreapp3.1/Razor/Views/Admin/PartialViews/_DlCartoesPartial.cshtml.g.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../LES/LES/obj/Debug/netcoreapp3.1/Razor/Views/Admin/PartialViews/_DlCartoesPartial.cshtml.g.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../LES/LES/obj/Debug/netcoreapp3.1/Razor/Views/Admin/PartialViews/_DlEnderecoPartial.cshtml.g.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../LES/LES/obj/Debug/netcoreapp3.1/Razor/Views/Admin/PartialViews/_DlEnderecoPartial.cshtml.g.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../LES/LES/obj/Debug/netcoreapp3.1/Razor/Views/Admin/PartialViews/_DlInfoPessoais.cshtml.g.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../LES/LES/obj/Debug/netcoreapp3.1/Razor/Views/Admin/PartialViews/_DlInfoPessoais.cshtml.g.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../LES/LES/obj/Debug/netcoreapp3.1/Razor/Views/Admin/PartialViews/_DlTelefonePartial.cshtml.g.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../LES/LES/obj/Debug/netcoreapp3.1/Razor/Views/Admin/PartialViews/_DlTelefonePartial.cshtml.g.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../LES/LES/obj/Debug/netcoreapp3.1/Razor/Views/Admin/PartialViews/_EnderecoPartial.cshtml.g.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../LES/LES/obj/Debug/netcoreapp3.1/Razor/Views/Admin/PartialViews/_EnderecoPartial.cshtml.g.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../LES/LES/obj/Debug/netcoreapp3.1/Razor/Views/Admin/PartialViews/_EntradaEstoqueLivroPartial.cshtml.g.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../LES/LES/obj/Debug/netcoreapp3.1/Razor/Views/Admin/PartialViews/_EntradaEstoqueLivroPartial.cshtml.g.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../LES/LES/obj/Debug/netcoreapp3.1/Razor/Views/Admin/PartialViews/_FormLivroPartial.cshtml.g.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../LES/LES/obj/Debug/netcoreapp3.1/Razor/Views/Admin/PartialViews/_FormLivroPartial.cshtml.g.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../LES/LES/obj/Debug/netcoreapp3.1/Razor/Views/Admin/PartialViews/_InativarReativarCategoriaPartial.cshtml.g.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../LES/LES/obj/Debug/netcoreapp3.1/Razor/Views/Admin/PartialViews/_InativarReativarCategoriaPartial.cshtml.g.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../LES/LES/obj/Debug/netcoreapp3.1/Razor/Views/Admin/PartialViews/_InativarReativarClientePartial.cshtml.g.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../LES/LES/obj/Debug/netcoreapp3.1/Razor/Views/Admin/PartialViews/_InativarReativarClientePartial.cshtml.g.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../LES/LES/obj/Debug/netcoreapp3.1/Razor/Views/Admin/PartialViews/_InativarReativarGrupoPrecoPartial.cshtml.g.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../LES/LES/obj/Debug/netcoreapp3.1/Razor/Views/Admin/PartialViews/_InativarReativarGrupoPrecoPartial.cshtml.g.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../LES/LES/obj/Debug/netcoreapp3.1/Razor/Views/Admin/PartialViews/_InativarReativarLivroPartial.cshtml.g.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../LES/LES/obj/Debug/netcoreapp3.1/Razor/Views/Admin/PartialViews/_InativarReativarLivroPartial.cshtml.g.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../LES/LES/obj/Debug/netcoreapp3.1/Razor/Views/Admin/PartialViews/_InfoPedidoPartial.cshtml.g.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../LES/LES/obj/Debug/netcoreapp3.1/Razor/Views/Admin/PartialViews/_InfoPedidoPartial.cshtml.g.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../LES/LES/obj/Debug/netcoreapp3.1/Razor/Views/Admin/PartialViews/_InfoPessoaisPartial.cshtml.g.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../LES/LES/obj/Debug/netcoreapp3.1/Razor/Views/Admin/PartialViews/_InfoPessoaisPartial.cshtml.g.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../LES/LES/obj/Debug/netcoreapp3.1/Razor/Views/Admin/PartialViews/_ListaCartoesPartial.cshtml.g.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../LES/LES/obj/Debug/netcoreapp3.1/Razor/Views/Admin/PartialViews/_ListaCartoesPartial.cshtml.g.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../LES/LES/obj/Debug/netcoreapp3.1/Razor/Views/Admin/PartialViews/_ListaCuponsPartial.cshtml.g.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../LES/LES/obj/Debug/netcoreapp3.1/Razor/Views/Admin/PartialViews/_ListaCuponsPartial.cshtml.g.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../LES/LES/obj/Debug/netcoreapp3.1/Razor/Views/Admin/PartialViews/_ListaEnderecosPartial.cshtml.g.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../LES/LES/obj/Debug/netcoreapp3.1/Razor/Views/Admin/PartialViews/_ListaEnderecosPartial.cshtml.g.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../LES/LES/obj/Debug/netcoreapp3.1/Razor/Views/Admin/PartialViews/_ListaPedidosPartial.cshtml.g.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../LES/LES/obj/Debug/netcoreapp3.1/Razor/Views/Admin/PartialViews/_ListaPedidosPartial.cshtml.g.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../LES/LES/obj/Debug/netcoreapp3.1/Razor/Views/Admin/PartialViews/_ListaTelefonesPartial.cshtml.g.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../LES/LES/obj/Debug/netcoreapp3.1/Razor/Views/Admin/PartialViews/_ListaTelefonesPartial.cshtml.g.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../LES/LES/obj/Debug/netcoreapp3.1/Razor/Views/Admin/PartialViews/_LoginFormPartial.cshtml.g.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../LES/LES/obj/Debug/netcoreapp3.1/Razor/Views/Admin/PartialViews/_LoginFormPartial.cshtml.g.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../LES/LES/obj/Debug/netcoreapp3.1/Razor/Views/Admin/PartialViews/_ProcessarPedidoPartial.cshtml.g.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../LES/LES/obj/Debug/netcoreapp3.1/Razor/Views/Admin/PartialViews/_ProcessarPedidoPartial.cshtml.g.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../LES/LES/obj/Debug/netcoreapp3.1/Razor/Views/Admin/PartialViews/_SenhaPartial.cshtml.g.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../LES/LES/obj/Debug/netcoreapp3.1/Razor/Views/Admin/PartialViews/_SenhaPartial.cshtml.g.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../LES/LES/obj/Debug/netcoreapp3.1/Razor/Views/Admin/PartialViews/_TablePedidos.cshtml.g.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../LES/LES/obj/Debug/netcoreapp3.1/Razor/Views/Admin/PartialViews/_TablePedidos.cshtml.g.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../LES/LES/obj/Debug/netcoreapp3.1/Razor/Views/Admin/PartialViews/_TabelaCategoriasConfigPartial.cshtml.g.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../LES/LES/obj/Debug/netcoreapp3.1/Razor/Views/Admin/PartialViews/_TabelaCategoriasConfigPartial.cshtml.g.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../LES/LES/obj/Debug/netcoreapp3.1/Razor/Views/Admin/PartialViews/_TabelaGrupoPrecosConfigPartial.cshtml.g.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../LES/LES/obj/Debug/netcoreapp3.1/Razor/Views/Admin/PartialViews/_TabelaGrupoPrecosConfigPartial.cshtml.g.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../LES/LES/obj/Debug/netcoreapp3.1/Razor/Views/Admin/PartialViews/_TabelaLivrosConfigPartial.cshtml.g.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../LES/LES/obj/Debug/netcoreapp3.1/Razor/Views/Admin/PartialViews/_TabelaLivrosConfigPartial.cshtml.g.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../LES/LES/obj/Debug/netcoreapp3.1/Razor/Views/Admin/PartialViews/_TabelaPedidosPartial.cshtml.g.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../LES/LES/obj/Debug/netcoreapp3.1/Razor/Views/Admin/PartialViews/_TabelaPedidosPartial.cshtml.g.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../LES/LES/obj/Debug/netcoreapp3.1/Razor/Views/Admin/PartialViews/_TelefonePartial.cshtml.g.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../LES/LES/obj/Debug/netcoreapp3.1/Razor/Views/Admin/PartialViews/_TelefonePartial.cshtml.g.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../LES/LES/obj/Debug/netcoreapp3.1/Razor/Views/Admin/PartialViews/_VisualizarClientePartial.cshtml.g.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../LES/LES/obj/Debug/netcoreapp3.1/Razor/Views/Admin/PartialViews/_VisualizarClientePartial.cshtml.g.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../LES/LES/obj/Debug/netcoreapp3.1/Razor/Views/Admin/PartialViews/_VisualizarLivroPartial.cshtml.g.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../LES/LES/obj/Debug/netcoreapp3.1/Razor/Views/Admin/PartialViews/_VisualizarLivroPartial.cshtml.g.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../LES/LES/obj/Debug/netcoreapp3.1/Razor/Views/Admin/PartialViews/_VisualizarPedidoPartial.cshtml.g.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../LES/LES/obj/Debug/netcoreapp3.1/Razor/Views/Admin/PartialViews/_VisualizarPedidoPartial.cshtml.g.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../LES/LES/obj/Debug/netcoreapp3.1/Razor/Views/Admin/Pedidos.cshtml.g.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../LES/LES/obj/Debug/netcoreapp3.1/Razor/Views/Admin/Pedidos.cshtml.g.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../LES/LES/obj/Debug/netcoreapp3.1/Razor/Views/Carrinho/FinalizarCompra.cshtml.g.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../LES/LES/obj/Debug/netcoreapp3.1/Razor/Views/Carrinho/FinalizarCompra.cshtml.g.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../LES/LES/obj/Debug/netcoreapp3.1/Razor/Views/Carrinho/PartialViews/_AdicionarNovoCartaoPartial.cshtml.g.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../LES/LES/obj/Debug/netcoreapp3.1/Razor/Views/Carrinho/PartialViews/_AdicionarNovoCartaoPartial.cshtml.g.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../LES/LES/obj/Debug/netcoreapp3.1/Razor/Views/Carrinho/PartialViews/_AdicionarNovoEnderecoPartial.cshtml.g.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../LES/LES/obj/Debug/netcoreapp3.1/Razor/Views/Carrinho/PartialViews/_AdicionarNovoEnderecoPartial.cshtml.g.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../LES/LES/obj/Debug/netcoreapp3.1/Razor/Views/Carrinho/PartialViews/_CalcularFretePartial.cshtml.g.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../LES/LES/obj/Debug/netcoreapp3.1/Razor/Views/Carrinho/PartialViews/_CalcularFretePartial.cshtml.g.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../LES/LES/obj/Debug/netcoreapp3.1/Razor/Views/Carrinho/PartialViews/_CartaoPartial.cshtml.g.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../LES/LES/obj/Debug/netcoreapp3.1/Razor/Views/Carrinho/PartialViews/_CartaoPartial.cshtml.g.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../LES/LES/obj/Debug/netcoreapp3.1/Razor/Views/Carrinho/PartialViews/_EnderecoPartial.cshtml.g.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../LES/LES/obj/Debug/netcoreapp3.1/Razor/Views/Carrinho/PartialViews/_EnderecoPartial.cshtml.g.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../LES/LES/obj/Debug/netcoreapp3.1/Razor/Views/Carrinho/PartialViews/_ListaCardsCartaoPartial.cshtml.g.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../LES/LES/obj/Debug/netcoreapp3.1/Razor/Views/Carrinho/PartialViews/_ListaCardsCartaoPartial.cshtml.g.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../LES/LES/obj/Debug/netcoreapp3.1/Razor/Views/Carrinho/PartialViews/_ListaCardsEnderecoPartial.cshtml.g.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../LES/LES/obj/Debug/netcoreapp3.1/Razor/Views/Carrinho/PartialViews/_ListaCardsEnderecoPartial.cshtml.g.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../LES/LES/obj/Debug/netcoreapp3.1/Razor/Views/Carrinho/PartialViews/_ListaCupomPartial.cshtml.g.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../LES/LES/obj/Debug/netcoreapp3.1/Razor/Views/Carrinho/PartialViews/_ListaCupomPartial.cshtml.g.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../LES/LES/obj/Debug/netcoreapp3.1/Razor/Views/Carrinho/PartialViews/_UsarCupomPartial.cshtml.g.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../LES/LES/obj/Debug/netcoreapp3.1/Razor/Views/Carrinho/PartialViews/_UsarCupomPartial.cshtml.g.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../LES/LES/obj/Debug/netcoreapp3.1/Razor/Views/Clientes/Cadastro.cshtml.g.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../LES/LES/obj/Debug/netcoreapp3.1/Razor/Views/Clientes/Cadastro.cshtml.g.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../LES/LES/obj/Debug/netcoreapp3.1/Razor/Views/Clientes/Delete.cshtml.g.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../LES/LES/obj/Debug/netcoreapp3.1/Razor/Views/Clientes/Delete.cshtml.g.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../LES/LES/obj/Debug/netcoreapp3.1/Razor/Views/Clientes/Detalhes.cshtml.g.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../LES/LES/obj/Debug/netcoreapp3.1/Razor/Views/Clientes/Detalhes.cshtml.g.cs" afterDir="false" />
@@ -107,7 +128,6 @@
       <change beforePath="$PROJECT_DIR$/../LES/LES/obj/Debug/netcoreapp3.1/Razor/Views/Shared/_Layout.cshtml.g.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../LES/LES/obj/Debug/netcoreapp3.1/Razor/Views/Shared/_Layout.cshtml.g.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../LES/LES/obj/Debug/netcoreapp3.1/Razor/Views/Shared/_LayoutAdmin.cshtml.g.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../LES/LES/obj/Debug/netcoreapp3.1/Razor/Views/Shared/_LayoutAdmin.cshtml.g.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../LES/LES/obj/Debug/netcoreapp3.1/Razor/Views/Shared/_LayoutDeslogado.cshtml.g.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../LES/LES/obj/Debug/netcoreapp3.1/Razor/Views/Shared/_LayoutDeslogado.cshtml.g.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../LES/LES/obj/Debug/netcoreapp3.1/Razor/Views/Shared/_LayoutLoja.cshtml.g.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../LES/LES/obj/Debug/netcoreapp3.1/Razor/Views/Shared/_LayoutLoja.cshtml.g.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../LES/LES/obj/Debug/netcoreapp3.1/Razor/Views/Shared/_ListaLivrosCardPartial.cshtml.g.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../LES/LES/obj/Debug/netcoreapp3.1/Razor/Views/Shared/_ListaLivrosCardPartial.cshtml.g.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../LES/LES/obj/Debug/netcoreapp3.1/Razor/Views/Shared/_LivroCardPartial.cshtml.g.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../LES/LES/obj/Debug/netcoreapp3.1/Razor/Views/Shared/_LivroCardPartial.cshtml.g.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../LES/LES/obj/Debug/netcoreapp3.1/Razor/Views/Shared/_ValidationScriptsPartial.cshtml.g.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../LES/LES/obj/Debug/netcoreapp3.1/Razor/Views/Shared/_ValidationScriptsPartial.cshtml.g.cs" afterDir="false" />
@@ -117,6 +137,9 @@
       <change beforePath="$PROJECT_DIR$/../LES/LES/obj/LES.csproj.nuget.g.props" beforeDir="false" afterPath="$PROJECT_DIR$/../LES/LES/obj/LES.csproj.nuget.g.props" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../LES/LES/obj/project.assets.json" beforeDir="false" afterPath="$PROJECT_DIR$/../LES/LES/obj/project.assets.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../LES/LES/obj/project.nuget.cache" beforeDir="false" afterPath="$PROJECT_DIR$/../LES/LES/obj/project.nuget.cache" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/chrome_id.json" beforeDir="false" afterPath="$PROJECT_DIR$/chrome_id.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -134,7 +157,9 @@
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
   </component>
   <component name="ProjectId" id="1puMm8RfsYSeENhLQEhMd1qlwGn" />
-  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
+    <ConfirmationsSetting value="1" id="Add" />
+  </component>
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
@@ -144,7 +169,28 @@
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
   </component>
-  <component name="RunManager">
+  <component name="RunManager" selected="Python.main">
+    <configuration name="entidades_mock" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="teste_so_raiva" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/entidades_mock.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
     <configuration name="main" type="PythonConfigurationType" factoryName="Python" nameIsGenerated="true">
       <module name="teste_so_raiva" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -166,6 +212,11 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Python.entidades_mock" />
+      </list>
+    </recent_temporary>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
