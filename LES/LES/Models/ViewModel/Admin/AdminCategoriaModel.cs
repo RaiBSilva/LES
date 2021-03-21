@@ -9,6 +9,7 @@ namespace LES.Models.ViewModel.Admin
     {
         public int Id { get; set; }
         public string Nome { get; set; }
+        public bool Inativo { get; set; }
 
 
     }

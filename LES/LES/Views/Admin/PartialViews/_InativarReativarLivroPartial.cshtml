@@ -1,0 +1,46 @@
+﻿@model LES.Models.ViewModel.Admin.InativarLivroModel
+
+<div class="modal-content">
+    <!-- Modal content-->
+    <div class="modal-header">
+        <h4 class="modal-title">Inativar Livro</h4>
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+    </div>
+    <div class="modal-body">
+            <form asp-action="InativarReativarLivro" asp-controller="Admin">
+                <div class="container">
+
+                    <div hidden style="display:none">
+                        <input asp-for="CodigoBarras" type="number" step="0.01" class="form-control required" readonly />
+                    </div>
+
+                    @if (Model.Inativo)
+                    {
+                        <div class="row">
+                            <div class="col-md-6">
+                                <h5 class="font-weight-light">Por que o livro está sendo inativado?</h5>
+                            </div>
+                            <div class="col-md-6">
+                                <select asp-for="Motivo" class="form-control" asp-items="@(new SelectList(ViewBag.Motivos, "Id", "Nome"))">
+                                </select>
+                            </div>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="row">
+                            <div class="col-md-6">
+                                <h5 class="font-weight-light">Tem certeza que o livro deve ser ativado?</h5>
+                            </div>
+                        </div>
+                    }
+
+                </div>
+
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-outline-danger" data-dismiss="modal">Inativar</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Sair</button>
+                </div>
+            </form>
+    </div>
+</div>

@@ -20,8 +20,8 @@ namespace LES.Controllers
 
             var livro = new LivroCardModel();
 
-            livro.CodigoBarras = 1;
-            livro.Descricao = "The Winds of Winter (Os Ventos do Inverno) é o sexto livro de As Crônicas de Gelo e Fogo, de George R. R. Martin.";
+            livro.CodigoBarras = "1";
+            livro.Sinopse = "The Winds of Winter (Os Ventos do Inverno) é o sexto livro de As Crônicas de Gelo e Fogo, de George R. R. Martin.";
             livro.Preco = 100;
             livro.Titulo = "The Winds of Winter";
 

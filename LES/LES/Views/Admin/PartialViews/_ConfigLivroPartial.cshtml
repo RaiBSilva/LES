@@ -47,6 +47,10 @@
                 <form asp-action="EditarLivro" asp-controller="Admin">
                     <div class="container">
 
+                        <div hidden style="display:none">
+                            <input asp-for="Livro.Id" class="form-control required" readonly/>
+                        </div>
+
                         <partial name="../PartialViews/_FormLivroPartial.cshtml" for="Livro" />
 
                         <div class="row mt-2">

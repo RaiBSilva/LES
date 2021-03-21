@@ -23,261 +23,44 @@
     </div>
     <div class="col-sm-9">
         <div id="Livros" class="tab">
-
-            <div class="row mb-2">
-                <div class="col-sm-12">
-                    <button type="button" class="btn-success btn-lg btn-block" data-toggle="modal" data-target="#modalAdicionarLivro">
-                        Cadastrar novo livro
-                    </button>
-                </div>
-            </div>
-            <div class="row">
-                <table class="table table-striped">
-                    <thead class="thead-dark">
-                        <tr>
-                            <th scope="col">Id</th>
-                            <th scope="col">Capa</th>
-                            <th scope="col">Título</th>
-                            <th scope="col">Preço</th>
-                            <th scope="col">Estoque</th>
-                            <th scope="col">Ações</th>
-                            <th scope="col">Inativar</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>1</td>
-                            <td>
-                                <img src="~/img/the-Winds-of-Winter-cover.jpg" style="max-height:2rem" />
-                            </td>
-                            <td>Winds of Winter</td>
-                            <td>R$ 100,00</td>
-                            <td><small class="font-weight-lighter">x</small>35</td>
-                            <td>
-                                <button type="button" class="btn btn-outline-success" data-toggle="modal" data-target="#modalEntradaEstoque">Entrada no Estoque</button>
-                                <button type="button" class="btn btn-outline-info" data-toggle="modal" data-target="#modalVisualizarLivro">Visualizar</button>
-                                <button type="button" class="btn btn-outline-info" data-toggle="modal" data-target="#modalEditarLivro">Editar</button>
-                            </td>
-                            <td><button type="button" class="btn btn-danger" href="#modalInativar" data-toggle="modal" data-target="#modalInativar">Inativar</button></td>
-                        </tr>
-                    </tbody>
-                </table>
-                <nav aria-label="Paginação">
-                    <ul class="pagination">
-                        <li class="page-item">
-                            <a class="page-link" href="#" aria-label="Previous">
-                                <span aria-hidden="true">&laquo;</span>
-                                <span class="sr-only">Previous</span>
-                            </a>
-                        </li>
-                        <li class="page-item"><a class="page-link" href="#">1</a></li>
-                        <li class="page-item">
-                            <a class="page-link" href="#" aria-label="Next">
-                                <span aria-hidden="true">&raquo;</span>
-                                <span class="sr-only">Next</span>
-                            </a>
-                        </li>
-                    </ul>
-                </nav>
-            </div>
-            <div class="row"></div>
+            <partial name="../Admin/PartialViews/_TabelaLivrosConfigPartial.cshtml" for="Livros" />
         </div>
 
         <div id="Categorias" class="tab" style="display:none">
-
-            <div class="row mb-2">
-                <div class="col-sm-12">
-                    <button type="button" class="btn-success btn-lg btn-block" data-toggle="modal" data-target="#modalAdicionarLivro">
-                        Cadastrar nova categoria
-                    </button>
-                </div>
-            </div>
-
-            <div class="row">
-                <table class="table table-striped">
-                    <thead class="thead-dark">
-                        <tr>
-                            <th>Id</th>
-                            <th>Nome</th>
-                            <th>Editar</th>
-                            <th>Excluir</th>
-                        </tr>
-                    </thead>
-                </table>
-            </div>
-            <div class="row">
-                <nav aria-label="Paginação">
-                    <ul class="pagination">
-                        <li class="page-item">
-                            <a class="page-link" href="#" aria-label="Previous">
-                                <span aria-hidden="true">&laquo;</span>
-                                <span class="sr-only">Previous</span>
-                            </a>
-                        </li>
-                        <li class="page-item"><a class="page-link" href="#">1</a></li>
-                        <li class="page-item">
-                            <a class="page-link" href="#" aria-label="Next">
-                                <span aria-hidden="true">&raquo;</span>
-                                <span class="sr-only">Next</span>
-                            </a>
-                        </li>
-                    </ul>
-                </nav>
-            </div>
+            <partial name="../Admin/PartialViews/_TabelaCategoriasConfigPartial.cshtml" for="Categorias" />
         </div>
 
         <div id="Preco" class="tab" style="display:none">
-
-            <div class="row mb-2">
-                <div class="col-sm-12">
-                    <button type="button" class="btn-success btn-lg btn-block" data-toggle="modal" data-target="#modalAdicionarLivro">
-                        Cadastrar novo grupo de preço
-                    </button>
-                </div>
-            </div>
-
-            <div class="row">
-                <table class="table table-striped">
-                    <thead class="thead-dark">
-                        <tr>
-                            <th>Id</th>
-                            <th>Nome</th>
-                            <th>Margem de lucro</th>
-                            <th>Editar</th>
-                            <th>Excluir</th>
-                        </tr>
-                    </thead>
-                </table>
-            </div>
-            <div class="row">
-                <nav aria-label="Paginação">
-                    <ul class="pagination">
-                        <li class="page-item">
-                            <a class="page-link" href="#" aria-label="Previous">
-                                <span aria-hidden="true">&laquo;</span>
-                                <span class="sr-only">Previous</span>
-                            </a>
-                        </li>
-                        <li class="page-item"><a class="page-link" href="#">1</a></li>
-                        <li class="page-item">
-                            <a class="page-link" href="#" aria-label="Next">
-                                <span aria-hidden="true">&raquo;</span>
-                                <span class="sr-only">Next</span>
-                            </a>
-                        </li>
-                    </ul>
-                </nav>
-            </div>
+            <partial name="../Admin/PartialViews/_TabelaGrupoPrecosConfigPartial.cshtml" for="GrupoPrecos" />
         </div>
     </div>
 </div>
 
-<div class="modal fade" id="modalEntradaEstoque">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <!-- Modal content-->
-            <div class="modal-header">
-                <h4 class="modal-title">Entrada no Estoque</h4>
-                <button type="button" class="close" data-dismiss="modal">&times;</button>
-            </div>
-            <div class="modal-body">
-                <div class="container">
-
-                    <form>
-
-                        <div class="row my-2">
-                            <div class="col-md-6">
-                                <img src="~/img/the-Winds-of-Winter-cover.jpg" style="max-width:100px" />
-                            </div>
-                            <div class="col-md-6">
-                                <div class="row">
-                                    <div class="col-sm-12">
-                                        <h3 class="font-weight-light">Winds of Winter</h3>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-sm-12">
-                                        <h5 class="text-muted">George R.R. Martin.</h5>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="form-row form-group">
-                            <div class="col-4">
-                                <label for="quantia" class="font-weight-light">Quantia</label>
-                                <input id="quantia" class="form-control" type="number" min="1" value="1" />
-                            </div>
-                            <div class="col-8">
-                                <label for="fornecedor" class="font-weight-light">Fornecedor</label>
-                                <input id="fornecedor" class="form-control" />
-                            </div>
-                        </div>
-
-                        <div class="form-row form-group">
-                            <div class="col-6">
-                                <label for="custo" class="font-weight-light">Valor de Custo</label>
-                                <input id="custo" class="form-control" type="number" min="0" value="1" step="0.01" />
-                            </div>
-                            <div class="col-6">
-                                <label for="dtEntrada" class="font-weight-light">Data de Entrada</label>
-                                <input id="dtEntrada" class="form-control" type="date"/>
-                            </div>
-                        </div>
-
-                    </form>
-
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-outline-success" data-dismiss="modal">Atualizar Estoque</button>
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Sair</button>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-
-<div class="modal fade" id="modalInativar">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <!-- Modal content-->
-            <div class="modal-header">
-                <h4 class="modal-title">Inativar Livro</h4>
-                <button type="button" class="close" data-dismiss="modal">&times;</button>
-            </div>
-            <div class="modal-body">
-                <div class="container">
-
-                    <form>
-
-                        <div class="row">
-                            <div class="col-md-6">
-                                <h5 class="font-weight-light">Por que o livro está sendo inativado?</h5>
-                            </div>
-                            <div class="col-md-6">
-                                <select class="form-control">
-                                    <option>Decisão Estratégica</option>
-                                    <option>Motivos Legais</option>
-                                    <option>Fora de Mercado</option>
-                                </select>
-                            </div>
-                        </div>
-                    </form>
-
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-outline-danger" data-dismiss="modal">Inativar</button>
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Sair</button>
-                </div>
-            </div>
-        </div>
-    </div>
+<div class="modal fade" id="myModal">
 </div>
 
 
 @section Scripts{
 
-    <script src="~/js/Conta/CarregadorPartialViewsDetalhes.js"></script>
+    <script type="text/javascript">
+        var urls = urls || {};
+
+        urls.AdicionarLivro = '@Url.Action("_AdicionarLivroPartial", "Admin")';
+        urls.EntradaEstoqueLivro = '@Url.Action("_EntradaEstoqueLivroPartial", "Admin")';
+        urls.VisualizarLivro = '@Url.Action("_VisualizarLivroPartial", "Admin")';
+        urls.EditarLivro = '@Url.Action("_EditarLivroPartial", "Admin")';
+        urls.InativarLivro = '@Url.Action("_InativarReativarLivroPartial", "Admin")';
+
+        urls.AdicionarCategoria = '@Url.Action("_AdicionarCategoriaPartial", "Admin")';
+        urls.EditarCategoria = '@Url.Action("_EditarCategoriaPartial", "Admin")';
+        urls.InativarCategoria = '@Url.Action("_InativarReativarCategoriaPartial", "Admin")';
+
+        urls.AdicionarGrupoPreco = '@Url.Action("_AdicionarGrupoPrecoPartial", "Admin")';
+        urls.EditarGrupoPreco = '@Url.Action("_EditarGrupoPrecoPartial", "Admin")';
+        urls.InativarGrupoPreco = '@Url.Action("_InativarReativarGrupoPreco", "Admin")';
+
+    </script>
+    <script src="~/js/Admin/CarregadorPartialViewConfigLoja.js"></script>
     <script src="~/js/Conta/Tabs.js"></script>
 
 }

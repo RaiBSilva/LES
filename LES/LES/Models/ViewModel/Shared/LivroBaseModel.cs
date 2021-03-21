@@ -13,7 +13,6 @@ namespace LES.Models.ViewModel.Shared
         public string Titulo { get; set; }
 
         [Display(Name = "Descrição")]
-        public string Descricao { get; set; }
         public string Autor { get; set; }
         public string Editora { get; set; }
         public string Sinopse { get; set; }
@@ -28,7 +27,7 @@ namespace LES.Models.ViewModel.Shared
         public int Edicao { get; set; }
 
         [Display(Name = "Código de Barras")]
-        public int CodigoBarras { get; set; }
+        public string CodigoBarras { get; set; }
 
         [Display(Name = "Páginas")]
         public int Paginas { get; set; }

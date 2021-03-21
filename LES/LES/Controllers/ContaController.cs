@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using LES.Models.Entity;
+using LES.Models.ViewModel.Admin;
 using LES.Models.ViewModel.Conta;
 using LES.Models.ViewModel.Shared;
 using Microsoft.AspNetCore.Mvc;
@@ -125,10 +126,10 @@ namespace LES.Views.Conta
             ped3.DtPedido = DateTime.Today;
             ped3.Status = (StatusPedidos)7;
 
-            var livro = new PedidoLivroModel();
+            var livro = new AdminLivroModel();
 
-            livro.CodigoBarras = 1;
-            livro.Descricao = "The Winds of Winter (Os Ventos do Inverno) é o sexto livro de As Crônicas de Gelo e Fogo, de George R. R. Martin.";
+            livro.CodigoBarras = "1";
+            livro.Sinopse = "The Winds of Winter (Os Ventos do Inverno) é o sexto livro de As Crônicas de Gelo e Fogo, de George R. R. Martin.";
             livro.Preco = 100;
             livro.Titulo = "The Winds of Winter";
 

@@ -10,6 +10,7 @@ namespace LES.Models.ViewModel.Admin
     public class AdminLivroModel : LivroBaseModel
     {
         public int Estoque { get; set; }
+        public int Id { get; set; }
 
         [Display(Name ="Grupo de preços")]
         public AdminGrupoPrecoModel GrupoPreco { get; set; }
