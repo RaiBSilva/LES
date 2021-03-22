@@ -384,13 +384,194 @@ class TestSoRaiva():
         if timer.expired:
             print("Timeout. Não clicou em cadastrar endereço.")
 
+    def test_acessar_so_raiva_administrado(self):
+        browser = ChromeBrowser().aberto()
+        browser.get("https://localhost:44378/Admin/Home")
+        titulo = browser.title
+        Mbox(text="Fim acessa home dos administrador.")
+        assert titulo == "View - SóRaiva"
+
+    def test_acessar_clientes(self):
+        browser = ChromeBrowser().aberto()
+        timer = Timer(15)
+        while timer.not_expired:
+            try:
+                tags_a = browser.find_elements_by_tag_name("a")
+                for a in tags_a:
+                    texto_a = a.get_attribute("innerText")
+                    if texto_a == "Clientes":
+                        a.click()
+                        break
+                else:
+                    continue
+                break
+            except:
+                continue
+        if timer.expired:
+            print("Timeout. Não achou clientes.")
+        Mbox(text="Fim acessa clientes.")
+
+    def test_inativa_cliente(self):
+        browser = ChromeBrowser().aberto()
+        timer = Timer(15)
+        while timer.not_expired:
+            try:
+                browser.find_element_by_xpath("/html/body/div/main/div[3]/table/tbody/tr[1]/td[4]/button").click()
+                break
+            except:
+                continue
+        if timer.expired:
+            print("Timeout. Não achou clientes.")
+
+        time.sleep(7)
+
+        while timer.not_expired:
+            try:
+                browser.find_element_by_xpath('//*[@id="myModal"]/div/div/div[2]/div[2]/button[2]').click()
+                break
+            except:
+                continue
+        if timer.expired:
+            print("Timeout. Não achou botão cancelar.")
+
+        Mbox(text="Fim inativa clientes.")
+
+    def test_visualiza_cliente(self):
+        browser = ChromeBrowser().aberto()
+        timer = Timer(15)
+        while timer.not_expired:
+            try:
+                browser.find_element_by_xpath("/html/body/div/main/div[3]/table/tbody/tr[1]/td[3]/button").click()
+                break
+            except:
+                continue
+        if timer.expired:
+            print("Timeout. Não achou btn visualizar.")
+
+        time.sleep(5)
+
+        timer.reset()
+        while timer.not_expired:
+            try:
+                browser.find_element_by_xpath('//*[@id="sidebar"]/div[2]/button').click()
+                break
+            except:
+                continue
+        if timer.expired:
+            print("Timeout. Não achou btn telefones.")
+
+        time.sleep(5)
+
+        timer.reset()
+        while timer.not_expired:
+            try:
+                browser.find_element_by_xpath('//*[@id="sidebar"]/div[3]/button').click()
+                break
+            except:
+                continue
+        if timer.expired:
+            print("Timeout. Não achou btn endereços.")
+
+        time.sleep(5)
+
+        timer.reset()
+        while timer.not_expired:
+            try:
+                browser.find_element_by_xpath('//*[@id="sidebar"]/div[4]/button').click()
+                break
+            except:
+                continue
+        if timer.expired:
+            print("Timeout. Não achou btn Cartões de Crédito.")
+
+        time.sleep(5)
+
+        timer.reset()
+        while timer.not_expired:
+            try:
+                browser.find_element_by_xpath('//*[@id="sidebar"]/div[5]/button').click()
+                break
+            except:
+                continue
+        if timer.expired:
+            print("Timeout. Não achou btn historia de compras.")
+
+        time.sleep(5)
+
+        timer.reset()
+        while timer.not_expired:
+            try:
+                browser.find_element_by_xpath('//*[@id="sidebar"]/div[6]/button').click()
+                break
+            except:
+                continue
+        if timer.expired:
+            print("Timeout. Não achou btn cupons.")
+
+        time.sleep(5)
+
+        timer.reset()
+        while timer.not_expired:
+            try:
+                browser.find_element_by_xpath('//*[@id="myModal"]/div/div/div[1]/button').click()
+                break
+            except:
+                continue
+        if timer.expired:
+            print("Timeout. Não achou btn cancelar.")
+
+        Mbox(text="Fim visualiza clientes.")
+
+    def test_visualiza_pedidos(self):
+        browser = ChromeBrowser().aberto()
+        timer = Timer(15)
+        while timer.not_expired:
+            try:
+                browser.find_element_by_xpath('//*[@id="navbarSupportedContent"]/ul[2]/li[3]/a').click()
+                break
+            except:
+                continue
+        if timer.expired:
+            print("Timeout. Não achou btn pedidos.")
+
+        time.sleep(3)
+
+        timer.reset()
+        while timer.not_expired:
+            try:
+                browser.find_element_by_xpath('//*[@id="corpoTabela"]/tr[1]/td[5]/button[2]').click()
+                break
+            except:
+                continue
+        if timer.expired:
+            print("Timeout. Não achou btn visualizar.")
+
+        time.sleep(5)
+
+        timer.reset()
+        while timer.not_expired:
+            try:
+                browser.find_element_by_xpath('//*[@id="myModal"]/div[2]/div/div[2]/div[2]/div/div/button').click()
+                break
+            except:
+                continue
+        if timer.expired:
+            print("Timeout. Não achou btn cancelar.")
+
+        Mbox(text="Fim visualiza pedidos.")
+
 
 if __name__ == '__main__':
-    TestSoRaiva().test_acessar_so_raiva()
-    TestSoRaiva().test_acessar_livros()
-    TestSoRaiva().test_filtro_busca()
-    TestSoRaiva().test_click_saiba_mais()
-    TestSoRaiva().test_click_compra_agora()
-    TestSoRaiva().test_escolhe_cupom()
-    TestSoRaiva().test_adiciona_cartao()
-    TestSoRaiva().test_preenche_endereco()
+    # TestSoRaiva().test_acessar_so_raiva()
+    # TestSoRaiva().test_acessar_livros()
+    # TestSoRaiva().test_filtro_busca()
+    # TestSoRaiva().test_click_saiba_mais()
+    # TestSoRaiva().test_click_compra_agora()
+    # TestSoRaiva().test_escolhe_cupom()
+    # TestSoRaiva().test_adiciona_cartao()
+    # TestSoRaiva().test_preenche_endereco()
+    TestSoRaiva().test_acessar_so_raiva_administrado()
+    TestSoRaiva().test_acessar_clientes()
+    TestSoRaiva().test_inativa_cliente()
+    TestSoRaiva().test_visualiza_cliente()
+    TestSoRaiva().test_visualiza_pedidos()
