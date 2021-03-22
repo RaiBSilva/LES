@@ -3,6 +3,7 @@ using LES.Models.ViewModel.Admin;
 using LES.Models.ViewModel.Conta;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -232,7 +233,7 @@ namespace LES.Controllers
             LivroDemo.GrupoPreco = GrupoPreco;
         }
 
-        public IActionResult Login()
+        public IActionResult Home()
         {
             return View();
         }
@@ -480,6 +481,22 @@ namespace LES.Controllers
         }
 
         #endregion
+
+        #endregion
+
+        #region Jsons
+
+        public IActionResult _MaisVendidosMesJson() {
+            return null;
+        }
+
+        public IActionResult _VendasMesJson()
+        {
+            IList<int> vendas = new List<int> { 100, 130, 200 };
+            IList<string> meses = new List<string> { "Janeiro", "Fevereiro", "Março" };
+
+            return Json(vendas, meses);
+        }
 
         #endregion
 
