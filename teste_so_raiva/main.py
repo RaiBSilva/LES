@@ -560,6 +560,61 @@ class TestSoRaiva():
 
         Mbox(text="Fim visualiza pedidos.")
 
+    def test_acessa_config(self):
+        browser = ChromeBrowser().aberto()
+        timer = Timer(15)
+        while timer.not_expired:
+            try:
+                browser.find_element_by_xpath('//*[@id="navbarSupportedContent"]/ul[2]/li[4]/a').click()
+                break
+            except:
+                continue
+        if timer.expired:
+            print("Timeout. Não achou menu de configurações da loja.")
+
+        time.sleep(5)
+
+        timer.reset()
+        while timer.not_expired:
+            try:
+                browser.find_element_by_xpath('//*[@id="Livros"]/div[1]/div/button').click()
+                break
+            except:
+                continue
+        if timer.expired:
+            print("Timeout. Não achou cadastro de livro.")
+
+        timer.reset()
+        while timer.not_expired:
+            try:
+                browser.find_element_by_id('Livro_Titulo').send_keys(Livro().titulo)
+                browser.find_element_by_id('Livro_Autor').send_keys(Livro().autor)
+                browser.find_element_by_id('Livro_Editora').send_keys(Livro().editora)
+                browser.find_element_by_id('Livro_Edicao').send_keys(Livro().edicao)
+                browser.find_element_by_id('Livro_Isbn').send_keys(Livro().ISBN)
+                browser.find_element_by_id('Livro_Paginas').send_keys(Livro().paginas)
+                browser.find_element_by_id('Livro_Comprimento').send_keys(Livro().dimencao)
+                break
+            except Exception as e:
+                continue
+        if timer.expired:
+            print("Timeout. Não achou campo de título.")
+
+        time.sleep(5)
+
+        timer.reset()
+        while timer.not_expired:
+            try:
+                browser.find_element_by_xpath('//*[@id="myModal"]/div/div/div[2]/form/div[2]/button[2]').click()
+                break
+            except:
+                continue
+        if timer.expired:
+            print("Timeout. Não achou botão de cadastrar livro.")
+
+        Mbox(text="Fim acessa configurações.")
+
+
 
 if __name__ == '__main__':
     # TestSoRaiva().test_acessar_so_raiva()
@@ -575,3 +630,4 @@ if __name__ == '__main__':
     TestSoRaiva().test_inativa_cliente()
     TestSoRaiva().test_visualiza_cliente()
     TestSoRaiva().test_visualiza_pedidos()
+    TestSoRaiva().test_acessa_config()

@@ -9,6 +9,9 @@ class Livro:
         self.categoria = "Fantasia"
         self.data_min = "19082007"
         self.data_max = "19082020"
+        self.edicao = "10"
+        self.paginas = "20000"
+        self.dimencao = "10"
 
 
 class Cartao:
