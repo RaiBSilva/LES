@@ -9,12 +9,9 @@ namespace LES.Models.Entity
 {
     public class EntidadeDominio
     {
-        [Key]
-        [Required, Column("id")]
         public int Id { get; set; }
-
-        [Required, Column("dt_cadastro")]
         public DateTime DtCadastro { get; set; }
+        public bool Inativo { get; set; }
 
         #region Construtores da Classe
         public EntidadeDominio() { }

@@ -1,11 +1,10 @@
 ﻿function getData(endereco) {
 
-    var data = $.get(endereco, function (data) {
-        return data;
+    var dados = $.getJSON(endereco, function (resposta) {
+        return resposta;
     });
 
-    return data;
-
+    return dados;
 }
 
 function desenhaMaisVendidos() {
@@ -13,25 +12,13 @@ function desenhaMaisVendidos() {
     var graph = $("#myChart");
 
     var endereco = urls.MaisVendidos;
+    var dados = getData(endereco);
+
     new Chart(graph, {
         type: 'bar',
         data: {
-            labels: ['Janeiro', 'Fevereiro', 'Março' ],
-            datasets: [{
-                label: "Livro1",
-                data: [100, 200, 150],
-                backgroundColor: 'rgba(94, 140, 95, 0.5)'
-            },
-            {
-                label: "Livro2",
-                data: [50, 20, 100],
-                backgroundColor: 'rgba(140, 94, 95, 0.5)'
-            },
-            {
-                label: "Livro3",
-                data: [123, 52, 231],
-                backgroundColor: 'rgba(95, 94, 140, 0.5)'
-            }]
+            labels: dados.labels,
+            datasets: dados.datasets
         },
         options: {
             title: {
@@ -49,7 +36,8 @@ function desenhaMaisVendidos() {
                 labels: {
                     defaultFontSize: 20
                 }
-            }
+            },
+            responsive: true
         }
     });
 
@@ -58,16 +46,14 @@ function desenhaMaisVendidos() {
 function desenhaVendas3Meses() {
     var graph = $("#myChart");
 
-    var endereco = urls.MaisVendidos;
+    var endereco = urls.VendasPorMes;
+    var dados = getData(endereco);
+
     new Chart(graph, {
         type: 'line',
         data: {
-            labels: ['Janeiro', 'Fevereiro', 'Março'],
-            datasets: [{
-                label: 'Vendas',
-                data: [320, 250, 250],
-                backgroundColor: 'rgba(94, 140, 95, 0.5)'
-            }]
+            labels: dados.labels,
+            datasets: dados.datasets
         },
         options: {
             title: {

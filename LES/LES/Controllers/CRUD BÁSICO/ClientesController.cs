@@ -14,6 +14,7 @@ using System.Text.Json;
 
 namespace LES.Controllers
 {
+    /*
     public class ClientesController : Controller
     {
         private IFacadeCrud _facade;
@@ -42,7 +43,7 @@ namespace LES.Controllers
         // GET: Clientes/Details/5
         public ActionResult Detalhes(int id)
         {
-            Cliente cliente = (Cliente)_facade.GetEntidade(new Cliente(id));
+            Cliente cliente = (Cliente)_facade.GetEntidade(new Cliente() { Id = id});
 
             ClienteCadastro clienteCadastro = ClienteModelParaView(cliente);
 
@@ -69,7 +70,7 @@ namespace LES.Controllers
             {
                 ModelState.Remove("Enderecos.[" + i + "].EEntrega");
                 ModelState.Remove("Enderecos.[" + i + "].ECobranca");
-            }*/
+            }
 
             if (ModelState.IsValid)
             {
@@ -93,7 +94,7 @@ namespace LES.Controllers
         // GET: Clientes/Delete/5
         public ActionResult Delete(int id)
         {
-            Cliente cliente = (Cliente)_facade.GetEntidade(new Cliente(id));
+            Cliente cliente = (Cliente)_facade.GetEntidade(new Cliente() { Id= id});
 
             ClienteCadastro clienteCadastro = ClienteModelParaView(cliente);
 
@@ -107,7 +108,7 @@ namespace LES.Controllers
         {
             try
             {
-                _facade.Deletar(new Cliente(id));
+                _facade.Deletar(new Cliente(){Id =id});
             }
             catch(Exception ex)
             {
@@ -119,7 +120,7 @@ namespace LES.Controllers
 
         public ActionResult Editar(int id)
         {
-            Cliente cliente = (Cliente)_facade.GetEntidade(new Cliente(id));
+            Cliente cliente = (Cliente)_facade.GetEntidade(new Cliente() { Id=id});
             ClienteCadastro clienteCadastro = ClienteModelParaView(cliente);
             return View(clienteCadastro);
         }
@@ -159,7 +160,7 @@ namespace LES.Controllers
 
         public ActionResult EditarSenha(int id)
         {
-            Cliente cliente = (Cliente)_facade.GetEntidade(new Cliente(id));
+            Cliente cliente = (Cliente)_facade.GetEntidade(new Cliente() { Id=id});
             ClienteCadastro clienteCadastro = ClienteModelParaView(cliente);
             return View(clienteCadastro);
         }
@@ -378,6 +379,6 @@ namespace LES.Controllers
             return enderecoCadastro;
         }
         #endregion
-
     }
+*/
 }

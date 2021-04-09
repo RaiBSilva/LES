@@ -1,6 +1,5 @@
 ﻿using LES.DAO;
 using LES.Models;
-using LES.Models.DAO;
 using LES.Models.Entity;
 using LES.Models.Strategy;
 using System;
@@ -11,6 +10,7 @@ using System.Threading.Tasks;
 
 namespace LES.Controllers
 {
+    /*
     public class Facade : IFacadeCrud
     {
        
@@ -104,4 +104,5 @@ namespace LES.Controllers
         }
 
     }
+    */
 }

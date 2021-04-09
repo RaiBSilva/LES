@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using LES.Controllers;
+using LES.Controllers.Facade;
 using LES.Models;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -26,11 +27,19 @@ namespace LES
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddAuthentication("CookieAuthentication")
+                 .AddCookie("CookieAuthentication", config =>
+                 {
+                     config.Cookie.Name = "LoginCookie";
+                     config.LoginPath = "/Conta/Login";
+                 });
+
             services.AddControllersWithViews();
             services.AddDbContext<AppDbContext>(
                 options => options.UseSqlServer(Configuration.GetConnectionString("DefaultSqlServer"))
                 );
-            services.AddScoped<IFacadeCrud, Facade>();
+
+            services.AddScoped<IFacadeCrud, FacadeCrud>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -50,6 +59,12 @@ namespace LES
             app.UseStaticFiles();
 
             app.UseRouting();
+
+            // who are you?  
+            app.UseAuthentication();
+
+            // are you allowed?  
+            app.UseAuthorization();
 
             app.UseAuthorization();
             app.UseAuthentication();

@@ -55,7 +55,7 @@
             <div class="form-group form-row">
                 <div id="divCategoria" class="col-md-12">
                     <label asp-for="Categoria" class="control-label text-center text-small"></label>
-                    <select asp-for="Categoria" class="form-control required" asp-items="Html.GetEnumSelectList<LES.Models.Entity.Categorias>()">
+                    <select asp-for="Categoria" class="form-control required" >
                     </select>
                     <span asp-validation-for="Categoria" class="text-danger"></span>
                 </div>

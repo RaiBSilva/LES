@@ -6,25 +6,22 @@ using System.Threading.Tasks;
 
 namespace LES.Models.Entity
 {
-    public enum BandeiraCartaoCredito
+    public class CartaoCredito : EntidadeDominio
     {
-        VISA,
-        Mastercard,
-        Elo,
-        Hipercard,
-        [Display(Name = "Diners Club")]
-        DinersClub,
-        [Display(Name = "American Express")]
-        AmericanExpress,
-    }
-
-    public class CartaoCredito
-    {
-
+        public int BandeiraId { get; set; }
         public string Codigo { get; set; }
         public string Cvv { get; set; }
+        public bool EFavorito { get; set; }
+        public string NomeImpresso { get; set; }
         public DateTime Vencimento { get; set; }
-        public BandeiraCartaoCredito Bandeira { get; set; }
+
+        public virtual BandeiraCartaoCredito Bandeira { get; set; }
+        public virtual Cliente Cliente { get; set; }
+
+        public CartaoCredito()
+        {
+
+        }
 
     }
 }

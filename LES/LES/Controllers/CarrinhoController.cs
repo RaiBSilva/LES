@@ -33,7 +33,7 @@ namespace LES.Views.Carrinho
             CarrinhoModel.Livros.Add(livro);
 
             #endregion
-
+            /*
             #region Finalizar Compra Demo
             DetalhesEnderecoModel end = new DetalhesEnderecoModel();
             end.Id = "1";
@@ -112,7 +112,7 @@ namespace LES.Views.Carrinho
             FCModel.Pedido.PrecoTotal = 250.50F;
 
             #endregion
-
+            */
         }
 
         public IActionResult FinalizarCompra() {

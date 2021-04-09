@@ -2,6 +2,7 @@
 using LES.Models.ViewModel.Admin;
 using LES.Models.ViewModel.Conta;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Data.SqlClient.DataClassification;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Newtonsoft.Json;
 using System;
@@ -32,6 +33,7 @@ namespace LES.Controllers
             Nome = "Motivo"
         };
 
+        /*
         public AdminController()
         {
             #region Cliente de Demonstração
@@ -232,6 +234,7 @@ namespace LES.Controllers
 
             LivroDemo.GrupoPreco = GrupoPreco;
         }
+        */
 
         public IActionResult Home()
         {
@@ -487,15 +490,54 @@ namespace LES.Controllers
         #region Jsons
 
         public IActionResult _MaisVendidosMesJson() {
-            return null;
+
+            string[] labels = new string[] { "Janeiro", "Fevereiro", "Março" };
+            JsonData[] datasets = {
+                new JsonData{ label ="Livro1", 
+                            data = new int[]{100, 200, 150 }, 
+                            backgroundColor = "rgba(94, 140, 95, 0.5)",
+                            fill= true},
+                new JsonData{ label ="Livro2", data = new int[]{50, 20, 100 }, backgroundColor = "rgba(140, 94, 95, 0.5)"},
+                new JsonData{ label ="Livro3", data = new int[]{123, 52, 231 }, backgroundColor = "rgba(95, 94, 140, 0.5)"},
+            };
+            JsonChart chart = new JsonChart
+            {
+                labels = labels,
+                datasets = datasets
+            };
+
+            return Json(chart);
+
         }
 
         public IActionResult _VendasMesJson()
         {
-            IList<int> vendas = new List<int> { 100, 130, 200 };
-            IList<string> meses = new List<string> { "Janeiro", "Fevereiro", "Março" };
 
-            return Json(vendas, meses);
+            string[] labels = new string[] { "Janeiro", "Fevereiro", "Março" };
+            JsonData[] datasets = {
+                new JsonData{
+                    label ="Livro1", 
+                    data = new int[]{100, 200, 150 }, 
+                    backgroundColor = "rgba(94, 140, 95, 0.5)",
+                    fill = false},
+                new JsonData{ 
+                    label ="Livro2", 
+                    data = new int[]{50, 20, 100 }, 
+                    backgroundColor = "rgba(140, 94, 95, 0.5)",
+                    fill = false},
+                new JsonData{ 
+                    label ="Livro3", 
+                    data = new int[]{123, 52, 231 }, 
+                    backgroundColor = "rgba(95, 94, 140, 0.5)",
+                    fill = false},
+            };
+            JsonChart chart = new JsonChart
+            {
+                labels = labels,
+                datasets = datasets
+            };
+
+            return Json(chart);
         }
 
         #endregion

@@ -16,6 +16,7 @@ namespace LES.Views.Conta
         DetalhesModel ClienteDemo = new DetalhesModel();
         AlterarSenhaModel Senha = new AlterarSenhaModel();
 
+        /*
         public ContaController()
         {
             #region Cliente de Demonstração
@@ -164,6 +165,7 @@ namespace LES.Views.Conta
             #endregion
 
         }
+        */
 
         #region Login, Registro e Detalhes
         //GET /Conta/Login
