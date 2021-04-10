@@ -14,7 +14,7 @@ namespace LES.Views.Carrinho
 
         CarrinhoModel CarrinhoModel = new CarrinhoModel();
 
-        FinalizarCompraModel FCModel = new FinalizarCompraModel();
+        PaginaFinalizarCompraModel FCModel = new PaginaFinalizarCompraModel();
 
         public CarrinhoController()
         {

@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace LES.Models.ViewModel.Conta
 {
-    public class RegistroModel
+    public class PaginaRegistroModel
     {
         public InfoBaseModel InfoUsuario { get; set; }
         public SenhaBaseModel Senha { get; set; }
@@ -15,7 +15,7 @@ namespace LES.Models.ViewModel.Conta
         public EnderecoBaseModel Endereco {get;set;}
         public CartaoBaseModel Cartao { get; set; }
 
-        public RegistroModel()
+        public PaginaRegistroModel()
         {
             InfoUsuario = new InfoBaseModel();
             Senha = new SenhaBaseModel();

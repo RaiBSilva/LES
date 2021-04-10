@@ -11,11 +11,11 @@ namespace LES.Controllers
     public class LivrosController : Controller
     {
 
-        public LojaModel LojaModel { get; set; }
+        public PaginaLojaModel LojaModel { get; set; }
 
         public IActionResult Loja()
         {
-            LojaModel = new LojaModel();
+            LojaModel = new PaginaLojaModel();
             LojaModel.Livros = new List<LivroCardModel>();
 
             var livro = new LivroCardModel();

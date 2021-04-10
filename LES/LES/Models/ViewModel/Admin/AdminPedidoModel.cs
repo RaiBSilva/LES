@@ -9,11 +9,11 @@ namespace LES.Models.ViewModel.Admin
     public class AdminPedidoModel : PedidoModel
     {
 
-        public DetalhesModel Cliente { get; set; }
+        public PaginaDetalhesModel Cliente { get; set; }
 
         public AdminPedidoModel()
         {
-            Cliente = new DetalhesModel();
+            Cliente = new PaginaDetalhesModel();
         }
 
     }

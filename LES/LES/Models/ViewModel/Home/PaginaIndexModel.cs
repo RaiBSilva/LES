@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace LES.Models.ViewModel.Home
 {
-    public class IndexModel
+    public class PaginaIndexModel
     {
         public IList<LivroCardModel> Livros { get; set; }
     }

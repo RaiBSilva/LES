@@ -161,6 +161,29 @@ namespace LES.Models
 
             #endregion
 
+            #region Cupom
+
+            tri = "cup";
+
+            modelBuilder = configBasico<Cupom>(modelBuilder, "CUPONS", tri);
+
+            modelBuilder.Entity<Cupom>()
+                .Property(c => c.ClienteId)
+                .HasColumnName($"{tri}_cli_id")
+                .IsRequired();
+
+            modelBuilder.Entity<Cupom>()
+                .Property(c => c.Codigo)
+                .HasColumnName($"{tri}_codigo")
+                .IsRequired();
+
+            modelBuilder.Entity<Cupom>()
+                .Property(c => c.Valor)
+                .HasColumnName($"{tri}_valor")
+                .IsRequired();
+
+            #endregion
+
             #region Cliente
 
             tri = "cli";
@@ -541,6 +564,10 @@ namespace LES.Models
                 .IsRequired();
 
             modelBuilder.Entity<Pedido>()
+                .Property(p => p.CupomId)
+                .HasColumnName(tri + "_cup_id");
+
+            modelBuilder.Entity<Pedido>()
                 .Property(p => p.Status)
                 .HasColumnName(tri + "_status")
                 .IsRequired();
@@ -550,6 +577,12 @@ namespace LES.Models
                 .WithMany(c => c.Pedidos)
                 .HasForeignKey(c => c.ClienteId)
                 .HasConstraintName("FK_" + tri.ToUpper() + "_PED");
+
+            modelBuilder.Entity<Pedido>()
+                .HasOne(p => p.Cupom)
+                .WithOne(c => c.Pedido)
+                .HasForeignKey<Pedido>( p => p.CupomId )
+                .HasConstraintName("FK_" + tri.ToUpper() + "_CUP");
 
             #endregion
 
@@ -647,6 +680,7 @@ namespace LES.Models
         public DbSet<CategoriaLivro> CategoriaLivros { get; set; }
         public DbSet<Cidade> Cidades { get; set; }
         public DbSet<Cliente> Clientes { get; set; }
+        public DbSet<Cupom> Cupons { get; set; }
         public DbSet<Editora> Editoras { get; set; }
         public DbSet<Endereco> Enderecos { get; set; }
         public DbSet<Estado> Estados { get; set; }

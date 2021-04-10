@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace LES.Models.ViewModel.Conta
 {
-    public class DetalhesModel
+    public class PaginaDetalhesModel
     {
         public DetalhesInfoModel InfoUsuario { get; set; }
         public IList<DetalhesEnderecoModel> Enderecos { get;set; }
@@ -15,7 +15,7 @@ namespace LES.Models.ViewModel.Conta
         public IList<PedidoModel> Pedidos { get; set; }
         public IList<CupomModel> Cupons { get; set; }
 
-        public DetalhesModel()
+        public PaginaDetalhesModel()
         {
             InfoUsuario = new DetalhesInfoModel();
             InfoUsuario.NotaUsuario = 0;

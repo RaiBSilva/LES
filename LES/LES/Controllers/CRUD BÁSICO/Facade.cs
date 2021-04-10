@@ -1,7 +1,5 @@
-﻿using LES.DAO;
-using LES.Models;
+﻿using LES.Models;
 using LES.Models.Entity;
-using LES.Models.Strategy;
 using System;
 using System.Collections.Generic;
 using System.Linq;

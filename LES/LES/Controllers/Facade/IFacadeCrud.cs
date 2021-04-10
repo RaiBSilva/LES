@@ -2,18 +2,20 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Threading.Tasks;
 
 namespace LES.Controllers.Facade
 {
-    public interface IFacadeCrud
+    public interface IFacadeCrud<T> where T: EntidadeDominio
     {
 
-        public IEnumerable<EntidadeDominio> Listar(EntidadeDominio e);
-        public EntidadeDominio GetEntidade(EntidadeDominio e);
-        public String Cadastrar(EntidadeDominio e);
-        public String Editar(EntidadeDominio e);
-        public String Deletar(EntidadeDominio e);
+        public IEnumerable<T> Listar(T e);
+        public T GetEntidade(T e);
+        public IEnumerable<TType> Query<TType>(Expression<Func<T, bool>> where, Expression<Func<T, TType>> select) where TType : EntidadeDominio;
+        public String Cadastrar(T e);
+        public String Editar(T e);
+        public String Deletar(T e);
 
 
     }

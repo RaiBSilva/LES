@@ -32,6 +32,7 @@ namespace LES.Models.Entity
         public virtual IList<Endereco> Enderecos { get; set; }
         public virtual IList<Pedido> Pedidos { get; set; }
         public virtual IList<Telefone> Telefones { get; set; }
+        public virtual IList<Cupom> Cupons { get; set; }
         public virtual Usuario Usuario { get; set; }
         #endregion
 

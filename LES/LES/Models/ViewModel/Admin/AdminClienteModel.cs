@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace LES.Models.ViewModel.Admin
 {
-    public class AdminClienteModel : DetalhesModel
+    public class AdminClienteModel : PaginaDetalhesModel
     {
         public bool Inativo { get; set; }
 

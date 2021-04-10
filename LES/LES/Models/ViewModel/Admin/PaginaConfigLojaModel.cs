@@ -5,16 +5,16 @@ using System.Threading.Tasks;
 
 namespace LES.Models.ViewModel.Admin
 {
-    public class ConfigLojaPaginaModel
+    public class PaginaConfigLojaModel
     {
         public IList<AdminLivroModel> Livros { get; set; }
-        public IList<AdminCategoriaModel> Categorias { get; set; }
+        public IList<CategoriaLivroModel> Categorias { get; set; }
         public IList<AdminGrupoPrecoModel> GrupoPrecos { get; set; }
 
-        public ConfigLojaPaginaModel()
+        public PaginaConfigLojaModel()
         {
             Livros = new List<AdminLivroModel>();
-            Categorias = new List<AdminCategoriaModel>();
+            Categorias = new List<CategoriaLivroModel>();
             GrupoPrecos = new List<AdminGrupoPrecoModel>();
         }
 

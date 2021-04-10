@@ -1,55 +1,96 @@
-﻿using LES.Models;
+﻿using LES.Data.DAO;
+using LES.Models;
 using LES.Models.Entity;
-using LES.Models.Strategy;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
+using System.Text;
 using System.Threading.Tasks;
 
 namespace LES.Controllers.Facade
 {
-    public class FacadeCrud : IFacadeCrud
+    public class FacadeCrud<T> : IFacadeCrud<T> where T : EntidadeDominio
     {
 
-        AppDbContext Contexto;
+        private IDAO<T> _dao;
 
-        public FacadeCrud(AppDbContext contexto)
+        public FacadeCrud(IDAO<T> dao)
         {
-            Contexto = contexto;
+            _dao = dao;
             DefinirStrategies();
         }
 
-        private Dictionary<String, ICollection<IStrategy>> _strategies;
+        private Dictionary<String, ICollection<Func<EntidadeDominio, string>>> _strategies;
 
         private void DefinirStrategies()
         {
-            _strategies = new Dictionary<String, ICollection<IStrategy>>();
-            _strategies[typeof(Cliente).Name] = new List<IStrategy>();
+            _strategies = new Dictionary<String, ICollection<Func<EntidadeDominio, string>>>
+            {
+                [typeof(Cliente).Name] = new List<Func<EntidadeDominio, string>>()
+            };
+        }
+        private string ExecutarRegras(T e)
+        {
+            string nmClasse = e.GetType().Name;
+
+            StringBuilder sb = new StringBuilder();
+
+            var regras = _strategies[nmClasse];
+            if (regras != null) 
+            {
+                foreach (var strat in regras)
+                {
+                    sb.Append(strat(e));
+                }  
+            }
+
+            return sb.ToString();
+
         }
 
-        public string Cadastrar(EntidadeDominio e)
+        public string Cadastrar(T e)
         {
-            throw new NotImplementedException();
+            String msg = ExecutarRegras(e);
+
+            if (msg == "")
+            {
+                return _dao.Add(e);
+            }
+
+            return msg;
         }
 
-        public string Deletar(EntidadeDominio e)
+        public string Deletar(T e)
         {
-            throw new NotImplementedException();
+            return _dao.Delete(e.Id);
         }
 
-        public string Editar(EntidadeDominio e)
+        public string Editar(T e)
         {
-            throw new NotImplementedException();
+            String msg = ExecutarRegras(e);
+
+            if (msg == "")
+            {
+                return _dao.Edit(e);
+            }
+
+            return msg;
         }
 
-        public EntidadeDominio GetEntidade(EntidadeDominio e)
+        public T GetEntidade(T e)
         {
-            throw new NotImplementedException();
+            return _dao.Get(e.Id);
         }
 
-        public IEnumerable<EntidadeDominio> Listar(EntidadeDominio e)
+        public IEnumerable<T> Listar(T e)
         {
-            throw new NotImplementedException();
+            return _dao.List();
+        }
+
+        public IEnumerable<TType> Query<TType>(Expression<Func<T, bool>> where, Expression<Func<T, TType>> select) where TType : EntidadeDominio
+        {
+            return _dao.Get<TType>(where, select);
         }
     }
 }

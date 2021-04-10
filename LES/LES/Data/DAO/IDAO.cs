@@ -5,9 +5,9 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 
-namespace LES.DAO
+namespace LES.Data.DAO
 {
-    interface IDAO<T> where T : EntidadeDominio
+    public interface IDAO<T> where T : EntidadeDominio
     {
 
         public IList<T> List();

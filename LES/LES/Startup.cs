@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using LES.Controllers;
 using LES.Controllers.Facade;
+using LES.Data.DAO;
 using LES.Models;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -39,7 +40,8 @@ namespace LES
                 options => options.UseSqlServer(Configuration.GetConnectionString("DefaultSqlServer"))
                 );
 
-            services.AddScoped<IFacadeCrud, FacadeCrud>();
+            services.AddScoped(typeof(IFacadeCrud<>), typeof(FacadeCrud<>));
+            services.AddScoped(typeof(IDAO<>), typeof(DAO<>));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

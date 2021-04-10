@@ -16,10 +16,10 @@ namespace LES.Controllers
     {
         public AdminClienteModel ClienteDemo = new AdminClienteModel();
         public AlterarSenhaModel Senha = new AlterarSenhaModel();
-        public PedidosPaginaModel PedidosDemo = new PedidosPaginaModel();
-        public ClientesPaginaModel ClientesDemo = new ClientesPaginaModel();
+        public PaginaPedidosModel PedidosDemo = new PaginaPedidosModel();
+        public PaginaClientesModel ClientesDemo = new PaginaClientesModel();
         public AdminLivroModel LivroDemo = new AdminLivroModel();
-        public AdminCategoriaModel Categoria = new AdminCategoriaModel();
+        public CategoriaLivroModel Categoria = new CategoriaLivroModel();
         public AdminGrupoPrecoModel GrupoPreco = new AdminGrupoPrecoModel
         {
             Id = 1,
@@ -254,10 +254,10 @@ namespace LES.Controllers
 
         public IActionResult ConfigLoja() {
 
-            ConfigLojaPaginaModel model = new ConfigLojaPaginaModel
+            PaginaConfigLojaModel model = new PaginaConfigLojaModel
             {
                 Livros = new List<AdminLivroModel> { LivroDemo, LivroDemo},
-                Categorias = new List<AdminCategoriaModel> { Categoria, Categoria},
+                Categorias = new List<CategoriaLivroModel> { Categoria, Categoria},
                 GrupoPrecos = new List<AdminGrupoPrecoModel> { GrupoPreco, GrupoPreco}
             };
 
@@ -416,7 +416,7 @@ namespace LES.Controllers
         }
 
         [HttpPost]
-        public IActionResult AdicionarCategoria(AdminCategoriaModel categoria)
+        public IActionResult AdicionarCategoria(CategoriaLivroModel categoria)
         {
             return RedirectToAction(nameof(ConfigLoja));
         }
@@ -428,7 +428,7 @@ namespace LES.Controllers
         }
 
         [HttpPost]
-        public IActionResult EditarCategoria(AdminCategoriaModel categoria)
+        public IActionResult EditarCategoria(CategoriaLivroModel categoria)
         {
             return RedirectToAction(nameof(ConfigLoja));
         }
@@ -439,7 +439,7 @@ namespace LES.Controllers
         }
 
         [HttpPost]
-        public IActionResult InativarReativarCategoria(AdminCategoriaModel categoria)
+        public IActionResult InativarReativarCategoria(CategoriaLivroModel categoria)
         {
             return RedirectToAction(nameof(ConfigLoja));
         }

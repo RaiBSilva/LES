@@ -3,10 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace LES.Models.Strategy
+namespace LES.Models.ViewModel
 {
-    interface IStrategy
+    public interface IViewHelper
     {
-        public string Validar(string s);
     }
 }
