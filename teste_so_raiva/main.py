@@ -9,7 +9,8 @@ class TestSoRaiva():
         browser = ChromeBrowser().novo()
         browser.get("https://localhost:44378/")
         titulo = browser.title
-        Mbox(text="Fim acessa livraria.")
+        # Mbox(text="Fim acessa livraria.")
+        time.sleep(3)
         assert titulo == "Home Page - SóRaiva"
 
     def test_acessar_livros(self):
@@ -23,8 +24,9 @@ class TestSoRaiva():
                 continue
         if timer.expired:
             print("Timeout. Não achou o menu Livros.")
-        Mbox(text="Fim acessa livro.")
+        # Mbox(text="Fim acessa livro.")
         titulo = browser.title
+        time.sleep(3)
         assert titulo == "SóRaiva Livros - SóRaiva"
 
     def test_filtro_busca(self):
@@ -109,8 +111,8 @@ class TestSoRaiva():
                 continue
         if timer.expired:
             print("Timeout. Não achou o input de Filtros_Categoria.")
-
-        Mbox(text="Preencheu filtro de busca.")
+        time.sleep(5)
+        # Mbox(text="Preencheu filtro de busca.")
 
     def test_click_saiba_mais(self):
         browser = ChromeBrowser().aberto()
@@ -130,8 +132,8 @@ class TestSoRaiva():
                 continue
         if timer.expired:
             print("Timeout. Não achou o btn SAIBA MAIS.")
-        Mbox(text="Clicou em SAIBA MAIS.")
-
+        # Mbox(text="Clicou em SAIBA MAIS.")
+        time.sleep(4)
         assert browser.title == "Descrição - SóRaiva"
 
     def test_click_compra_agora(self):
@@ -152,7 +154,8 @@ class TestSoRaiva():
                 continue
         if timer.expired:
             print("Timeout. Não achou o btn COMPRAR AGORA.")
-        Mbox(text="Clicou em COMPRAR AGORA.")
+        # Mbox(text="Clicou em COMPRAR AGORA.")
+        time.sleep(4)
         assert browser.title == "FinalizarCompra - SóRaiva"
 
     def test_escolhe_cupom(self):  #buttonCupom
@@ -167,7 +170,7 @@ class TestSoRaiva():
         if timer.expired:
             print("Timeout. Não achou o botão dos cupons.")
 
-        time.sleep(3)
+        time.sleep(4)
 
         timer.reset()
         while timer.not_expired:
@@ -185,7 +188,8 @@ class TestSoRaiva():
                 continue
         if timer.expired:
             print("Timeout. Não achou o btn do cupom.")
-        Mbox(text="Escolheu o cupom.")
+        time.sleep(4)
+        # Mbox(text="Escolheu o cupom.")
 
     def test_adiciona_cartao(self):
         browser = ChromeBrowser().aberto()
@@ -198,7 +202,7 @@ class TestSoRaiva():
                 continue
         if timer.expired:
             print("Timeout. Não achou o botão buttonCartao.")
-        time.sleep(3)
+        time.sleep(4)
         timer.reset()
         while timer.not_expired:
             try:
@@ -254,7 +258,8 @@ class TestSoRaiva():
         autoit.send("{TAB}")
         time.sleep(1)
         vencimento.send_keys(Cartao().ano)
-        Mbox(text="Preencheu novo cartão.")
+        # Mbox(text="Preencheu novo cartão.")
+        time.sleep(5)
         timer.reset()
         while timer.not_expired:
             try:
@@ -373,7 +378,8 @@ class TestSoRaiva():
                 continue
         if timer.expired:
             print("Timeout. Não achou o label de endereço de entrega.")
-        Mbox(text="Preencheu novo endereço de entrega.")
+        # Mbox(text="Preencheu novo endereço de entrega.")
+        time.sleep(5)
         timer.reset()
         while timer.not_expired:
             try:
@@ -384,11 +390,89 @@ class TestSoRaiva():
         if timer.expired:
             print("Timeout. Não clicou em cadastrar endereço.")
 
+    def test_acessa_pagina_conta(self):
+        browser = ChromeBrowser().aberto()
+        browser.get("https://localhost:44378/")
+
+        timer = Timer(15)
+        while timer.not_expired:
+            try:
+                browser.find_element_by_xpath('//*[@id="navbarSupportedContent"]/ul[1]/li[1]/a').click()
+                break
+            except:
+                continue
+        if timer.expired:
+            print("Timeout. Não clicou em cadastrar endereço.")
+
+        time.sleep(2)
+
+        timer.reset()
+        while timer.not_expired:
+            try:
+                browser.find_element_by_xpath('//*[@id="navbarSupportedContent"]/ul[1]/li/a').click()
+                break
+            except:
+                continue
+        if timer.expired:
+            print("Timeout. Não clicou em cadastrar endereço.")
+
+        time.sleep(2)
+
+        timer.reset()
+        while timer.not_expired:
+            try:
+                browser.find_element_by_xpath('//*[@id="sidebar"]/div[5]/button').click()
+                break
+            except:
+                continue
+        if timer.expired:
+            print("Timeout. Não clicou em historico de compras.")
+
+        time.sleep(2)
+        # Mbox(text="Iniciando processo de troca do produto.")
+
+        timer.reset()
+        while timer.not_expired:
+            try:
+                browser.find_element_by_xpath('//*[@id="heading_2"]/h5/button/div/div/span[1]').click()
+                break
+            except:
+                continue
+        if timer.expired:
+            print("Timeout. Não clicou na compra.")
+
+        time.sleep(3)
+
+        timer.reset()
+        while timer.not_expired:
+            try:
+                browser.find_element_by_xpath('//*[@id="collapse_2"]/div/table/tbody/tr[1]/td[3]/button').click()
+                break
+            except:
+                continue
+        if timer.expired:
+            print("Timeout. Não solicitar troca.")
+
+        time.sleep(5)
+
+        timer.reset()
+        while timer.not_expired:
+            try:
+                browser.find_element_by_xpath('//*[@id="btn"]').click()
+                break
+            except:
+                continue
+        if timer.expired:
+            print("Timeout. Não confirmou solicitar troca.")
+
+        # Mbox(text="Solicitou troca do produto.")
+
+
     def test_acessar_so_raiva_administrado(self):
         browser = ChromeBrowser().aberto()
         browser.get("https://localhost:44378/Admin/Home")
         titulo = browser.title
-        Mbox(text="Fim acessa home dos administrador.")
+        # Mbox(text="Fim acessa home dos administrador.")
         assert titulo == "View - SóRaiva"
 
     def test_acessar_clientes(self):
@@ -525,6 +609,7 @@ class TestSoRaiva():
     def test_visualiza_pedidos(self):
         browser = ChromeBrowser().aberto()
         timer = Timer(15)
+        time.sleep(3)
         while timer.not_expired:
             try:
                 browser.find_element_by_xpath('//*[@id="navbarSupportedContent"]/ul[2]/li[3]/a').click()
@@ -536,29 +621,29 @@ class TestSoRaiva():
 
         time.sleep(3)
 
+        timer = Timer(15)
+        while timer.not_expired:
+            try:
+                browser.find_element_by_xpath('//*[@id="corpoTabela"]/tr[3]/td[5]/button[1]').click()
+                break
+            except:
+                continue
+        if timer.expired:
+            print("Timeout. Não achou btn pedidos.")
+
+        time.sleep(3)
+
         timer.reset()
         while timer.not_expired:
             try:
-                browser.find_element_by_xpath('//*[@id="corpoTabela"]/tr[1]/td[5]/button[2]').click()
+                browser.find_element_by_xpath('//*[@id="myModal"]/div/div/div[2]/div[2]/button[1]').click()
                 break
             except:
                 continue
         if timer.expired:
             print("Timeout. Não achou btn visualizar.")
 
-        time.sleep(5)
-
-        timer.reset()
-        while timer.not_expired:
-            try:
-                browser.find_element_by_xpath('//*[@id="myModal"]/div[2]/div/div[2]/div[2]/div/div/button').click()
-                break
-            except:
-                continue
-        if timer.expired:
-            print("Timeout. Não achou btn cancelar.")
-
-        Mbox(text="Fim visualiza pedidos.")
+        Mbox(text="Aprovou a troca. Nevegador será fechado.")
 
     def test_acessa_config(self):
         browser = ChromeBrowser().aberto()
@@ -583,6 +668,8 @@ class TestSoRaiva():
                 continue
         if timer.expired:
             print("Timeout. Não achou cadastro de livro.")
+
+        time.sleep(5)
 
         timer.reset()
         while timer.not_expired:
@@ -617,17 +704,18 @@ class TestSoRaiva():
 
 
 if __name__ == '__main__':
-    # TestSoRaiva().test_acessar_so_raiva()
-    # TestSoRaiva().test_acessar_livros()
-    # TestSoRaiva().test_filtro_busca()
-    # TestSoRaiva().test_click_saiba_mais()
-    # TestSoRaiva().test_click_compra_agora()
-    # TestSoRaiva().test_escolhe_cupom()
-    # TestSoRaiva().test_adiciona_cartao()
-    # TestSoRaiva().test_preenche_endereco()
+    TestSoRaiva().test_acessar_so_raiva()
+    TestSoRaiva().test_acessar_livros()
+    TestSoRaiva().test_filtro_busca()
+    TestSoRaiva().test_click_saiba_mais()
+    TestSoRaiva().test_click_compra_agora()
+    TestSoRaiva().test_escolhe_cupom()
+    TestSoRaiva().test_adiciona_cartao()
+    TestSoRaiva().test_preenche_endereco()
+    TestSoRaiva().test_acessa_pagina_conta()
     TestSoRaiva().test_acessar_so_raiva_administrado()
-    TestSoRaiva().test_acessar_clientes()
-    TestSoRaiva().test_inativa_cliente()
-    TestSoRaiva().test_visualiza_cliente()
+    # TestSoRaiva().test_acessar_clientes()
+    # TestSoRaiva().test_inativa_cliente()
+    # TestSoRaiva().test_visualiza_cliente()
     TestSoRaiva().test_visualiza_pedidos()
-    TestSoRaiva().test_acessa_config()
+    # TestSoRaiva().test_acessa_config()
