@@ -16,7 +16,7 @@
             </div>
         </div>
     </div>
-    <div class="row">
+    <div class="row chart-container">
         <canvas id="myChart" class="col-sm-12" style="max-height:600px"></canvas>
     </div>
 
@@ -27,7 +27,7 @@
     <script type="text/javascript">
         var urls = urls || {};
 
-        urls.MaisVendidos = '@Url.Action("_MaisVendidosJson", "Admin")';
+        urls.MaisVendidos = '@Url.Action("_MaisVendidosMesJson", "Admin")';
         urls.VendasPorMes = '@Url.Action("_VendasMesJson", "Admin")';
 
     </script>

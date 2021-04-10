@@ -19,7 +19,7 @@ namespace LES.Models.ViewModel.Livros
         public float PrecoMin { get; set; }
         [Display(Name = "Preço máximo")]
         public float PrecoMax { get; set; }
-        public Categorias Categoria { get; set; }
+        public IList<CategoriaLivro> Categoria { get; set; }
 
     }
 }

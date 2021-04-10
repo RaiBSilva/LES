@@ -7,9 +7,9 @@ namespace LES.Models.ViewModel.Admin
 {
     public class ConfigLojaLivroModel
     {
-        public AdminLivroModel Livro { get; set; }
         public IList<AdminCategoriaModel> Categorias { get; set; }
         public IList<AdminGrupoPrecoModel> GrupoPrecos { get; set; }
+        public AdminLivroModel Livro { get; set; }
 
         public ConfigLojaLivroModel()
         {

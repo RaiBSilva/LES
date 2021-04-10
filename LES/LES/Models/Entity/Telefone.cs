@@ -7,46 +7,18 @@ using System.Threading.Tasks;
 
 namespace LES.Models.Entity
 {
-    public enum TipoTelefone { 
-        Celular,
-        Fixo
-    }
-
-    [Table("TELEFONES")]
     public class Telefone : EntidadeDominio
     {
-        [Required, Column("tel_tipo")]
-        public TipoTelefone TipoTelefone { get; set; }
-
-        [Required, Column("tel_ddd")]
+        public int ClienteId { get; set; }
         public string Ddd { get; set; }
-
-        [Required, Column("tel_numero")]
+        public bool EFavorito { get; set; }
         public string Numero { get; set; }
+        public int TipoTelefoneId { get; set; }
 
-        #region Construtores de Classe
+        public virtual Cliente Cliente { get; set; }
+        public virtual TipoTelefone TipoTelefone { get; set; }
+
         public Telefone() 
         { }
-
-        public Telefone(int id) : base(id) 
-        { }
-
-        public void DefinirAtributos(TipoTelefone tipo, string ddd, string numero) 
-        {
-            TipoTelefone = tipo;
-            Ddd = ddd;
-            Numero = numero;
-        }
-
-        public Telefone(TipoTelefone tipo, string ddd, string numero)
-        {
-            DefinirAtributos(tipo, ddd, numero);
-        }
-
-        public Telefone(int id, DateTime dtCadastro, TipoTelefone tipo, string ddd, string numero) : base(id, dtCadastro)
-        {
-            DefinirAtributos(tipo, ddd, numero);
-        }
-        #endregion
     }
 }
