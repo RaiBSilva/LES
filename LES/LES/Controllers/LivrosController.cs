@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace LES.Controllers
 {
-    public class LivrosController : Controller
+    public class LivrosController : BaseController
     {
 
         public PaginaLojaModel LojaModel { get; set; }

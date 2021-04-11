@@ -11,14 +11,23 @@ namespace LES.Models.ViewHelpers.Conta
     public class PaginaLoginViewHelper : AbstractViewHelper, IViewHelper
     {
 
+        //Atributo responsável por guardar as entidades que vêm do db, ou que vão para o db
         private IDictionary<string, EntidadeDominio> _entidades;
-        public override IDictionary<string, EntidadeDominio> Entidades { get; set; }
+        public override IDictionary<string, EntidadeDominio> Entidades
+        {
+            get => _entidades;
+            set
+            {
+                _entidades = value;
+                ToViewModel();
+            }
+        }
 
-
+        //Atributo responsável por guardar as entidades que vêm do request, ou vão para uma página razor
         private ViewModel.IViewHelper _viewModel;
         public override ViewModel.IViewHelper ViewModel 
         { 
-            get=> _viewModel; 
+            get => _viewModel; 
             set 
             {
                 _viewModel = value;
@@ -26,6 +35,7 @@ namespace LES.Models.ViewHelpers.Conta
             } 
         }
 
+        //Método é chamado quando um valor é settado no viewmodel
         protected override void ToEntidade()
         {
             PaginaLoginModel vm = (PaginaLoginModel)ViewModel;
@@ -38,6 +48,7 @@ namespace LES.Models.ViewHelpers.Conta
             Entidades[typeof(Usuario).Name] = usuario;
         }
 
+        //Método é chamado quando um valor é settado no dicionário de Entidades
         protected override void ToViewModel()
         {
             Usuario usuario = (Usuario)Entidades[typeof(Usuario).Name];

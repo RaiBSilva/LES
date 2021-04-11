@@ -1,4 +1,5 @@
-﻿using LES.Models.Entity;
+﻿using LES.Controllers;
+using LES.Models.Entity;
 using LES.Models.ViewModel.Carrinho;
 using LES.Models.ViewModel.Conta;
 using Microsoft.AspNetCore.Mvc;
@@ -9,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace LES.Views.Carrinho
 {
-    public class CarrinhoController : Controller
+    public class CarrinhoController : BaseController
     {
 
         CarrinhoModel CarrinhoModel = new CarrinhoModel();

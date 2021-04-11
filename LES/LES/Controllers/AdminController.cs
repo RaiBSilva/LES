@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace LES.Controllers
 {
-    public class AdminController : Controller
+    public class AdminController : BaseController
     {
         public AdminClienteModel ClienteDemo = new AdminClienteModel();
         public AlterarSenhaModel Senha = new AlterarSenhaModel();

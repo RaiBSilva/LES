@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using LES.Controllers;
 using LES.Controllers.Facade;
 using LES.Models.Entity;
 using LES.Models.ViewHelpers;
@@ -13,10 +14,9 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace LES.Views.Conta
 {
-    public class ContaController : Controller
+    public class ContaController : BaseController
     {
         private IFacadeCrud<Cliente> _facade { get; set; }
-        private IViewHelper _vh { get; set; }
 
         public ContaController(IFacadeCrud<Cliente> facade)
         {
@@ -32,15 +32,15 @@ namespace LES.Views.Conta
 
         //Post
         [HttpPost]
-        public IActionResult Login(PaginaLoginModel usuario) { 
-        {
+        public IActionResult Login(PaginaLoginModel usuario)
+        { 
             _vh = new PaginaLoginViewHelper
             {
-                ViewModel = usuario,
+                ViewModel = usuario
             };
 
-            
-            Cliente cliente = _vh;
+
+            Cliente cliente = new Cliente();
 
 
             return View();

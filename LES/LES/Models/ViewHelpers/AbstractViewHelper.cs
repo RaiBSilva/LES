@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace LES.Models.ViewHelpers.Conta
+namespace LES.Models.ViewHelpers
 {
     public abstract class AbstractViewHelper : IViewHelper
     {

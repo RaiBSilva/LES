@@ -29,11 +29,5 @@ namespace LES.Models.Entity
         {
         }
 
-        public bool ChecaSenha(string senha)
-        {
-            if (_senha != null) return _hasher.Verify(senha);
-            else return false;
-        }
-
     }
 }
