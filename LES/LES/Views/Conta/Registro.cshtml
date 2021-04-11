@@ -20,7 +20,7 @@
                 </div>
             </div>
             <div class="col-md-9">
-                <form asp-action="Registrar">
+                <form asp-action="Registrar" class="requiredForm">
                     <h1>Registre-se!</h1>
                     <div id="Info" class="tab">
                         <partial name="../Conta/PartialViews/_InfoPessoaisPartial.cshtml" for="InfoUsuario" />
@@ -51,7 +51,8 @@
         </div>
     </div>
 </div>
-@section Scripts{
 
+@section Scripts{
     <script src="~/js/Conta/Tabs.js"></script>
+    <script src="~/js/Shared/ValidadorCamposObrigatorios.js"></script>
 }

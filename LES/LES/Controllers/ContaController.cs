@@ -11,6 +11,8 @@ using LES.Models.ViewModel.Admin;
 using LES.Models.ViewModel.Conta;
 using LES.Models.ViewModel.Shared;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 
 namespace LES.Views.Conta
 {
@@ -33,16 +35,32 @@ namespace LES.Views.Conta
         //Post
         [HttpPost]
         public IActionResult Login(PaginaLoginModel usuario)
-        { 
-            _vh = new PaginaLoginViewHelper
-            {
-                ViewModel = usuario
-            };
+        {
+            if (ModelState.IsValid) 
+            { 
+            
+                _vh = new PaginaLoginViewHelper
+                {
+                    ViewModel = usuario
+                };
 
+                Cliente clienteLogin = new Cliente 
+                { 
+                    Usuario = (Usuario)_vh.Entidades[typeof(Usuario).Name] 
+                };
 
-            Cliente cliente = new Cliente();
+                Cliente clienteDb = _facade.Query<Cliente>(
+                    c => c.Usuario.Email == clienteLogin.Usuario.Email, 
+                    c => c,
+                    c => c.Usuario).FirstOrDefault();
 
+                if (clienteLogin.Usuario.Senha == clienteDb.Usuario.Senha) 
+                {
+                    //Código de login aqui
+                }
 
+                return RedirectToAction("Index","Home");
+            }
             return View();
         }
 
@@ -56,6 +74,28 @@ namespace LES.Views.Conta
         [HttpPost]
         public IActionResult Registro(PaginaRegistroModel usuarioNovo)
         {
+            if (ModelState.IsValid)
+            {
+                /*_vh = new PaginaRegistroViewModel
+                {
+                    Entidades = usuarioNovo
+                };*/
+
+                Cliente cliente = new Cliente();//Pegar do viewhelper
+
+                string msg = _facade.Cadastrar(cliente);
+
+                if (msg == "") 
+                {
+                    return RedirectToAction("Login");
+                }
+                else
+                {
+                    //handling de quebra de strategies
+                    return View();
+                }
+            }
+
             return View();
         }
 

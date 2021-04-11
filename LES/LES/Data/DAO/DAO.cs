@@ -69,9 +69,21 @@ namespace LES.Data.DAO
             return _entidade.Find(id);
         }
 
-        public IList<TType> Get<TType>(Expression<Func<T, bool>> where, Expression<Func<T, TType>> select) where TType : class
+        public IList<TType> Get<TType>(Expression<Func<T, bool>> where, Expression<Func<T, TType>> select,
+            params Expression<Func<TType, object>>[] include) where TType : class
         {
-            return _entidade.Where(where).Select(select).ToList();
+            IQueryable<TType> query = _entidade.Where(where).Select(select);
+
+            if (include != null) query = ApplyIncludesOnQuery<TType>(query, include);
+
+            return query.ToList();
+        }
+
+        private IQueryable<TType> ApplyIncludesOnQuery<TType>(IQueryable<TType> query, 
+            params Expression<Func<TType, object>>[] includeProperties) where TType : class
+        {
+            // Return Applied Includes query
+            return (includeProperties.Aggregate(query, (current, include) => current.Include(include)));
         }
 
         public IList<T> List()

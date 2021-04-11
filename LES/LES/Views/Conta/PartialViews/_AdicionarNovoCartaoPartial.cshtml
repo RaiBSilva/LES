@@ -7,7 +7,7 @@
         <button type="button" class="close" data-dismiss="modal">&times;</button>
     </div>
     <div class="modal-body">
-        <form asp-action="AdicionarNovoCartao" asp-controller="Conta">
+        <form asp-action="AdicionarNovoCartao" asp-controller="Conta" class="requiredForm">
 
             <partial name="../PartialViews/_CartaoPartial.cshtml" for="@Model" />
 
