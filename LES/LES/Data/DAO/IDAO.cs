@@ -12,7 +12,7 @@ namespace LES.Data.DAO
 
         public IList<T> List();
         public T Get(int id);
-        public IList<TType> Get<TType>(Expression<Func<T, bool>> where, Expression<Func<T, TType>> select) where TType : class;
+        public IList<TType> Get<TType>(Expression<Func<T, bool>> where, Expression<Func<T, TType>> select, params Expression<Func<TType, object>>[] include) where TType : class;
         public String Add(T e);
         public String Edit(T e);
         public String Delete(int id);

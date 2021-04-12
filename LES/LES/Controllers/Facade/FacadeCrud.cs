@@ -88,9 +88,10 @@ namespace LES.Controllers.Facade
             return _dao.List();
         }
 
-        public IEnumerable<TType> Query<TType>(Expression<Func<T, bool>> where, Expression<Func<T, TType>> select) where TType : EntidadeDominio
-        {
-            return _dao.Get<TType>(where, select);
+        public IEnumerable<TType> Query<TType>(Expression<Func<T, bool>> where, Expression<Func<T, TType>> select,
+            params Expression<Func<TType, object>>[] include) where TType : class
+        { 
+            return _dao.Get<TType>(where, select, include);
         }
     }
 }
