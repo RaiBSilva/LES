@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using LES.Controllers;
 using LES.Controllers.Facade;
@@ -10,6 +11,8 @@ using LES.Models.ViewHelpers.Conta;
 using LES.Models.ViewModel.Admin;
 using LES.Models.ViewModel.Conta;
 using LES.Models.ViewModel.Shared;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
@@ -56,8 +59,22 @@ namespace LES.Views.Conta
 
                 if (clienteLogin.Usuario.Senha == clienteDb.Usuario.Senha) 
                 {
-                    //Código de login aqui
-                }
+                    int role = (int)clienteLogin.Usuario.Role;
+
+                    var userClaims = new List<Claim>()
+                    {
+                    new Claim(ClaimTypes.Name, clienteLogin.Nome),
+                    new Claim(ClaimTypes.Email, clienteLogin.Usuario.Email),
+                    new Claim(ClaimTypes.Role, role.ToString())
+                     };
+
+                    var grandmaIdentity = new ClaimsIdentity(userClaims, "UsuarioInfo");
+
+                    var userPrincipal = new ClaimsPrincipal(new[] { grandmaIdentity });
+                    HttpContext.SignInAsync(userPrincipal);
+
+                    return RedirectToAction("Index", "Home");
+                    }
 
                 return RedirectToAction("Index","Home");
             }
@@ -85,10 +102,7 @@ namespace LES.Views.Conta
 
                 string msg = _facade.Cadastrar(cliente);
 
-                if (msg == "") 
-                {
-                    return RedirectToAction("Login");
-                }
+                if (msg == "")  return RedirectToAction("Login");
                 else
                 {
                     //handling de quebra de strategies
@@ -99,9 +113,11 @@ namespace LES.Views.Conta
             return View();
         }
 
+        [Authorize]
         //Get /Conta/Detalhes
         public IActionResult Detalhes() 
         {
+            var email = HttpContext.User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.Email)?.Value;
             return View();
         }
 
@@ -130,7 +146,7 @@ namespace LES.Views.Conta
 
         //POST
         [HttpPost]
-        public IActionResult EditarSenha(AlterarSenhaModel senha)
+        public IActionResult EditarSenha(AlterarSenhaModel senhaModel)
         {
             return RedirectToAction(nameof(Detalhes));
         }
