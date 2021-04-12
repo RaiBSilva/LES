@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace LES.Models.ViewModel.Conta
 {
-    public class PaginaRegistroModel
+    public class PaginaRegistroModel : IViewModel
     {
         public InfoBaseModel InfoUsuario { get; set; }
         public SenhaBaseModel Senha { get; set; }

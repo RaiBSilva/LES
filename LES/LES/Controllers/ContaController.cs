@@ -8,6 +8,7 @@ using LES.Controllers.Facade;
 using LES.Models.Entity;
 using LES.Models.ViewHelpers;
 using LES.Models.ViewHelpers.Conta;
+using LES.Models.ViewModel;
 using LES.Models.ViewModel.Admin;
 using LES.Models.ViewModel.Conta;
 using LES.Models.ViewModel.Shared;
@@ -44,7 +45,7 @@ namespace LES.Views.Conta
             
                 _vh = new PaginaLoginViewHelper
                 {
-                    ViewModel = usuario
+                    ViewModel = (IViewModel)usuario
                 };
 
                 Cliente clienteLogin = new Cliente 
@@ -93,12 +94,12 @@ namespace LES.Views.Conta
         {
             if (ModelState.IsValid)
             {
-                /*_vh = new PaginaRegistroViewModel
+                _vh = new PaginaRegistroViewHelper
                 {
-                    Entidades = usuarioNovo
-                };*/
+                    ViewModel = usuarioNovo
+                };
 
-                Cliente cliente = new Cliente();//Pegar do viewhelper
+                Cliente cliente = (Cliente)_vh.Entidades[typeof(Cliente).Name];
 
                 string msg = _facade.Cadastrar(cliente);
 

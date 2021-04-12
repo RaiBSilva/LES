@@ -1,6 +1,8 @@
 ﻿using LES.Models.Entity;
+using LES.Models.ViewModel;
 using LES.Models.ViewModel.Conta;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ViewEngines;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -23,8 +25,8 @@ namespace LES.Models.ViewHelpers.Conta
         }
 
         //Atributo responsável por guardar as entidades que vêm do request, ou vão para uma página razor
-        private ViewModel.IViewHelper _viewModel;
-        public override ViewModel.IViewHelper ViewModel 
+        private IViewModel _viewModel;
+        public override IViewModel ViewModel 
         {
             get => _viewModel;
             set
@@ -44,8 +46,8 @@ namespace LES.Models.ViewHelpers.Conta
             user.Senha = vm.Senha.Senha;
             user.Email = vm.InfoUsuario.Email;
 
-            ListaEnderecos.Add(toEndereco(vm.Endereco));
-            ListaTelefones.Add(toTelefone(vm.Telefone));
+            ListaEnderecos.Add(ToEndereco(vm.Endereco));
+            ListaTelefones.Add(ToTelefone(vm.Telefone));
 
             Cliente cliente = new Cliente
             {
@@ -67,15 +69,15 @@ namespace LES.Models.ViewHelpers.Conta
 
             PaginaRegistroModel vm = new PaginaRegistroModel
             {
-                InfoUsuario = toInfoBaseModel(cliente),
-                Endereco = toEnderecoBaseModel(cliente),
-                Telefone = toTelefoneBaseModel(cliente)
+                InfoUsuario = ToInfoBaseModel(cliente),
+                Endereco = ToEnderecoBaseModel(cliente),
+                Telefone = ToTelefoneBaseModel(cliente)
             };
 
-            ViewModel = (ViewModel.IViewHelper)vm;
+            ViewModel = vm;
         }
 
-        public TelefoneBaseModel toTelefoneBaseModel(Cliente cli)
+        public TelefoneBaseModel ToTelefoneBaseModel(Cliente cli)
         {
             TelefoneBaseModel baseModel = new TelefoneBaseModel();
             Telefone tel = new Telefone();
@@ -92,7 +94,7 @@ namespace LES.Models.ViewHelpers.Conta
             return baseModel;
         }
 
-        public EnderecoBaseModel toEnderecoBaseModel(Cliente cli)
+        public EnderecoBaseModel ToEnderecoBaseModel(Cliente cli)
         {
             EnderecoBaseModel baseModel = new EnderecoBaseModel();
             Endereco endereco = new Endereco();
@@ -116,7 +118,7 @@ namespace LES.Models.ViewHelpers.Conta
             return baseModel;
         }
 
-        public InfoBaseModel toInfoBaseModel(Cliente input)
+        public InfoBaseModel ToInfoBaseModel(Cliente input)
         {
             InfoBaseModel baseModel = new InfoBaseModel();
 
@@ -131,7 +133,7 @@ namespace LES.Models.ViewHelpers.Conta
             return baseModel;
         }
 
-        public Endereco toEndereco(EnderecoBaseModel input)
+        public Endereco ToEndereco(EnderecoBaseModel input)
         {
             Endereco endereco = new Endereco();
 
@@ -147,7 +149,7 @@ namespace LES.Models.ViewHelpers.Conta
             return endereco;
         }
 
-        public Telefone toTelefone(TelefoneBaseModel input)
+        public Telefone ToTelefone(TelefoneBaseModel input)
         {
             Telefone telefone = new Telefone();
 

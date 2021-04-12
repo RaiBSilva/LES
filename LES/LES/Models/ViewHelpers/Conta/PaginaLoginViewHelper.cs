@@ -24,8 +24,8 @@ namespace LES.Models.ViewHelpers.Conta
         }
 
         //Atributo responsável por guardar as entidades que vêm do request, ou vão para uma página razor
-        private ViewModel.IViewHelper _viewModel;
-        public override ViewModel.IViewHelper ViewModel 
+        private IViewModel _viewModel;
+        public override IViewModel ViewModel 
         { 
             get => _viewModel; 
             set 
@@ -58,7 +58,7 @@ namespace LES.Models.ViewHelpers.Conta
                 Username = usuario.Email
             };
 
-            ViewModel = vm;
+            ViewModel = (IViewModel)vm;
         }
     }
 }

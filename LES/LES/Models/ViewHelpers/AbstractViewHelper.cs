@@ -11,7 +11,7 @@ namespace LES.Models.ViewHelpers
     {
 
         public abstract IDictionary<string, EntidadeDominio> Entidades { get; set; }
-        public abstract ViewModel.IViewHelper ViewModel { get; set; }
+        public abstract IViewModel ViewModel { get; set; }
 
         protected abstract void ToEntidade();
 

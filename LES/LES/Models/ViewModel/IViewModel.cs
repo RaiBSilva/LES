@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace LES.Models.ViewModel
 {
-    public interface IViewHelper
+    public interface IViewModel
     {
     }
 }

@@ -10,7 +10,7 @@ namespace LES.Models.ViewHelpers
     public interface IViewHelper
     {
         public IDictionary<string, EntidadeDominio> Entidades { get; set; }
-        public ViewModel.IViewHelper ViewModel { get; set; }
+        public IViewModel ViewModel { get; set; }
 
     }
 }
