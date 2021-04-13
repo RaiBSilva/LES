@@ -2,7 +2,6 @@
 using LES.Models.ViewModel;
 using LES.Models.ViewModel.Conta;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.ViewEngines;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace LES.Models.ViewHelpers.Conta
 {
-    public class PaginaRegistroViewHelper : AbstractViewHelper, IViewHelper
+    public class InfoBaseModelViewHelper : AbstractViewHelper, IViewHelper
     {
         //Atributo responsável por guardar as entidades que vêm do db, ou que vão para o db
         private IDictionary<string, EntidadeDominio> _entidades;
@@ -38,27 +37,15 @@ namespace LES.Models.ViewHelpers.Conta
 
         protected override void ToEntidade()
         {
-            PaginaRegistroModel vm = (PaginaRegistroModel)ViewModel;
-            IList<Endereco> ListaEnderecos = new List<Endereco>();
-            IList<Telefone> ListaTelefones = new List<Telefone>();
+            InfoBaseModel vm = (InfoBaseModel)ViewModel;
+            Cliente cliente = new Cliente();
 
-            Usuario user = new Usuario();
-            user.Senha = vm.Senha.Senha;
-            user.Email = vm.InfoUsuario.Email;
-
-            ListaEnderecos.Add(ToEndereco(vm.Endereco));
-            ListaTelefones.Add(ToTelefone(vm.Telefone));
-
-            Cliente cliente = new Cliente
-            {
-                Cpf = vm.InfoUsuario.Cpf,
-                DtNascimento = vm.InfoUsuario.DtNascimento,
-                Genero = vm.InfoUsuario.Genero,
-                Nome = vm.InfoUsuario.Nome,
-                Enderecos = ListaEnderecos,
-                Usuario = user,
-                Telefones = ListaTelefones
-            };
+            cliente.Cpf = vm.Cpf;
+            cliente.Codigo = vm.Codigo;
+            cliente.DtNascimento = vm.DtNascimento;
+            cliente.Genero = vm.Genero;
+            cliente.Nome = vm.Nome;
+            cliente.Usuario.Senha = vm.Senha;
 
             Entidades[typeof(Cliente).Name] = cliente;
         }
@@ -70,48 +57,24 @@ namespace LES.Models.ViewHelpers.Conta
             PaginaRegistroModel vm = new PaginaRegistroModel
             {
                 InfoUsuario = ToInfoBaseModel(cliente),
-                Endereco = ToEnderecoBaseModel(cliente),
-                Telefone = ToTelefoneBaseModel(cliente)
+                Telefone = ToTelefoneBaseModel(cliente.Telefones[0])
             };
 
             ViewModel = vm;
         }
 
-        public TelefoneBaseModel ToTelefoneBaseModel(Cliente cli)
+        public TelefoneBaseModel ToTelefoneBaseModel(Telefone tel)
         {
             TelefoneBaseModel baseModel = new TelefoneBaseModel();
 
-            Telefone tel = cli.Telefones[0];
-
             baseModel.Ddd = tel.Ddd;
             baseModel.NumeroTelefone = tel.Numero;
+            baseModel.Id = tel.Id.ToString();
+            baseModel.TipoTelefone = tel.TipoTelefone;
 
             return baseModel;
         }
 
-        public EnderecoBaseModel ToEnderecoBaseModel(Cliente cli)
-        {
-            EnderecoBaseModel baseModel = new EnderecoBaseModel();
-            Endereco endereco = new Endereco();
-
-            IList<Endereco> Enderecos = cli.Enderecos;
-            foreach (Endereco e in Enderecos)
-            {
-                endereco = e;
-            }
-
-            baseModel.Cep = endereco.Cep;
-            baseModel.Cidade = endereco.Cidade.Nome;
-            baseModel.Complemento = endereco.Complemento;
-            baseModel.Estado = endereco.Cidade.Estado.Nome;
-            baseModel.Logradouro = endereco.Logradouro;
-            baseModel.Numero = endereco.Numero;
-            baseModel.Pais = endereco.Cidade.Estado.Pais.Nome;
-            baseModel.TipoEndereco = endereco.TipoEndereco;
-            baseModel.Observacoes = endereco.Observacoes;
-
-            return baseModel;
-        }
 
         public InfoBaseModel ToInfoBaseModel(Cliente input)
         {

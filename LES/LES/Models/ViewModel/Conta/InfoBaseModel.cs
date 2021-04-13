@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace LES.Models.ViewModel.Conta
 {
-    public class InfoBaseModel
+    public class InfoBaseModel: IViewModel
     {
         //[Required]
         [Display(Name = "Nome")]

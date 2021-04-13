@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace LES.Models.ViewModel.Conta
 {
-    public class CartaoBaseModel
+    public class CartaoBaseModel : IViewModel
     {
         public string Id { get; set; }
 

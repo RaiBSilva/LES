@@ -2,7 +2,6 @@
 using LES.Models.ViewModel;
 using LES.Models.ViewModel.Conta;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.ViewEngines;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,11 +9,11 @@ using System.Threading.Tasks;
 
 namespace LES.Models.ViewHelpers.Conta
 {
-    public class PaginaRegistroViewHelper : AbstractViewHelper, IViewHelper
+    public class DetalhesEnderecoModelViewHelper : AbstractViewHelper, IViewHelper
     {
         //Atributo responsável por guardar as entidades que vêm do db, ou que vão para o db
         private IDictionary<string, EntidadeDominio> _entidades;
-        public override IDictionary<string, EntidadeDominio> Entidades 
+        public override IDictionary<string, EntidadeDominio> Entidades
         {
             get => _entidades;
             set
@@ -26,7 +25,7 @@ namespace LES.Models.ViewHelpers.Conta
 
         //Atributo responsável por guardar as entidades que vêm do request, ou vão para uma página razor
         private IViewModel _viewModel;
-        public override IViewModel ViewModel 
+        public override IViewModel ViewModel
         {
             get => _viewModel;
             set
@@ -35,30 +34,40 @@ namespace LES.Models.ViewHelpers.Conta
                 ToEntidade();
             }
         }
-
         protected override void ToEntidade()
         {
-            PaginaRegistroModel vm = (PaginaRegistroModel)ViewModel;
-            IList<Endereco> ListaEnderecos = new List<Endereco>();
-            IList<Telefone> ListaTelefones = new List<Telefone>();
+            DetalhesEnderecoModel vm = (DetalhesEnderecoModel)ViewModel;
 
-            Usuario user = new Usuario();
-            user.Senha = vm.Senha.Senha;
-            user.Email = vm.InfoUsuario.Email;
+            Cliente cliente = new Cliente();
+            Endereco endereco = new Endereco();
+            Cidade cidade = new Cidade();
+            Estado estado = new Estado();
+            Pais pais = new Pais();
 
-            ListaEnderecos.Add(ToEndereco(vm.Endereco));
-            ListaTelefones.Add(ToTelefone(vm.Telefone));
+            List<Endereco> listaEnderecos = new List<Endereco>();
 
-            Cliente cliente = new Cliente
-            {
-                Cpf = vm.InfoUsuario.Cpf,
-                DtNascimento = vm.InfoUsuario.DtNascimento,
-                Genero = vm.InfoUsuario.Genero,
-                Nome = vm.InfoUsuario.Nome,
-                Enderecos = ListaEnderecos,
-                Usuario = user,
-                Telefones = ListaTelefones
-            };
+            pais.Nome = vm.Pais;
+            estado.Nome = vm.Estado;
+            estado.Pais = pais;
+            cidade.Nome = vm.Cidade;
+            cidade.Estado = estado;
+
+            endereco.Cep = vm.Cep;
+            endereco.Complemento = vm.Complemento;
+            endereco.ECobranca = vm.ECobranca;
+            endereco.EEntrega = vm.EEntrega;
+            endereco.EFavorito = vm.EPreferencial;
+            endereco.Cidade = cidade;
+            endereco.TipoEndereco = vm.TipoEndereco;
+            endereco.Id = Convert.ToInt32(vm.Id);
+            endereco.Logradouro = vm.Logradouro;
+            endereco.Numero = vm.Numero;
+            endereco.Observacoes = vm.Observacoes;
+            endereco.TipoEndereco = vm.TipoEndereco;
+            endereco.NomeEndereco = vm.NomeEndereco;
+
+            listaEnderecos.Add(endereco);
+            cliente.Enderecos = listaEnderecos;
 
             Entidades[typeof(Cliente).Name] = cliente;
         }
@@ -67,21 +76,28 @@ namespace LES.Models.ViewHelpers.Conta
         {
             Cliente cliente = (Cliente)Entidades[typeof(Cliente).Name];
 
-            PaginaRegistroModel vm = new PaginaRegistroModel
-            {
-                InfoUsuario = ToInfoBaseModel(cliente),
-                Endereco = ToEnderecoBaseModel(cliente),
-                Telefone = ToTelefoneBaseModel(cliente)
-            };
+            DetalhesEnderecoModel vm = new DetalhesEnderecoModel();
+
+            vm.ECobranca = cliente.Enderecos[0].ECobranca;
+            vm.EEntrega = cliente.Enderecos[0].EEntrega;
+            vm.EPreferencial = cliente.Enderecos[0].EFavorito;
+            vm.Cidade = cliente.Enderecos[0].Cidade.Nome;
+            vm.Cep = cliente.Enderecos[0].Cep;
+            vm.Complemento = cliente.Enderecos[0].Complemento;
+            vm.Estado = cliente.Enderecos[0].Cidade.Estado.Nome;
+            vm.Logradouro = cliente.Enderecos[0].Logradouro;
+            vm.TipoEndereco = cliente.Enderecos[0].TipoEndereco;
+            vm.Id = cliente.Enderecos[0].Id.ToString();
+            vm.Numero = cliente.Enderecos[0].Numero;
+            vm.Observacoes = cliente.Enderecos[0].Observacoes;
+            vm.Pais = cliente.Enderecos[0].Cidade.Estado.Pais.Nome;
 
             ViewModel = vm;
         }
 
-        public TelefoneBaseModel ToTelefoneBaseModel(Cliente cli)
+        public TelefoneBaseModel ToTelefoneBaseModel(Telefone tel)
         {
             TelefoneBaseModel baseModel = new TelefoneBaseModel();
-
-            Telefone tel = cli.Telefones[0];
 
             baseModel.Ddd = tel.Ddd;
             baseModel.NumeroTelefone = tel.Numero;
@@ -89,29 +105,6 @@ namespace LES.Models.ViewHelpers.Conta
             return baseModel;
         }
 
-        public EnderecoBaseModel ToEnderecoBaseModel(Cliente cli)
-        {
-            EnderecoBaseModel baseModel = new EnderecoBaseModel();
-            Endereco endereco = new Endereco();
-
-            IList<Endereco> Enderecos = cli.Enderecos;
-            foreach (Endereco e in Enderecos)
-            {
-                endereco = e;
-            }
-
-            baseModel.Cep = endereco.Cep;
-            baseModel.Cidade = endereco.Cidade.Nome;
-            baseModel.Complemento = endereco.Complemento;
-            baseModel.Estado = endereco.Cidade.Estado.Nome;
-            baseModel.Logradouro = endereco.Logradouro;
-            baseModel.Numero = endereco.Numero;
-            baseModel.Pais = endereco.Cidade.Estado.Pais.Nome;
-            baseModel.TipoEndereco = endereco.TipoEndereco;
-            baseModel.Observacoes = endereco.Observacoes;
-
-            return baseModel;
-        }
 
         public InfoBaseModel ToInfoBaseModel(Cliente input)
         {
@@ -157,3 +150,4 @@ namespace LES.Models.ViewHelpers.Conta
         }
     }
 }
+
