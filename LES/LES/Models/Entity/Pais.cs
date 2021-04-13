@@ -12,6 +12,9 @@ namespace LES.Models.Entity
         public string Nome { get; set; }
 
         public virtual IList<Estado> Estados { get; set; }
-        public Pais() { }
+        public Pais() 
+        {
+            Estados = new List<Estado>();
+        }
     }
 }

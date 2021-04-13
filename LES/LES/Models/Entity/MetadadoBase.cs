@@ -9,7 +9,7 @@ namespace LES.Models.Entity
     {
         public string Nome { get; set; }
 
-        public MetadadoBase()
+        public MetadadoBase() : base()
         {
 
         }

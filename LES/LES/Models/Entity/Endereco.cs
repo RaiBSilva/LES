@@ -24,7 +24,11 @@ namespace LES.Models.Entity
         public virtual TipoEndereco TipoEndereco { get; set; }
         #endregion
 
-        public Endereco() { }
+        public Endereco() : base()
+        {
+            Cidade = new Cidade();
+            TipoEndereco = new TipoEndereco();
+        }
 
     }
 }

@@ -15,5 +15,11 @@ namespace LES.Models.Entity
         public Cliente Cliente { get; set; }
         public Pedido Pedido { get; set; }
 
+        public Cupom() : base()
+        {
+            Cliente = new Cliente();
+            Pedido = new Pedido();
+        }
+
     }
 }

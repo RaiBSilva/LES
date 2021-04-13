@@ -11,7 +11,7 @@ namespace LES.Models.Entity
 
         public TipoEndereco()
         {
-
+            Enderecos = new List<Endereco>();
         }
 
     }

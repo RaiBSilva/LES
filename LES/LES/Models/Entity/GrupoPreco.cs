@@ -10,5 +10,10 @@ namespace LES.Models.Entity
         public double MargemLucro { get; set; }
 
         public virtual IList<Livro> Livros { get; set; }
+
+        public GrupoPreco() : base()
+        {
+            Livros = new List<Livro>();
+        }
     }
 }

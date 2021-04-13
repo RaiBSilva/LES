@@ -9,5 +9,9 @@ namespace LES.Models.Entity
     {
         public virtual IList<Inativacao> Inativacoes { get; set; }
 
+        public CategoriaInativacao():base()
+        {
+            Inativacoes = new List<Inativacao>();
+        }
     }
 }

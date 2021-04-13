@@ -9,9 +9,9 @@ namespace LES.Models.Entity
     {
         public virtual IList<Livro> Livros { get; set; }
 
-        public Editora()
+        public Editora() : base()
         {
-
+            Livros = new List<Livro>();
         }
 
     }

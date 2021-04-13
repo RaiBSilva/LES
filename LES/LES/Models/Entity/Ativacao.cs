@@ -13,5 +13,11 @@ namespace LES.Models.Entity
         public virtual CategoriaAtivacao Categoria { get; set; }
         public virtual Livro Livro { get; set; }
 
+        public Ativacao() : base()
+        {
+            Categoria = new CategoriaAtivacao();
+            Livro = new Livro();
+        }
+
     }
 }

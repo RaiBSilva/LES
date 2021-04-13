@@ -13,5 +13,12 @@ namespace LES.Models.Entity
 
         public virtual Livro Livro { get; set; }
         public virtual Pedido Pedido { get; set; }
+
+        public LivroPedido()
+        {
+            Livro = new Livro();
+            Pedido = new Pedido();
+        }
+
     }
 }

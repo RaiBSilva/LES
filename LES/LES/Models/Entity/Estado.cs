@@ -14,7 +14,11 @@ namespace LES.Models.Entity
         public virtual IList<Cidade> Cidades { get; set; }
         public virtual Pais Pais { get; set; }
 
-        public Estado() { }
+        public Estado() : base()
+        {
+            Cidades = new List<Cidade>();
+            Pais = new Pais();
+        }
 
     }
 }

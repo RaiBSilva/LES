@@ -8,5 +8,10 @@ namespace LES.Models.Entity
     public class CategoriaAtivacao : MetadadoBase
     {
         public virtual IList<Ativacao> Ativacoes { get; set; }
+
+        public CategoriaAtivacao() : base()
+        {
+            Ativacoes = new List<Ativacao>();
+        }
     }
 }

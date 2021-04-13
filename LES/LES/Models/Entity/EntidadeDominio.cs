@@ -14,7 +14,10 @@ namespace LES.Models.Entity
         public bool Inativo { get; set; }
 
         #region Construtores da Classe
-        public EntidadeDominio() { }
+        public EntidadeDominio() 
+        {
+            DtCadastro = DateTime.Now;
+        }
 
         public EntidadeDominio(int id) 
         {
