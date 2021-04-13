@@ -36,7 +36,14 @@ namespace LES.Models.Entity
         public virtual Usuario Usuario { get; set; }
         #endregion
 
-        public Cliente() { }
+        public Cliente() 
+        {
+            Enderecos = new List<Endereco>();
+            Pedidos = new List<Pedido>();
+            Telefones = new List<Telefone>();
+            Cupons = new List<Cupom>();
+            Usuario = new Usuario();
+        }
 
     }
 

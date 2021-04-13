@@ -9,7 +9,7 @@ namespace LES.Models.Entity
     public class Pedido : EntidadeDominio
     {
         public int ClienteId { get; set; }
-        public int CupomId { get; set; }
+        public int? CupomId { get; set; }
         public StatusPedidos Status { get; set; }
 
         public virtual Cliente Cliente { get; set; }

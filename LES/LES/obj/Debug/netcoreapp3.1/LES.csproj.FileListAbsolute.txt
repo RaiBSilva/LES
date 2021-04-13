@@ -500,3 +500,5 @@ C:\Programming\LES\LES\LES\obj\Debug\netcoreapp3.1\Razor\Views\Admin\PartialView
 C:\Programming\LES\LES\LES\obj\Debug\netcoreapp3.1\Razor\Views\Admin\Home.cshtml.g.cs
 D:\DEVELOPMENT\LES\LES\LES\obj\Debug\netcoreapp3.1\Razor\Views\Admin\Home.cshtml.g.cs
 D:\DEVELOPMENT\LES\LES\LES\obj\Debug\netcoreapp3.1\Razor\Views\Admin\PartialViews\_ConfigGrupoPrecoPartial.cshtml.g.cs
+C:\Programming\LES\LES\LES\obj\Debug\netcoreapp3.1\LES.csproj.CoreCompileInputs.cache
+C:\Programming\LES\LES\LES\obj\Debug\netcoreapp3.1\LES.MvcApplicationPartsAssemblyInfo.cache
