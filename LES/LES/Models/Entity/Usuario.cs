@@ -1,10 +1,5 @@
-﻿using LES.Negocio.Strategy;
-using LES.Negócio.Strategy;
-using Microsoft.CodeAnalysis.CSharp.Syntax;
+﻿using LES.Negócio.Strategy;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace LES.Models.Entity
 {
