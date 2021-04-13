@@ -1,33 +1,26 @@
-﻿function shake(thing) {
-    var interval = 100;
-    var distance = 10;
-    var times = 6;
+﻿function makeRed(thing) {
+    $(thing).css("border", "2px solid red")
+};
 
-    for (var i = 0; i < (times + 1); i++) {
-        $(thing).animate({
-            left:
-                (i % 2 == 0 ? distance : distance * -1)
-        }, interval);
+function checaVazio(input) {
+
+    if (!$(input).val()) {
+        makeRed(input);
+        return true;
     }
-    $(thing).animate({
-        left: 0,
-        top: 0
-    }, interval);
-};
-
-function makeRed(thing) {
-    $(thing).css('border-color', 'red')
-};
+    else {
+        $(input).removeAttr("style");
+        return false;
+    }
+}
 
 function validaCampos(listaRequired) {
 
     var validados = true;
 
     $(listaRequired).each(function (i) {
-        if ($(this).val == "") {
+        if (checaVazio($(this))) {
             validados = false;
-            shake(this);
-            makeRed(this);
         }
     });
 
@@ -35,24 +28,23 @@ function validaCampos(listaRequired) {
 };
 
 function validaInput(e) {
-
     inputAlterado = e.target;
-    if ($(inputAlterado).val = "") {
-        shake(inputAlterado);
-        makeRed(inputAlterado);
-    }
+    checaVazio(inputAlterado);
 };
 
-$(".required").on("input", function (e) {
-    validaInput(e);
+$(document).ready(function() {
+    $(".required").on("input", function (e) {
+        validaInput(e);
+    });
+
+    $(".requiredForm").one("submit", function (e) {
+
+        e.preventDefault();
+        var listaRequired = $(".required");
+
+        if (validaCampos(listaRequired)) {
+            $(this).submit();
+        }
+    });
 });
 
-$(".requiredForm").one("submit", function (e) {
-
-    e.preventDefault();
-    var listaRequired = $(".required");
-
-    if (validaCampos(listaRequired)) {
-        $(this).submit();
-    }
-});

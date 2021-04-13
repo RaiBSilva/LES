@@ -182,6 +182,12 @@ namespace LES.Models
                 .HasColumnName($"{tri}_valor")
                 .IsRequired();
 
+            modelBuilder.Entity<Cupom>()
+                .HasOne(c => c.Cliente)
+                .WithMany(c => c.Cupons)
+                .HasForeignKey(c => c.ClienteId)
+                .HasConstraintName("FK_" + tri.ToUpper() + "_CLI");
+
             #endregion
 
             #region Cliente

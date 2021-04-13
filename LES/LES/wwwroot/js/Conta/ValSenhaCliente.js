@@ -85,5 +85,3 @@ document.getElementById("senha").addEventListener("input", function (e) {
     confirmaSenha();
 
 });
-
-//document.getElementById("senhaConfirmacao").addEventListener("input", confirmaSenha);

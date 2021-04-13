@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace LES.Models.ViewModel.Conta
 {
-    public class PaginaLoginModel : IViewHelper
+    public class PaginaLoginModel : IViewModel
     {
 
         public string Username { get; set; }
