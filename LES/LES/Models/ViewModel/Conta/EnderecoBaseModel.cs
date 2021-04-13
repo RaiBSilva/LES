@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace LES.Models.ViewModel.Conta
 {
-    public class EnderecoBaseModel
+    public class EnderecoBaseModel : IViewModel
     {
         //[Required]
         public string Logradouro { get; set; }

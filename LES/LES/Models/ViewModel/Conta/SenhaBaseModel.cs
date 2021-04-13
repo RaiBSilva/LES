@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace LES.Models.ViewModel.Conta
 {
-    public class SenhaBaseModel
+    public class SenhaBaseModel : IViewModel
     {
         //[Required]
         public string Senha { get; set; }
