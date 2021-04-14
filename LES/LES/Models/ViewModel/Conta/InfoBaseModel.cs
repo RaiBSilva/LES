@@ -35,5 +35,7 @@ namespace LES.Models.ViewModel.Conta
         //[StringLength(11, MinimumLength = 11, ErrorMessage = "Insira um CPF válido.")]
         //[NumeroRegEx(ErrorMessage = "Insira somente os valores numéricos.")]
         public string Cpf { get; set; }
+
+
     }
 }

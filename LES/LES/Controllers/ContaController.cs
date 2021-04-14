@@ -23,10 +23,19 @@ namespace LES.Views.Conta
     public class ContaController : BaseController
     {
         private IFacadeCrud<Cliente> _facade { get; set; }
+        private IFacadeCrud<BandeiraCartaoCredito> _facadeBandeiras { get; set; }
+        private IFacadeCrud<TipoTelefone> _facadeTipoTelefone { get; set; }
+        private IFacadeCrud<TipoEndereco> _facadeTipoEndereco { get; set; }
 
-        public ContaController(IFacadeCrud<Cliente> facade)
+        public ContaController(IFacadeCrud<Cliente> facade,
+            IFacadeCrud<BandeiraCartaoCredito> facadeBandeira,
+            IFacadeCrud<TipoTelefone> facadeTipoTelefone,
+            IFacadeCrud<TipoEndereco> facadeTipoEndereco)
         {
             _facade = facade;
+            _facadeBandeiras = facadeBandeira;
+            _facadeTipoTelefone = facadeTipoTelefone;
+            _facadeTipoEndereco = facadeTipoEndereco;
         }
 
         #region Login, Registro e Detalhes
@@ -85,7 +94,15 @@ namespace LES.Views.Conta
         //GET /Conta/Registro
         public IActionResult Registro() 
         {
-            return View();
+
+            PaginaRegistroModel vm = new PaginaRegistroModel()
+            {
+                Cartao = new CartaoBaseModel { Bandeiras = _facadeBandeiras.Listar() },
+                Telefone = new TelefoneBaseModel { TipoTelefones = _facadeTipoTelefone.Listar() },
+                Endereco = new EnderecoBaseModel { TiposEnderecos = _facadeTipoEndereco.Listar() }
+            };
+
+            return View(vm);
         }
 
         //POST

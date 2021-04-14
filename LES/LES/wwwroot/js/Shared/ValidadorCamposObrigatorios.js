@@ -36,15 +36,5 @@ $(document).ready(function() {
     $(".required").on("input", function (e) {
         validaInput(e);
     });
-
-    $(".requiredForm").one("submit", function (e) {
-
-        e.preventDefault();
-        var listaRequired = $(".required");
-
-        if (validaCampos(listaRequired)) {
-            $(this).submit();
-        }
-    });
 });
 

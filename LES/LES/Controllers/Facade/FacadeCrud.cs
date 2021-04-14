@@ -83,7 +83,7 @@ namespace LES.Controllers.Facade
             return _dao.Get(e.Id);
         }
 
-        public IEnumerable<T> Listar(T e)
+        public IList<T> Listar()
         {
             return _dao.List();
         }

@@ -15,6 +15,8 @@ namespace LES.Models.ViewModel.Conta
         public EnderecoBaseModel Endereco {get;set;}
         public CartaoBaseModel Cartao { get; set; }
 
+
+
         public PaginaRegistroModel()
         {
             InfoUsuario = new InfoBaseModel();

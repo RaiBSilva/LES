@@ -26,6 +26,13 @@ namespace LES.Models.ViewModel.Conta
         //[NumeroRegEx(ErrorMessage = "Insira somente os valores numéricos.")]
         public string NumeroTelefone { get; set; }
 
+        //Entidades de auxilio, não devem ser captadas
+        public IList<TipoTelefone> TipoTelefones { get; set; }
+
+        public TelefoneBaseModel()
+        {
+            TipoTelefones = new List<TipoTelefone>();
+        }
 
     }
 }

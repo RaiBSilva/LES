@@ -41,7 +41,12 @@ document.getElementById("senha").addEventListener("input", function (e) {
 
     var senhaValor = senhaInput.value;
 
-    if (((senhaValor.length >= 8) && (containsLowerCase(senhaValor))) && ((containsUpperCase(senhaValor))) && (containsSpecialChar(senhaValor)))
+    var boolCaracteres = senhaValor.length >= 8;
+    var boolMinusculas = containsLowerCase(senhaValor);
+    var boolMaiusculas = containsUpperCase(senhaValor);
+    var boolEspeciais = containsSpecialChar(senhaValor);
+
+    if (((boolCaracteres) && (boolMinusculas)) && ((boolMaiusculas)) && (boolEspeciais))
     {
         confirmaInput.disabled = false;
         senhaInput.style.borderColor = "green";
@@ -56,25 +61,25 @@ document.getElementById("senha").addEventListener("input", function (e) {
         senhaInput.style.borderColor = "red";
         requisitos.style.color = "red";
 
-        if (senhaValor.length < 8) {
-            caracteres.style.color = "red";
-        } else {
+        if (boolCaracteres) {
             caracteres.style.color = "green";
+        } else {
+            caracteres.style.color = "red";
         }
 
-        if (containsLowerCase(senhaValor)) {
+        if (boolMinusculas) {
             minusculas.style.color = "green";
         } else {
             minusculas.style.color = "red";
         }
 
-        if (containsUpperCase(senhaValor)) {
+        if (boolMaiusculas) {
             maiusculas.style.color = "green";
         } else {
             maiusculas.style.color = "red";
         }
 
-        if (containsSpecialChar(senhaValor)) {
+        if (boolEspeciais) {
             especiais.style.color = "green";
         } else {
             especiais.style.color = "red";
@@ -82,6 +87,6 @@ document.getElementById("senha").addEventListener("input", function (e) {
 
     }
 
-    confirmaSenha();
+    return confirmaSenha();
 
 });

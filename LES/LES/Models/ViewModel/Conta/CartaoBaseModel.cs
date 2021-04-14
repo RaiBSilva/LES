@@ -26,5 +26,13 @@ namespace LES.Models.ViewModel.Conta
         //[Required]
         [Display(Name = "Bandeira do cartão")]
         public BandeiraCartaoCredito Bandeira { get; set; }
+
+        //Entidades de auxilio, não devem ser captadas
+        public IList<BandeiraCartaoCredito> Bandeiras { get; set; }
+
+        public CartaoBaseModel()
+        {
+            Bandeiras = new List<BandeiraCartaoCredito>();
+        }
     }
 }

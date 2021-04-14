@@ -43,5 +43,13 @@ namespace LES.Models.ViewModel.Conta
         [Display(Name = "Tipo de endereço")]
         public TipoEndereco TipoEndereco { get; set; }
 
+        //Entidades de auxilio, não devem ser captadas
+        public IList<TipoEndereco> TiposEnderecos { get; set; }
+
+        public EnderecoBaseModel()
+        {
+            TiposEnderecos = new List<TipoEndereco>();
+        }
+
     }
 }
