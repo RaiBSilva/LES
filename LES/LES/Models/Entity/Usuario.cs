@@ -1,20 +1,22 @@
 ﻿using LES.Negócio.Strategy;
 using System;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace LES.Models.Entity
 {
     public class Usuario : EntidadeDominio
     {
         public string Email { get; set; }
-        private Hasher _hasher { get; set; }
+        [NotMapped]
+        public Hasher Hasher { get; set; }
         private string _senha;
         public string Senha
         {
             get => _senha; 
             set
             {
-                _hasher = new Hasher(value);
-                _senha = Convert.ToBase64String(_hasher.ToArray());
+                Hasher = new Hasher(value);
+                _senha = Convert.ToBase64String(Hasher.ToArray());
             }
         }
         public UserRole Role { get; set; }

@@ -2,21 +2,15 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
-using System.Threading.Tasks;
+using System.Security.Cryptography;
 using LES.Controllers;
 using LES.Controllers.Facade;
 using LES.Models.Entity;
-using LES.Models.ViewHelpers;
 using LES.Models.ViewHelpers.Conta;
-using LES.Models.ViewModel;
-using LES.Models.ViewModel.Admin;
 using LES.Models.ViewModel.Conta;
-using LES.Models.ViewModel.Shared;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
 
 namespace LES.Views.Conta
 {
@@ -54,12 +48,12 @@ namespace LES.Views.Conta
             
                 _vh = new PaginaLoginViewHelper
                 {
-                    ViewModel = (IViewModel)usuario
+                    ViewModel = usuario
                 };
 
-                Cliente clienteLogin = new Cliente 
-                { 
-                    Usuario = (Usuario)_vh.Entidades[typeof(Usuario).Name] 
+                Cliente clienteLogin = new Cliente
+                {
+                    Usuario = (Usuario)_vh.Entidades[typeof(Usuario).Name]
                 };
 
                 Cliente clienteDb = _facadeClientes.Query<Cliente>(
@@ -67,14 +61,29 @@ namespace LES.Views.Conta
                     c => c,
                     c => c.Usuario).FirstOrDefault();
 
-                if (clienteLogin.Usuario.Senha == clienteDb.Usuario.Senha) 
+                string senhaDb = clienteDb.Usuario.Senha;
+                byte[] hashBytes = Convert.FromBase64String(senhaDb);
+                byte[] salt = new byte[16];
+
+                Array.Copy(hashBytes, 0, salt, 0, 16);
+
+                var pbkdf2 = new Rfc2898DeriveBytes(usuario.Senha, salt, 10000);
+                byte[] hash = pbkdf2.GetBytes(20);
+
+                bool access = true;
+
+                for (int i = 0; i < 20; i++)
+                    if (hashBytes[i + 16] != hash[i])
+                        access = false;
+
+                if (access) 
                 {
-                    int role = (int)clienteLogin.Usuario.Role;
+                    int role = (int)clienteDb.Usuario.Role;
 
                     var userClaims = new List<Claim>()
                     {
-                    new Claim(ClaimTypes.Name, clienteLogin.Nome),
-                    new Claim(ClaimTypes.Email, clienteLogin.Usuario.Email),
+                    new Claim(ClaimTypes.Name, clienteDb.Nome),
+                    new Claim(ClaimTypes.Email, clienteDb.Usuario.Email),
                     new Claim(ClaimTypes.Role, role.ToString())
                      };
 
@@ -84,11 +93,14 @@ namespace LES.Views.Conta
                     HttpContext.SignInAsync(userPrincipal);
 
                     return RedirectToAction("Index", "Home");
-                    }
-
-                return RedirectToAction("Index","Home");
+                }
+                return View(new PaginaLoginModel
+                {
+                    Username = clienteLogin.Usuario.Email,
+                    Falhou = true
+                });
             }
-            return View();
+            return View(new PaginaLoginModel { Falhou = true});
         }
 
         //GET /Conta/Registro

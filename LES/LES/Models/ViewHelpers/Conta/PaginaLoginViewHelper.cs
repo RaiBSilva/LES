@@ -2,6 +2,7 @@
 using LES.Models.ViewModel;
 using LES.Models.ViewModel.Conta;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -35,6 +36,11 @@ namespace LES.Models.ViewHelpers.Conta
             } 
         }
 
+        public PaginaLoginViewHelper()
+        {
+            Entidades = new Dictionary<string, EntidadeDominio>();
+        }
+
         //Método é chamado quando um valor é settado no viewmodel
         protected override void ToEntidade()
         {
@@ -51,14 +57,16 @@ namespace LES.Models.ViewHelpers.Conta
         //Método é chamado quando um valor é settado no dicionário de Entidades
         protected override void ToViewModel()
         {
-            Usuario usuario = (Usuario)Entidades[typeof(Usuario).Name];
+            if (Entidades.Count > 0) { 
+                Usuario usuario = (Usuario)Entidades[typeof(Usuario).Name];
 
-            PaginaLoginModel vm = new PaginaLoginModel
-            {
-                Username = usuario.Email
-            };
+                PaginaLoginModel vm = new PaginaLoginModel
+                {
+                    Username = usuario.Email
+                };
 
-            ViewModel = (IViewModel)vm;
+                ViewModel = vm;
+            }
         }
     }
 }

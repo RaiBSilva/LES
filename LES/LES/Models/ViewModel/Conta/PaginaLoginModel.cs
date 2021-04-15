@@ -14,5 +14,7 @@ namespace LES.Models.ViewModel.Conta
         [Required]
         public string Senha { get; set; }
 
+        public bool Falhou { get; set; }
+
     }
 }
