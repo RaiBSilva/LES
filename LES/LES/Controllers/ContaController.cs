@@ -62,7 +62,7 @@ namespace LES.Views.Conta
                     c => c.Usuario).FirstOrDefault();
 
                 if (clienteDb != null) {  
-                    if (GerenciadorLogin.comparaSenha(clienteDb.Usuario.Senha, usuario.Senha)) 
+                    if (GerenciadorLogin.comparaSenha(usuario.Senha, clienteDb.Usuario.Senha)) 
                     {
                         HttpContext.SignInAsync(GerenciadorLogin.FazerLogin(clienteDb));
                         return RedirectToAction("Index", "Home");
