@@ -9,40 +9,40 @@ namespace LES.Models.ViewModel.Conta
 {
     public class EnderecoBaseModel : IViewModel
     {
-        //[Required]
+        [Required]
         public string Logradouro { get; set; }
 
         public string Id { get; set; }
 
-        //[Required]
+        [Required]
         [Display(Name = "Nº")]
         public string Numero { get; set; }
 
-        //[Required]
-        //[StringLength(7, MinimumLength = 7, ErrorMessage = "Insira um CEP de sete dígitos.")]
+        [Required]
+        [StringLength(7, MinimumLength = 7, ErrorMessage = "Insira um CEP de sete dígitos.")]
         [Display(Name = "CEP")]
         public string Cep { get; set; }
 
-        //[Required]
+        [Required]
         public string Complemento { get; set; }
 
-        //[Required]
+        [Required]
         public string Cidade { get; set; }
 
-        //[Required]
+        [Required]
         public string Estado { get; set; }
 
-        //[Required]
+        [Required]
         public string Nome { get; set; }
 
-        //[Required]
+        [Required]
         [Display(Name = "País")]
         public string Pais { get; set; }
 
         [Display(Name = "Observações")]
         public string Observacoes { get; set; }
 
-        //[Required]
+        [Required]
         [Display(Name = "Tipo de endereço")]
         public string TipoEndereco { get; set; }
 

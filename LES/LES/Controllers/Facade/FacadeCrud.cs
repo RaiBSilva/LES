@@ -22,18 +22,12 @@ namespace LES.Controllers.Facade
         }
 
         private Dictionary<String, ICollection<Func<EntidadeDominio, string>>> _strategiesValidacao;
-        private Dictionary<String, ICollection<Func<T, T>>> _strategiesTransformacao;
 
         private void DefinirStrategies()
         {
             _strategiesValidacao = new Dictionary<String, ICollection<Func<EntidadeDominio, string>>>
             {
                 [typeof(Cliente).Name] = new List<Func<EntidadeDominio, string>>()
-            };
-
-            _strategiesTransformacao = new Dictionary<String, ICollection<Func<T, T>>>
-            {
-                [typeof(Cliente).Name] = new List<Func<T, T>>()
             };
         }
         private string ExecutarRegras(T e)
@@ -43,7 +37,6 @@ namespace LES.Controllers.Facade
             StringBuilder sb = new StringBuilder();
 
             var regras = _strategiesValidacao[nmClasse];
-            var transformacoes = _strategiesTransformacao[nmClasse];
             sb.Append("");
             if (regras != null) 
             {
@@ -51,14 +44,6 @@ namespace LES.Controllers.Facade
                 {
                     sb.Append(strat(e));
                 }  
-            }
-
-            if (transformacoes != null)
-            {
-                foreach (var strat in transformacoes)
-                {
-                    e = strat(e);
-                }
             }
 
             return sb.ToString();

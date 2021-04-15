@@ -53,6 +53,14 @@
 </div>
 
 @section Scripts{
+
+    <script type="text/javascript">
+        var urls = urls || {};
+        urls.ChecarEmail = '@Url.Action("ChecaEmail", "Conta")';
+    </script>
+
     <script src="~/js/Conta/Tabs.js"></script>
-    <!--><script src="~/js/Shared/ValidadorCamposObrigatorios.js"></script>-->
+    <script src="~/js/Shared/ValidadorCamposObrigatorios.js"></script>
+    <script src="~/js/Conta/ValidadorExistenciaEmail.js"></script>
+    <script src="~/js/Conta/ValidadorRegistro.js"></script>
 }

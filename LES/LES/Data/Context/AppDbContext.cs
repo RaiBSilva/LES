@@ -300,8 +300,7 @@ namespace LES.Models
 
             modelBuilder.Entity<Endereco>()
                .Property(e => e.Observacoes)
-               .HasColumnName(tri + "_observacoes")
-               .IsRequired();
+               .HasColumnName(tri + "_observacoes");
 
             modelBuilder.Entity<Endereco>()
                .Property(e => e.TipoEnderecoId)

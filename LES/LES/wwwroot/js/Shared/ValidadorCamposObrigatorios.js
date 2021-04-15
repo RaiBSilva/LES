@@ -2,6 +2,10 @@
     $(thing).css("border", "2px solid red")
 };
 
+function makeGreen(thing) {
+    $(thing).css("border", "2px solid green")
+};
+
 function checaVazio(input) {
 
     if (!$(input).val()) {

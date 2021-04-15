@@ -11,19 +11,18 @@ namespace LES.Models.ViewModel.Conta
     {
         public string Id { get; set; }
 
-        //[Required]
+        [Required]
         [Display(Name = "Tipo de telefone")]
         public string TipoTelefone { get; set; }
 
-        //[Required]
+        [Required]
         [Display(Name = "DDD")]
-        //[StringLength(3, MinimumLength = 3, ErrorMessage = "Insira os três digitos do DDD.")]
+        [StringLength(3, MinimumLength = 3, ErrorMessage = "Insira os três digitos do DDD.")]
         public string Ddd { get; set; }
 
-        //[Required]
+        [Required]
         [Display(Name = "Número de telefone")]
-        //[StringLength(9, MinimumLength = 8, ErrorMessage = "Insira um telefone de oito ou nove dígitos.")]
-        //[NumeroRegEx(ErrorMessage = "Insira somente os valores numéricos.")]
+        [StringLength(9, MinimumLength = 8, ErrorMessage = "Insira um telefone de oito ou nove dígitos.")]
         public string NumeroTelefone { get; set; }
 
         //Entidades de auxilio, não devem ser captadas

@@ -12,19 +12,23 @@ namespace LES.Models.ViewModel.Conta
     {
         public string Id { get; set; }
 
-        //[Required]
+        [Required]
         [Display(Name = "Nome Impresso no Cartão")]
         public string Nome { get; set; }
-        //[Required]
+
+        [Required]
         [Display(Name = "Código")]
         public string Codigo { get; set; }
-        //[Required]
+
+        [Required]
         [Display(Name = "CVV")]
         public string Cvv { get; set; }
-        //[Required]
+
+        [Required]
         [Display(Name = "Data de Vencimento")]
         public DateTime Vencimento { get; set; }
-        //[Required]
+
+        [Required]
         [Display(Name = "Bandeira do cartão")]
         public string Bandeira { get; set; }
 

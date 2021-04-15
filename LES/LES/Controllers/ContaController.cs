@@ -97,9 +97,14 @@ namespace LES.Views.Conta
 
             PaginaRegistroModel vm = new PaginaRegistroModel()
             {
+                InfoUsuario = new InfoBaseModel 
+                {
+                    DtNascimento = DateTime.Now
+                },
                 Cartao = new CartaoBaseModel
                 {
-                    Bandeiras = _facadeBandeiras.Listar().OrderBy(b => b.Nome).ToList()  
+                    Bandeiras = _facadeBandeiras.Listar().OrderBy(b => b.Nome).ToList(),
+                    Vencimento = DateTime.Now
                 },
                 Telefone = new TelefoneBaseModel 
                 { 
@@ -125,15 +130,11 @@ namespace LES.Views.Conta
                     ViewModel = usuarioNovo
                 };
 
-                BandeiraCartaoCredito bandeira = new BandeiraCartaoCredito { Id = Convert.ToInt32(usuarioNovo.Cartao.Bandeira) };
-                TipoEndereco tipoEndereco = new TipoEndereco { Id = Convert.ToInt32(usuarioNovo.Endereco.TipoEndereco) };
-                TipoTelefone tipoTelefone = new TipoTelefone { Id = Convert.ToInt32(usuarioNovo.Telefone.TipoTelefone) };
-
                 Cliente cliente = (Cliente)_vh.Entidades[typeof(Cliente).Name];
-                cliente.Cartoes[0].Bandeira = _facadeBandeiras.GetEntidade(bandeira);
-                cliente.Enderecos[0].TipoEndereco = _facadeTipoEndereco.GetEntidade(tipoEndereco);
-                cliente.Telefones[0].TipoTelefone = _facadeTipoTelefone.GetEntidade(tipoTelefone);
-                cliente.Codigo = "1";
+                cliente.Cartoes[0].Bandeira = _facadeBandeiras.GetEntidade(cliente.Cartoes[0].Bandeira);
+                cliente.Enderecos[0].TipoEndereco = _facadeTipoEndereco.GetEntidade(cliente.Enderecos[0].TipoEndereco);
+                cliente.Telefones[0].TipoTelefone = _facadeTipoTelefone.GetEntidade(cliente.Telefones[0].TipoTelefone);
+                cliente.Codigo = GeraCodigoCliente();
 
                 string msg = _facadeClientes.Cadastrar(cliente);
 
@@ -311,6 +312,36 @@ namespace LES.Views.Conta
         }
 
         #endregion
+
+        [HttpPost]
+        public IActionResult ChecaEmail(string email)
+        {
+            var clienteDb = _facadeClientes.Query<Cliente>(
+                c => c.Usuario.Email == email,
+                c => c);
+
+            if (clienteDb.Count() > 0) return Json(new { valor = true }) ;
+            return Json(new { valor = false });
+        }
+
+        private string GeraCodigoCliente()
+        {
+            Random rnd = new Random();
+
+            int codigo = rnd.Next();
+            bool naoExiste = true;
+            do
+            {
+                var items = _facadeClientes.Query<Cliente>(
+                    c => Convert.ToInt32(c.Codigo) == codigo,
+                    c => c);
+
+                if (items.Count() == 0) return codigo.ToString();
+                codigo = rnd.Next();
+            } while (naoExiste);
+
+            return "";
+        }
 
     }
 }

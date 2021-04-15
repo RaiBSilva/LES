@@ -20,16 +20,11 @@ function confirmaSenha() {
     var senhaValor = senhaInput.value;
     var confirmaValor = confirmaInput.value;
 
-        if (senhaValor == confirmaValor) {
-            return true;
-        } else {
-            return false;
-        }
+    return (senhaValor == confirmaValor);
 
 }
 
-document.getElementById("senha").addEventListener("input", function (e) {
-
+function validaSenha() {
     var senhaInput = document.getElementById("senha");
     var confirmaInput = document.getElementById("senhaConfirmacao");
 
@@ -46,8 +41,7 @@ document.getElementById("senha").addEventListener("input", function (e) {
     var boolMaiusculas = containsUpperCase(senhaValor);
     var boolEspeciais = containsSpecialChar(senhaValor);
 
-    if (((boolCaracteres) && (boolMinusculas)) && ((boolMaiusculas)) && (boolEspeciais))
-    {
+    if (((boolCaracteres) && (boolMinusculas)) && ((boolMaiusculas)) && (boolEspeciais)) {
         confirmaInput.disabled = false;
         senhaInput.style.borderColor = "green";
         requisitos.style.color = "green";
@@ -55,6 +49,7 @@ document.getElementById("senha").addEventListener("input", function (e) {
         minusculas.style.color = "green";
         maiusculas.style.color = "green";
         especiais.style.color = "green";
+        return confirmaSenha();
 
     } else {
         confirmaInput.disabled = true;
@@ -84,9 +79,10 @@ document.getElementById("senha").addEventListener("input", function (e) {
         } else {
             especiais.style.color = "red";
         }
-
     }
+    return false;
+}
 
-    return confirmaSenha();
-
+document.getElementById("senha").addEventListener("input", function (e) {
+    validaSenha();
 });

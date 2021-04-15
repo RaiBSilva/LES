@@ -10,6 +10,8 @@ namespace LES.Models.ViewModel.Conta
     {
         public string Codigo { get; set; }
         [Display(Name ="Senha antiga")]
+
+        [Required]
         public string VelhaSenha { get; set; }
 
     }
