@@ -45,7 +45,7 @@ namespace LES.Models.ViewHelpers.Conta
             telefone.Ddd = vm.Ddd;
             telefone.EFavorito = vm.EPreferencial;
             telefone.Numero = vm.NumeroTelefone;
-            telefone.TipoTelefone = vm.TipoTelefone;
+            telefone.TipoTelefone = new TipoTelefone { Id = Convert.ToInt32(vm.TipoTelefone) };
             telefone.Id = Convert.ToInt32(vm.Id);
 
             listaTelefones.Add(telefone);
@@ -63,7 +63,7 @@ namespace LES.Models.ViewHelpers.Conta
             vm.Id = cliente.Telefones[0].Id.ToString();
             vm.Ddd = cliente.Telefones[0].Ddd;
             vm.NumeroTelefone = cliente.Telefones[0].Numero;
-            vm.TipoTelefone = cliente.Telefones[0].TipoTelefone;
+            vm.TipoTelefone = cliente.Telefones[0].TipoTelefone.Nome;
             vm.EPreferencial = cliente.Telefones[0].EFavorito;
 
             ViewModel = vm;

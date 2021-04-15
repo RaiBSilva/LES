@@ -58,12 +58,11 @@ namespace LES.Models.ViewHelpers.Conta
             endereco.EEntrega = vm.EEntrega;
             endereco.EFavorito = vm.EPreferencial;
             endereco.Cidade = cidade;
-            endereco.TipoEndereco = vm.TipoEndereco;
+            endereco.TipoEndereco = new TipoEndereco { Id = Convert.ToInt32(vm.TipoEndereco) };
             endereco.Id = Convert.ToInt32(vm.Id);
             endereco.Logradouro = vm.Logradouro;
             endereco.Numero = vm.Numero;
             endereco.Observacoes = vm.Observacoes;
-            endereco.TipoEndereco = vm.TipoEndereco;
             endereco.NomeEndereco = vm.NomeEndereco;
 
             listaEnderecos.Add(endereco);
@@ -86,7 +85,7 @@ namespace LES.Models.ViewHelpers.Conta
             vm.Complemento = cliente.Enderecos[0].Complemento;
             vm.Estado = cliente.Enderecos[0].Cidade.Estado.Nome;
             vm.Logradouro = cliente.Enderecos[0].Logradouro;
-            vm.TipoEndereco = cliente.Enderecos[0].TipoEndereco;
+            vm.TipoEndereco = cliente.Enderecos[0].TipoEndereco.Nome;
             vm.Id = cliente.Enderecos[0].Id.ToString();
             vm.Numero = cliente.Enderecos[0].Numero;
             vm.Observacoes = cliente.Enderecos[0].Observacoes;
@@ -112,7 +111,7 @@ namespace LES.Models.ViewHelpers.Conta
             endereco.Cep = input.Cep;
             endereco.Cidade.Nome = input.Cidade;
             endereco.Complemento = input.Complemento;
-            endereco.TipoEndereco = input.TipoEndereco;
+            endereco.TipoEndereco = new TipoEndereco { Id = Convert.ToInt32(input.TipoEndereco) };
             endereco.Cidade.Estado.Nome = input.Estado;
             endereco.Cidade.Estado.Pais.Nome = input.Pais;
             endereco.Numero = input.Numero;

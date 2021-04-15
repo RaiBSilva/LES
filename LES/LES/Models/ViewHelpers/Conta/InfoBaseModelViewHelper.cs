@@ -13,7 +13,7 @@ namespace LES.Models.ViewHelpers.Conta
     {
         //Atributo responsável por guardar as entidades que vêm do db, ou que vão para o db
         private IDictionary<string, EntidadeDominio> _entidades;
-        public override IDictionary<string, EntidadeDominio> Entidades 
+        public override IDictionary<string, EntidadeDominio> Entidades
         {
             get => _entidades;
             set
@@ -25,7 +25,7 @@ namespace LES.Models.ViewHelpers.Conta
 
         //Atributo responsável por guardar as entidades que vêm do request, ou vão para uma página razor
         private IViewModel _viewModel;
-        public override IViewModel ViewModel 
+        public override IViewModel ViewModel
         {
             get => _viewModel;
             set
@@ -56,25 +56,11 @@ namespace LES.Models.ViewHelpers.Conta
 
             PaginaRegistroModel vm = new PaginaRegistroModel
             {
-                InfoUsuario = ToInfoBaseModel(cliente),
-                Telefone = ToTelefoneBaseModel(cliente.Telefones[0])
+                InfoUsuario = ToInfoBaseModel(cliente)
             };
 
             ViewModel = vm;
         }
-
-        public TelefoneBaseModel ToTelefoneBaseModel(Telefone tel)
-        {
-            TelefoneBaseModel baseModel = new TelefoneBaseModel();
-
-            baseModel.Ddd = tel.Ddd;
-            baseModel.NumeroTelefone = tel.Numero;
-            baseModel.Id = tel.Id.ToString();
-            //baseModel.TipoTelefone = tel.TipoTelefone;
-
-            return baseModel;
-        }
-
 
         public InfoBaseModel ToInfoBaseModel(Cliente input)
         {
@@ -89,34 +75,6 @@ namespace LES.Models.ViewHelpers.Conta
             baseModel.Codigo = input.Codigo;
 
             return baseModel;
-        }
-
-        public Endereco ToEndereco(EnderecoBaseModel input)
-        {
-            Endereco endereco = new Endereco();
-
-            endereco.Cep = input.Cep;
-            endereco.Cidade.Nome = input.Cidade;
-            endereco.Complemento = input.Complemento;
-            endereco.TipoEndereco = input.TipoEndereco;
-            endereco.Cidade.Estado.Nome = input.Estado;
-            endereco.Cidade.Estado.Pais.Nome = input.Pais;
-            endereco.Numero = input.Numero;
-            endereco.Logradouro = input.Logradouro;
-
-            return endereco;
-        }
-
-        public Telefone ToTelefone(TelefoneBaseModel input)
-        {
-            Telefone telefone = new Telefone();
-
-            telefone.Ddd = input.Ddd;
-            telefone.Numero = input.NumeroTelefone;
-            telefone.Id = Convert.ToInt32(input.Id);
-            telefone.TipoTelefoneId = input.TipoTelefone.Id;
-
-            return telefone;
         }
     }
 }

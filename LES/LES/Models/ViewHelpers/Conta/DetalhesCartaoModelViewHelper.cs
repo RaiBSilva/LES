@@ -41,7 +41,7 @@ namespace LES.Models.ViewHelpers.Conta
 
             CartaoCredito card = new CartaoCredito();
 
-            card.Bandeira = vm.Bandeira;
+            card.Bandeira = new BandeiraCartaoCredito { Id = Convert.ToInt32(vm.Bandeira) };
             card.Codigo = vm.Codigo;
             card.Cvv = vm.Cvv;
             card.EFavorito = vm.EPreferencial;
@@ -58,7 +58,7 @@ namespace LES.Models.ViewHelpers.Conta
 
             DetalhesCartaoModel vm = new DetalhesCartaoModel();
 
-            vm.Bandeira = card.Bandeira;
+            vm.Bandeira = card.Bandeira.Id.ToString();
             vm.Codigo = card.Codigo;
             vm.Cvv = card.Cvv;
             vm.EPreferencial = card.EFavorito;
