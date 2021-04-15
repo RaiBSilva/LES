@@ -61,44 +61,18 @@ namespace LES.Views.Conta
                     c => c,
                     c => c.Usuario).FirstOrDefault();
 
-                string senhaDb = clienteDb.Usuario.Senha;
-                byte[] hashBytes = Convert.FromBase64String(senhaDb);
-                byte[] salt = new byte[16];
-
-                Array.Copy(hashBytes, 0, salt, 0, 16);
-
-                var pbkdf2 = new Rfc2898DeriveBytes(usuario.Senha, salt, 10000);
-                byte[] hash = pbkdf2.GetBytes(20);
-
-                bool access = true;
-
-                for (int i = 0; i < 20; i++)
-                    if (hashBytes[i + 16] != hash[i])
-                        access = false;
-
-                if (access) 
-                {
-                    int role = (int)clienteDb.Usuario.Role;
-
-                    var userClaims = new List<Claim>()
+                if (clienteDb != null) {  
+                    if (GerenciadorLogin.comparaSenha(clienteDb.Usuario.Senha, usuario.Senha)) 
                     {
-                    new Claim(ClaimTypes.Name, clienteDb.Nome),
-                    new Claim(ClaimTypes.Email, clienteDb.Usuario.Email),
-                    new Claim(ClaimTypes.Role, role.ToString())
-                     };
-
-                    var grandmaIdentity = new ClaimsIdentity(userClaims, "UsuarioInfo");
-
-                    var userPrincipal = new ClaimsPrincipal(new[] { grandmaIdentity });
-                    HttpContext.SignInAsync(userPrincipal);
-
-                    return RedirectToAction("Index", "Home");
+                        HttpContext.SignInAsync(GerenciadorLogin.FazerLogin(clienteDb));
+                        return RedirectToAction("Index", "Home");
+                    }
+                    return View(new PaginaLoginModel
+                    {
+                        Username = clienteLogin.Usuario.Email,
+                        Falhou = true
+                    });
                 }
-                return View(new PaginaLoginModel
-                {
-                    Username = clienteLogin.Usuario.Email,
-                    Falhou = true
-                });
             }
             return View(new PaginaLoginModel { Falhou = true});
         }
