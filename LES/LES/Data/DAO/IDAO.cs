@@ -16,7 +16,6 @@ namespace LES.Data.DAO
         public String Add(T e);
         public String Edit(T e);
         public String Delete(int id);
-        public void Save();
 
     }
 }

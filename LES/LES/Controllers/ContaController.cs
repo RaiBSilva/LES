@@ -22,17 +22,17 @@ namespace LES.Views.Conta
 {
     public class ContaController : BaseController
     {
-        private IFacadeCrud<Cliente> _facade { get; set; }
+        private IFacadeCrud<Cliente> _facadeClientes { get; set; }
         private IFacadeCrud<BandeiraCartaoCredito> _facadeBandeiras { get; set; }
         private IFacadeCrud<TipoTelefone> _facadeTipoTelefone { get; set; }
         private IFacadeCrud<TipoEndereco> _facadeTipoEndereco { get; set; }
 
-        public ContaController(IFacadeCrud<Cliente> facade,
+        public ContaController(IFacadeCrud<Cliente> facadeClientes,
             IFacadeCrud<BandeiraCartaoCredito> facadeBandeira,
             IFacadeCrud<TipoTelefone> facadeTipoTelefone,
             IFacadeCrud<TipoEndereco> facadeTipoEndereco)
         {
-            _facade = facade;
+            _facadeClientes = facadeClientes;
             _facadeBandeiras = facadeBandeira;
             _facadeTipoTelefone = facadeTipoTelefone;
             _facadeTipoEndereco = facadeTipoEndereco;
@@ -62,7 +62,7 @@ namespace LES.Views.Conta
                     Usuario = (Usuario)_vh.Entidades[typeof(Usuario).Name] 
                 };
 
-                Cliente clienteDb = _facade.Query<Cliente>(
+                Cliente clienteDb = _facadeClientes.Query<Cliente>(
                     c => c.Usuario.Email == clienteLogin.Usuario.Email, 
                     c => c,
                     c => c.Usuario).FirstOrDefault();
@@ -97,9 +97,18 @@ namespace LES.Views.Conta
 
             PaginaRegistroModel vm = new PaginaRegistroModel()
             {
-                Cartao = new CartaoBaseModel { Bandeiras = _facadeBandeiras.Listar() },
-                Telefone = new TelefoneBaseModel { TipoTelefones = _facadeTipoTelefone.Listar() },
-                Endereco = new EnderecoBaseModel { TiposEnderecos = _facadeTipoEndereco.Listar() }
+                Cartao = new CartaoBaseModel
+                {
+                    Bandeiras = _facadeBandeiras.Listar().OrderBy(b => b.Nome).ToList()  
+                },
+                Telefone = new TelefoneBaseModel 
+                { 
+                    TipoTelefones = _facadeTipoTelefone.Listar().OrderBy(t => t.Nome).ToList() 
+                },
+                Endereco = new EnderecoBaseModel 
+                { 
+                    TiposEnderecos = _facadeTipoEndereco.Listar().OrderBy(t => t.Nome).ToList() 
+                }
             };
 
             return View(vm);
@@ -116,9 +125,17 @@ namespace LES.Views.Conta
                     ViewModel = usuarioNovo
                 };
 
-                Cliente cliente = (Cliente)_vh.Entidades[typeof(Cliente).Name];
+                BandeiraCartaoCredito bandeira = new BandeiraCartaoCredito { Id = Convert.ToInt32(usuarioNovo.Cartao.Bandeira) };
+                TipoEndereco tipoEndereco = new TipoEndereco { Id = Convert.ToInt32(usuarioNovo.Endereco.TipoEndereco) };
+                TipoTelefone tipoTelefone = new TipoTelefone { Id = Convert.ToInt32(usuarioNovo.Telefone.TipoTelefone) };
 
-                string msg = _facade.Cadastrar(cliente);
+                Cliente cliente = (Cliente)_vh.Entidades[typeof(Cliente).Name];
+                cliente.Cartoes[0].Bandeira = _facadeBandeiras.GetEntidade(bandeira);
+                cliente.Enderecos[0].TipoEndereco = _facadeTipoEndereco.GetEntidade(tipoEndereco);
+                cliente.Telefones[0].TipoTelefone = _facadeTipoTelefone.GetEntidade(tipoTelefone);
+                cliente.Codigo = "1";
+
+                string msg = _facadeClientes.Cadastrar(cliente);
 
                 if (msg == "")  return RedirectToAction("Login");
                 else

@@ -29,6 +29,7 @@ namespace LES.Models.Entity
         public int Nota { get; set; }
         public int UsuarioId { get; set; }
 
+        public virtual IList<CartaoCredito> Cartoes { get; set; }
         public virtual IList<Endereco> Enderecos { get; set; }
         public virtual IList<Pedido> Pedidos { get; set; }
         public virtual IList<Telefone> Telefones { get; set; }
@@ -38,6 +39,7 @@ namespace LES.Models.Entity
 
         public Cliente() : base()
         {
+            Cartoes = new List<CartaoCredito>();
             Enderecos = new List<Endereco>();
             Pedidos = new List<Pedido>();
             Telefones = new List<Telefone>();

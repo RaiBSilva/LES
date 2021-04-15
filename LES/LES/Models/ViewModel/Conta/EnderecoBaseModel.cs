@@ -33,6 +33,9 @@ namespace LES.Models.ViewModel.Conta
         public string Estado { get; set; }
 
         //[Required]
+        public string Nome { get; set; }
+
+        //[Required]
         [Display(Name = "País")]
         public string Pais { get; set; }
 
@@ -41,7 +44,7 @@ namespace LES.Models.ViewModel.Conta
 
         //[Required]
         [Display(Name = "Tipo de endereço")]
-        public TipoEndereco TipoEndereco { get; set; }
+        public string TipoEndereco { get; set; }
 
         //Entidades de auxilio, não devem ser captadas
         public IList<TipoEndereco> TiposEnderecos { get; set; }

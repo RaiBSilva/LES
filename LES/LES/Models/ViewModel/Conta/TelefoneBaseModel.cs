@@ -13,7 +13,7 @@ namespace LES.Models.ViewModel.Conta
 
         //[Required]
         [Display(Name = "Tipo de telefone")]
-        public TipoTelefone? TipoTelefone { get; set; }
+        public string TipoTelefone { get; set; }
 
         //[Required]
         [Display(Name = "DDD")]

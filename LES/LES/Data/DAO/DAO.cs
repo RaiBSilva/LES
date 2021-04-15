@@ -32,7 +32,7 @@ namespace LES.Data.DAO
             {
                 return ex.Message;
             }
-            return "";
+            return Save();
         }
 
         public string Delete(int id)
@@ -47,7 +47,7 @@ namespace LES.Data.DAO
             {
                 return ex.Message;
             }
-            return "";
+            return Save();
 
         }
 
@@ -61,7 +61,7 @@ namespace LES.Data.DAO
             {
                 return ex.Message;
             }
-            return "";
+            return Save();
         }
 
         public T Get(int id)
@@ -91,9 +91,21 @@ namespace LES.Data.DAO
             return _entidade.ToList();
         }
 
-        public void Save()
+        private string Save()
         {
+            //try
+            //{
+            //    _contexto.SaveChanges();
+            //}
+            //catch (Exception ex) 
+            //{
+            //    return ex.Message;
+            //}
+            //return "";
+
+
             _contexto.SaveChanges();
+            return "";
         }
     }
 }

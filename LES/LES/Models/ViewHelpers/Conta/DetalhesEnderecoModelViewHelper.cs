@@ -105,22 +105,6 @@ namespace LES.Models.ViewHelpers.Conta
             return baseModel;
         }
 
-
-        public InfoBaseModel ToInfoBaseModel(Cliente input)
-        {
-            InfoBaseModel baseModel = new InfoBaseModel();
-
-            baseModel.Nome = input.Nome;
-            baseModel.Email = input.Usuario.Email;
-            baseModel.Senha = input.Usuario.Senha;
-            baseModel.Cpf = input.Cpf;
-            baseModel.DtNascimento = input.DtNascimento;
-            baseModel.Genero = input.Genero;
-            baseModel.Codigo = input.Codigo;
-
-            return baseModel;
-        }
-
         public Endereco ToEndereco(EnderecoBaseModel input)
         {
             Endereco endereco = new Endereco();
@@ -137,17 +121,6 @@ namespace LES.Models.ViewHelpers.Conta
             return endereco;
         }
 
-        public Telefone ToTelefone(TelefoneBaseModel input)
-        {
-            Telefone telefone = new Telefone();
-
-            telefone.Ddd = input.Ddd;
-            telefone.Numero = input.NumeroTelefone;
-            telefone.Id = Convert.ToInt32(input.Id);
-            telefone.TipoTelefoneId = input.TipoTelefone.Id;
-
-            return telefone;
-        }
     }
 }
 

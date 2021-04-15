@@ -7,7 +7,7 @@
         <div class="row">
             <div id="divTipoTelefone" class="form-group col-md-3">
                 <label asp-for="TipoTelefone" class="control-label"></label>
-                <select asp-for="TipoTelefone" class="form-control required">
+                <select asp-for="TipoTelefone" class="form-control required"asp-items="@(new SelectList(Model.TipoTelefones, "Id", "Nome"))">
                 </select>
                 <span asp-validation-for="TipoTelefone" class="text-danger"></span>
             </div>

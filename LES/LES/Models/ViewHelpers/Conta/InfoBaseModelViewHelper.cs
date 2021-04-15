@@ -70,7 +70,7 @@ namespace LES.Models.ViewHelpers.Conta
             baseModel.Ddd = tel.Ddd;
             baseModel.NumeroTelefone = tel.Numero;
             baseModel.Id = tel.Id.ToString();
-            baseModel.TipoTelefone = tel.TipoTelefone;
+            //baseModel.TipoTelefone = tel.TipoTelefone;
 
             return baseModel;
         }

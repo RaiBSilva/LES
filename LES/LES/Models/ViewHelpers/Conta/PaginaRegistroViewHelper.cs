@@ -36,18 +36,25 @@ namespace LES.Models.ViewHelpers.Conta
             }
         }
 
+        public PaginaRegistroViewHelper()
+        {
+            Entidades = new Dictionary<string, EntidadeDominio>();
+        }
+
         protected override void ToEntidade()
         {
             PaginaRegistroModel vm = (PaginaRegistroModel)ViewModel;
-            IList<Endereco> ListaEnderecos = new List<Endereco>();
-            IList<Telefone> ListaTelefones = new List<Telefone>();
+            IList<Endereco> listaEnderecos = new List<Endereco>();
+            IList<Telefone> listaTelefones = new List<Telefone>();
+            IList<CartaoCredito> listaCartoes = new List<CartaoCredito>();
 
             Usuario user = new Usuario();
             user.Senha = vm.Senha.Senha;
             user.Email = vm.InfoUsuario.Email;
 
-            ListaEnderecos.Add(ToEndereco(vm.Endereco));
-            ListaTelefones.Add(ToTelefone(vm.Telefone));
+            listaEnderecos.Add(ToEndereco(vm.Endereco));
+            listaTelefones.Add(ToTelefone(vm.Telefone));
+            listaCartoes.Add(ToCartao(vm.Cartao));
 
             Cliente cliente = new Cliente
             {
@@ -55,9 +62,10 @@ namespace LES.Models.ViewHelpers.Conta
                 DtNascimento = vm.InfoUsuario.DtNascimento,
                 Genero = vm.InfoUsuario.Genero,
                 Nome = vm.InfoUsuario.Nome,
-                Enderecos = ListaEnderecos,
+                Enderecos = listaEnderecos,
                 Usuario = user,
-                Telefones = ListaTelefones
+                Cartoes = listaCartoes,
+                Telefones = listaTelefones
             };
 
             Entidades[typeof(Cliente).Name] = cliente;
@@ -65,16 +73,18 @@ namespace LES.Models.ViewHelpers.Conta
 
         protected override void ToViewModel()
         {
-            Cliente cliente = (Cliente)Entidades[typeof(Cliente).Name];
+            if(Entidades.Count > 1) { 
+                Cliente cliente = (Cliente)Entidades[typeof(Cliente).Name];
 
-            PaginaRegistroModel vm = new PaginaRegistroModel
-            {
-                InfoUsuario = ToInfoBaseModel(cliente),
-                Endereco = ToEnderecoBaseModel(cliente),
-                Telefone = ToTelefoneBaseModel(cliente)
-            };
+                PaginaRegistroModel vm = new PaginaRegistroModel
+                {
+                    InfoUsuario = ToInfoBaseModel(cliente),
+                    Endereco = ToEnderecoBaseModel(cliente),
+                    Telefone = ToTelefoneBaseModel(cliente)
+                };
 
-            ViewModel = vm;
+                ViewModel = vm;
+            }
         }
 
         public TelefoneBaseModel ToTelefoneBaseModel(Cliente cli)
@@ -83,6 +93,7 @@ namespace LES.Models.ViewHelpers.Conta
 
             Telefone tel = cli.Telefones[0];
 
+            //baseModel.TipoTelefone = tel.TipoTelefone;
             baseModel.Ddd = tel.Ddd;
             baseModel.NumeroTelefone = tel.Numero;
 
@@ -107,7 +118,7 @@ namespace LES.Models.ViewHelpers.Conta
             baseModel.Logradouro = endereco.Logradouro;
             baseModel.Numero = endereco.Numero;
             baseModel.Pais = endereco.Cidade.Estado.Pais.Nome;
-            baseModel.TipoEndereco = endereco.TipoEndereco;
+            //baseModel.TipoEndereco = endereco.TipoEndereco;
             baseModel.Observacoes = endereco.Observacoes;
 
             return baseModel;
@@ -130,28 +141,65 @@ namespace LES.Models.ViewHelpers.Conta
 
         public Endereco ToEndereco(EnderecoBaseModel input)
         {
-            Endereco endereco = new Endereco();
-
-            endereco.Cep = input.Cep;
-            endereco.Cidade.Nome = input.Cidade;
-            endereco.Complemento = input.Complemento;
-            endereco.TipoEndereco = input.TipoEndereco;
-            endereco.Cidade.Estado.Nome = input.Estado;
-            endereco.Cidade.Estado.Pais.Nome = input.Pais;
-            endereco.Numero = input.Numero;
-            endereco.Logradouro = input.Logradouro;
+            Endereco endereco = new Endereco
+            {
+                Cep = input.Cep,
+                ECobranca = true,
+                EEntrega = true,
+                EFavorito = true,
+                NomeEndereco = input.Nome,
+                Complemento = input.Complemento,
+                TipoEndereco = new TipoEndereco
+                {
+                    Id = Convert.ToInt32(input.TipoEndereco)
+                },
+                Numero = input.Numero,
+                Logradouro = input.Logradouro,
+                EResidencia = true,
+                Observacoes = input.Observacoes,
+                Cidade = new Cidade
+                {
+                    Nome = input.Cidade,
+                    Estado = new Estado
+                    {
+                        Nome = input.Estado,
+                        Pais = new Pais
+                        {
+                            Nome = input.Pais
+                        }
+                    }
+                }
+            };
 
             return endereco;
         }
+        public CartaoCredito ToCartao(CartaoBaseModel input)
+        {
+            CartaoCredito c = new CartaoCredito
+            {
+                NomeImpresso = input.Nome,
+                Bandeira = new BandeiraCartaoCredito {
+                    Id = Convert.ToInt32(input.Bandeira)
+                },
+                Codigo = input.Codigo,
+                Cvv = input.Cvv,
+                EFavorito = true,
+                Vencimento = input.Vencimento
+            };
 
+            return c;
+        }
         public Telefone ToTelefone(TelefoneBaseModel input)
         {
-            Telefone telefone = new Telefone();
-
-            telefone.Ddd = input.Ddd;
-            telefone.Numero = input.NumeroTelefone;
-            telefone.Id = Convert.ToInt32(input.Id);
-            telefone.TipoTelefoneId = input.TipoTelefone.Id;
+            Telefone telefone = new Telefone
+            {
+                Ddd = input.Ddd,
+                Numero = input.NumeroTelefone,
+                Id = Convert.ToInt32(input.Id),
+                TipoTelefone = new TipoTelefone{
+                    Id = Convert.ToInt32(input.TipoTelefone) 
+                }
+            };
 
             return telefone;
         }

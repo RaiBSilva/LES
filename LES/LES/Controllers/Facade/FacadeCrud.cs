@@ -21,13 +21,19 @@ namespace LES.Controllers.Facade
             DefinirStrategies();
         }
 
-        private Dictionary<String, ICollection<Func<EntidadeDominio, string>>> _strategies;
+        private Dictionary<String, ICollection<Func<EntidadeDominio, string>>> _strategiesValidacao;
+        private Dictionary<String, ICollection<Func<T, T>>> _strategiesTransformacao;
 
         private void DefinirStrategies()
         {
-            _strategies = new Dictionary<String, ICollection<Func<EntidadeDominio, string>>>
+            _strategiesValidacao = new Dictionary<String, ICollection<Func<EntidadeDominio, string>>>
             {
                 [typeof(Cliente).Name] = new List<Func<EntidadeDominio, string>>()
+            };
+
+            _strategiesTransformacao = new Dictionary<String, ICollection<Func<T, T>>>
+            {
+                [typeof(Cliente).Name] = new List<Func<T, T>>()
             };
         }
         private string ExecutarRegras(T e)
@@ -36,7 +42,9 @@ namespace LES.Controllers.Facade
 
             StringBuilder sb = new StringBuilder();
 
-            var regras = _strategies[nmClasse];
+            var regras = _strategiesValidacao[nmClasse];
+            var transformacoes = _strategiesTransformacao[nmClasse];
+            sb.Append("");
             if (regras != null) 
             {
                 foreach (var strat in regras)
@@ -45,13 +53,21 @@ namespace LES.Controllers.Facade
                 }  
             }
 
+            if (transformacoes != null)
+            {
+                foreach (var strat in transformacoes)
+                {
+                    e = strat(e);
+                }
+            }
+
             return sb.ToString();
 
         }
 
         public string Cadastrar(T e)
         {
-            String msg = ExecutarRegras(e);
+            string msg = ExecutarRegras(e);
 
             if (msg == "")
             {
@@ -68,7 +84,7 @@ namespace LES.Controllers.Facade
 
         public string Editar(T e)
         {
-            String msg = ExecutarRegras(e);
+            string msg = ExecutarRegras(e);
 
             if (msg == "")
             {
