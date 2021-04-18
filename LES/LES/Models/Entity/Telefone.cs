@@ -18,10 +18,5 @@ namespace LES.Models.Entity
         public virtual Cliente Cliente { get; set; }
         public virtual TipoTelefone TipoTelefone { get; set; }
 
-        public Telefone() 
-        {
-            Cliente = new Cliente();
-            TipoTelefone = new TipoTelefone();
-        }
     }
 }

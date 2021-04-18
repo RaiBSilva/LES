@@ -10,10 +10,5 @@ namespace LES.Models.Entity
     {
         public virtual IList<LivroCategoriaLivro> LivrosCategoriaLivros { get; set; }
 
-        public CategoriaLivro() : base()
-        {
-
-        }
-
     }
 }

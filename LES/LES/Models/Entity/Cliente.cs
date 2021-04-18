@@ -29,23 +29,13 @@ namespace LES.Models.Entity
         public int Nota { get; set; }
         public int UsuarioId { get; set; }
 
-        public virtual IList<CartaoCredito> Cartoes { get; set; }
-        public virtual IList<Endereco> Enderecos { get; set; }
-        public virtual IList<Pedido> Pedidos { get; set; }
-        public virtual IList<Telefone> Telefones { get; set; }
-        public virtual IList<Cupom> Cupons { get; set; }
-        public virtual Usuario Usuario { get; set; }
+        public virtual IList<CartaoCredito> Cartoes { get; set; } = new List<CartaoCredito>();
+        public virtual IList<Endereco> Enderecos { get; set; } = new List<Endereco>();
+        public virtual IList<Pedido> Pedidos { get; set; } = new List<Pedido>();
+        public virtual IList<Telefone> Telefones { get; set; } = new List<Telefone>();
+        public virtual IList<Cupom> Cupons { get; set; } = new List<Cupom>();
+        public virtual Usuario Usuario { get; set; } = new Usuario();
         #endregion
-
-        public Cliente() : base()
-        {
-            Cartoes = new List<CartaoCredito>();
-            Enderecos = new List<Endereco>();
-            Pedidos = new List<Pedido>();
-            Telefones = new List<Telefone>();
-            Cupons = new List<Cupom>();
-            Usuario = new Usuario();
-        }
 
     }
 

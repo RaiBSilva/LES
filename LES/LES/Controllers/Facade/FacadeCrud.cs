@@ -14,14 +14,18 @@ namespace LES.Controllers.Facade
     {
 
         private IDAO<T> _dao;
+        private AppDbContext _contexto;
 
-        public FacadeCrud(IDAO<T> dao)
+        public FacadeCrud(IDAO<T> dao, AppDbContext context)
         {
             _dao = dao;
+            _contexto = context;
             DefinirStrategies();
+            DefinirDAOs();
         }
 
-        private Dictionary<String, ICollection<Func<EntidadeDominio, string>>> _strategiesValidacao;
+        private Dictionary<string, ICollection<Func<EntidadeDominio, string>>> _strategiesValidacao;
+        private Dictionary<string, IDAOComplex> _daosComplexos;
 
         private void DefinirStrategies()
         {
@@ -30,6 +34,14 @@ namespace LES.Controllers.Facade
                 [typeof(Cliente).Name] = new List<Func<EntidadeDominio, string>>()
             };
         }
+        private void DefinirDAOs()
+        {
+            _daosComplexos = new Dictionary<string, IDAOComplex>
+            {
+                [typeof(Cliente).Name] = new DAOCliente<Cliente>(_contexto)
+            };
+        }
+
         private string ExecutarRegras(T e)
         {
             string nmClasse = e.GetType().Name;
@@ -92,7 +104,15 @@ namespace LES.Controllers.Facade
         public IEnumerable<TType> Query<TType>(Expression<Func<T, bool>> where, Expression<Func<T, TType>> select,
             params Expression<Func<TType, object>>[] include) where TType : class
         { 
-            return _dao.Get<TType>(where, select, include);
+            return _dao.Get(where, select, include);
+        }
+        public T GetAllInclude(T e)
+        {
+            string nmClasse = typeof(T).Name;
+
+            if (_daosComplexos.ContainsKey(nmClasse)) return (T)_daosComplexos[nmClasse].IncludeAll(e);
+            return null;
+
         }
     }
 }

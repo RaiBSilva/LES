@@ -1,5 +1,6 @@
 ﻿function carregarPartialView(endereco) {
 
+
     var divModal = document.getElementById("myModal");
     var newDivForm = document.createElement("div");
     newDivForm.className = "modal-dialog modal-lg";
@@ -22,46 +23,50 @@ function carregarNovoCartao() {
     carregarPartialView(urls.novoCartao);
 }
 
-function carregarEditarInfo(){
-    carregarPartialView(urls.editarInfoPessoal);
+function carregarEditarInfo() {
+    var endereco = urls.editarInfoPessoal + "?id=" + codigo;
+    console.log(endereco);
+    carregarPartialView(endereco);
 }
 
 function carregarEditarSenha() {
-    carregarPartialView(urls.editarSenha);
+    var endereco = urls.editarSenha + "?id=" + codigo;
+    console.log(endereco);
+    carregarPartialView(endereco);
 }
 
 function carregarEditarEndereco(id) {
-    var endereco = urls.EditarEndereco + "/" + id;
+    var endereco = urls.EditarEndereco + "?id=" + id;
     carregarPartialView(endereco);
 }
 
 function carregarEditarTelefone(id) {
-    var endereco = urls.EditarTelefone + "/" + id;
+    var endereco = urls.EditarTelefone + "?id=" + id;
     carregarPartialView(endereco);
 }
 
 function carregarEditarCartao(id) {
-    var endereco = urls.EditarCartao + "/" + id;
+    var endereco = urls.EditarCartao + "?id=" + id;
     carregarPartialView(endereco);
 }
 
 function carregarRemoverEndereco(id) {
-    var endereco = urls.RemoverEndereco + "/" + id;
+    var endereco = urls.RemoverEndereco + "?id=" + id;
     carregarPartialView(endereco);
 }
 
 function carregarRemoverTelefone(id) {
-    var endereco = urls.RemoverTelefone + "/" + id;
+    var endereco = urls.RemoverTelefone + "?id=" + id;
     carregarPartialView(endereco);
 }
 
 function carregarRemoverCartao(id) {
-    var endereco = urls.RemoverCartao + "/" + id;
+    var endereco = urls.RemoverCartao + "?id=" + id;
     carregarPartialView(endereco);
 }
 
 function carregarRealizarTroca(id) {
-    var endereco = urls.RealizarTroca + "/" + id;
+    var endereco = urls.RealizarTroca + "?id=" + id;
     carregarPartialView(endereco);
 }
 

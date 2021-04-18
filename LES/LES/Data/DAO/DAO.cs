@@ -13,8 +13,8 @@ namespace LES.Data.DAO
     public class DAO<T> : IDAO<T> where T : EntidadeDominio
     {
 
-        private AppDbContext _contexto;
-        private DbSet<T> _entidade;
+        protected AppDbContext _contexto;
+        protected DbSet<T> _entidade;
 
         public DAO(AppDbContext contexto)
         {
@@ -59,7 +59,7 @@ namespace LES.Data.DAO
             }
             catch (DbUpdateException ex)
             {
-                return ex.Message;
+                return ex.Message + "\n" + ex.InnerException.Message;
             }
             return Save();
         }
@@ -93,18 +93,14 @@ namespace LES.Data.DAO
 
         private string Save()
         {
-            //try
-            //{
-            //    _contexto.SaveChanges();
-            //}
-            //catch (Exception ex) 
-            //{
-            //    return ex.Message;
-            //}
-            //return "";
-
-
-            _contexto.SaveChanges();
+            try
+            {
+                _contexto.SaveChanges();
+            }
+            catch (DbUpdateException ex) 
+            {
+                return ex.Message + "\n" + ex.InnerException.Message; 
+            }
             return "";
         }
     }

@@ -10,25 +10,8 @@ namespace LES.Models.Entity
     public class EntidadeDominio
     {
         public int Id { get; set; }
-        public DateTime DtCadastro { get; set; }
+        public DateTime DtCadastro { get; set; } = DateTime.Now;
         public bool Inativo { get; set; }
 
-        #region Construtores da Classe
-        public EntidadeDominio() 
-        {
-            DtCadastro = DateTime.Now;
-        }
-
-        public EntidadeDominio(int id) 
-        {
-            this.Id = id;
-        }
-
-        public EntidadeDominio(int id, DateTime dtCadastro)
-        {
-            this.Id = id;
-            this.DtCadastro = dtCadastro;
-        }
-        #endregion
     }
 }

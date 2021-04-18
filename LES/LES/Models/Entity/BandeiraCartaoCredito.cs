@@ -9,10 +9,5 @@ namespace LES.Models.Entity
     {
         public virtual IList<CartaoCredito> Cartoes { get; set; }
 
-        public BandeiraCartaoCredito() : base()
-        {
-            Cartoes = new List<CartaoCredito>();
-        }
-
     }
 }

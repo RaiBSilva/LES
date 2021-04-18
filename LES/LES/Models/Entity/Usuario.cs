@@ -22,9 +22,7 @@ namespace LES.Models.Entity
         public UserRole Role { get; set; }
 
         public virtual Cliente Cliente { get; set; }
-        public Usuario()
-        {
-        }
+
 
     }
 }

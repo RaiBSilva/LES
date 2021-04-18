@@ -12,30 +12,6 @@ namespace LES.Models.ViewHelpers.Conta
 {
     public class PaginaRegistroViewHelper : AbstractViewHelper, IViewHelper
     {
-        //Atributo responsável por guardar as entidades que vêm do db, ou que vão para o db
-        private IDictionary<string, EntidadeDominio> _entidades;
-        public override IDictionary<string, EntidadeDominio> Entidades 
-        {
-            get => _entidades;
-            set
-            {
-                _entidades = value;
-                ToViewModel();
-            }
-        }
-
-        //Atributo responsável por guardar as entidades que vêm do request, ou vão para uma página razor
-        private IViewModel _viewModel;
-        public override IViewModel ViewModel 
-        {
-            get => _viewModel;
-            set
-            {
-                _viewModel = value;
-                ToEntidade();
-            }
-        }
-
         public PaginaRegistroViewHelper()
         {
             Entidades = new Dictionary<string, EntidadeDominio>();
@@ -83,7 +59,7 @@ namespace LES.Models.ViewHelpers.Conta
                     Telefone = ToTelefoneBaseModel(cliente)
                 };
 
-                ViewModel = vm;
+                _viewModel = vm;
             }
         }
 
@@ -130,7 +106,6 @@ namespace LES.Models.ViewHelpers.Conta
 
             baseModel.Nome = input.Nome;
             baseModel.Email = input.Usuario.Email;
-            baseModel.Senha = input.Usuario.Senha;
             baseModel.Cpf = input.Cpf;
             baseModel.DtNascimento = input.DtNascimento;
             baseModel.Genero = input.Genero;
@@ -195,9 +170,10 @@ namespace LES.Models.ViewHelpers.Conta
             {
                 Ddd = input.Ddd,
                 Numero = input.NumeroTelefone,
+                EFavorito = true,
                 Id = Convert.ToInt32(input.Id),
-                TipoTelefone = new TipoTelefone{
-                    Id = Convert.ToInt32(input.TipoTelefone) 
+                TipoTelefone = new TipoTelefone {
+                    Id = Convert.ToInt32(input.TipoTelefone)
                 }
             };
 

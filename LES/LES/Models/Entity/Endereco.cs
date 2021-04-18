@@ -9,6 +9,7 @@ namespace LES.Models.Entity
         #region Propriedades
         public string Cep { get; set; }
         public int CidadeId { get; set; }
+        public int ClienteId { get; set; }
         public string Complemento { get; set; }
         public bool ECobranca { get; set; }
         public bool EEntrega { get; set; }
@@ -21,14 +22,10 @@ namespace LES.Models.Entity
         public int TipoEnderecoId { get; set; }
 
         public virtual Cidade Cidade { get; set; }
+        public virtual Cliente Cliente {get;set; }
         public virtual TipoEndereco TipoEndereco { get; set; }
         #endregion
 
-        public Endereco() : base()
-        {
-            Cidade = new Cidade();
-            TipoEndereco = new TipoEndereco();
-        }
 
     }
 }

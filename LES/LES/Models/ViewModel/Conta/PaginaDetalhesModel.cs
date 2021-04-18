@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace LES.Models.ViewModel.Conta
 {
-    public class PaginaDetalhesModel
+    public class PaginaDetalhesModel : IViewModel
     {
         public DetalhesInfoModel InfoUsuario { get; set; }
         public IList<DetalhesEnderecoModel> Enderecos { get;set; }
@@ -27,13 +27,13 @@ namespace LES.Models.ViewModel.Conta
         }
     }
 
-    public class DetalhesInfoModel : InfoBaseModel 
+    public class DetalhesInfoModel : InfoBaseModel, IViewModel
     {
         [Display(Name ="Sua nota de cliente SóRaiva:")]
         public int NotaUsuario { get; set; }
     }
 
-    public class DetalhesEnderecoModel : EnderecoBaseModel
+    public class DetalhesEnderecoModel : EnderecoBaseModel, IViewModel
     {
         [Display(Name = "Nome do endereço (ex: casa, trabalho, etc...)")]
         public string NomeEndereco { get; set; }
@@ -49,13 +49,13 @@ namespace LES.Models.ViewModel.Conta
 
     }
 
-    public class DetalhesTelefoneModel : TelefoneBaseModel 
+    public class DetalhesTelefoneModel : TelefoneBaseModel, IViewModel
     { 
         [Display(Name = "É preferencial?")]
         public bool EPreferencial { get; set; }
     }
 
-    public class DetalhesCartaoModel : CartaoBaseModel 
+    public class DetalhesCartaoModel : CartaoBaseModel, IViewModel
     {
         [Display(Name = "É preferencial?")]
         public bool EPreferencial { get; set; }

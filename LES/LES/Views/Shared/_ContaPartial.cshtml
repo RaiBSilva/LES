@@ -4,7 +4,7 @@
         <a class="nav-link navbar-item" asp-action="Detalhes" asp-controller="Conta">Minha Conta</a>
     </li>
     <li>
-        Olá, @(User.Identity.Name)! 
+        Olá, @(User.Identity.Name.Split(' ')[0])
     </li>
 }
 else
