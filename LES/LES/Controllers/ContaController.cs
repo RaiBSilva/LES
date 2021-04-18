@@ -35,7 +35,7 @@ namespace LES.Views.Conta
             _facadeTipoEndereco = facadeTipoEndereco;
         }
 
-        #region Login, Registro e Detalhes
+        #region Login, Registro, Logout e Detalhes
         //GET /Conta/Login
         public IActionResult Login()
         {
@@ -138,7 +138,11 @@ namespace LES.Views.Conta
         {
             Cliente cliente = GetClienteComEmail();
 
-            var clienteDb = _facadeClientes.GetAllInclude(cliente);                
+            var clienteDb = _facadeClientes.GetAllInclude(cliente);
+
+            clienteDb.Cartoes = clienteDb.Cartoes.Where(c => c.Inativo == false).ToList();
+            clienteDb.Enderecos = clienteDb.Enderecos.Where(e => e.Inativo == false).ToList();
+            clienteDb.Telefones = clienteDb.Telefones.Where(c => c.Inativo == false).ToList();
 
             IDictionary<string, EntidadeDominio> e = new Dictionary<string, EntidadeDominio>
             {
@@ -153,6 +157,14 @@ namespace LES.Views.Conta
             if (TempData["Alert"] != null) ViewData["Alert"] = TempData["Alert"];
 
             return View(_vh.ViewModel);
+        }
+
+        //GET /Conta/Logout
+        [Authorize]
+        public IActionResult Logout()
+        {
+            HttpContext.SignOutAsync();
+            return RedirectToAction(nameof(Login));
         }
 
         #endregion
@@ -270,24 +282,13 @@ namespace LES.Views.Conta
         //GET Conta/_EditarEnderecoPartial
         public IActionResult _EditarEnderecoPartial(int id)
         {
-            Endereco e = _facadeClientes.GetAllInclude( GetClienteComEmail()).Enderecos
-                .Where(e => e.Id == id).FirstOrDefault();
-
-            if (e == null)
+            DetalhesEnderecoModel vm = (DetalhesEnderecoModel)GetEnderecoVm(id);
+            if (vm == null)
             {
                 return PartialView("../Conta/PartialViews/_ErroPartial");
             }
-
-            _vh = new DetalhesEnderecoViewHelper
-            {
-                Entidades = new Dictionary<string, EntidadeDominio>
-                {
-                    [typeof(Endereco).Name] = e
-                }
-            };
-
-            DetalhesEnderecoModel vm = (DetalhesEnderecoModel)_vh.ViewModel;
             vm.TiposEnderecos = GetTipoEnderecos();
+            vm.Edicao = true;
 
             return PartialView("../Conta/PartialViews/_EditarEnderecoPartial", vm);
         }
@@ -322,7 +323,7 @@ namespace LES.Views.Conta
 
             string msg = _facadeClientes.Editar(c);
 
-            if (msg != null)
+            if (msg != "")
                 TempData["Alert"] = msg;
 
             return RedirectToAction(nameof(Detalhes));
@@ -331,25 +332,13 @@ namespace LES.Views.Conta
         //GET Conta/_EditarTelefonePartial
         public IActionResult _EditarTelefonePartial(int id)
         {
-
-            Telefone t = _facadeClientes.GetAllInclude(GetClienteComEmail()).Telefones
-                .Where(t => t.Id == id).FirstOrDefault();
-
-            if (t == null)
+            DetalhesTelefoneModel vm = (DetalhesTelefoneModel)GetTelefoneVm(id);
+            if(vm == null) 
             {
                 return PartialView("../Conta/PartialViews/_ErroPartial");
             }
-
-            _vh = new DetalhesTelefoneViewHelper
-            {
-                Entidades = new Dictionary<string, EntidadeDominio>
-                {
-                    [typeof(Telefone).Name] = t
-                }
-            };
-
-            DetalhesTelefoneModel vm = (DetalhesTelefoneModel)_vh.ViewModel;
             vm.TipoTelefones = GetTipoTelefones();
+            vm.Edicao = true;
 
             return PartialView("../Conta/PartialViews/_EditarTelefonePartial", vm);
         }
@@ -376,7 +365,7 @@ namespace LES.Views.Conta
 
             string msg = _facadeClientes.Editar(c);
 
-            if (msg != null)
+            if (msg != "")
                 TempData["Alert"] = msg;
 
             return RedirectToAction(nameof(Detalhes));
@@ -385,24 +374,13 @@ namespace LES.Views.Conta
         //GET Conta/_EditarCartaoPartial
         public IActionResult _EditarCartaoPartial(int id)
         {
-            CartaoCredito c = _facadeClientes.GetAllInclude(GetClienteComEmail()).Cartoes
-                   .Where(c => c.Id == id).FirstOrDefault();
-
-            if (c == null)
+            DetalhesCartaoModel vm = (DetalhesCartaoModel)GetCartaoVm(id);
+            if (vm == null)
             {
                 return PartialView("../Conta/PartialViews/_ErroPartial");
             }
-
-            _vh = new DetalhesCartaoViewHelper
-            {
-                Entidades = new Dictionary<string, EntidadeDominio>
-                {
-                    [typeof(CartaoCredito).Name] = c
-                }
-            };
-
-            DetalhesCartaoModel vm = (DetalhesCartaoModel)_vh.ViewModel;
             vm.Bandeiras = GetBandeiras();
+            vm.Edicao = true;
 
             return PartialView("../Conta/PartialViews/_EditarCartaoPartial", vm);
         }
@@ -431,7 +409,7 @@ namespace LES.Views.Conta
 
             string msg = _facadeClientes.Editar(c);
 
-            if (msg != null)
+            if (msg != "")
                 TempData["Alert"] = msg;
 
             return RedirectToAction(nameof(Detalhes));
@@ -440,70 +418,332 @@ namespace LES.Views.Conta
         #endregion
 
         #region Adicionar
-        public IActionResult _AdicionarNovoEnderecoPartial(int id) 
+        public IActionResult _AdicionarNovoEnderecoPartial() 
         {
-            return PartialView("../Conta/PartialViews/_AdicionarNovoEnderecoPartial");
+            IList<Endereco> enderecos = _facadeClientes.Query(
+                c => c.Usuario.Email == GetClienteComEmail().Usuario.Email,
+                c => c.Enderecos).FirstOrDefault();
+
+            enderecos = enderecos.Where(e => e.Inativo == false).ToList();
+
+            if (enderecos.Count >= 4) 
+            {
+                ViewData["ErrorMessage"] = "Você já possui o máximo de endereços possível.";
+                return PartialView("../Conta/PartialViews/_ErroPartial");
+            }
+
+            DetalhesEnderecoModel vm = new DetalhesEnderecoModel
+            {
+                TiposEnderecos = GetTipoEnderecos()
+            };
+
+            return PartialView("../Conta/PartialViews/_AdicionarNovoEnderecoPartial", vm);
         }
 
         [HttpPost]
         public IActionResult AdicionarNovoEndereco(DetalhesEnderecoModel novoEndereco) 
         {
+            _vh = new DetalhesEnderecoViewHelper
+            {
+                ViewModel = novoEndereco
+            };
+
+            Endereco endereco = (Endereco)_vh.Entidades[typeof(Endereco).Name];
+            endereco.TipoEndereco = _facadeTipoEndereco.GetEntidade(endereco.TipoEndereco);
+
+            Cliente clienteDb = _facadeClientes.GetAllInclude(GetClienteComEmail());
+            clienteDb.Enderecos.Add(endereco);
+
+            string msg = _facadeClientes.Editar(clienteDb);
+
+            if (msg == "") return RedirectToAction(nameof(Detalhes));
+            TempData["Alert"] = msg;
+
             return RedirectToAction(nameof(Detalhes));
         }
 
-        public IActionResult _AdicionarNovoTelefonePartial(int id)
+        public IActionResult _AdicionarNovoTelefonePartial()
         {
-            return PartialView("../Conta/PartialViews/_AdicionarNovoTelefonePartial");
+            IList<Telefone> telefones = _facadeClientes.Query(
+                   c => c.Usuario.Email == GetClienteComEmail().Usuario.Email,
+                   c => c.Telefones).FirstOrDefault();
+
+            telefones = telefones.Where(e => e.Inativo == false).ToList();
+
+            if (telefones.Count >= 4)
+            {
+                ViewData["ErrorMessage"] = "Você já possui o máximo de telefones possível.";
+                return PartialView("../Conta/PartialViews/_ErroPartial");
+            }
+
+            DetalhesTelefoneModel vm = new DetalhesTelefoneModel
+            {
+                TipoTelefones = GetTipoTelefones()
+            };
+
+            return PartialView("../Conta/PartialViews/_AdicionarNovoTelefonePartial", vm);
         }
 
         [HttpPost]
         public IActionResult AdicionarNovoTelefone(DetalhesTelefoneModel novoTelefone)
         {
+            _vh = new DetalhesTelefoneViewHelper
+            {
+                ViewModel = novoTelefone
+            };
+
+            Telefone telefone = (Telefone)_vh.Entidades[typeof(Telefone).Name];
+            telefone.TipoTelefone = _facadeTipoTelefone.GetEntidade(telefone.TipoTelefone);
+
+            Cliente clienteDb = _facadeClientes.GetAllInclude(GetClienteComEmail());
+            clienteDb.Telefones.Add(telefone);
+
+            string msg = _facadeClientes.Editar(clienteDb);
+
+            if (msg == "") return RedirectToAction(nameof(Detalhes));
+            TempData["Alert"] = msg;
+
             return RedirectToAction(nameof(Detalhes));
         }
 
-        public IActionResult _AdicionarNovoCartaoPartial(int id)
+        public IActionResult _AdicionarNovoCartaoPartial()
         {
-            return PartialView("../Conta/PartialViews/_AdicionarNovoCartaoPartial");
+            IList<CartaoCredito> cartoes = _facadeClientes.Query(
+                   c => c.Usuario.Email == GetClienteComEmail().Usuario.Email,
+                   c => c.Cartoes).FirstOrDefault();
+
+            cartoes = cartoes.Where(e => e.Inativo == false).ToList();
+
+            if (cartoes.Count >= 4)
+            {
+                ViewData["ErrorMessage"] = "Você já possui o máximo de cartões possível.";
+                return PartialView("../Conta/PartialViews/_ErroPartial");
+            }
+
+            DetalhesCartaoModel vm = new DetalhesCartaoModel
+            {
+                Bandeiras = GetBandeiras()
+            };
+
+            return PartialView("../Conta/PartialViews/_AdicionarNovoCartaoPartial", vm);
         }
 
         [HttpPost]
         public IActionResult AdicionarNovoCartao(DetalhesCartaoModel novoCartao)
         {
+            _vh = new DetalhesCartaoViewHelper
+            {
+                ViewModel = novoCartao
+            };
+
+            CartaoCredito cartao = (CartaoCredito)_vh.Entidades[typeof(Telefone).Name];
+            cartao.Bandeira = _facadeBandeiras.GetEntidade(cartao.Bandeira);
+
+            Cliente clienteDb = _facadeClientes.GetAllInclude(GetClienteComEmail());
+            clienteDb.Cartoes.Add(cartao);
+
+            string msg = _facadeClientes.Editar(clienteDb);
+
+            if (msg == "") return RedirectToAction(nameof(Detalhes));
+            TempData["Alert"] = msg;
+
             return RedirectToAction(nameof(Detalhes));
         }
 
         #endregion
 
-        #region Remover
+        #region Remover e Favoritar
 
         public IActionResult _RemoverEnderecoPartial(int id)
         {
-            return PartialView("../Conta/PartialViews/_RemoverEnderecoPartial"/*, ClienteDemo.Enderecos[0]*/);
+            DetalhesEnderecoModel vm = (DetalhesEnderecoModel)GetEnderecoVm(id);
+            if (vm == null)
+            {
+                return PartialView("../Conta/PartialViews/_ErroPartial");
+            }
+            ViewData["Acao"] = "Remover";
+
+            return PartialView("../Conta/PartialViews/_RmvFavEnderecoPartial", vm);
         }
 
         public IActionResult RemoverEndereco(int id)
         {
+            Cliente clienteDb = _facadeClientes.GetAllInclude(GetClienteComEmail());
+
+            IList<Endereco> enderecos = clienteDb.Enderecos.Where(e => e.Inativo == false).ToList();
+
+            Endereco enderecoRem = enderecos.Where(e => e.Id == id).FirstOrDefault();
+            if (enderecoRem.EFavorito) 
+                enderecos.Where(e => e.Id != id).FirstOrDefault().EFavorito = true;
+
+            enderecoRem.EFavorito = false;
+            enderecoRem.Inativo = true;
+
+            string msg = _facadeClientes.Editar(clienteDb);
+
+            if (msg != "")
+                TempData["Alert"] = msg;
+
             return RedirectToAction(nameof(Detalhes));
         }
 
         public IActionResult _RemoverTelefonePartial(int id)
         {
-            return PartialView("../Conta/PartialViews/_RemoverTelefonePartial" /*ClienteDemo.Telefones[0]*/);
+            DetalhesTelefoneModel vm = (DetalhesTelefoneModel)GetTelefoneVm(id);
+            if (vm == null)
+            {
+                return PartialView("../Conta/PartialViews/_ErroPartial");
+            }
+            ViewData["Acao"] = "Remover";
+            return PartialView("../Conta/PartialViews/_RmvFavTelefonePartial", vm);
         }
 
         public IActionResult RemoverTelefone(int id)
         {
+
+            Cliente clienteDb = _facadeClientes.GetAllInclude(GetClienteComEmail());
+
+            IList<Telefone> telefones = clienteDb.Telefones.Where(t => t.Inativo == false).ToList();
+
+            Telefone telefoneRem = telefones.Where(t => t.Id == id).FirstOrDefault();
+            if (telefoneRem.EFavorito)
+                telefones.Where(e => e.Id != id).FirstOrDefault().EFavorito = true;
+
+            telefoneRem.EFavorito = false;
+            telefoneRem.Inativo = true;
+
+            string msg = _facadeClientes.Editar(clienteDb);
+
+            if (msg != "")
+                TempData["Alert"] = msg;
+
             return RedirectToAction(nameof(Detalhes));
         }
 
         public IActionResult _RemoverCartaoPartial(int id)
         {
-            return PartialView("../Conta/PartialViews/_RemoverCartaoPartial" /*ClienteDemo.Cartoes[0]*/);
+            DetalhesCartaoModel vm = (DetalhesCartaoModel)GetCartaoVm(id);
+            if (vm == null)
+            {
+                return PartialView("../Conta/PartialViews/_ErroPartial");
+            }
+            ViewData["Acao"] = "Remover";
+
+            return PartialView("../Conta/PartialViews/_RmvFavCartaoPartial", vm);
         }
 
         public IActionResult RemoverCartao(int id)
         {
+            Cliente clienteDb = _facadeClientes.GetAllInclude(GetClienteComEmail());
+
+            IList<CartaoCredito> cartoes = clienteDb.Cartoes.Where(c => c.Inativo == false).ToList();
+
+            CartaoCredito cartaoRem = cartoes.Where(t => t.Id == id).FirstOrDefault();
+            if (cartaoRem.EFavorito)
+                cartoes.Where(e => e.Id != id).FirstOrDefault().EFavorito = true;
+
+            cartaoRem.EFavorito = false;
+            cartaoRem.Inativo = true;
+
+            string msg = _facadeClientes.Editar(clienteDb);
+
+            if (msg != "")
+                TempData["Alert"] = msg;
+            return RedirectToAction(nameof(Detalhes));
+        }
+
+        public IActionResult _FavoritarEnderecoPartial(int id)
+        {
+            DetalhesEnderecoModel vm = (DetalhesEnderecoModel)GetEnderecoVm(id);
+            if (vm == null)
+            {
+                return PartialView("../Conta/PartialViews/_ErroPartial");
+            }
+            ViewData["Acao"] = "Favoritar";
+
+            return PartialView("../Conta/PartialViews/_RmvFavEnderecoPartial", vm);
+        }
+
+        public IActionResult FavoritarEndereco(int id)
+        {
+
+            Cliente clienteDb = _facadeClientes.GetAllInclude(GetClienteComEmail());
+
+            IList<Endereco> enderecos = clienteDb.Enderecos.Where(e => e.Inativo == false).ToList();
+
+            Endereco enderecoFav = enderecos.Where(e => e.Id == id).FirstOrDefault();
+            foreach (var endereco in enderecos.Where(e => e.Id != id))
+                endereco.EFavorito = false;
+
+            enderecoFav.EFavorito = true;
+
+            string msg = _facadeClientes.Editar(clienteDb);
+
+            if (msg != "")
+                TempData["Alert"] = msg;
+            return RedirectToAction(nameof(Detalhes));
+        }
+
+        public IActionResult _FavoritarTelefonePartial(int id)
+        {
+            DetalhesTelefoneModel vm = (DetalhesTelefoneModel)GetTelefoneVm(id);
+            if (vm == null)
+            {
+                return PartialView("../Conta/PartialViews/_ErroPartial");
+            }
+            ViewData["Acao"] = "Favoritar";
+            return PartialView("../Conta/PartialViews/_RmvFavTelefonePartial", vm);
+        }
+
+        public IActionResult FavoritarTelefone(int id)
+        {
+            Cliente clienteDb = _facadeClientes.GetAllInclude(GetClienteComEmail());
+
+            IList<Telefone> telefones = clienteDb.Telefones.Where(e => e.Inativo == false).ToList();
+
+            Telefone telefoneFav = telefones.Where(e => e.Id == id).FirstOrDefault();
+            foreach (var telefone in telefones.Where(e => e.Id != id))
+                telefone.EFavorito = false;
+
+            telefoneFav.EFavorito = true;
+
+            string msg = _facadeClientes.Editar(clienteDb);
+
+            if (msg != "")
+                TempData["Alert"] = msg;
+
+            return RedirectToAction(nameof(Detalhes));
+        }
+
+        public IActionResult _FavoritarCartaoPartial(int id)
+        {
+            DetalhesCartaoModel vm = (DetalhesCartaoModel)GetCartaoVm(id);
+            if (vm == null)
+            {
+                return PartialView("../Conta/PartialViews/_ErroPartial");
+            }
+            ViewData["Acao"] = "Favoritar";
+
+            return PartialView("../Conta/PartialViews/_RmvFavCartaoPartial", vm);
+        }
+
+        public IActionResult FavoritarCartao(int id)
+        {
+            Cliente clienteDb = _facadeClientes.GetAllInclude(GetClienteComEmail());
+
+            IList<CartaoCredito> cartoes = clienteDb.Cartoes.Where(e => e.Inativo == false).ToList();
+
+            CartaoCredito cartaoFav = cartoes.Where(e => e.Id == id).FirstOrDefault();
+            foreach (var cartao in cartoes.Where(e => e.Id != id))
+                cartao.EFavorito = false;
+
+            cartaoFav.EFavorito = true;
+
+            string msg = _facadeClientes.Editar(clienteDb);
+
+            if (msg != "")
+                TempData["Alert"] = msg;
+
             return RedirectToAction(nameof(Detalhes));
         }
 
@@ -584,6 +824,75 @@ namespace LES.Views.Conta
         private IList<TipoTelefone> GetTipoTelefones()
         {
             return _facadeTipoTelefone.Listar().OrderBy(b => b.Nome).ToList();
+        }
+
+        private IViewModel GetEnderecoVm(int id)
+        {
+            Endereco e = _facadeClientes.GetAllInclude(GetClienteComEmail()).Enderecos
+                .Where(e => e.Id == id).FirstOrDefault();
+
+            if (e == null)
+            {
+                return null;
+            }
+
+            _vh = new DetalhesEnderecoViewHelper
+            {
+                Entidades = new Dictionary<string, EntidadeDominio>
+                {
+                    [typeof(Endereco).Name] = e
+                }
+            };
+
+            DetalhesEnderecoModel vm = (DetalhesEnderecoModel)_vh.ViewModel;
+
+            return vm;
+        }
+
+        private IViewModel GetTelefoneVm(int id) 
+        {
+            Telefone t = _facadeClientes.GetAllInclude(GetClienteComEmail()).Telefones
+                .Where(t => t.Id == id).FirstOrDefault();
+
+            if (t == null)
+            {
+                return null;
+            }
+
+            _vh = new DetalhesTelefoneViewHelper
+            {
+                Entidades = new Dictionary<string, EntidadeDominio>
+                {
+                    [typeof(Telefone).Name] = t
+                }
+            };
+
+            DetalhesTelefoneModel vm = (DetalhesTelefoneModel)_vh.ViewModel;
+
+            return vm;
+        }
+
+        private IViewModel GetCartaoVm(int id) 
+        {
+            CartaoCredito c = _facadeClientes.GetAllInclude(GetClienteComEmail()).Cartoes
+                   .Where(c => c.Id == id).FirstOrDefault();
+
+            if (c == null)
+            {
+                return null;
+            }
+
+            _vh = new DetalhesCartaoViewHelper
+            {
+                Entidades = new Dictionary<string, EntidadeDominio>
+                {
+                    [typeof(CartaoCredito).Name] = c
+                }
+            };
+
+            DetalhesCartaoModel vm = (DetalhesCartaoModel)_vh.ViewModel;
+
+            return vm;
         }
         #endregion
     }
