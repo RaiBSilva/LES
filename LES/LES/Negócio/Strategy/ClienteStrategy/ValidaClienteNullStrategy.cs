@@ -58,7 +58,7 @@ namespace LES.Negócio.Strategy.ClienteStrategy
                 foreach (CartaoCredito card in cliente.Cartoes)
                 {
                     if (card.Bandeira is null) myStringBuilder.Append("É necessário informar a bandeira do cartão.;");
-                    if (card.Codigo is null) myStringBuilder.Append("É necessário informar o código do cartão.;");
+                    if (card.Codigo is null) myStringBuilder.Append("É necessário informar o número do cartão.;");
                     if (card.Cvv is null) myStringBuilder.Append("É necessário informar o Cvv do cartão.;");
                     if (card.NomeImpresso is null) myStringBuilder.Append("É necessário informar o nome impresso no cartão.;");
                 }
