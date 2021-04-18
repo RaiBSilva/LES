@@ -37,11 +37,15 @@
                 <div class="container">
                     <div class="row">
                         <div class="col-12">
-                            <div class="form-check form-switch form-check-inline">
-                                <input asp-for="EPreferencial" class="form-check-input required" />
-                                <label asp-for="EPreferencial" class="form-check-label"></label>
-                                <span asp-validation-for="EPreferencial" class="text-danger required"></span>
-                            </div>
+                            
+                             @if (Model.Edicao != true)
+                             {
+                                <div class="form-check form-switch form-check-inline">
+                                    <input asp-for="EPreferencial" class="form-check-input required" />
+                                    <label asp-for="EPreferencial" class="form-check-label"></label>
+                                    <span asp-validation-for="EPreferencial" class="text-danger required"></span>
+                                </div>
+                             }
 
                             <div class="form-check form-switch form-check-inline">
                                 <input asp-for="ECobranca" class="form-check-input required " />

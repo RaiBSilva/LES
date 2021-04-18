@@ -50,6 +50,11 @@ function carregarEditarCartao(id) {
     carregarPartialView(endereco);
 }
 
+function carregarRemoverCartao(id) {
+    var endereco = urls.RemoverCartao + "?id=" + id;
+    carregarPartialView(endereco);
+}
+
 function carregarRemoverEndereco(id) {
     var endereco = urls.RemoverEndereco + "?id=" + id;
     carregarPartialView(endereco);
@@ -60,8 +65,18 @@ function carregarRemoverTelefone(id) {
     carregarPartialView(endereco);
 }
 
-function carregarRemoverCartao(id) {
-    var endereco = urls.RemoverCartao + "?id=" + id;
+function carregarFavoritarCartao(id) {
+    var endereco = urls.FavoritarCartao + "?id=" + id;
+    carregarPartialView(endereco);
+}
+
+function carregarFavoritarEndereco(id) {
+    var endereco = urls.FavoritarEndereco + "?id=" + id;
+    carregarPartialView(endereco);
+}
+
+function carregarFavoritarTelefone(id) {
+    var endereco = urls.FavoritarTelefone + "?id=" + id;
     carregarPartialView(endereco);
 }
 
@@ -122,6 +137,21 @@ $(".botaoRemoverTelefone").on("click", function (e) {
 $(".botaoRemoverCartao").on("click", function (e) {
     var id = $(this).val();
     carregarRemoverCartao(id);
+});
+
+$(".botaoFavoritarCartao").on("click", function (e) {
+    var id = $(this).val();
+    carregarFavoritarCartao(id);
+});
+
+$(".botaoFavoritarEndereco").on("click", function (e) {
+    var id = $(this).val();
+    carregarFavoritarEndereco(id);
+});
+
+$(".botaoFavoritarTelefone").on("click", function (e) {
+    var id = $(this).val();
+    carregarFavoritarTelefone(id);
 });
 
 $(".btnTroca").on("click", function (e) {

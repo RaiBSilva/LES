@@ -46,6 +46,7 @@ namespace LES.Models.ViewModel.Conta
 
         [Display(Name = "É o preferencial?")]
         public bool EPreferencial { get; set; }
+        public bool Edicao { get; set; }
 
     }
 
@@ -53,11 +54,13 @@ namespace LES.Models.ViewModel.Conta
     { 
         [Display(Name = "É preferencial?")]
         public bool EPreferencial { get; set; }
+        public bool Edicao { get; set; }
     }
 
     public class DetalhesCartaoModel : CartaoBaseModel, IViewModel
     {
         [Display(Name = "É preferencial?")]
         public bool EPreferencial { get; set; }
+        public bool Edicao { get; set; }
     }
 }

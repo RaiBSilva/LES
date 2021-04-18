@@ -20,9 +20,7 @@
                 </button>
                 <div id="navbarSupportedContent" class="collapse navbar-collapse flex-sm-row-reverse">
                     <ul class="navbar-nav">
-                        <li>
-                            <a class="nav-link navbar-item" asp-action="Detalhes" asp-controller="Conta">Minha Conta</a>
-                        </li>
+                        <partial name="_ContaPartial" />
                     </ul>
                     <ul class="navbar-nav">
                         <li class="nav-item">
@@ -58,7 +56,7 @@
                 {
                     <div class="col-sm-12">
                         <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                            ERRO
+                            <strong>ERRO</strong>
                             @(ViewData["Alert"])
                             <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                                 <span aria-hidden="true">&times;</span>
