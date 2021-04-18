@@ -92,8 +92,9 @@ namespace LES.Migrations
                         .HasColumnType("int")
                         .HasColumnName("car_ban_id");
 
-                    b.Property<int?>("ClienteId")
-                        .HasColumnType("int");
+                    b.Property<int>("ClienteId")
+                        .HasColumnType("int")
+                        .HasColumnName("car_cli_id");
 
                     b.Property<string>("Codigo")
                         .IsRequired()
@@ -385,8 +386,9 @@ namespace LES.Migrations
                         .HasColumnType("int")
                         .HasColumnName("end_cid_id");
 
-                    b.Property<int?>("ClienteId")
-                        .HasColumnType("int");
+                    b.Property<int>("ClienteId")
+                        .HasColumnType("int")
+                        .HasColumnName("end_cli_id");
 
                     b.Property<string>("Complemento")
                         .IsRequired()
@@ -909,7 +911,10 @@ namespace LES.Migrations
 
                     b.HasOne("LES.Models.Entity.Cliente", "Cliente")
                         .WithMany("Cartoes")
-                        .HasForeignKey("ClienteId");
+                        .HasForeignKey("ClienteId")
+                        .HasConstraintName("FK_CAR_CLI")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Bandeira");
 
@@ -961,9 +966,12 @@ namespace LES.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("LES.Models.Entity.Cliente", null)
+                    b.HasOne("LES.Models.Entity.Cliente", "Cliente")
                         .WithMany("Enderecos")
-                        .HasForeignKey("ClienteId");
+                        .HasForeignKey("ClienteId")
+                        .HasConstraintName("FK_END_CLI")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("LES.Models.Entity.TipoEndereco", "TipoEndereco")
                         .WithMany("Enderecos")
@@ -973,6 +981,8 @@ namespace LES.Migrations
                         .IsRequired();
 
                     b.Navigation("Cidade");
+
+                    b.Navigation("Cliente");
 
                     b.Navigation("TipoEndereco");
                 });

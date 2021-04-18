@@ -16,11 +16,5 @@ namespace LES.Models.Entity
         public virtual IList<Endereco> Enderecos { get; set; }
         public virtual Estado Estado { get; set; }
 
-        public Cidade() : base()
-        {
-            Enderecos = new List<Endereco>();
-            Estado = new Estado();
-        }
-
     }
 }

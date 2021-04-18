@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace LES.Models.ViewModel.Conta
 {
-    public class CupomModel
+    public class CupomModel : IViewModel
     {
 
         public string Codigo { get; set; }

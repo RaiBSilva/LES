@@ -14,10 +14,10 @@ namespace LES.Controllers.Facade
         public T GetEntidade(T e);
         public IEnumerable<TType> Query<TType>(Expression<Func<T, bool>> where, Expression<Func<T, TType>> select,
             params Expression<Func<TType, object>>[] include) where TType : class;
-        public String Cadastrar(T e);
-        public String Editar(T e);
-        public String Deletar(T e);
-
+        public string Cadastrar(T e);
+        public string Editar(T e);
+        public string Deletar(T e);
+        public T GetAllInclude(T e);
 
     }
 }

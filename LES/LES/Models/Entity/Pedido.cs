@@ -16,12 +16,5 @@ namespace LES.Models.Entity
         public virtual Cupom Cupom { get; set; }
         public virtual IList<LivroPedido> LivrosPedidos { get; set; }
 
-        public Pedido()
-        {
-            Cliente = new Cliente();
-            Cupom = new Cupom();
-            LivrosPedidos = new List<LivroPedido>();
-        }
-
     }
 }

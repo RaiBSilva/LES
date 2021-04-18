@@ -27,10 +27,6 @@ namespace LES.Models.ViewModel.Conta
         public string Email { get; set; }
 
         [Required]
-        [StringLength(32, MinimumLength = 8, ErrorMessage = "A senha deve ter 8 no caracteres no mínimo.")]
-        public string Senha { get; set; }
-
-        [Required]
         [Display(Name = "CPF")]
         [StringLength(11, MinimumLength = 11, ErrorMessage = "Insira um CPF válido.")]
         public string Cpf { get; set; }

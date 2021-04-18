@@ -9,9 +9,5 @@ namespace LES.Models.Entity
     {
         public string Nome { get; set; }
 
-        public MetadadoBase() : base()
-        {
-
-        }
     }
 }

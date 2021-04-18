@@ -29,16 +29,6 @@ namespace LES.Models.Entity
         public virtual GrupoPreco GrupoPreco { get; set; }
         public virtual IList<Inativacao> Inativacoes { get; set; }
 
-        public Livro() : base()
-        {
-            Ativacoes = new List<Ativacao>();
-            LivrosCategoriaLivros = new List<LivroCategoriaLivro>();
-            LivroPedidos = new List<LivroPedido>();
-            Editora = new Editora();
-            GrupoPreco = new GrupoPreco();
-            Inativacoes = new List<Inativacao>();
-        }
-
     }
 
 }

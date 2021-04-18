@@ -9,6 +9,7 @@ namespace LES.Models.Entity
     public class CartaoCredito : EntidadeDominio
     {
         public int BandeiraId { get; set; }
+        public int ClienteId { get; set; }
         public string Codigo { get; set; }
         public string Cvv { get; set; }
         public bool EFavorito { get; set; }
@@ -20,8 +21,6 @@ namespace LES.Models.Entity
 
         public CartaoCredito() : base()
         {
-            Bandeira = new BandeiraCartaoCredito();
-            Cliente = new Cliente();
         }
 
     }

@@ -9,10 +9,5 @@ namespace LES.Models.Entity
     {
 
         public virtual IList<Telefone> Telefones { get; set; }
-
-        public TipoTelefone()
-        {
-            Telefones = new List<Telefone>();
-        }
     }
 }

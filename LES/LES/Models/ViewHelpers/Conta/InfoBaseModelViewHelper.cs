@@ -11,41 +11,19 @@ namespace LES.Models.ViewHelpers.Conta
 {
     public class InfoBaseModelViewHelper : AbstractViewHelper, IViewHelper
     {
-        //Atributo responsável por guardar as entidades que vêm do db, ou que vão para o db
-        private IDictionary<string, EntidadeDominio> _entidades;
-        public override IDictionary<string, EntidadeDominio> Entidades
-        {
-            get => _entidades;
-            set
-            {
-                _entidades = value;
-                ToViewModel();
-            }
-        }
-
-        //Atributo responsável por guardar as entidades que vêm do request, ou vão para uma página razor
-        private IViewModel _viewModel;
-        public override IViewModel ViewModel
-        {
-            get => _viewModel;
-            set
-            {
-                _viewModel = value;
-                ToEntidade();
-            }
-        }
 
         protected override void ToEntidade()
         {
             InfoBaseModel vm = (InfoBaseModel)ViewModel;
-            Cliente cliente = new Cliente();
-
-            cliente.Cpf = vm.Cpf;
-            cliente.Codigo = vm.Codigo;
-            cliente.DtNascimento = vm.DtNascimento;
-            cliente.Genero = vm.Genero;
-            cliente.Nome = vm.Nome;
-            cliente.Usuario.Senha = vm.Senha;
+            Cliente cliente = new Cliente
+            {
+                Cpf = vm.Cpf,
+                Codigo = vm.Codigo,
+                DtNascimento = vm.DtNascimento,
+                Genero = vm.Genero,
+                Nome = vm.Nome
+            };
+            cliente.Usuario.Email = vm.Email;
 
             Entidades[typeof(Cliente).Name] = cliente;
         }
@@ -54,27 +32,19 @@ namespace LES.Models.ViewHelpers.Conta
         {
             Cliente cliente = (Cliente)Entidades[typeof(Cliente).Name];
 
-            PaginaRegistroModel vm = new PaginaRegistroModel
+            InfoBaseModel vm =  new InfoBaseModel 
             {
-                InfoUsuario = ToInfoBaseModel(cliente)
+                Nome = cliente.Nome,
+                Email = cliente.Usuario.Email,
+                Cpf = cliente.Cpf,
+                DtNascimento = cliente.DtNascimento,
+                Genero = cliente.Genero,
+                Codigo = cliente.Codigo
             };
+            vm.Email = cliente.Usuario.Email;
 
-            ViewModel = vm;
+            _viewModel = vm;
         }
 
-        public InfoBaseModel ToInfoBaseModel(Cliente input)
-        {
-            InfoBaseModel baseModel = new InfoBaseModel();
-
-            baseModel.Nome = input.Nome;
-            baseModel.Email = input.Usuario.Email;
-            baseModel.Senha = input.Usuario.Senha;
-            baseModel.Cpf = input.Cpf;
-            baseModel.DtNascimento = input.DtNascimento;
-            baseModel.Genero = input.Genero;
-            baseModel.Codigo = input.Codigo;
-
-            return baseModel;
-        }
     }
 }

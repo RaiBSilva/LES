@@ -9,30 +9,12 @@ using System.Threading.Tasks;
 
 namespace LES.Models.ViewHelpers.Conta
 {
-    public class DetalhesCartaoModelViewHelper : AbstractViewHelper, IViewHelper
+    public class DetalhesCartaoViewHelper : AbstractViewHelper, IViewHelper
     {
-        //Atributo responsável por guardar as entidades que vêm do db, ou que vão para o db
-        private IDictionary<string, EntidadeDominio> _entidades;
-        public override IDictionary<string, EntidadeDominio> Entidades
-        {
-            get => _entidades;
-            set
-            {
-                _entidades = value;
-                ToViewModel();
-            }
-        }
 
-        //Atributo responsável por guardar as entidades que vêm do request, ou vão para uma página razor
-        private IViewModel _viewModel;
-        public override IViewModel ViewModel
+        public DetalhesCartaoViewHelper() : base()
         {
-            get => _viewModel;
-            set
-            {
-                _viewModel = value;
-                ToEntidade();
-            }
+
         }
 
         protected override void ToEntidade()
@@ -66,7 +48,7 @@ namespace LES.Models.ViewHelpers.Conta
             vm.Vencimento = card.Vencimento;
             vm.Id = card.Id.ToString();
 
-            ViewModel = vm;
+            _viewModel = vm;
         }
     }
 }

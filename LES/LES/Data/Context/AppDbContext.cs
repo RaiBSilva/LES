@@ -81,6 +81,11 @@ namespace LES.Models
                 .IsRequired();
 
             modelBuilder.Entity<CartaoCredito>()
+                .Property(c => c.ClienteId)
+                .HasColumnName(tri + "_cli_id")
+                .IsRequired();
+
+            modelBuilder.Entity<CartaoCredito>()
                 .Property(c => c.Codigo)
                 .HasColumnName(tri + "_codigo")
                 .IsRequired();
@@ -110,6 +115,12 @@ namespace LES.Models
                 .WithMany(b => b.Cartoes)
                 .HasForeignKey(c => c.BandeiraId)
                 .HasConstraintName("FK_"+ tri.ToUpper() +"_BAN");
+
+            modelBuilder.Entity<CartaoCredito>()
+                .HasOne(c => c.Cliente)
+                .WithMany(c => c.Cartoes)
+                .HasForeignKey(c => c.ClienteId)
+                .HasConstraintName("FK_" + tri.ToUpper() + "_CLI");
 
             #endregion
 
@@ -259,6 +270,11 @@ namespace LES.Models
                .IsRequired();
 
             modelBuilder.Entity<Endereco>()
+               .Property(e => e.ClienteId)
+               .HasColumnName(tri + "_cli_id")
+               .IsRequired();
+
+            modelBuilder.Entity<Endereco>()
                .Property(e => e.Complemento)
                .HasColumnName(tri + "_complemento")
                .IsRequired();
@@ -312,6 +328,12 @@ namespace LES.Models
                 .WithMany(c => c.Enderecos)
                 .HasForeignKey(e => e.CidadeId)
                 .HasConstraintName("FK_" + tri.ToUpper() + "_CID");
+
+            modelBuilder.Entity<Endereco>()
+                .HasOne(e => e.Cliente)
+                .WithMany(c => c.Enderecos)
+                .HasForeignKey(e => e.ClienteId)
+                .HasConstraintName("FK_" + tri.ToUpper() + "_CLI");
 
             modelBuilder.Entity<Endereco>()
                 .HasOne(e => e.TipoEndereco)

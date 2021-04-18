@@ -39,22 +39,32 @@
                 </button>
             </div>
             <div id="Telefone" class="tab" style="display:none">
-                <partial name="../Conta/PartialViews/_ListaTelefonesPartial.cshtml" for="Telefones" />
+                <div id="divTelefones">
+                    <partial name="../Conta/PartialViews/_ListaTelefonesPartial.cshtml" for="Telefones" />
+                </div>
                 <a id="addNovoTelefoneLink" href="#myModal" data-toggle="modal" data-target="#myModal">Adicionar Telefone</a>
             </div>
             <div id="Endereco" class="tab" style="display:none">
-                <partial name="../Conta/PartialViews/_ListaEnderecosPartial.cshtml" for="Enderecos" />
+                <div id="divEnderecos">
+                    <partial name="../Conta/PartialViews/_ListaEnderecosPartial.cshtml" for="Enderecos" />
+                </div>
                 <a id="addNovoEnderecoLink" href="#myModal" data-toggle="modal" data-target="#myModal">Adicionar Endereço</a>
             </div>
             <div id="Cartao" class="tab" style="display:none">
-                <partial name="../Conta/PartialViews/_ListaCartoesPartial.cshtml" for="Cartoes" />
+                <div id="divCartoes">
+                    <partial name="../Conta/PartialViews/_ListaCartoesPartial.cshtml" for="Cartoes" />
+                </div>
                 <a id="addNovoCartaoLink" href="#myModal" data-toggle="modal" data-target="#myModal">Adicionar Cartão de Crédito</a>
             </div>
             <div id="Compras" class="tab" style="display:none">
-                <partial name="../Conta/PartialViews/_ListaPedidosPartial.cshtml" for="Pedidos">
+                <div id="divPedidos">
+                    <partial name="../Conta/PartialViews/_ListaPedidosPartial.cshtml" for="Pedidos">
+                </div>
             </div>
             <div id="Cupons" class="tab" style="display:none">
-                <partial name="../Conta/PartialViews/_ListaCuponsPartial.cshtml" for="Cupons">
+                <div id="divCupons">
+                    <partial name="../Conta/PartialViews/_ListaCuponsPartial.cshtml" for="Cupons">
+                </div>
             </div>
         </div>
 
@@ -67,12 +77,13 @@
 @section Scripts{
 
     <script type="text/javascript">
+        var codigo = @(Int32.Parse(Model.InfoUsuario.Codigo));
         var urls = urls || {};
-        urls.editarInfoPessoal = '@Url.Action("_EditarInfoPessoalPartial","Conta", Int32.Parse( Model.InfoUsuario.Codigo))';
-        urls.editarSenha = '@Url.Action("_EditarSenhaPartial","Conta", Int32.Parse(Model.InfoUsuario.Codigo))';
-        urls.novoEndereco = '@Url.Action("_AdicionarNovoEnderecoPartial", "Conta", Int32.Parse(Model.InfoUsuario.Codigo))';
-        urls.novoTelefone = '@Url.Action("_AdicionarNovoTelefonePartial", "Conta", Int32.Parse(Model.InfoUsuario.Codigo))';
-        urls.novoCartao = '@Url.Action("_AdicionarNovoCartaoPartial", "Conta", Int32.Parse(Model.InfoUsuario.Codigo))';
+        urls.editarInfoPessoal = '@Url.Action("_EditarInfoPessoalPartial","Conta")';
+        urls.editarSenha = '@Url.Action("_EditarSenhaPartial","Conta")';
+        urls.novoEndereco = '@Url.Action("_AdicionarNovoEnderecoPartial", "Conta")';
+        urls.novoTelefone = '@Url.Action("_AdicionarNovoTelefonePartial", "Conta")';
+        urls.novoCartao = '@Url.Action("_AdicionarNovoCartaoPartial", "Conta")';
         urls.EditarEndereco = '@Url.Action("_EditarEnderecoPartial", "Conta")';
         urls.EditarTelefone = '@Url.Action("_EditarTelefonePartial", "Conta")';
         urls.EditarCartao = '@Url.Action("_EditarCartaoPartial", "Conta")';
@@ -80,7 +91,6 @@
         urls.RemoverTelefone = '@Url.Action("_RemoverTelefonePartial", "Conta")';
         urls.RemoverCartao = '@Url.Action("_RemoverCartaoPartial", "Conta")';
         urls.RealizarTroca = '@Url.Action("_RealizarTrocaPartial", "Conta")';
-
     </script>
     <script src="~/js/Conta/CarregadorPartialViewsDetalhes.js"></script>
     <script src="~/js/Conta/Tabs.js"></script>

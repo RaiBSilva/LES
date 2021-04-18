@@ -9,10 +9,5 @@ namespace LES.Models.Entity
     {
         public virtual IList<Endereco> Enderecos { get; set; }
 
-        public TipoEndereco()
-        {
-            Enderecos = new List<Endereco>();
-        }
-
     }
 }
