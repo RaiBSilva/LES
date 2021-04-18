@@ -17,7 +17,14 @@ namespace LES.Negócio.Strategy.ClienteStrategy
 
             foreach (Telefone tel in listTelefones)
             {
-                if (tel.Numero.Length != 8 && tel.Numero.Length != 9) return "Numero de telefone/celular inválido.";
+                if (tel.TipoTelefone.Nome == "Celular")
+                {
+                    if (tel.Numero.Length != 9) return "Número de celular inválido.";
+                }
+                else 
+                {
+                    if (tel.Numero.Length != 8) return "Número de telefone inválido.";
+                }
             }
 
             return "";
