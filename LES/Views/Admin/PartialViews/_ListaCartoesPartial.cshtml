@@ -1,0 +1,17 @@
+﻿@model IList<DetalhesCartaoModel>
+
+    <div>
+        <div class="row">
+            <h2 class="font-weight-light col-sm-12">
+                Cartões de crédito
+            </h2>
+        </div>
+        <div class="row">
+            @foreach (var card in Model)
+            {
+                <dl class="col-lg card">
+                    <partial name="../PartialViews/_DlCartoesPartial.cshtml" for="@card" />
+                </dl>
+            }
+        </div>
+    </div>

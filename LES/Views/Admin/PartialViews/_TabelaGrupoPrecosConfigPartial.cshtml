@@ -1,0 +1,84 @@
+﻿@model IList<LES.Models.ViewModel.Admin.AdminGrupoPrecoModel>
+
+<div class="row mb-2">
+    <div class="col-sm-12">
+        <button type="button" class="btn-success btn-lg btn-block btnAddGrupoPreco" data-toggle="modal" data-target="#myModal">
+            Cadastrar novo grupo de preço
+        </button>
+    </div>
+</div>
+
+@if(Model.Count > 0) {
+    <div class="row">
+        <table class="table table-striped">
+            <thead class="thead-dark">
+                <tr>
+                    <th>Id</th>
+                    <th>Nome</th>
+                    <th>Margem de lucro</th>
+                    <th>Editar</th>
+                    <th>Inativar</th>
+                </tr>
+                <tr>
+                    <th>
+                        <input id="filtroGruposId" class="form-control" placeholder="1..." />
+                    </th>
+                    <th>
+                        <input id="filtroGruposNome" class="form-control" placeholder="Best-Sellers..." />
+                    </th>
+                    <th>
+                        De <input id="filtroMargemMin" class="form-control" type="number" min="0" placeholder="1..." />%
+                        Até <input id="filtroMargemMax" class="form-control" type="number" min="0" placeholder="100..." />%
+                    </th>
+                    <th>
+                        <input id="filtroGruposInativado" class="form-check-input" type="checkbox" />
+                        <label for="filtroGruposInativado" class="form-check-label">Incluir inativados?</label>
+                    </th>
+                    <th>
+                        <button class="btn btn-primary btnBuscarCategoria">Buscar</button>
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model) {
+                    <tr>
+                        <th scope="row">
+                            @item.Id
+                        </th>
+                        <td>
+                            @item.Nome
+                        </td>
+                        <td>
+                            @((item.MargemLucro*100).ToString())%
+                        </td>
+                        <td>
+                            <button type="button" class="btn btn-outline-info btnEditarGrupoPreco" data-toggle="modal" data-target="#myModal" value="@item.Id">Editar</button>
+                        </td>
+                        <td>
+                            <button type="button" class="btn btn-danger btnInativarGrupoPreco" data-toggle="modal" data-target="#myModal" value="@item.Id">Inativar</button>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+    <div class="row">
+        <nav aria-label="Paginação">
+            <ul class="pagination">
+                <li class="page-item">
+                    <a class="page-link" href="#" aria-label="Previous">
+                        <span aria-hidden="true">&laquo;</span>
+                        <span class="sr-only">Previous</span>
+                    </a>
+                </li>
+                <li class="page-item"><a class="page-link" href="#">1</a></li>
+                <li class="page-item">
+                    <a class="page-link" href="#" aria-label="Next">
+                        <span aria-hidden="true">&raquo;</span>
+                        <span class="sr-only">Next</span>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+}

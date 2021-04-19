@@ -1,0 +1,87 @@
+﻿@model LES.Models.ViewModel.Admin.PaginaClientesModel
+
+@{
+    ViewData["Title"] = "Livros";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<div class="row justify-content-center"><h1 class="col-12 text-center">Base de Clientes Cadastrados</h1></div>
+<div class="row">
+    <div class="col-12 mb-3 border-bottom">
+    </div>
+</div>
+<div class="row">
+    <table class="table">
+        <caption>Lista de clientes</caption>
+        <thead class="thead-dark">
+            <tr>
+                <th scope="col">Id</th>
+                <th scope="col">Nome</th>
+                <th scope="col">E-mail</th>
+                <th scope="col">Detalhes</th>
+                <th scope="col">Inativar</th>
+            </tr>
+            <tr>
+                <th scope="col"><input id="filtroId" class="form-control" placeholder="1..." /></th>
+                <th scope="col"><input id="filtroNome" class="form-control" placeholder="José..." /></th>
+                <th scope="col"><input id="filtroEmail" class="form-control" type="email" placeholder="Jose@hotmail.com..." /></th>
+                <th scope="col"><button class="btn btn-primary btnBuscar">Buscar</button></th>
+                <th scope="col"></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var cliente in Model.Clientes)
+            {
+                <tr>
+                    <th scope="row">@cliente.InfoUsuario.Codigo</th>
+                    <td>@cliente.InfoUsuario.Nome</td>
+                    <td>@cliente.InfoUsuario.Email</td>
+                    <td><button type="button" class="btn btn-outline-info btnVisualizar" data-toggle="modal" data-target="#myModal" value="@cliente.InfoUsuario.Codigo">Visualizar</button></td>
+                    @if (cliente.Inativo)
+                    {
+                        <td><button type="button" class="btn btn-success btnInativar" data-toggle="modal" data-target="#myModal" value="@cliente.InfoUsuario.Codigo">Reativar</button></td>
+                    }
+                    else
+                    {
+                        <td><button type="button" class="btn btn-danger btnInativar" data-toggle="modal" data-target="#myModal" value="@cliente.InfoUsuario.Codigo">Inativar</button></td>
+                    }
+                </tr>
+            }
+        </tbody>
+    </table>
+    <nav aria-label="Paginação">
+        <ul class="pagination">
+            <li class="page-item">
+                <a class="page-link" href="#" aria-label="Previous">
+                    <span aria-hidden="true">&laquo;</span>
+                    <span class="sr-only">Previous</span>
+                </a>
+            </li>
+            <li class="page-item"><a class="page-link" href="#">1</a></li>
+            <li class="page-item">
+                <a class="page-link" href="#" aria-label="Next">
+                    <span aria-hidden="true">&raquo;</span>
+                    <span class="sr-only">Next</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+</div>
+<div class="modal fade" id="myModal" role="dialog">
+
+</div>
+
+
+@section Scripts
+{
+
+    <script type="text/javascript">
+
+        var urls = urls || {};
+        urls.InativarReativarCliente = '@Url.Action("_InativarReativarClientePartial", "Admin")';
+        urls.VisualizarCliente = '@Url.Action("_VisualizarClientePartial", "Admin")';
+
+    </script>
+    <script src="~/js/Admin/CarregadorPartialViewClientes.js"></script>
+    <script src="~/js/Conta/Tabs.js"></script>
+}

@@ -1,0 +1,14 @@
+﻿.modal-backdrop {
+    z-index: -1;
+}
+
+.card{
+    background-color: lightgray;
+    border-style:solid;
+    border-color:white;
+    border-radius: 20%;
+}
+
+.btn-pedido:focus, .btn-pedido:active {
+    outline: none !important;
+}

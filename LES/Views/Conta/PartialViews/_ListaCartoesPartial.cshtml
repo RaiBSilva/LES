@@ -1,0 +1,37 @@
+﻿@model IList<DetalhesCartaoModel>
+
+    <div>
+        <div class="row">
+            <h2 class="font-weight-light col-sm-12">
+                Cartões de crédito
+            </h2>
+        </div>
+        <div class="row">
+            @foreach (var card in Model)
+            {
+                <dl class="col-lg-6 card">
+                    <partial name="../PartialViews/_DlCartoesPartial.cshtml" for="@card" />
+                    <dd class="row justify-content-start mx-1">
+                        <button class="btn btn-secondary botaoCartao col-6 mr-3" type="button" data-toggle="modal" data-target="#myModal" value="@card.Id">
+                            Editar este cartão
+                        </button>
+
+                        @if (Model.Count > 1)
+                        {
+                            <button class="btn btn-danger botaoRemoverCartao col-2 mx-3" type="button" data-toggle="modal" data-target="#myModal" value="@card.Id">
+                                &times;
+                            </button>
+                        }
+
+                        @if (!card.EPreferencial)
+                        {
+                            <button class="btn btn-outline-warning botaoFavoritarCartao col-2 ml-3" type="button" data-toggle="modal" data-target="#myModal" value="@card.Id">
+                                &#9733;
+                            </button>
+                        }
+                    </dd>
+                </dl>
+            }
+        </div>
+
+    </div>

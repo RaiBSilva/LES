@@ -1,0 +1,23 @@
+﻿@model LES.Models.ViewModel.Conta.PaginaLoginModel
+
+@{
+    ViewData["Title"] = "Login";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Login</h1>
+
+<div id="divConteudo" class="col-md-6">
+    <form asp-action="Login" asp-controller="Conta" class="requiredForm">
+        <div id="divPartial">
+            <partial name="../Conta/PartialViews/_LoginFormPartial.cshtml" for="@Model">
+        </div>
+        <div id="divBotao" class="form-group">
+            <input type="submit" value="Cadastrar" class="btn btn-primary" id="btn" />
+        </div>
+    </form>
+</div>
+
+@section Scripts{
+    <script src="~/js/Shared/ValidadorCamposObrigatorios.js"></script>
+}
