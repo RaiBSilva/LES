@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace LES.Negócio.Strategy.LivroStrategy
 {
-    public class ValidaIsbnStrategy : IStrategy<EntidadeDominio>
+    public class ValidaIsbnStrategy : IStrategy
     {
         
         public string Validar(EntidadeDominio e)
@@ -16,7 +16,7 @@ namespace LES.Negócio.Strategy.LivroStrategy
             Livro book = (Livro)e;
             StringBuilder sb = new StringBuilder("");
 
-            String isbn13 = book.ISBN;
+            String isbn13 = book.Isbn;
 
             bool valorLogico = false;
             if (!string.IsNullOrEmpty(isbn13))

@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace LES.Negócio.Strategy.LivroStrategy
 {
-    public class ValidaDtLancamentoStrategy : IStrategy<EntidadeDominio>
+    public class ValidaDtLancamentoStrategy : IStrategy
     {
         public string Validar(EntidadeDominio e)
         {

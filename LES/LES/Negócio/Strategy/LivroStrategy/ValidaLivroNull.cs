@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace LES.Negócio.Strategy.LivroStrategy
 {
-    public class ValidaLivroNull : IStrategy<EntidadeDominio>
+    public class ValidaLivroNull : IStrategy
     {
         public string Validar(EntidadeDominio e)
         {
@@ -23,7 +23,7 @@ namespace LES.Negócio.Strategy.LivroStrategy
 
             if (string.IsNullOrEmpty(book.Editora.Nome)) sb.Append("É necessário informar o nome da editora.;");
 
-            if (string.IsNullOrEmpty(book.ISBN)) sb.Append("O ISBN é obrigatório.;");
+            if (string.IsNullOrEmpty(book.Isbn)) sb.Append("O ISBN é obrigatório.;");
 
             if (string.IsNullOrEmpty(book.Sinopse)) sb.Append("A Sinopse é obrigatória.;");
 

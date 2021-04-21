@@ -25,8 +25,6 @@ namespace LES.Models.Entity
         public double Peso { get; set; }
         public string Sinopse { get; set; }
         public double Valor { get; set; }
-        public DateTime DtLancamento { get; set; }
-        public int Edicao { get; set; }
 
         public virtual IList<Ativacao> Ativacoes { get; set; } = new List<Ativacao>();
         public virtual IList<CarrinhoLivro> CarrinhoLivro { get; set; }
