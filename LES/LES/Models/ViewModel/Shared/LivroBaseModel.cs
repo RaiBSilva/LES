@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace LES.Models.ViewModel.Shared
 {
-    public class LivroBaseModel
+    public class LivroBaseModel : IViewModel
     {
         [Display(Name ="Título")]
         public string Titulo { get; set; }
