@@ -12,7 +12,24 @@ namespace LES.Models.ViewHelpers.Shared
     {
         protected override void ToEntidade()
         {
-            throw new NotImplementedException();
+            LivroCardModel vm = (LivroCardModel)ViewModel;
+            Livro book = new Livro();
+
+            book.Titulo = vm.Titulo;
+            book.Altura = vm.Altura;
+            book.Autor = vm.Autor;
+            book.CodigoBarras = vm.CodigoBarras;
+            book.Comprimento = vm.Comprimento;
+            book.DtLancamento = vm.DtLancamento;
+            book.Edicao = vm.Edicao;
+            book.Editora.Nome = vm.Editora;
+            book.Isbn = vm.Isbn;
+            book.Largura = vm.Largura;
+            book.Paginas = vm.Paginas;
+            book.Sinopse = vm.Sinopse;
+            book.Valor = vm.Preco;
+
+            Entidades[typeof(Livro).Name] = book;
         }
 
         protected override void ToViewModel()
