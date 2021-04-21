@@ -9,6 +9,6 @@ namespace LES.Models.ViewModel.Livros
     public class PaginaLojaModel
     {
         public LojaFiltrosModel Filtros { get; set; }
-        public IList<LivroCardModel> Livros { get; set; }
+        public ListaCardLivrosModel Livros { get; set; }
     }
 }

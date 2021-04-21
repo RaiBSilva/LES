@@ -17,9 +17,9 @@ namespace LES.Controllers
             _facadeLivro = facadeLivro;
         }
 
-        public IActionResult Livro(string id)
+        public IActionResult Livro(string codBar)
         {
-            byte[] img = _facadeLivro.Query(l => l.CodigoBarras == id,
+            byte[] img = _facadeLivro.Query(l => l.CodigoBarras == codBar,
                 l => l).FirstOrDefault().Capa;
 
             return File(img, "image/png");

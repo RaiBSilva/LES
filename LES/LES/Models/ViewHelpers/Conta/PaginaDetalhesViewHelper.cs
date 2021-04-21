@@ -67,7 +67,7 @@ namespace LES.Models.ViewHelpers.Conta
 
             DetalhesInfoViewHelper infoVH = new DetalhesInfoViewHelper
             {
-                Entidades = new Dictionary<string, EntidadeDominio>
+                Entidades = new Dictionary<string, object>
                 {
                     [typeof(Cliente).Name] = cliente
                 }
@@ -85,7 +85,7 @@ namespace LES.Models.ViewHelpers.Conta
 
             foreach(var cartao in cliente.Cartoes)
             {
-                cartaoVH.Entidades = new Dictionary<string, EntidadeDominio>
+                cartaoVH.Entidades = new Dictionary<string, object>
                 {
                     [typeof(CartaoCredito).Name] = cartao 
                 };
@@ -95,7 +95,7 @@ namespace LES.Models.ViewHelpers.Conta
 
             foreach(var endereco in cliente.Enderecos)
             {
-                enderecoVH.Entidades = new Dictionary<string, EntidadeDominio>
+                enderecoVH.Entidades = new Dictionary<string, object>
                 {
                     [typeof(Endereco).Name] = endereco
                 };
@@ -105,7 +105,7 @@ namespace LES.Models.ViewHelpers.Conta
 
             foreach (var telefone in cliente.Telefones)
             {
-                telefoneVH.Entidades = new Dictionary<string, EntidadeDominio>
+                telefoneVH.Entidades = new Dictionary<string, object>
                 {
                     [typeof(Telefone).Name] = telefone
                 };
@@ -115,7 +115,7 @@ namespace LES.Models.ViewHelpers.Conta
 
             foreach (var cupom in cliente.Cupons)
             {
-                cupomVH.Entidades = new Dictionary<string, EntidadeDominio>
+                cupomVH.Entidades = new Dictionary<string, object>
                 {
                     [typeof(Cupom).Name] = cupom
                 };

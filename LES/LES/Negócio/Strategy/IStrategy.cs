@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 
 namespace LES.Negocio.Strategy
 {
-    interface IStrategy<T> where T : EntidadeDominio
+    interface IStrategy
     {
-        public string Validar(T e);
+        public string Validar(EntidadeDominio e);
     }
 }

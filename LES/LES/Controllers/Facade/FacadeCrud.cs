@@ -1,6 +1,8 @@
 ﻿using LES.Data.DAO;
 using LES.Models;
 using LES.Models.Entity;
+using LES.Negocio.Strategy;
+using LES.Negócio.Strategy.ClienteStrategy;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -24,21 +26,39 @@ namespace LES.Controllers.Facade
             DefinirDAOs();
         }
 
-        private Dictionary<string, ICollection<Func<EntidadeDominio, string>>> _strategiesValidacao;
-        private Dictionary<string, IDAOComplex> _daosComplexos;
+        private Dictionary<string, ICollection<IStrategy>> _strategiesValidacao;
+        private Dictionary<string, IGetIncludeAll> _daosGetIncludeAll;
+        private Dictionary<string, IListIncludeAll> _daosListIncludeAll;
 
         private void DefinirStrategies()
         {
-            _strategiesValidacao = new Dictionary<String, ICollection<Func<EntidadeDominio, string>>>
+            _strategiesValidacao = new Dictionary<String, ICollection<IStrategy>>
             {
-                [typeof(Cliente).Name] = new List<Func<EntidadeDominio, string>>()
+                [typeof(Cliente).Name] = new List<IStrategy>
+                {
+                    new ValidarClienteNullStrategy(),
+                    new ValidarCepStrategy(),
+                    new ValidarDataNascimentoStrategy(),
+                    new ValidarCvvCartaoStrategy(),
+                    new ValidarDataNascimentoStrategy(),
+                    new ValidarDddStrategy(),
+                    new ValidarNumeroCartaoStrategy(),
+                    new ValidarTelefoneStrategy()
+                }
             };
         }
         private void DefinirDAOs()
         {
-            _daosComplexos = new Dictionary<string, IDAOComplex>
+            _daosGetIncludeAll = new Dictionary<string, IGetIncludeAll>
             {
-                [typeof(Cliente).Name] = new DAOCliente<Cliente>(_contexto)
+                [typeof(Cliente).Name] = new DAOCliente<Cliente>(_contexto),
+                [typeof(Carrinho).Name] = new DAOCarrinho<Carrinho>(_contexto),
+                [typeof(Livro).Name] = new DAOLivro<Livro>(_contexto)
+            };
+
+            _daosListIncludeAll = new Dictionary<string, IListIncludeAll>
+            {
+                [typeof(Livro).Name] = new DAOLivro<Livro>(_contexto)
             };
         }
 
@@ -54,7 +74,7 @@ namespace LES.Controllers.Facade
             {
                 foreach (var strat in regras)
                 {
-                    sb.Append(strat(e));
+                    sb.Append(strat.Validar(e));
                 }  
             }
 
@@ -110,9 +130,17 @@ namespace LES.Controllers.Facade
         {
             string nmClasse = typeof(T).Name;
 
-            if (_daosComplexos.ContainsKey(nmClasse)) return (T)_daosComplexos[nmClasse].IncludeAll(e);
+            if (_daosGetIncludeAll.ContainsKey(nmClasse)) return (T)_daosGetIncludeAll[nmClasse].IncludeAll(e);
             return null;
 
+        }
+
+        public IList<T> ListAllInclude()
+        {
+            string nmClasse = typeof(T).Name;
+
+            if (_daosListIncludeAll.ContainsKey(nmClasse)) return (IList<T>)_daosListIncludeAll[nmClasse].ListIncludeAll();
+            return null;
         }
     }
 }

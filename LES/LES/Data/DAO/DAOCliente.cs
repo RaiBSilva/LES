@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace LES.Data.DAO
 {
-    public class DAOCliente<T> : DAO<T>,  IDAOComplex where T : Cliente
+    public class DAOCliente<T> : DAO<T>,  IGetIncludeAll where T : Cliente
     {
         public DAOCliente(AppDbContext contexto) : base(contexto)
         {
@@ -20,7 +20,7 @@ namespace LES.Data.DAO
             Cliente request = (Cliente)e;
             string email = request.Usuario.Email;
 
-            Cliente retorno = _contexto.Clientes.Select(c => c).Where(c => c.Usuario.Email == email)
+            Cliente response = _contexto.Clientes.Select(c => c).Where(c => c.Usuario.Email == email)
                 .Include(c => c.Cartoes).ThenInclude(c => c.Bandeira)
                 .Include(c => c.Enderecos)
                     .ThenInclude(e => e.Cidade)
@@ -36,7 +36,7 @@ namespace LES.Data.DAO
                     .ThenInclude(l => l.Livro)
                 .FirstOrDefault();
 
-            return retorno;
+            return response;
         }
 
     }

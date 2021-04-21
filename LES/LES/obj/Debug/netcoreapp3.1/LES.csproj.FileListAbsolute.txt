@@ -342,9 +342,6 @@ C:\Programming\LES\LES\LES\obj\Debug\netcoreapp3.1\Razor\Views\Conta\PartialView
 C:\Programming\LES\LES\LES\obj\Debug\netcoreapp3.1\Razor\Views\Conta\PartialViews\_RealizarTrocaPartial.cshtml.g.cs
 C:\Programming\LES\LES\LES\obj\Debug\netcoreapp3.1\Razor\Views\Shared\_CarrinhoPartial.cshtml.g.cs
 C:\Programming\LES\LES\LES\obj\Debug\netcoreapp3.1\Razor\Views\Shared\_ItemCarrinhoPartial.cshtml.g.cs
-C:\Programming\LES\LES\LES\obj\Debug\netcoreapp3.1\Razor\Views\Carrinho\FinalizarCompra.cshtml.g.cs
-C:\Programming\LES\LES\LES\obj\Debug\netcoreapp3.1\Razor\Views\Carrinho\PartialViews\_ListaCardsCartaoPartial.cshtml.g.cs
-C:\Programming\LES\LES\LES\obj\Debug\netcoreapp3.1\Razor\Views\Carrinho\PartialViews\_ListaCardsEnderecoPartial.cshtml.g.cs
 C:\Programming\LES\LES\LES\obj\Debug\netcoreapp3.1\Razor\Views\Conta\PartialViews\_ListaCuponsPartial.cshtml.g.cs
 D:\DEVELOPMENT\LES\LES\LES\obj\Debug\netcoreapp3.1\Razor\Views\Carrinho\FinalizarCompra.cshtml.g.cs
 D:\DEVELOPMENT\LES\LES\LES\obj\Debug\netcoreapp3.1\Razor\Views\Carrinho\PartialViews\_ListaCardsCartaoPartial.cshtml.g.cs
@@ -376,13 +373,6 @@ C:\Programming\LES\LES\LES\obj\Debug\netcoreapp3.1\Razor\Views\Admin\Clientes.cs
 C:\Programming\LES\LES\LES\obj\Debug\netcoreapp3.1\Razor\Views\Admin\Pedidos.cshtml.g.cs
 C:\Programming\LES\LES\LES\obj\Debug\netcoreapp3.1\Razor\Views\Admin\ConfigLoja.cshtml.g.cs
 C:\Programming\LES\LES\LES\obj\Debug\netcoreapp3.1\Razor\Views\Shared\_LayoutAdmin.cshtml.g.cs
-C:\Programming\LES\LES\LES\obj\Debug\netcoreapp3.1\Razor\Views\Carrinho\PartialViews\_AdicionarNovoCartaoPartial.cshtml.g.cs
-C:\Programming\LES\LES\LES\obj\Debug\netcoreapp3.1\Razor\Views\Carrinho\PartialViews\_AdicionarNovoEnderecoPartial.cshtml.g.cs
-C:\Programming\LES\LES\LES\obj\Debug\netcoreapp3.1\Razor\Views\Carrinho\PartialViews\_CartaoPartial.cshtml.g.cs
-C:\Programming\LES\LES\LES\obj\Debug\netcoreapp3.1\Razor\Views\Carrinho\PartialViews\_EnderecoPartial.cshtml.g.cs
-C:\Programming\LES\LES\LES\obj\Debug\netcoreapp3.1\Razor\Views\Carrinho\PartialViews\_CalcularFretePartial.cshtml.g.cs
-C:\Programming\LES\LES\LES\obj\Debug\netcoreapp3.1\Razor\Views\Carrinho\PartialViews\_ListaCupomPartial.cshtml.g.cs
-C:\Programming\LES\LES\LES\obj\Debug\netcoreapp3.1\Razor\Views\Carrinho\PartialViews\_UsarCupomPartial.cshtml.g.cs
 C:\Programming\LES\LES\LES\obj\Debug\netcoreapp3.1\Razor\Views\Admin\PartialViews\_CardTabelaPedidos.cshtml.g.cs
 C:\Programming\LES\LES\LES\obj\Debug\netcoreapp3.1\Razor\Views\Admin\PartialViews\_TabelaPedidosPartial.cshtml.g.cs
 C:\Programming\LES\LES\LES\obj\Debug\netcoreapp3.1\Razor\Views\Admin\PartialViews\_VisualizarPedidoPartial.cshtml.g.cs
@@ -478,3 +468,13 @@ C:\Programming\LES\LES\LES\bin\Debug\netcoreapp3.1\runtimes\win\lib\netstandard2
 C:\Programming\LES\LES\LES\bin\Debug\netcoreapp3.1\runtimes\win\lib\netstandard2.0\System.Security.Cryptography.ProtectedData.dll
 C:\Programming\LES\LES\LES\obj\Debug\netcoreapp3.1\LES.csproj.CoreCompileInputs.cache
 C:\Programming\LES\LES\LES\obj\Debug\netcoreapp3.1\LES.MvcApplicationPartsAssemblyInfo.cache
+C:\Programming\LES\LES\LES\obj\Debug\netcoreapp3.1\Razor\Views\CarrinhoCompra\FinalizarCompra.cshtml.g.cs
+C:\Programming\LES\LES\LES\obj\Debug\netcoreapp3.1\Razor\Views\CarrinhoCompra\PartialViews\_AdicionarNovoCartaoPartial.cshtml.g.cs
+C:\Programming\LES\LES\LES\obj\Debug\netcoreapp3.1\Razor\Views\CarrinhoCompra\PartialViews\_AdicionarNovoEnderecoPartial.cshtml.g.cs
+C:\Programming\LES\LES\LES\obj\Debug\netcoreapp3.1\Razor\Views\CarrinhoCompra\PartialViews\_CalcularFretePartial.cshtml.g.cs
+C:\Programming\LES\LES\LES\obj\Debug\netcoreapp3.1\Razor\Views\CarrinhoCompra\PartialViews\_CartaoPartial.cshtml.g.cs
+C:\Programming\LES\LES\LES\obj\Debug\netcoreapp3.1\Razor\Views\CarrinhoCompra\PartialViews\_EnderecoPartial.cshtml.g.cs
+C:\Programming\LES\LES\LES\obj\Debug\netcoreapp3.1\Razor\Views\CarrinhoCompra\PartialViews\_ListaCardsCartaoPartial.cshtml.g.cs
+C:\Programming\LES\LES\LES\obj\Debug\netcoreapp3.1\Razor\Views\CarrinhoCompra\PartialViews\_ListaCardsEnderecoPartial.cshtml.g.cs
+C:\Programming\LES\LES\LES\obj\Debug\netcoreapp3.1\Razor\Views\CarrinhoCompra\PartialViews\_ListaCupomPartial.cshtml.g.cs
+C:\Programming\LES\LES\LES\obj\Debug\netcoreapp3.1\Razor\Views\CarrinhoCompra\PartialViews\_UsarCupomPartial.cshtml.g.cs

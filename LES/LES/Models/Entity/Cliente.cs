@@ -21,6 +21,7 @@ namespace LES.Models.Entity
     public class Cliente : EntidadeDominio
     {
         #region Propriedades
+        public int? CarrinhoId { get; set; }
         public string Codigo { get; set; }
         public string Cpf { get; set; }
         public virtual DateTime DtNascimento { get; set; }
@@ -29,6 +30,7 @@ namespace LES.Models.Entity
         public int Nota { get; set; }
         public int UsuarioId { get; set; }
 
+        public virtual Carrinho Carrinho { get; set; } = new Carrinho();
         public virtual IList<CartaoCredito> Cartoes { get; set; } = new List<CartaoCredito>();
         public virtual IList<Endereco> Enderecos { get; set; } = new List<Endereco>();
         public virtual IList<Pedido> Pedidos { get; set; } = new List<Pedido>();

@@ -11,8 +11,8 @@ namespace LES.Models.ViewHelpers
     {
 
         //Atributo responsável por guardar as entidades que vêm do db, ou que vão para o db
-        protected IDictionary<string, EntidadeDominio> _entidades { get; set; }
-        public virtual IDictionary<string, EntidadeDominio> Entidades
+        protected IDictionary<string, object> _entidades { get; set; } = new Dictionary<string, object>();
+        public virtual IDictionary<string, object> Entidades
         {
             get => _entidades;
             set
@@ -32,11 +32,6 @@ namespace LES.Models.ViewHelpers
                 _viewModel = value;
                 ToEntidade();
             }
-        }
-
-        public AbstractViewHelper()
-        {
-            _entidades = new Dictionary<string, EntidadeDominio>();
         }
 
         protected abstract void ToEntidade();

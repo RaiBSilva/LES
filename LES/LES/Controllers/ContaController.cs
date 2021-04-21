@@ -127,9 +127,9 @@ namespace LES.Views.Conta
 
             string msg = _facadeClientes.Cadastrar(cliente);
 
-            if (msg == "")  return RedirectToAction("Login");
+            if (msg == "")  return RedirectToAction(nameof(Login));
             TempData["Alert"] = msg;
-            return RedirectToAction("Registro");
+            return RedirectToAction(nameof(Registro));
         }
 
         [Authorize]
@@ -144,7 +144,7 @@ namespace LES.Views.Conta
             clienteDb.Enderecos = clienteDb.Enderecos.Where(e => e.Inativo == false).ToList();
             clienteDb.Telefones = clienteDb.Telefones.Where(c => c.Inativo == false).ToList();
 
-            IDictionary<string, EntidadeDominio> e = new Dictionary<string, EntidadeDominio>
+            IDictionary<string, object> e = new Dictionary<string, object>
             {
                 [typeof(Cliente).Name] = clienteDb
             };
@@ -183,7 +183,7 @@ namespace LES.Views.Conta
                 return  PartialView("../Conta/PartialViews/_ErroPartial"); 
             }
 
-            IDictionary<string, EntidadeDominio> entidades = new Dictionary<string, EntidadeDominio>
+            IDictionary<string, object> entidades = new Dictionary<string, object>
             {
                 [typeof(Cliente).Name] = cliente
             };
@@ -796,21 +796,6 @@ namespace LES.Views.Conta
         return "";
     }
 
-        private Cliente GetClienteComEmail()
-        {
-            var email = HttpContext.User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.Email)?.Value;
-
-            Cliente cliente = new Cliente
-            {
-                Usuario = new Usuario
-                {
-                    Email = email
-                }
-            };
-
-            return cliente;
-        }
-
         private IList<BandeiraCartaoCredito> GetBandeiras() 
         {
             return _facadeBandeiras.Listar().OrderBy(b => b.Nome).ToList();
@@ -838,7 +823,7 @@ namespace LES.Views.Conta
 
             _vh = new DetalhesEnderecoViewHelper
             {
-                Entidades = new Dictionary<string, EntidadeDominio>
+                Entidades = new Dictionary<string, object>
                 {
                     [typeof(Endereco).Name] = e
                 }
@@ -861,7 +846,7 @@ namespace LES.Views.Conta
 
             _vh = new DetalhesTelefoneViewHelper
             {
-                Entidades = new Dictionary<string, EntidadeDominio>
+                Entidades = new Dictionary<string, object>
                 {
                     [typeof(Telefone).Name] = t
                 }
@@ -884,7 +869,7 @@ namespace LES.Views.Conta
 
             _vh = new DetalhesCartaoViewHelper
             {
-                Entidades = new Dictionary<string, EntidadeDominio>
+                Entidades = new Dictionary<string, object>
                 {
                     [typeof(CartaoCredito).Name] = c
                 }

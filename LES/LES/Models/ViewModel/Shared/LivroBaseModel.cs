@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace LES.Models.ViewModel.Shared
 {
-    public class LivroBaseModel
+    public class LivroBaseModel : IViewModel
     {
         [Display(Name ="Título")]
         public string Titulo { get; set; }
@@ -21,7 +21,7 @@ namespace LES.Models.ViewModel.Shared
         public string Isbn { get; set; }
 
         [Display(Name = "Preço")]
-        public float Preco { get; set; }
+        public double Preco { get; set; }
 
         [Display(Name = "Edição")]
         public int Edicao { get; set; }

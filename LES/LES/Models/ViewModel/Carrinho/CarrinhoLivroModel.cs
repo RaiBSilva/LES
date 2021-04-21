@@ -11,7 +11,7 @@ namespace LES.Models.ViewModel.Carrinho
         public string CodigoBarras { get; set; }
         public string Autor { get; set; }
         public int Quantia { get; set; }
-        public float Preco { get; set; }
+        public double Preco { get; set; }
 
     }
 }

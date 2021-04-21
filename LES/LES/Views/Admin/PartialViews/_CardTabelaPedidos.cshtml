@@ -3,7 +3,7 @@
 @using LES.Models.Entity
 
    @{ bool elegivelTroca = (Model.Status <= (StatusPedidos)6 && Model.Status >= (StatusPedidos)5);
-       float precoTotal = 0;}
+       double precoTotal = 0;}
 
 <table class="table table-striped table-hover table-sm ">
     <thead>

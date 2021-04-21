@@ -10,7 +10,7 @@ namespace LES.Models.ViewModel.Carrinho
     {
         public IList<CarrinhoLivroModel> Livros { get; set; }
         [Display(Name = "Preço total: ")]
-        public float PrecoTotal { get; set; }
+        public double PrecoTotal { get; set; }
 
     }
 }

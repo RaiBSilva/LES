@@ -1,0 +1,77 @@
+﻿@model LES.Models.ViewModel.Carrinho.PaginaFinalizarCompraModel
+
+@{
+    ViewData["Title"] = "FinalizarCompra";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<link href="~/css/Carrinho/CardsAsRadio.css" rel="stylesheet" />
+<link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700" rel="stylesheet">
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+<div class="row justify-content-center"><h1 class="col-12 text-center">Finalizar Compra</h1></div>
+<div class="row">
+    <div class="col-12 mb-3 border-bottom">
+    </div>
+</div>
+<div class="row">
+    <div class="col-12 text-center">
+        <h6 class="font-weight-light">Preço total:</h6><h5>R$ @Model.Pedido.PrecoTotal.ToString("0.00")</h5>
+    </div>
+    <partial name="../CarrinhoCompra/PartialViews/_ListaCupomPartial.cshtml" for="Cupons">
+    <div class="col-3 mb-2"></div>
+    <button type="submit" id="buttonCupom" class="btn btn-outline-info col-6 btnUsarCupom text-center mb-2" data-toggle="modal" data-target="#myModal">
+        <h5>
+            Adicionar cupom
+        </h5>
+    </button>
+    <div class="col-3 mb-2"></div>
+    <div class="col-6 border-bottom border-top border-right my-2 text-center">
+        <h4 class="font-weight-light">Preço com descontos:</h4><h3>R$ 205,00</h3>
+    </div>
+    <div class="col-6 border-bottom border-top border-left my-2 text-center">
+        <h3 class="font-weight-light"> + Frete(R$30,00):</h3><h2>R$ 235,00</h2>
+    </div>
+</div>
+<div class="row justify-content-around mt-4">
+    <div class="col-md-6 border-right">
+        <div class="row">
+            <h4 class="font-weight-light ml-3">
+                Endereços
+            </h4>
+        </div>
+        <div class="row mx-2">
+            <partial name="../CarrinhoCompra/PartialViews/_ListaCardsEnderecoPartial.cshtml" for="Enderecos">
+        </div>
+    </div>
+    <div class="col-md-6 border-left justify-content-end">
+        <div class="row">
+            <h4 class="font-weight-light ml-3">
+                Cartões
+            </h4>
+        </div>
+        <div class="row mx-2">
+            <partial name="../CarrinhoCompra/PartialViews/_ListaCardsCartaoPartial.cshtml" for="Cartoes">
+        </div>
+    </div>
+</div>
+<div class="row mt-3 justify-content-around">
+    <button class="btn btn-success col-12" onclick="window.location.href='@Url.Action("Home","Admin")'">
+        <h3>Comprar</h3>
+    </button>
+</div>
+
+<div id="myModal" class="modal fade" role="dialog">
+
+</div>
+
+@section Scripts{ 
+
+    <script type="text/javascript">
+        var urls = urls || {};
+        urls.novoEndereco = '@Url.Action("_AdicionarNovoEnderecoPartial", "CarrinhoCompra")';
+        urls.novoCartao = '@Url.Action("_AdicionarNovoCartaoPartial", "CarrinhoCompra")';
+        urls.calcularFrete = '@Url.Action("_CalcularFretePartial", "CarrinhoCompra")';
+        urls.usarCupom = '@Url.Action("_UsarCupomPartial", "CarrinhoCompra")';
+    </script>
+    <script src="~/js/Carrinho/CarregadorPartialViewsFinalizarCompra.js"></script>
+}

@@ -69,6 +69,57 @@ namespace LES.Models
 
             #endregion
 
+            #region Carrinho
+
+            tri = "crr";
+
+            modelBuilder = configBasico<Carrinho>(modelBuilder, "CARRINHOS", tri);
+
+            modelBuilder.Entity<Carrinho>()
+                .Property(c => c.TimeoutDate)
+                .HasColumnName($"{tri}_dt_timeout")
+                .IsRequired();
+
+            #endregion
+
+            #region CarrinhoLivro
+
+            tri = "crl";
+
+            modelBuilder.Entity<CarrinhoLivro>().ToTable("CARRINHOS_LIVROS");
+
+            modelBuilder.Entity<CarrinhoLivro>().HasKey(l => new { l.CarrinhoId, l.LivroId })
+                .HasName("PK_" + tri.ToUpper());
+
+            modelBuilder.Entity<CarrinhoLivro>()
+                .Property(l => l.LivroId)
+                .HasColumnName(tri + "_liv_id")
+                .IsRequired();
+
+            modelBuilder.Entity<CarrinhoLivro>()
+                .Property(l => l.CarrinhoId)
+                .HasColumnName(tri + "_crr_id")
+                .IsRequired();
+
+            modelBuilder.Entity<CarrinhoLivro>()
+                .Property(l => l.Quantia)
+                .HasColumnName($"{tri}_quantia")
+                .IsRequired();
+
+            modelBuilder.Entity<CarrinhoLivro>()
+                .HasOne(l => l.Carrinho)
+                .WithMany(c => c.CarrinhoLivro)
+                .HasForeignKey(l => l.LivroId)
+                .HasConstraintName("FK_" + tri.ToUpper() + "_CRR");
+
+            modelBuilder.Entity<CarrinhoLivro>()
+                .HasOne(l => l.Livro)
+                .WithMany(l => l.CarrinhoLivro)
+                .HasForeignKey(l => l.CarrinhoId)
+                .HasConstraintName("FK_" + tri.ToUpper() + "_LIV");
+
+            #endregion
+
             #region CartaoCredito
 
             tri = "car";
@@ -208,6 +259,11 @@ namespace LES.Models
             modelBuilder = configBasico<Cliente>(modelBuilder, "CLIENTES", tri);
 
             modelBuilder.Entity<Cliente>()
+                .Property(c => c.CarrinhoId)
+                .HasColumnName(tri + "_crr_id")
+                .IsRequired();
+
+            modelBuilder.Entity<Cliente>()
                 .Property(c => c.Codigo)
                 .HasColumnName(tri + "_codigo")
                 .IsRequired();
@@ -238,10 +294,16 @@ namespace LES.Models
                 .IsRequired();
 
             modelBuilder.Entity<Cliente>()
+                .HasOne(c => c.Carrinho)
+                .WithOne(u => u.Cliente)
+                .HasForeignKey<Cliente>(c => c.CarrinhoId)
+                .HasConstraintName("FK_"+ tri.ToUpper() +"_CRR");
+
+            modelBuilder.Entity<Cliente>()
                 .HasOne(c => c.Usuario)
                 .WithOne(u => u.Cliente)
                 .HasForeignKey<Cliente>(c => c.UsuarioId)
-                .HasConstraintName("FK_"+ tri.ToUpper() +"_USU");
+                .HasConstraintName("FK_" + tri.ToUpper() + "_USU");
 
             #endregion
 
@@ -442,6 +504,16 @@ namespace LES.Models
                 .IsRequired();
 
             modelBuilder.Entity<Livro>()
+                .Property(l => l.DtLancamento)
+                .HasColumnName(tri + "_dt_lancamento")
+                .IsRequired();
+
+            modelBuilder.Entity<Livro>()
+                .Property(l => l.Edicao)
+                .HasColumnName(tri + "_edicao")
+                .IsRequired();
+
+            modelBuilder.Entity<Livro>()
                 .Property(l => l.EditoraId)
                 .HasColumnName(tri + "_edi_id")
                 .IsRequired();
@@ -457,7 +529,7 @@ namespace LES.Models
                 .IsRequired();
 
             modelBuilder.Entity<Livro>()
-                .Property(l => l.ISBN)
+                .Property(l => l.Isbn)
                 .HasColumnName(tri + "_isbn")
                 .IsRequired();
 
@@ -467,7 +539,7 @@ namespace LES.Models
                 .IsRequired();
 
             modelBuilder.Entity<Livro>()
-                .Property(l => l.NumPag)
+                .Property(l => l.Paginas)
                 .HasColumnName(tri + "_num_pag")
                 .IsRequired();
 
@@ -479,6 +551,11 @@ namespace LES.Models
             modelBuilder.Entity<Livro>()
                 .Property(l => l.Sinopse)
                 .HasColumnName(tri + "_sinopse")
+                .IsRequired();
+
+            modelBuilder.Entity<Livro>()
+                .Property(l => l.Titulo)
+                .HasColumnName(tri + "_titulo")
                 .IsRequired();
 
             modelBuilder.Entity<Livro>()
@@ -706,6 +783,8 @@ namespace LES.Models
 
         public DbSet<Ativacao> Ativacaos { get; set; }
         public DbSet<BandeiraCartaoCredito> BandeiraCartaoCreditos { get; set; }
+        public DbSet<Carrinho> Carrinhos { get; set; }
+        public DbSet<CarrinhoLivro> CarrinhosLivro { get; set; }
         public DbSet<CartaoCredito> CartaoCreditos { get; set; }
         public DbSet<CategoriaAtivacao> CategoriaAtivacaos { get; set; }
         public DbSet<CategoriaInativacao> CategoriasInativacaos { get; set; }

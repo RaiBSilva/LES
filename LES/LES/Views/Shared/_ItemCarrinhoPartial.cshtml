@@ -12,9 +12,9 @@
         <div class="font-weight-lighter"><h4>x @Model.Quantia</h4></div>
     </td>
     <td>
-        <button class="btn btn-light carrinho-update">+</button>
-        <button class="btn btn-light carrinho-update">-</button>
+        <button type="button" class="btn btn-light mais-carrinho" value="@Model.CodigoBarras">+</button>
+        <button type="button" class="btn btn-light menos-carrinho" value="@Model.CodigoBarras">-</button>
     </td>
     <td>
-        <button class="btn btn-danger carrinho-update">&times;</button>
+        <button type="button" class="btn btn-danger remover-carrinho" value="@Model.CodigoBarras">&times;</button>
     </td>

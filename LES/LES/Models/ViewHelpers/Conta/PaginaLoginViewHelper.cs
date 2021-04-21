@@ -11,11 +11,6 @@ namespace LES.Models.ViewHelpers.Conta
 {
     public class PaginaLoginViewHelper : AbstractViewHelper, IViewHelper
     {
-        public PaginaLoginViewHelper()
-        {
-            Entidades = new Dictionary<string, EntidadeDominio>();
-        }
-
         //Método é chamado quando um valor é settado no viewmodel
         protected override void ToEntidade()
         {

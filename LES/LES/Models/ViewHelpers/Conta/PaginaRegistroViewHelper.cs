@@ -12,11 +12,6 @@ namespace LES.Models.ViewHelpers.Conta
 {
     public class PaginaRegistroViewHelper : AbstractViewHelper, IViewHelper
     {
-        public PaginaRegistroViewHelper()
-        {
-            Entidades = new Dictionary<string, EntidadeDominio>();
-        }
-
         protected override void ToEntidade()
         {
             PaginaRegistroModel vm = (PaginaRegistroModel)ViewModel;

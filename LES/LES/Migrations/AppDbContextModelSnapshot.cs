@@ -80,6 +80,54 @@ namespace LES.Migrations
                     b.ToTable("BANDEIRAS_CARTAO_CREDITO");
                 });
 
+            modelBuilder.Entity("LES.Models.Entity.Carrinho", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasColumnName("crr_id")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<DateTime>("DtCadastro")
+                        .HasColumnType("datetime2")
+                        .HasColumnName("crr_dt_cadastro");
+
+                    b.Property<bool>("Inativo")
+                        .HasColumnType("bit")
+                        .HasColumnName("crr_inativo");
+
+                    b.Property<DateTime>("TimeoutDate")
+                        .HasColumnType("datetime2")
+                        .HasColumnName("crr_dt_timeout");
+
+                    b.HasKey("Id")
+                        .HasName("PK_CRR");
+
+                    b.ToTable("CARRINHOS");
+                });
+
+            modelBuilder.Entity("LES.Models.Entity.CarrinhoLivro", b =>
+                {
+                    b.Property<int>("CarrinhoId")
+                        .HasColumnType("int")
+                        .HasColumnName("crl_crr_id");
+
+                    b.Property<int>("LivroId")
+                        .HasColumnType("int")
+                        .HasColumnName("crl_liv_id");
+
+                    b.Property<int>("Quantia")
+                        .HasColumnType("int")
+                        .HasColumnName("crl_quantia");
+
+                    b.HasKey("CarrinhoId", "LivroId")
+                        .HasName("PK_CRL");
+
+                    b.HasIndex("LivroId");
+
+                    b.ToTable("CARRINHOS_LIVROS");
+                });
+
             modelBuilder.Entity("LES.Models.Entity.CartaoCredito", b =>
                 {
                     b.Property<int>("Id")
@@ -259,6 +307,11 @@ namespace LES.Migrations
                         .HasColumnName("cli_id")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<int?>("CarrinhoId")
+                        .IsRequired()
+                        .HasColumnType("int")
+                        .HasColumnName("cli_crr_id");
+
                     b.Property<string>("Codigo")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)")
@@ -299,6 +352,9 @@ namespace LES.Migrations
 
                     b.HasKey("Id")
                         .HasName("PK_CLI");
+
+                    b.HasIndex("CarrinhoId")
+                        .IsUnique();
 
                     b.HasIndex("UsuarioId")
                         .IsUnique();
@@ -587,6 +643,14 @@ namespace LES.Migrations
                         .HasColumnType("datetime2")
                         .HasColumnName("liv_dt_cadastro");
 
+                    b.Property<DateTime>("DtLancamento")
+                        .HasColumnType("datetime2")
+                        .HasColumnName("liv_dt_lancamento");
+
+                    b.Property<int>("Edicao")
+                        .HasColumnType("int")
+                        .HasColumnName("liv_edicao");
+
                     b.Property<int>("EditoraId")
                         .HasColumnType("int")
                         .HasColumnName("liv_edi_id");
@@ -599,20 +663,20 @@ namespace LES.Migrations
                         .HasColumnType("int")
                         .HasColumnName("liv_gpp_id");
 
-                    b.Property<string>("ISBN")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)")
-                        .HasColumnName("liv_isbn");
-
                     b.Property<bool>("Inativo")
                         .HasColumnType("bit")
                         .HasColumnName("liv_inativo");
+
+                    b.Property<string>("Isbn")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("liv_isbn");
 
                     b.Property<int>("Largura")
                         .HasColumnType("int")
                         .HasColumnName("liv_largura");
 
-                    b.Property<int>("NumPag")
+                    b.Property<int>("Paginas")
                         .HasColumnType("int")
                         .HasColumnName("liv_num_pag");
 
@@ -624,6 +688,11 @@ namespace LES.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)")
                         .HasColumnName("liv_sinopse");
+
+                    b.Property<string>("Titulo")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("liv_titulo");
 
                     b.Property<double>("Valor")
                         .HasColumnType("float")
@@ -905,6 +974,27 @@ namespace LES.Migrations
                     b.Navigation("Livro");
                 });
 
+            modelBuilder.Entity("LES.Models.Entity.CarrinhoLivro", b =>
+                {
+                    b.HasOne("LES.Models.Entity.Livro", "Livro")
+                        .WithMany("CarrinhoLivro")
+                        .HasForeignKey("CarrinhoId")
+                        .HasConstraintName("FK_CRL_LIV")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("LES.Models.Entity.Carrinho", "Carrinho")
+                        .WithMany("CarrinhoLivro")
+                        .HasForeignKey("LivroId")
+                        .HasConstraintName("FK_CRL_CRR")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Carrinho");
+
+                    b.Navigation("Livro");
+                });
+
             modelBuilder.Entity("LES.Models.Entity.CartaoCredito", b =>
                 {
                     b.HasOne("LES.Models.Entity.BandeiraCartaoCredito", "Bandeira")
@@ -940,12 +1030,21 @@ namespace LES.Migrations
 
             modelBuilder.Entity("LES.Models.Entity.Cliente", b =>
                 {
+                    b.HasOne("LES.Models.Entity.Carrinho", "Carrinho")
+                        .WithOne("Cliente")
+                        .HasForeignKey("LES.Models.Entity.Cliente", "CarrinhoId")
+                        .HasConstraintName("FK_CLI_CRR")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("LES.Models.Entity.Usuario", "Usuario")
                         .WithOne("Cliente")
                         .HasForeignKey("LES.Models.Entity.Cliente", "UsuarioId")
                         .HasConstraintName("FK_CLI_USU")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Carrinho");
 
                     b.Navigation("Usuario");
                 });
@@ -1133,6 +1232,13 @@ namespace LES.Migrations
                     b.Navigation("Cartoes");
                 });
 
+            modelBuilder.Entity("LES.Models.Entity.Carrinho", b =>
+                {
+                    b.Navigation("CarrinhoLivro");
+
+                    b.Navigation("Cliente");
+                });
+
             modelBuilder.Entity("LES.Models.Entity.CategoriaAtivacao", b =>
                 {
                     b.Navigation("Ativacoes");
@@ -1189,6 +1295,8 @@ namespace LES.Migrations
             modelBuilder.Entity("LES.Models.Entity.Livro", b =>
                 {
                     b.Navigation("Ativacoes");
+
+                    b.Navigation("CarrinhoLivro");
 
                     b.Navigation("Inativacoes");
 

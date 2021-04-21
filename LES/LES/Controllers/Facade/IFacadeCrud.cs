@@ -18,6 +18,7 @@ namespace LES.Controllers.Facade
         public string Editar(T e);
         public string Deletar(T e);
         public T GetAllInclude(T e);
+        public IList<T> ListAllInclude();
 
     }
 }

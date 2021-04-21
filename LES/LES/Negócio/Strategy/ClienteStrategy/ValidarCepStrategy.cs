@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace LES.Negócio.Strategy.ClienteStrategy
 {
-    public class ValidarCepStrategy : IStrategy<EntidadeDominio>
+    public class ValidarCepStrategy : IStrategy
     {
         
         public string Validar(EntidadeDominio e)

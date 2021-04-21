@@ -16,9 +16,9 @@ namespace LES.Models.ViewModel.Livros
         public string Isbn { get; set; }
         public string Editora { get; set; }
         [Display(Name="Preço mínimo")]
-        public float PrecoMin { get; set; }
+        public double PrecoMin { get; set; }
         [Display(Name = "Preço máximo")]
-        public float PrecoMax { get; set; }
+        public double PrecoMax { get; set; }
         public string Categorias { get; set; }
 
     }
