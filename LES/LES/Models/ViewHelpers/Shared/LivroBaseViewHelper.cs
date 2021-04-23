@@ -8,11 +8,11 @@ using System.Threading.Tasks;
 
 namespace LES.Models.ViewHelpers.Shared
 {
-    public class LivroCardViewHelper : AbstractViewHelper, IViewHelper
+    public class LivroBaseViewHelper : AbstractViewHelper, IViewHelper
     {
         protected override void ToEntidade()
         {
-            LivroCardModel vm = (LivroCardModel)ViewModel;
+            LivroBaseModel vm = (LivroBaseModel)ViewModel;
             Livro book = new Livro();
 
             book.Titulo = vm.Titulo;
@@ -34,9 +34,9 @@ namespace LES.Models.ViewHelpers.Shared
 
         protected override void ToViewModel()
         {
-            Livro l = (Livro)Entidades[$"{typeof(Livro).Name}"];
+            Livro l = (Livro)Entidades[typeof(Livro).Name];
 
-            LivroCardModel vm = new LivroCardModel
+            LivroBaseModel vm = new LivroBaseModel
             {
                 Altura = l.Altura,
                 Autor = l.Autor,
@@ -52,6 +52,8 @@ namespace LES.Models.ViewHelpers.Shared
                 Sinopse = l.Sinopse,
                 Titulo = l.Titulo
             };
+
+            vm.Categorias = l.LivrosCategoriaLivros.Select(c => c.CategoriaLivro.Nome).ToList();
 
             _viewModel = vm;
         }

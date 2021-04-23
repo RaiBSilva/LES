@@ -44,7 +44,9 @@ namespace LES.Controllers.Facade
                     new ValidarDddStrategy(),
                     new ValidarNumeroCartaoStrategy(),
                     new ValidarTelefoneStrategy()
-                }
+                },
+                [typeof(Carrinho).Name] = new List<IStrategy>(),
+                [typeof(Livro).Name] = new List<IStrategy>()
             };
         }
         private void DefinirDAOs()
@@ -139,7 +141,7 @@ namespace LES.Controllers.Facade
         {
             string nmClasse = typeof(T).Name;
 
-            if (_daosListIncludeAll.ContainsKey(nmClasse)) return (IList<T>)_daosListIncludeAll[nmClasse].ListIncludeAll();
+            if (_daosListIncludeAll.ContainsKey(nmClasse)) return _daosListIncludeAll[nmClasse].ListIncludeAll().Cast<T>().ToList();
             return null;
         }
     }

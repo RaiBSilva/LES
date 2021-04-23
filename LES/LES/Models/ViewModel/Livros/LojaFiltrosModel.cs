@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace LES.Models.ViewModel.Livros
 {
-    public class LojaFiltrosModel
+    public class LojaFiltrosModel : IViewModel
     {
         [Display(Name = "Título")]
         public string Titulo { get; set; }
@@ -19,7 +19,12 @@ namespace LES.Models.ViewModel.Livros
         public double PrecoMin { get; set; }
         [Display(Name = "Preço máximo")]
         public double PrecoMax { get; set; }
+        [Display(Name = "Data mínima")]
+        public string DataMin { get; set; }
+        [Display(Name = "Data máxima")]
+        public string DataMax { get; set; }
         public string Categorias { get; set; }
+        public int PaginaAtual { get; set; }
 
     }
 }

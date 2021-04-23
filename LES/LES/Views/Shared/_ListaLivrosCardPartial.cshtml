@@ -18,25 +18,29 @@
                 }
             }
         </div>
-        <div class="row">
+        <div class="row justify-content-center">
             <nav aria-label="Paginação">
-                <ul class="pagination justify-content-center"">
+                <ul class="pagination justify-content-center">
                     <li class="page-item @if (Model.PagAtual == 1) {<text> disabled </text> }">
-                        <a class="page-link" href="" aria-label="Previous">
+                        <button type="button" class="page-link btnPage" aria-label="Previous" value="@(Model.PagAtual-1)" @if (Model.PagAtual == 1) {<text> disabled </text> }>
                             <span aria-hidden="true">&laquo;</span>
                             <span class="sr-only">Anterior</span>
-                        </a>
+                        </button>
                     </li>
                     @for(int i = 1; i <= Model.PagMax; i++) {
-                        <li class="page-item @if (i == Model.PagAtual) {<text> active </text> } ">
-                            <a class="page-link" href="#"> @i </a>
+                        string active = "";
+                        @if (i == Model.PagAtual) { active = "active"; }
+                        else { active = ""; }
+                        <li class="page-item @active">
+                            <button type="button" class="page-link btnPage" value="@i"> @i </button>
+                            @if(i == Model.PagAtual) { <span class="sr-only">(current)</span>}
                         </li>
                     }
                     <li class="page-item @if (Model.PagAtual == Model.PagMax) {<text> disabled </text> }">
-                        <a class="page-link" href="" aria-label="Next">
+                        <button type="button" class="page-link btnPage" aria-label="Next" value="@(Model.PagAtual+1)" @if (Model.PagAtual == Model.PagMax) {<text> disabled </text> }>
                             <span aria-hidden="true">&raquo;</span>
                             <span class="sr-only">Próxima</span>
-                        </a>
+                        </button>
                     </li>
                 </ul>
             </nav>

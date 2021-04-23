@@ -8,6 +8,6 @@ namespace LES.Models.ViewModel.Home
 {
     public class PaginaIndexModel
     {
-        public IList<LivroCardModel> Livros { get; set; }
+        public IList<LivroBaseModel> Livros { get; set; }
     }
 }

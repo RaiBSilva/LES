@@ -38,6 +38,8 @@ namespace LES.Models.ViewModel.Shared
         [Display(Name = "Mês de Lançamento")]
         public DateTime DtLancamento { get; set; }
 
+        public IList<string> Categorias { get; set; }
+
         public LivroBaseModel()
         {
             DtLancamento = DateTime.Now;

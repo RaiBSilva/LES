@@ -2,9 +2,11 @@
 using LES.Controllers.Facade;
 using LES.Migrations;
 using LES.Models.Entity;
+using LES.Models.ViewHelpers.CarrinhoCompra;
 using LES.Models.ViewModel.Carrinho;
 using LES.Models.ViewModel.Conta;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Formatters;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -37,9 +39,14 @@ namespace LES.Views.CarrinhoCompra
         {
             Carrinho c = GetCarrinho();
 
-            _vh.Entidades = new Dictionary<string, object>
+            if (c == null) return PartialView("_CarrinhoPartial", new CarrinhoModel());
+
+            _vh = new CarrinhoViewHelper
             {
-                [typeof(Carrinho).Name] = c
+                Entidades = new Dictionary<string, object>
+                {
+                    [typeof(Carrinho).Name] = c
+                }
             };
 
             return PartialView("_CarrinhoPartial", _vh.ViewModel);
@@ -49,8 +56,7 @@ namespace LES.Views.CarrinhoCompra
         public IActionResult _AddToCarrinho(string codBar, int quantia = 1)
         {
             Carrinho c = GetCarrinho();
-            Livro livro = _facadeLivro.Query(l => l.CodigoBarras == codBar,
-                l => l).FirstOrDefault();
+            Livro livro = _facadeLivro.GetAllInclude(new Livro { CodigoBarras = codBar});
             IEnumerable<CarrinhoLivro> carrinhoLivro = c.CarrinhoLivro.Where(c => c.LivroId == livro.Id);
 
             if (quantia > livro.Estoque)

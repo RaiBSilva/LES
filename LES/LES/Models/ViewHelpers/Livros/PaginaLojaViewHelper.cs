@@ -24,49 +24,33 @@ namespace LES.Models.ViewHelpers.Livros
             LojaFiltrosModel filtrosModel = new LojaFiltrosModel();
             ListaCardLivrosModel listaCardModel = new ListaCardLivrosModel();
 
-            LivroCardViewHelper livCarHelper = new LivroCardViewHelper();
-
-            IList<Livro> livros = new List<Livro>();
-
-            if (Entidades != null) 
+            if (Entidades == null) 
             {
-                _viewModel = (IViewModel)model;
+                _viewModel = model;
                 return;
             }
 
-            if (Entidades.ContainsKey(typeof(IList<Livro>).Name)) 
-            { 
-                livros = (IList<Livro>)Entidades[typeof(IList<Livro>).Name];
-
-                foreach (var l in livros)
+            ListaCardLivrosViewHelper listaCardHelper = new ListaCardLivrosViewHelper
+            {
+                Entidades = new Dictionary<string, object>
                 {
-                    livCarHelper.Entidades = new Dictionary<string, object>
-                    {
-                        [typeof(Livro).Name] = l
-                    };
-
-                    listaCardModel.Livros.Add((LivroCardModel)livCarHelper.ViewModel);
+                    [typeof(IList<Livro>).Name] = Entidades[typeof(IList<Livro>).Name],
+                    [nameof(ListaCardLivrosModel.PagAtual)] = Entidades[nameof(ListaCardLivrosModel.PagAtual)],
+                    [nameof(ListaCardLivrosModel.PagMax)] = Entidades[nameof(ListaCardLivrosModel.PagMax)]
                 }
-            }
+            };
 
-            string pagAtual = nameof(ListaCardLivrosModel.PagAtual),
-                pagMax = nameof(ListaCardLivrosModel.PagMax),
-                Titulo = nameof(LojaFiltrosModel.Titulo),
+            listaCardModel = (ListaCardLivrosModel)listaCardHelper.ViewModel;
+
+            string Titulo = nameof(LojaFiltrosModel.Titulo),
                 Autor = nameof(LojaFiltrosModel.Autor),
                 Isbn = nameof(LojaFiltrosModel.Isbn),
                 Editora = nameof(LojaFiltrosModel.Editora),
                 PrecoMin = nameof(LojaFiltrosModel.PrecoMin),
                 PrecoMax = nameof(LojaFiltrosModel.PrecoMax),
+                DataMin = nameof(LojaFiltrosModel.DataMin),
+                DataMax = nameof(LojaFiltrosModel.DataMax),
                 Categorias = nameof(LojaFiltrosModel.Categorias);
-
-
-            if (Entidades.ContainsKey(pagAtual))
-                listaCardModel.PagAtual = (int)Entidades[pagAtual];
-            else
-                listaCardModel.PagAtual = 1;
-
-            if (Entidades.ContainsKey(pagMax))
-                listaCardModel.PagMax = (int)Entidades[pagMax];
 
             if (Entidades.ContainsKey(Titulo))
                 filtrosModel.Titulo = (string)Entidades[Titulo];
@@ -86,11 +70,19 @@ namespace LES.Models.ViewHelpers.Livros
             if (Entidades.ContainsKey(PrecoMax))
                 filtrosModel.PrecoMax = (double)Entidades[PrecoMax];
 
+            if (Entidades.ContainsKey(DataMin))
+                filtrosModel.PrecoMax = (double)Entidades[DataMin];
+
+            if (Entidades.ContainsKey(DataMax))
+                filtrosModel.PrecoMax = (double)Entidades[DataMax];
+
             if (Entidades.ContainsKey(Categorias))
                 filtrosModel.Categorias = (string)Entidades[Categorias];
 
             model.Filtros = filtrosModel;
             model.Livros = listaCardModel;
+
+            _viewModel = model;
 
         }
     }

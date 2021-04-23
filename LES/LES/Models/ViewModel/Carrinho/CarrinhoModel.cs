@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace LES.Models.ViewModel.Carrinho
 {
-    public class CarrinhoModel
+    public class CarrinhoModel : IViewModel
     {
         public IList<CarrinhoLivroModel> Livros { get; set; }
         [Display(Name = "Preço total: ")]

@@ -32,6 +32,7 @@ function desativarBtns() {
     $(".menos-carrinho").prop("disabled", true);
     $(".remover-carrinho").prop("disabled", true);
     $(".btn-carrinho-comprar").prop("disabled", true);
+    $(".addToCarrinho").prop("disabled", true);
 };
 
 function reativarBtns() {
@@ -39,6 +40,7 @@ function reativarBtns() {
     $(".menos-carrinho").prop("disabled", false);
     $(".remover-carrinho").prop("disabled", false);
     $(".btn-carrinho-comprar").prop("disabled", false);
+    $(".addToCarrinho").prop("disabled", false);
 };
 
 function opCarrinho(codBar, endereco) {

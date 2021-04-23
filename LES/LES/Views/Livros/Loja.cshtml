@@ -11,8 +11,8 @@
             <div id="sidebar" class="col-md-3 sticky-top border-right" style="height:6rem; top:10%">
                 <partial name="../Livros/PartialViews/_LojaFiltroSidebarPartial.cshtml" for="Filtros">
             </div>
-            <div class="col-md-9 div-loja">
-                <partial name="../Livros/PartialViews/_ListaLivrosCardPartial.cshtml" for="Livros">
+            <div id="divLoja" class="col-md-9 div-loja">
+                <partial name="../Shared/_ListaLivrosCardPartial.cshtml" for="Livros">
             </div>
         </div>
     </div>
@@ -21,4 +21,11 @@
 
 @section Scripts{
 
+    <script type="text/javascript">
+        var urls = urls || {};
+        urls.Pesquisar = '@Url.Action("Pesquisa", "Livros")';
+        urls.AddCarrinho = '@Url.Action("_AddToCarrinho", "CarrinhoCompra")';
+    </script>
+    <script src="~/js/Shared/AddToCarrinho.js"></script>
+    <script src="~/js/Livros/CarregarPesquisa.js"></script>
 }

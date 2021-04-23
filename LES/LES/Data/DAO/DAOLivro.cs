@@ -26,6 +26,8 @@ namespace LES.Data.DAO
                     .ThenInclude(a => a.Categoria)
                 .Include(l => l.Inativacoes)
                     .ThenInclude(i => i.Categoria)
+                .Include(l => l.Editora)
+                .Include(l => l.GrupoPreco)
                 .Include(l => l.LivroPedidos)
                 .Include(l => l.LivrosCategoriaLivros)
                     .ThenInclude(l => l.CategoriaLivro).FirstOrDefault();
@@ -35,14 +37,16 @@ namespace LES.Data.DAO
 
         public IList<EntidadeDominio> ListIncludeAll()
         {
-            IList<EntidadeDominio> response = (IList<EntidadeDominio>)_contexto.Livros.Select(l => l)
+            IList<EntidadeDominio> response = _contexto.Livros.Select(l => l)
                 .Include(l => l.Ativacoes)
                     .ThenInclude(a => a.Categoria)
                 .Include(l => l.Inativacoes)
                     .ThenInclude(i => i.Categoria)
+                .Include(l => l.Editora)
+                .Include(l => l.GrupoPreco)
                 .Include(l => l.LivroPedidos)
                 .Include(l => l.LivrosCategoriaLivros)
-                    .ThenInclude(l => l.CategoriaLivro).ToList();
+                    .ThenInclude(l => l.CategoriaLivro).Cast<EntidadeDominio>().ToList();
 
             return response;
         }

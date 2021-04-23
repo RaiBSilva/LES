@@ -8,7 +8,7 @@ namespace LES.Models.ViewModel.Shared
 {
     public class ListaCardLivrosModel : IViewModel
     {
-        public IList<LivroCardModel> Livros { get; set; } = new List<LivroCardModel>();
+        public IList<LivroBaseModel> Livros { get; set; } = new List<LivroBaseModel>();
 
         public int PagAtual { get; set; }
 
