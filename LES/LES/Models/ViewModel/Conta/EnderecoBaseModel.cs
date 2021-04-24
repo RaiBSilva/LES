@@ -19,7 +19,7 @@ namespace LES.Models.ViewModel.Conta
         public string Numero { get; set; }
 
         [Required]
-        [StringLength(7, MinimumLength = 7, ErrorMessage = "Insira um CEP de sete dígitos.")]
+        [StringLength(8, MinimumLength = 8, ErrorMessage = "Insira um CEP de sete dígitos.")]
         [Display(Name = "CEP")]
         public string Cep { get; set; }
 

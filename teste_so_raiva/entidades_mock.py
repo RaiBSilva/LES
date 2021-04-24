@@ -40,7 +40,7 @@ class Endereco:
 class User:
     def __init__(self):
         self.nome = "John Price"
-        self.data_nascimento = "12/08/1996"
+        self.data_nascimento = "12081996"
         self.cpf = "42069024185"
         self.email = "bravo6goingdark@gmail.com"
         self.senha = "CODww@sucks"
