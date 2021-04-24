@@ -48,7 +48,8 @@ class ChromeBrowser:
         self.chrome_id = "chrome_id.json"
         self.chrome_exe = r"D:\DEVELOPMENT\WebDrivers\chromedriver.exe"
 
-    def novo(self):
+    def new(self):
+        global driver
         driver = webdriver.Chrome(executable_path=self.chrome_exe)
         try:
             driver.maximize_window()
@@ -65,13 +66,12 @@ class ChromeBrowser:
 
         return driver
 
-    def aberto(self):
+    def opened(self, open_new=True):
         tem_id = True
         with open(self.chrome_id, 'r') as json_file:
             try:
                 chrome_info = json.load(json_file)
-            except Exception as e:
-                print(e)
+            except:
                 tem_id = False
         if tem_id:
             id = chrome_info["session_id"]
@@ -85,9 +85,9 @@ class ChromeBrowser:
                     break
                 return driver
             except:
-                return self.novo()
-        return self.novo()
+                return self.new() if open_new else -1
+        return self.new() if open_new else -1
 
-    def fechar(self):
-        driver = self.aberto()
+    def kill(self):
+        driver = self.opened()
         driver.close()
