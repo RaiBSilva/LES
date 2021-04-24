@@ -4,14 +4,16 @@ using LES.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace LES.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210424011747_destrocaCrl")]
+    partial class destrocaCrl
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -183,28 +185,6 @@ namespace LES.Migrations
                     b.HasIndex("ClienteId");
 
                     b.ToTable("CARTOES_CREDITO");
-                });
-
-            modelBuilder.Entity("LES.Models.Entity.CartaoPedido", b =>
-                {
-                    b.Property<int>("CartaoId")
-                        .HasColumnType("int")
-                        .HasColumnName("cap_car_id");
-
-                    b.Property<int>("PedidoId")
-                        .HasColumnType("int")
-                        .HasColumnName("cap_ped_id");
-
-                    b.Property<double>("Valor")
-                        .HasColumnType("float")
-                        .HasColumnName("cap_valor");
-
-                    b.HasKey("CartaoId", "PedidoId")
-                        .HasName("PK_CAP");
-
-                    b.HasIndex("PedidoId");
-
-                    b.ToTable("CARTOES_PEDIDOS");
                 });
 
             modelBuilder.Entity("LES.Models.Entity.CategoriaAtivacao", b =>
@@ -1038,27 +1018,6 @@ namespace LES.Migrations
                     b.Navigation("Cliente");
                 });
 
-            modelBuilder.Entity("LES.Models.Entity.CartaoPedido", b =>
-                {
-                    b.HasOne("LES.Models.Entity.CartaoCredito", "Cartao")
-                        .WithMany("CartaoPedidos")
-                        .HasForeignKey("CartaoId")
-                        .HasConstraintName("FK_CAP_CAR")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("LES.Models.Entity.Pedido", "Pedido")
-                        .WithMany("CartaoPedidos")
-                        .HasForeignKey("PedidoId")
-                        .HasConstraintName("FK_CAP_PED")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
-
-                    b.Navigation("Cartao");
-
-                    b.Navigation("Pedido");
-                });
-
             modelBuilder.Entity("LES.Models.Entity.Cidade", b =>
                 {
                     b.HasOne("LES.Models.Entity.Estado", "Estado")
@@ -1282,11 +1241,6 @@ namespace LES.Migrations
                     b.Navigation("Cliente");
                 });
 
-            modelBuilder.Entity("LES.Models.Entity.CartaoCredito", b =>
-                {
-                    b.Navigation("CartaoPedidos");
-                });
-
             modelBuilder.Entity("LES.Models.Entity.CategoriaAtivacao", b =>
                 {
                     b.Navigation("Ativacoes");
@@ -1360,8 +1314,6 @@ namespace LES.Migrations
 
             modelBuilder.Entity("LES.Models.Entity.Pedido", b =>
                 {
-                    b.Navigation("CartaoPedidos");
-
                     b.Navigation("LivrosPedidos");
                 });
 

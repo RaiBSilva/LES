@@ -10,21 +10,41 @@ function carregarCarrinho(msg, classe) {
 
     var divDropdown = document.getElementById("dropdown");
 
-    $(divDropdown).load(carrinhoUrl);
+    $(divDropdown).load(carrinhoUrl, function () {
+
+        $(".mais-carrinho").on("click", function (e) {
+            e.preventDefault();
+            var codBar = $(this).val();
+            opCarrinho(codBar, carrinhoMais);
+        });
+
+        $(".menos-carrinho").on("click", function (e) {
+            e.preventDefault();
+            var codBar = $(this).val();
+            opCarrinho(codBar, carrinhoMenos);
+        });
+
+        $(".remover-carrinho").on("click", function (e) {
+            e.preventDefault();
+            var codBar = $(this).val();
+            opCarrinho(codBar, carrinhoRemover);
+        });
+
+    });
     if (msg != "") appendAlert(msg, classe);
 }
 
 function appendAlert(msg, classe) {
     var divAlert = $("#alertCarrinho");
 
-    divAlert.append(
+    divAlert[0].innerHTML =
         '<div class="alert'+ classe +'alert-dismissible fade show" role="alert">' +
             '<strong>ERRO</strong>' +
                 msg +
             '<button type="button" class="close" data-dismiss="alert" aria-label="Close">' +
                 '<span aria-hidden="true">&times;</span>' +
             '</button>' +
-        '</div>');
+        '</div>';
 };
 
 function desativarBtns() {
@@ -61,21 +81,6 @@ function opCarrinho(codBar, endereco) {
 $(".carrinho-update").on("click", function (e) {
     e.preventDefault();
     carregarCarrinho();
-});
-
-$(".mais-carrinho").on("click", function (e) {
-    var codBar = $(this).val();
-    opCarrinho(codBar, carrinhoMais);
-});
-
-$(".menos-carrinho").on("click", function (e) {
-    var codBar = $(this).val();
-    opCarrinho(codBar, carrinhoMenos);
-});
-
-$(".remover-carrinho").on("click", function (e) {
-    var codBar = $(this).val();
-    opCarrinho(codBar, carrinhoRemover);
 });
 
 carregarCarrinho();

@@ -109,13 +109,13 @@ namespace LES.Models
             modelBuilder.Entity<CarrinhoLivro>()
                 .HasOne(l => l.Carrinho)
                 .WithMany(c => c.CarrinhoLivro)
-                .HasForeignKey(l => l.LivroId)
+                .HasForeignKey(l => l.CarrinhoId)
                 .HasConstraintName("FK_" + tri.ToUpper() + "_CRR");
 
             modelBuilder.Entity<CarrinhoLivro>()
                 .HasOne(l => l.Livro)
                 .WithMany(l => l.CarrinhoLivro)
-                .HasForeignKey(l => l.CarrinhoId)
+                .HasForeignKey(l => l.LivroId)
                 .HasConstraintName("FK_" + tri.ToUpper() + "_LIV");
 
             #endregion
@@ -172,6 +172,44 @@ namespace LES.Models
                 .WithMany(c => c.Cartoes)
                 .HasForeignKey(c => c.ClienteId)
                 .HasConstraintName("FK_" + tri.ToUpper() + "_CLI");
+
+            #endregion
+
+            #region CartaoPedido
+
+            tri = "cap";
+
+            modelBuilder.Entity<CartaoPedido>().ToTable("CARTOES_PEDIDOS");
+
+            modelBuilder.Entity<CartaoPedido>().HasKey(c => new { c.CartaoId, c.PedidoId })
+                .HasName("PK_" + tri.ToUpper());
+
+            modelBuilder.Entity<CartaoPedido>()
+                .Property(c => c.CartaoId)
+                .HasColumnName(tri + "_car_id")
+                .IsRequired();
+
+            modelBuilder.Entity<CartaoPedido>()
+                .Property(c => c.PedidoId)
+                .HasColumnName(tri + "_ped_id")
+                .IsRequired();
+
+            modelBuilder.Entity<CartaoPedido>()
+                .Property(c => c.Valor)
+                .HasColumnName($"{tri}_valor")
+                .IsRequired();
+
+            modelBuilder.Entity<CartaoPedido>()
+                .HasOne(c => c.Cartao)
+                .WithMany(c => c.CartaoPedidos)
+                .HasForeignKey(l => l.CartaoId)
+                .HasConstraintName("FK_" + tri.ToUpper() + "_CAR");
+
+            modelBuilder.Entity<CartaoPedido>()
+                .HasOne(l => l.Pedido)
+                .WithMany(l => l.CartaoPedidos)
+                .HasForeignKey(l => l.PedidoId)
+                .HasConstraintName("FK_" + tri.ToUpper() + "_PED").OnDelete(DeleteBehavior.NoAction);
 
             #endregion
 
@@ -786,6 +824,7 @@ namespace LES.Models
         public DbSet<Carrinho> Carrinhos { get; set; }
         public DbSet<CarrinhoLivro> CarrinhosLivro { get; set; }
         public DbSet<CartaoCredito> CartaoCreditos { get; set; }
+        public DbSet<CartaoPedido> CartaoPedidos { get; set; }
         public DbSet<CategoriaAtivacao> CategoriaAtivacaos { get; set; }
         public DbSet<CategoriaInativacao> CategoriasInativacaos { get; set; }
         public DbSet<CategoriaLivro> CategoriaLivros { get; set; }

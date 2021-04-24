@@ -2,18 +2,20 @@
 
     <form>
         <div class="container dropdown-item">
-            <div>
-                <h3 class="font-weight-light">Carrinho de compras</h3>
+            <div class="row">
+                <h4 class="font-weight-light">Carrinho de compras</h4>
             </div>
             <div id="alertCarrinho"></div>
-            @foreach (var item in Model.Livros)
-            {
-                <table class="table table-borderless">
+                <table class="table table-borderless row">
                     <tbody>
-                        <partial name="_ItemCarrinhoPartial" for="@item">
+                        @foreach (var item in Model.Livros)
+                        { 
+                            <tr class="form-group">
+                                <partial name="_ItemCarrinhoPartial" for="@item">
+                            </tr> 
+                        }
                     </tbody>
                 </table>
-            }
         </div>
         <div class="dropdown-divider"></div>
         <div class="container">

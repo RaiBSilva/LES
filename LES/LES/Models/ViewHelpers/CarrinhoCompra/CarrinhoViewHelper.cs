@@ -38,10 +38,10 @@ namespace LES.Models.ViewHelpers.CarrinhoCompra
                     Titulo = item.Livro.Titulo,
                 };
                 vm.Livros.Add(livro);
-                vm.PrecoTotal += livro.Preco;
+                vm.PrecoTotal += livro.Preco * livro.Quantia;
             }
 
-            _viewModel = (IViewModel)vm;
+            _viewModel = vm;
         }
     }
 }

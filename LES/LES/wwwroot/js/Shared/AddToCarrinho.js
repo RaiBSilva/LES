@@ -17,6 +17,5 @@
 
 $(".addToCarrinho").on("click", function (e) {
     var codBar = this.value;
-    alert(codBar);
     addCarrinho(codBar);
 });

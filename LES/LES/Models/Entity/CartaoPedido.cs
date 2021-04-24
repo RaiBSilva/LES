@@ -5,14 +5,15 @@ using System.Threading.Tasks;
 
 namespace LES.Models.Entity
 {
-    public class LivroPedido : MuitosPMuitos
+    public class CartaoPedido : MuitosPMuitos
     {
-        public int LivroId { get; set; }
+        public int CartaoId { get; set; }
         public int PedidoId { get; set; }
-        public bool Trocado { get; set; }
+        public double Valor { get; set; }
 
-        public virtual Livro Livro { get; set; }
+        public virtual CartaoCredito Cartao { get; set; }
         public virtual Pedido Pedido { get; set; }
+
 
     }
 }

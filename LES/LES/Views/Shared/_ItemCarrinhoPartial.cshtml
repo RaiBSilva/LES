@@ -3,12 +3,12 @@
     <td>
         <img src="@Url.Action("Livro","Imagem")?codBar=@Model.CodigoBarras" class="capa-carrinho" />
     </td>
-    <td>
-        <div class=""><h5>@Model.Titulo</h5></div>
+    <td style="width:30%">
+        <div class=""><h6>@Model.Titulo</h6></div>
         <div class="font-weight-lighter"><h6>@Model.Autor</h6></div>
     </td>
     <td>
-        <div class=""><h6>R$ @Model.Preco.ToString("0.00")</h6></div>
+        <div class=""><small>R$ @Model.Preco.ToString("0.00")</small></div>
         <div class="font-weight-lighter"><h4>x @Model.Quantia</h4></div>
     </td>
     <td>
