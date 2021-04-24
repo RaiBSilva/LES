@@ -1,0 +1,37 @@
+﻿@model IList<LES.Models.ViewModel.Carrinho.ListaCartoesPedidoModel>
+
+<div class="modal-content">
+
+    <!-- Modal content-->
+    <div class="modal-header">
+        <h4 class="modal-title">Selecionar Cartões para Pagar</h4>
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+    </div>
+    <div class="modal-body">
+        <form asp-action="AlterarPagamento" asp-controller="CarrinhoCompra">
+            @foreach(var item in Model)
+            {
+            <div class="row">
+                <div class="col-sm-3">
+                    <div class="form-check form-switch form-check-inline">
+                        <input asp-for="@item.Ativado" class="form-check-input required " />
+                        <label asp-for="@item.Ativado" class="form-check-label"></label>
+                        <span asp-validation-for="@item.Ativado" class="text-danger required"></span>
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <h5></h5>
+                </div>
+                <div class="col-sm-3">
+
+                </div>
+            </div>
+            }
+
+        </form>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+    </div>
+
+</div>

@@ -18,7 +18,7 @@ namespace LES.Negócio.Strategy.ClienteStrategy
 
             foreach (Endereco end in listEnderecos)
             {
-                if (end.Cep.Length != 8) return "O CEP deve possuir exatos oito dígitos.";
+                if (end.Cep.Length != 7) return "O CEP deve possuir exatos sete dígitos.";
             }
 
             return "";
