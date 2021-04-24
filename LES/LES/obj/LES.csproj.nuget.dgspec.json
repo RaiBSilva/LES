@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "D:\\DEVELOPMENT\\LES\\LES\\LES\\LES.csproj": {}
+    "C:\\Programming\\LES\\LES\\LES\\LES.csproj": {}
   },
   "projects": {
-    "D:\\DEVELOPMENT\\LES\\LES\\LES\\LES.csproj": {
+    "C:\\Programming\\LES\\LES\\LES\\LES.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\DEVELOPMENT\\LES\\LES\\LES\\LES.csproj",
+        "projectUniqueName": "C:\\Programming\\LES\\LES\\LES\\LES.csproj",
         "projectName": "LES",
-        "projectPath": "D:\\DEVELOPMENT\\LES\\LES\\LES\\LES.csproj",
-        "packagesPath": "C:\\Users\\Elite\\.nuget\\packages\\",
-        "outputPath": "D:\\DEVELOPMENT\\LES\\LES\\LES\\obj\\",
+        "projectPath": "C:\\Programming\\LES\\LES\\LES\\LES.csproj",
+        "packagesPath": "C:\\Users\\raibs\\.nuget\\packages\\",
+        "outputPath": "C:\\Programming\\LES\\LES\\LES\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\Elite\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\raibs\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -26,7 +26,6 @@
         },
         "frameworks": {
           "netcoreapp3.1": {
-            "targetAlias": "netcoreapp3.1",
             "projectReferences": {}
           }
         },
@@ -38,7 +37,6 @@
       },
       "frameworks": {
         "netcoreapp3.1": {
-          "targetAlias": "netcoreapp3.1",
           "dependencies": {
             "Microsoft.EntityFrameworkCore": {
               "target": "Package",
@@ -69,12 +67,6 @@
           ],
           "assetTargetFallback": true,
           "warn": true,
-          "downloadDependencies": [
-            {
-              "name": "Microsoft.NETCore.App.Host.win-x64",
-              "version": "[3.1.13, 3.1.13]"
-            }
-          ],
           "frameworkReferences": {
             "Microsoft.AspNetCore.App": {
               "privateAssets": "none"
@@ -83,7 +75,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.104\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.201\\RuntimeIdentifierGraph.json"
         }
       }
     }

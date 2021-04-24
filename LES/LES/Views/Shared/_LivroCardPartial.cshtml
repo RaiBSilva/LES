@@ -21,7 +21,7 @@
             </div>
             <div class="container">
                 <div class="row no-gutters justify-content-sm-around">
-                        <button type="button" class="btn btn-outline-success col-8" onclick="window.location.href='@Url.Action("Descricao","Livros", Model.CodigoBarras)'" style="font-size:0.75rem">SAIBA MAIS</button>
+                        <button type="button" class="btn btn-outline-success col-8" onclick="window.location.href='@(Url.Action("Descricao","Livros"))?codBar=@(Model.CodigoBarras)'" style="font-size:0.75rem">SAIBA MAIS</button>
                         <button type="button" class="btn btn-success col-3 addToCarrinho" value="@Model.CodigoBarras" style="font-size:0.75rem"><i class="fa fa-shopping-cart"></i></button>
                 </div>
             </div>
