@@ -22,6 +22,16 @@ class Cartao:
         self.mes = "maio"
         self.ano = "2027"
         self.mastercard = "Mastercard"
+        
+        
+class Cartao2:
+    def __init__(self):
+        self.nome = "John Price"
+        self.codigo = "1235567891239999"
+        self.cvv = "253"
+        self.mes = "maio"
+        self.ano = "2026"
+        self.mastercard = "Visa"
 
 
 class Endereco:
