@@ -109,4 +109,6 @@
     <UpToDateCheckInput Remove="Views\Admin\PartialViews\_ListaPedidosPartial.cshtml" />
   </ItemGroup>
 
+  <ProjectExtensions><VisualStudio><UserProperties appsettings_1json__JsonSchema="" /></VisualStudio></ProjectExtensions>
+
 </Project>
