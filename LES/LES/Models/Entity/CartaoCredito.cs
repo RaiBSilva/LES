@@ -18,10 +18,8 @@ namespace LES.Models.Entity
 
         public virtual BandeiraCartaoCredito Bandeira { get; set; }
         public virtual Cliente Cliente { get; set; }
+        public virtual IList<CartaoPedido> CartaoPedidos { get; set; }
 
-        public CartaoCredito() : base()
-        {
-        }
 
     }
 }

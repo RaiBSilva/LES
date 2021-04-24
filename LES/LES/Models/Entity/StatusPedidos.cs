@@ -8,6 +8,8 @@ namespace LES.Models.Entity
 {
     public enum StatusPedidos
     {
+        [Display(Name = "Não finalizado.")]
+        NaoFinalizado = -1,
         [Display(Name = "Em processamento.")]
         Processamento,
         [Display(Name ="Em trânsito...")]

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace LES.Models.Entity
 {
-    public class LivroCategoriaLivro
+    public class LivroCategoriaLivro : MuitosPMuitos
     {
         public int CategoriaLivroId { get; set; }
         public int LivroId { get; set; }

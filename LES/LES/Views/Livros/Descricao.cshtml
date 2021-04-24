@@ -10,7 +10,7 @@
 <div class="container ">
     <div class="row">
         <div class="col-4 text-center pr-3 border-right border-secondary">
-            <img src="@Url.Action("Livro", "Imagen")?codBar=@(Model.CodigoBarras)" class="img-fluid" />
+            <img src="@Url.Action("Livro", "Imagem")?codBar=@(Model.CodigoBarras)" class="img-fluid" />
         </div>
         <div class="col-7 mt-lg-3">
             <div class="container">
@@ -37,76 +37,91 @@
                 <div class="row justify-content-center">
                     <div class="col-sm-4">
                         <div class="row">
-                            <span class="col-12 font-weight-bold text-center">Editora</span>
+                            <span class="col-sm-12 font-weight-bold text-center">Editora</span>
                         </div>
                         <div class="row">
-                            <span class="col-12 font-weight-light text-center">@Model.Editora</span>
+                            <span class="col-sm-12 font-weight-light text-center">@Model.Editora</span>
                         </div>
                     </div>
                     <div class="col-sm-4">
                         <div class="row">
-                            <span class="col-12 font-weight-bold text-center">Ano de lançamento</span>
+                            <span class="col-sm-12 font-weight-bold text-center">Ano de lançamento</span>
                         </div>
                         <div class="row">
-                            <span class="col-12 font-weight-light text-center">@Model.DtLancamento.Year</span>
+                            <span class="col-sm-12 font-weight-light text-center">@Model.DtLancamento.Year</span>
                         </div>
                     </div>
                     <div class="col-sm-4 ">
                         <div class="row">
-                            <span class="col-12 font-weight-bold text-center">Páginas</span>
+                            <span class="col-sm-12 font-weight-bold text-center">Páginas</span>
                         </div>
                         <div class="row">
-                            <span class="col-12 font-weight-light text-center">@Model.Paginas</span>
+                            <span class="col-sm-12 font-weight-light text-center">@Model.Paginas</span>
                         </div>
-                    </div>
-                    <div class="col-8 align-content-lg-end text-center my-4">
-                        <h2 class="font-weight-bold">@Model.Preco</h2>
                     </div>
                 </div>
                 <div class="row justify-content-center">
-                    <div class="col-sm-3">
+                    <div class="col-lg-3">
                         <div class="row">
-                            <span class="col-12 font-weight-bold text-center">Edição</span>
+                            <span class="col-sm-12 font-weight-bold text-center">Edição</span>
                         </div>
                         <div class="row">
-                            <span class="col-12 font-weight-light text-center">@Model.Edicao</span>
-                        </div>
-                    </div>
-                    <div class="col-sm-3">
-                        <div class="row">
-                            <span class="col-12 font-weight-bold text-center">Largura</span>
-                        </div>
-                        <div class="row">
-                            <span class="col-12 font-weight-light text-center">@Model.Largura</span>
+                            <span class="col-sm-12 font-weight-light text-center">@Model.Edicao</span>
                         </div>
                     </div>
-                    <div class="col-sm-3">
+                    <div class="col-lg-3">
                         <div class="row">
-                            <span class="col-12 font-weight-bold text-center">Comprimento</span>
+                            <span class="col-sm-12 font-weight-bold text-center">Largura</span>
                         </div>
                         <div class="row">
-                            <span class="col-12 font-weight-light text-center">@Model.Comprimento</span>
-                        </div>
-                    </div>
-                    <div class="col-sm-3">
-                        <div class="row">
-                            <span class="col-12 font-weight-bold text-center">Altura</span>
-                        </div>
-                        <div class="row">
-                            <span class="col-12 font-weight-light text-center">@Model.Altura</span>
+                            <span class="col-sm-12 font-weight-light text-center">@Model.Largura</span>
                         </div>
                     </div>
+                    <div class="col-lg-3">
+                        <div class="row">
+                            <span class="col-sm-12 font-weight-bold text-center">Comprimento</span>
+                        </div>
+                        <div class="row">
+                            <span class="col-sm-12 font-weight-light text-center">@Model.Comprimento</span>
+                        </div>
+                    </div>
+                    <div class="col-lg-3">
+                        <div class="row">
+                            <span class="col-sm-12 font-weight-bold text-center">Altura</span>
+                        </div>
+                        <div class="row">
+                            <span class="col-sm-12 font-weight-light text-center">@Model.Altura</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="row justify-content-center">
+                    <div class="col-sm-8 align-content-lg-end text-center my-4">
+                        <h2 class="font-weight-bold">R$ @Model.Preco.ToString("0.00").Replace('.', ',')</h2>
+                    </div>
+                </div>
+                <div class="row justify-content-center">
+                    <div class="col-8 font-weight-bold text-center">
+                        <span class="text-center">
+                            Categorias
+                        </span>
+                    </div> 
                 </div>
                 <div class="row justify-content-center">
                     @foreach (var item in Model.Categorias)
                     {
-                        <span class="border rounded bg-light text-dark mb-2 mx-3"><small>@item</small></span>
+                        <span class="border rounded bg-light text-dark p-1 mb-2 mx-3"><small>@item</small></span>
                     }
                 </div>
+                <div class="row justify-content-end">
+                    <div class="col-8"></div>
+                    <span class="col-1"> x </span>
+                    <div class="col-3 justify-content-end">
+                        <input class="form-control mr-1" type="number" min="1" value="1" id="QuantiaItens" />
+                    </div>
+                </div>
                 <div class="row justify-content-center">
-                    <button type="button" class="btn btn-success col-sm-6 mr-1 text-center" onclick="window.location.href='@Url.Action("FinalizarCompra","CarrinhoCompra")'">COMPRAR AGORA</button>
-                    <input class="form-control col-sm-3" type="number" min="1" id="QuantiaItens" />
-                    <button type="button" class="btn btn-outline-success col-sm-3 text-center addtoCarrinho" value="@Model.CodigoBarras"><small><i class="fa fa-shopping-cart"></i></small></button>
+                    <button type="button" class="btn btn-success col-sm-7 mr-4 text-center" onclick="window.location.href='@Url.Action("FinalizarCompra","CarrinhoCompra")'">COMPRAR AGORA</button>
+                    <button type="button" class="btn btn-outline-success col-sm-4 text-center addtoCarrinho" value="@Model.CodigoBarras"><small><i class="fa fa-shopping-cart"></i></small></button>
                 </div>
             </div>
         </div>

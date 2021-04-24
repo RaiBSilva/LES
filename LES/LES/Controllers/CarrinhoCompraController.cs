@@ -1,5 +1,6 @@
 ﻿using LES.Controllers;
 using LES.Controllers.Facade;
+using LES.Data.DAO;
 using LES.Migrations;
 using LES.Models.Entity;
 using LES.Models.ViewHelpers.CarrinhoCompra;
@@ -18,15 +19,17 @@ namespace LES.Views.CarrinhoCompra
     {
 
         IFacadeCrud<Carrinho> _facadeCarrinho { get; set; }
+        IDAOTabelaRel<CarrinhoLivro> _daoCarrinhoLivro { get; set; }
         IFacadeCrud<Cliente> _facadeCliente { get; set; }
         IFacadeCrud<Livro> _facadeLivro { get; set; }
 
         public CarrinhoCompraController(IFacadeCrud<Carrinho> facadeCarrinho, IFacadeCrud<Cliente> facadeCliente,
-            IFacadeCrud<Livro> facadeLivro)
+            IFacadeCrud<Livro> facadeLivro, IDAOTabelaRel<CarrinhoLivro> daoCarrinhoLivro)
         {
             _facadeCarrinho = facadeCarrinho;
             _facadeCliente = facadeCliente;
             _facadeLivro = facadeLivro;
+            _daoCarrinhoLivro = daoCarrinhoLivro;
         }
 
         public IActionResult FinalizarCompra() {
@@ -95,15 +98,14 @@ namespace LES.Views.CarrinhoCompra
         [HttpPost]
         public IActionResult _MaisQuantiaNoCarrinho(string codBar)
         {
-            return RedirectToAction(nameof(_AlterarQuantiaNoCarrinho), codBar, "+");
+            return RedirectToAction(nameof(_AlterarQuantiaNoCarrinho), new { codBar, op = "+" });
         }
         [HttpPost]
         public IActionResult _MenosQuantiaNoCarrinho(string codBar)
         {
-            return RedirectToAction(nameof(_AlterarQuantiaNoCarrinho), codBar, "-");
+            return RedirectToAction(nameof(_AlterarQuantiaNoCarrinho), new { codBar, op = "-" });
         }
 
-        [NonAction]
         public IActionResult _AlterarQuantiaNoCarrinho(string codBar, string op) 
         {
             Carrinho c = GetCarrinho();
@@ -155,7 +157,7 @@ namespace LES.Views.CarrinhoCompra
             livro.Estoque += carrinhoLivro.Quantia;
             c.CarrinhoLivro.Remove(carrinhoLivro);
 
-            string msg = _facadeCarrinho.Editar(c);
+            string msg = _daoCarrinhoLivro.Remove(carrinhoLivro);
             msg += _facadeLivro.Editar(livro);
 
             if (msg == "")
