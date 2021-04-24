@@ -68,6 +68,14 @@ VALUES ('Visa', CURRENT_TIMESTAMP, 0),
  ('Hipercard', CURRENT_TIMESTAMP, 0),
  ('Diners Club', CURRENT_TIMESTAMP, 0);
 
+ INSERT INTO [dbo].[CATEGORIAS_LIVRO]
+           ([ctl_dt_cadastro]
+           ,[ctl_inativo]
+           ,[ctl_nome])
+     VALUES
+           (CURRENT_TIMESTAMP, 0, 'Romance'),
+		   (CURRENT_TIMESTAMP, 0, 'Aventura')
+
  INSERT INTO [dbo].[LIVROS_CATEGORIAS_LIVROS]
            ([lcl_ctl_id]
            ,[lcl_liv_id])
