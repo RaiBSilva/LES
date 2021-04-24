@@ -16,20 +16,34 @@ class Livro:
 
 class Cartao:
     def __init__(self):
-        self.nome = "Joseph Joestar"
+        self.nome = "John Price"
         self.codigo = "1234567891231234"
         self.cvv = "420"
         self.mes = "maio"
         self.ano = "2027"
+        self.mastercard = "Mastercard"
 
 
 class Endereco:
     def __init__(self):
-        self.nome = "Simas Turbo Oficina Mecânica"
+        self.nome = "Toreto Oficina Mecânica"
         self.logradouro = "Av. Eugen Wissmann"
         self.numero = "271"
-        self.cep = "13304-270"
+        self.cep = "13304270"
         self.cidade = "São Luiz, Itu"
         self.estado = "SP"
         self.pais = "Brasil"
         self.complemento = "Perto do mercado."
+        self.observacoes = "Casa B, na esquerda."
+        
+
+class User:
+    def __init__(self):
+        self.nome = "John Price"
+        self.data_nascimento = "12/08/1996"
+        self.cpf = "42069024185"
+        self.email = "bravo6goingdark@gmail.com"
+        self.senha = "CODww@sucks"
+        self.ddd = "011"
+        self.telefone = "942458998"
+        
