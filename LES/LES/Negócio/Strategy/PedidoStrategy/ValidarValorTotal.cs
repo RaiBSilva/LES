@@ -27,7 +27,7 @@ namespace LES.Negócio.Strategy.PedidoStrategy
                 valorCartoes += item.Valor;
 
             if (valorCartoes != valorTotal)
-                return "A soma dos valores nos cartões não condiz com a soma total do pedido.";
+                return "A soma dos valores nos cartões não condiz com a soma total do pedido.\n";
 
             return "";
         }

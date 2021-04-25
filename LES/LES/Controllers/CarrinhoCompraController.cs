@@ -121,6 +121,25 @@ namespace LES.Views.CarrinhoCompra
             return View(_vh.ViewModel); 
         }
 
+        public IActionResult Comprar()
+        {
+            Cliente clienteDb = _facadeCliente.GetAllInclude(GetClienteComEmail());
+            Pedido p = GetPedidoNaoFinalizado(clienteDb);
+
+            if(p == null)
+            {
+                TempData["Alert"] = "Ocorreu um erro. Tente novamente\n.";
+                return RedirectToAction(nameof(FinalizarCompra));
+            }
+
+            p.Status = StatusPedidos.Processamento;
+            string msg = _facadePedido.Editar(p);
+
+            if (msg != "")
+                TempData["Alert"] = msg;
+            return RedirectToAction(nameof(FinalizarCompra));
+        }
+
         #region Selecionar Endereco e Cartao
 
         public IActionResult _SelecionarEndereco()

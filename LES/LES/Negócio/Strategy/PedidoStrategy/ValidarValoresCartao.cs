@@ -26,7 +26,7 @@ namespace LES.Negócio.Strategy.PedidoStrategy
 
             foreach (var item in p.CartaoPedidos)
                 if (item.Valor <= 10)
-                    return "Deve ser pago pelo menos 10 reais com cada cartão.";
+                    return "Deve ser pago pelo menos 10 reais com cada cartão.\n";
 
             return "";
         }
