@@ -58,6 +58,13 @@ namespace LES.Views.CarrinhoCompra
             Cliente c = GetClienteComEmail();
             Cliente clienteDb = _facadeCliente.GetAllInclude(c);
             Carrinho carrinho = clienteDb.Carrinho;
+
+            if (carrinho == null || carrinho.CarrinhoLivro.Count == 0) 
+            {
+                TempData["Alert"] = "Você não possui livros no carrinho!";
+                return RedirectToAction("Loja", "Livros");
+            }
+
             Pedido pedNaoFinalizado = GetPedidoNaoFinalizado(clienteDb);
             bool naoTemPedido = pedNaoFinalizado == null;
 
@@ -125,19 +132,25 @@ namespace LES.Views.CarrinhoCompra
         {
             Cliente clienteDb = _facadeCliente.GetAllInclude(GetClienteComEmail());
             Pedido p = GetPedidoNaoFinalizado(clienteDb);
+            Carrinho c = GetCarrinho();
 
-            if(p == null)
+            if (p == null)
             {
                 TempData["Alert"] = "Ocorreu um erro. Tente novamente\n.";
                 return RedirectToAction(nameof(FinalizarCompra));
             }
+
+            int lastIndex = c.CarrinhoLivro.Count() - 1;
+
+            for (int i = lastIndex; i >= 0; i--)
+                _daoCarrinhoLivro.Remove(c.CarrinhoLivro[i]);
 
             p.Status = StatusPedidos.Processamento;
             string msg = _facadePedido.Editar(p);
 
             if (msg != "")
                 TempData["Alert"] = msg;
-            return RedirectToAction(nameof(FinalizarCompra));
+            return RedirectToAction("Loja", "Livros");
         }
 
         #region Selecionar Endereco e Cartao

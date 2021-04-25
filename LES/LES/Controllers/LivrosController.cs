@@ -42,6 +42,9 @@ namespace LES.Controllers
                 }
             };
 
+            if (TempData["Alert"] != null)
+                ViewData["Alert"] = (string)TempData["Alert"];
+
             return View(_vh.ViewModel);
         }
 
