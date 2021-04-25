@@ -1,0 +1,87 @@
+﻿@model LES.Models.ViewModel.Carrinho.SelecionarEnderecoModel
+
+@*
+    For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
+*@
+
+    <div class="modal-content">
+
+        <!-- Modal content-->
+        <div class="modal-header">
+            <h4 class="modal-title">Selecionar Endereco</h4>
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+        </div>
+        <div class="modal-body">
+            <form asp-action="AlterarEndereco" asp-controller="CarrinhoCompra">
+                @foreach (var item in Model.Enderecos)
+                {
+                    <div class="row align-content-center border-bottom">
+                        <div class="col-2">
+                            @if (item.Id == Model.EnderecoId.ToString())
+                            {
+                                <input type="radio" checked="checked" asp-for="EnderecoId" value="@item.Id" id="Endereco@(item.Id)">
+                            }
+                            else
+                            {
+                                <input type="radio" asp-for="EnderecoId" value="@item.Id" id="Endereco@(item.Id)">
+                            }
+                        </div>
+                        <div class="col-10 border-left">
+                            <partial name="/Views/Conta/PartialViews/_DlEnderecoPartial.cshtml" for="@item" />
+                        </div>
+                    </div>
+                }
+
+                <div class="form-group">
+                    <input type="submit" value="Alterar" class="btn btn-primary" id="btn" />
+                </div>
+
+            </form>
+            @if (Model.Enderecos.Count < 4)
+            {
+            <a class="btn btn-primary" data-toggle="collapse" href="#collapseEndereco" role="button" aria-expanded="false" aria-controls="collapseEndereco">
+                Adicionar Novo Endereço
+            </a>
+            
+                <div class="collapse" id="collapseEndereco">
+                    <div class="card card-body">
+                        <form asp-action="AdicionarNovoEndereco" asp-controller="CarrinhoCompra">
+
+                            <partial name="/Views/Conta/PartialViews/_EnderecoPartial.cshtml" for="@Model" />
+
+                            <div class="container">
+                                <div class="row">
+                                    <div class="col-12">
+                                        <div class="form-check form-switch form-check-inline">
+                                            <input asp-for="ECobranca" class="form-control required" />
+                                            <label asp-for="ECobranca" class="form-check-label"></label>
+                                            <span asp-validation-for="ECobranca" class="text-danger required"></span>
+                                        </div>
+
+                                        <div class="form-check form-switch form-check-inline">
+                                            <input asp-for="EEntrega" class="form-control required" />
+                                            <label asp-for="EEntrega" class="form-check-label"></label>
+                                            <span asp-validation-for="EEntrega" class="text-danger required"></span>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <input type="submit" value="Cadastrar" class="btn btn-primary" id="btn" />
+                                    </div>
+                                </div>
+                            </div>
+
+                        </form>
+                    </div>
+                </div>
+            }
+            else
+            {
+                <a tabindex="0" class="btn btn-primary" role="button" data-toggle="popover" data-trigger="focus" title="Limite de endereços atingido." data-content="O seu número de endereços registrado atingiu o máximo.">Adicionar Novo Endereço</a>
+            }
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+        </div>
+
+    </div>

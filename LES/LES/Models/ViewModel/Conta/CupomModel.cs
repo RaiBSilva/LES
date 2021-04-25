@@ -9,7 +9,7 @@ namespace LES.Models.ViewModel.Conta
     {
 
         public string Codigo { get; set; }
-        public float Valor { get; set; }
+        public double Valor { get; set; }
 
     }
 }

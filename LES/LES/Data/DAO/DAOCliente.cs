@@ -21,6 +21,9 @@ namespace LES.Data.DAO
             string email = request.Usuario.Email;
 
             Cliente response = _contexto.Clientes.Select(c => c).Where(c => c.Usuario.Email == email)
+                .Include(c => c.Carrinho)
+                    .ThenInclude(c => c.CarrinhoLivro)
+                    .ThenInclude(c => c.Livro)
                 .Include(c => c.Cartoes).ThenInclude(c => c.Bandeira)
                 .Include(c => c.Enderecos)
                     .ThenInclude(e => e.Cidade)
@@ -31,6 +34,8 @@ namespace LES.Data.DAO
                 .Include(c => c.Telefones).ThenInclude(t => t.TipoTelefone)
                 .Include(c => c.Usuario)
                 .Include(c => c.Cupons)
+                .Include(c => c.Pedidos)
+                    .ThenInclude(p => p.CartaoPedidos)
                 .Include(c => c.Pedidos)
                     .ThenInclude(p => p.LivrosPedidos)
                     .ThenInclude(l => l.Livro)

@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -23,6 +25,7 @@ namespace LES.Models.Entity
 
         public virtual Cidade Cidade { get; set; }
         public virtual Cliente Cliente {get;set; }
+        public virtual IList<Pedido> Pedidos { get; set; }
         public virtual TipoEndereco TipoEndereco { get; set; }
         #endregion
 

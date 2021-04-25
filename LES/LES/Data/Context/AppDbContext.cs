@@ -668,6 +668,11 @@ namespace LES.Models
                 .IsRequired();
 
             modelBuilder.Entity<LivroPedido>()
+                .Property(l => l.Quantia)
+                .HasColumnName(tri + "_quantia")
+                .IsRequired();
+
+            modelBuilder.Entity<LivroPedido>()
                 .Property(l => l.Trocado)
                 .HasColumnName(tri + "_trocado")
                 .IsRequired();
@@ -715,6 +720,11 @@ namespace LES.Models
                 .HasColumnName(tri + "_cup_id");
 
             modelBuilder.Entity<Pedido>()
+                .Property(p => p.EnderecoId)
+                .HasColumnName(tri + "_end_id")
+                .IsRequired();
+
+            modelBuilder.Entity<Pedido>()
                 .Property(p => p.Status)
                 .HasColumnName(tri + "_status")
                 .IsRequired();
@@ -723,7 +733,14 @@ namespace LES.Models
                 .HasOne(p => p.Cliente)
                 .WithMany(c => c.Pedidos)
                 .HasForeignKey(c => c.ClienteId)
-                .HasConstraintName("FK_" + tri.ToUpper() + "_PED");
+                .HasConstraintName("FK_" + tri.ToUpper() + "_CLI");
+
+            modelBuilder.Entity<Pedido>()
+                .HasOne(p => p.Endereco)
+                .WithMany(e => e.Pedidos)
+                .HasForeignKey(p => p.EnderecoId)
+                .HasConstraintName("FK_" + tri.ToUpper() + "_END")
+                .OnDelete(DeleteBehavior.NoAction);
 
             modelBuilder.Entity<Pedido>()
                 .HasOne(p => p.Cupom)

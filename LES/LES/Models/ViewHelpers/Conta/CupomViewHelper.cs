@@ -34,7 +34,7 @@ namespace LES.Models.ViewHelpers.Conta
             CupomModel vm = new CupomModel
             {
                 Codigo = cupom.Codigo.ToString(),
-                Valor = (float)cupom.Valor
+                Valor = (double)cupom.Valor
             };
 
             _viewModel = vm;

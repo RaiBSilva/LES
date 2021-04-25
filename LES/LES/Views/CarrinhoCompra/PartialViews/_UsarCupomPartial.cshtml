@@ -36,7 +36,7 @@
                                     R$ @item.Valor.ToString("0.00").Replace(".", ",")
                                 </td>
                                 <td>
-                                    <button class="btn btn-outline-success" onclick="window.location.href='@Url.Action("UsarCupom","Carrinho", item.Codigo)'">Usar este cupom</button>
+                                    <button class="btn btn-outline-success" onclick="window.location.href='@Url.Action("UsarCupom","Carrinho")?cod=@(item.Codigo)'">Usar este cupom</button>
                                 </td>
                             </tr>
                         }

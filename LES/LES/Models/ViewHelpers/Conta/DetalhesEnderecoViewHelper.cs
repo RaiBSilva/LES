@@ -76,6 +76,7 @@ namespace LES.Models.ViewHelpers.Conta
             vm.Id = endereco.Id.ToString();
             vm.Numero = endereco.Numero;
             vm.Observacoes = endereco.Observacoes;
+            vm.NomeEndereco = endereco.NomeEndereco;
             vm.Pais = endereco.Cidade.Estado.Pais.Nome;
 
             _viewModel = vm;

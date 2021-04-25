@@ -117,7 +117,7 @@ namespace LES.Models.ViewHelpers.Conta
                 ECobranca = true,
                 EEntrega = true,
                 EFavorito = true,
-                NomeEndereco = input.Nome,
+                NomeEndereco = input.NomeEndereco,
                 Complemento = input.Complemento,
                 TipoEndereco = new TipoEndereco
                 {

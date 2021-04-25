@@ -35,8 +35,6 @@ namespace LES.Models.ViewModel.Conta
 
     public class DetalhesEnderecoModel : EnderecoBaseModel, IViewModel
     {
-        [Display(Name = "Nome do endereço (ex: casa, trabalho, etc...)")]
-        public string NomeEndereco { get; set; }
 
         [Display(Name = "É endereço de entrega?")]
         public bool EEntrega { get; set; }

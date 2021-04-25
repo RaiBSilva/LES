@@ -12,5 +12,14 @@ namespace LES.Models.Entity
 
         public virtual IList<CarrinhoLivro> CarrinhoLivro { get; set; }
         public virtual Cliente Cliente { get; set; }
+
+        public double PrecoTotal()
+        {
+            double soma = 0;
+            if (CarrinhoLivro != null)
+                foreach(var item in CarrinhoLivro) 
+                    soma += item.Livro.Valor;
+            return soma;
+        }
     }
 }

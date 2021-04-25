@@ -7,11 +7,11 @@ using System.Threading.Tasks;
 
 namespace LES.Models.ViewModel.Carrinho
 {
-    public class PaginaFinalizarCompraModel
+    public class PaginaFinalizarCompraModel : IViewModel
     {
-        public IList<DetalhesEnderecoModel> Enderecos { get; set; }
+        public DetalhesEnderecoModel Endereco { get; set; }
         public IDictionary<DetalhesCartaoModel, double> Cartoes { get; set; } = new Dictionary<DetalhesCartaoModel, double>();
-        public IList<CupomModel> Cupons { get; set; }
+        public CupomModel Cupom { get; set; }
         public CarrinhoModel Pedido {get;set;}
 
     }

@@ -9,6 +9,7 @@ namespace LES.Models.Entity
     {
         public int LivroId { get; set; }
         public int PedidoId { get; set; }
+        public int Quantia { get; set; }
         public bool Trocado { get; set; }
 
         public virtual Livro Livro { get; set; }

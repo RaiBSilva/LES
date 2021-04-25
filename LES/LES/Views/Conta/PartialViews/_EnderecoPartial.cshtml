@@ -1,4 +1,4 @@
-﻿@model LES.Models.ViewModel.Conta.EnderecoBaseModel
+﻿@model LES.Models.ViewModel.Conta.DetalhesEnderecoModel
 @*
     For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
 *@
@@ -7,9 +7,9 @@
 
         <div class="form-group row justify-content-between">
             <div class="col-lg-12">
-                <label asp-for="Nome" class="control-label"></label>
-                <input asp-for="Nome" class="form-control required" />
-                <span asp-validation-for="Nome" class="text-danger"></span>
+                <label asp-for="NomeEndereco" class="control-label"></label>
+                <input asp-for="NomeEndereco" class="form-control required" />
+                <span asp-validation-for="NomeEndereco" class="text-danger"></span>
             </div>
         </div>
 
@@ -59,6 +59,15 @@
                 <label asp-for="Observacoes" class="control-label"></label>
                 <input asp-for="Observacoes" class="form-control" />
                 <span asp-validation-for="Observacoes" class="text-danger"></span>
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <div class="col-12">
+                <label asp-for="TipoEndereco" class="control-label"></label>
+                <select asp-for="TipoEndereco" class="form-control required" asp-items="@(new SelectList(Model.TiposEnderecos, "Id", "Nome"))">
+                </select>
+                <span asp-validation-for="TipoEndereco" class="text-danger"></span>
             </div>
         </div>
 

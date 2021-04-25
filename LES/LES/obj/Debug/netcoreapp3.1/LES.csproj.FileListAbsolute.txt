@@ -469,11 +469,8 @@ C:\Programming\LES\LES\LES\bin\Debug\netcoreapp3.1\runtimes\win\lib\netstandard2
 C:\Programming\LES\LES\LES\obj\Debug\netcoreapp3.1\LES.csproj.CoreCompileInputs.cache
 C:\Programming\LES\LES\LES\obj\Debug\netcoreapp3.1\LES.MvcApplicationPartsAssemblyInfo.cache
 C:\Programming\LES\LES\LES\obj\Debug\netcoreapp3.1\Razor\Views\CarrinhoCompra\FinalizarCompra.cshtml.g.cs
-C:\Programming\LES\LES\LES\obj\Debug\netcoreapp3.1\Razor\Views\CarrinhoCompra\PartialViews\_AdicionarNovoCartaoPartial.cshtml.g.cs
-C:\Programming\LES\LES\LES\obj\Debug\netcoreapp3.1\Razor\Views\CarrinhoCompra\PartialViews\_AdicionarNovoEnderecoPartial.cshtml.g.cs
 C:\Programming\LES\LES\LES\obj\Debug\netcoreapp3.1\Razor\Views\CarrinhoCompra\PartialViews\_CalcularFretePartial.cshtml.g.cs
-C:\Programming\LES\LES\LES\obj\Debug\netcoreapp3.1\Razor\Views\CarrinhoCompra\PartialViews\_ListaCardsEnderecoPartial.cshtml.g.cs
-C:\Programming\LES\LES\LES\obj\Debug\netcoreapp3.1\Razor\Views\CarrinhoCompra\PartialViews\_ListaCupomPartial.cshtml.g.cs
 C:\Programming\LES\LES\LES\obj\Debug\netcoreapp3.1\Razor\Views\CarrinhoCompra\PartialViews\_UsarCupomPartial.cshtml.g.cs
 C:\Programming\LES\LES\LES\obj\Debug\netcoreapp3.1\Razor\Views\CarrinhoCompra\PartialViews\_ListaMétodosPagamento.cshtml.g.cs
 C:\Programming\LES\LES\LES\obj\Debug\netcoreapp3.1\Razor\Views\CarrinhoCompra\PartialViews\_SelecionarCartaoPartial.cshtml.g.cs
+C:\Programming\LES\LES\LES\obj\Debug\netcoreapp3.1\Razor\Views\CarrinhoCompra\PartialViews\_SelecionarEndereçoPartial.cshtml.g.cs

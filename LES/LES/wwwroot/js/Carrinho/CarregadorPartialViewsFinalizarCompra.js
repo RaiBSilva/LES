@@ -1,47 +1,73 @@
-﻿function carregarPartialView(endereco) {
+﻿function updateValor(id, checked) {
+    var inputValor = $('input[name="Cartoes[' + id + '].Valor"]');
+
+    if (checked) {
+        $(inputValor).prop('disabled', false);
+    } else {
+        $(inputValor).prop('disabled', true);
+        $(inputValor).val("");
+    }
+}
+
+function somaValores(){
+
+    soma = 0;
+
+    $(".valorInput:enabled").each(function () {
+        soma += Number($(this).val());
+    })
+
+    $("#valSoma").html("R$" + soma);
+    if (soma == $("#ValorTotal").val()) {
+        $("#btnAlteraPag").prop('disabled', false);
+    } else {
+        $("#btnAlteraPag").prop('disabled', true);
+    }
+ }
+
+function carregarPartialView(endereco) {
 
     var divModal = document.getElementById("myModal");
     var newDivForm = document.createElement("div");
     newDivForm.className = "modal-dialog modal-lg";
 
-    $(newDivForm).load(endereco);
+    $(newDivForm).load(endereco, function () {
+
+        $(".cartaoCheckBox").change(function () {
+
+            var check = false;
+            if (this.checked) {
+                check = true;
+            }
+            var nome = this.getAttribute("name");
+            var id = nome.substring(nome.lastIndexOf("[") + 1,
+                nome.lastIndexOf("]"));
+            updateValor(id, check);
+            somaValores();
+        });
+
+
+        $(".valorInput").on("input", somaValores);
+    });
     divModal.appendChild(newDivForm);
 }
 
-
-function carregarNovoEndereco() {
-    carregarPartialView(urls.novoEndereco);
+function carregarAddEndereco() {
+    carregarPartialView(urls.SelecionarEndereco);
 }
 
-function carregarNovoCartao() {
-    carregarPartialView(urls.novoCartao);
-}
-
-function carregarCalcularFrete() {
-    carregarPartialView(urls.calcularFrete);
-}
-
-function carregarUsarCupom(){
-    carregarPartialView(urls.usarCupom);
+function carregarAddCartao() {
+    carregarPartialView(urls.SelecionarCartao);
 }
 
 $('#myModal').on('hidden.bs.modal', function () {
     $(this).empty();
 });
 
-$(".btnEndereco").on("click", function (e) {
-    carregarNovoEndereco();
+$(".addEndereco").on("click", function (e) {
+    carregarAddEndereco();
 });
 
-$(".btnCartao").on("click", function (e) {
-    carregarNovoCartao();
+$(".addCartao").on("click", function (e) {
+    carregarAddCartao();
 });
-
-$(".btnFrete").on("click", function (e) {
-    carregarCalcularFrete();
-});
-
-$(".btnUsarCupom").on("click", function (e) {
-    carregarUsarCupom();
-});
-

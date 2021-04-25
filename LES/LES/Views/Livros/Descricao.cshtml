@@ -104,7 +104,7 @@
                         <span class="text-center">
                             Categorias
                         </span>
-                    </div> 
+                    </div>
                 </div>
                 <div class="row justify-content-center">
                     @foreach (var item in Model.Categorias)
@@ -120,7 +120,7 @@
                     </div>
                 </div>
                 <div class="row justify-content-center">
-                    <button type="button" class="btn btn-success col-sm-7 mr-4 text-center" onclick="window.location.href='@Url.Action("FinalizarCompra","CarrinhoCompra")'">COMPRAR AGORA</button>
+                    <button type="button" class="btn btn-success col-sm-7 mr-4 text-center comprarAgora" value="@Model.CodigoBarras">COMPRAR AGORA</button>
                     <button type="button" class="btn btn-outline-success col-sm-4 text-center addtoCarrinho" value="@Model.CodigoBarras"><small><i class="fa fa-shopping-cart"></i></small></button>
                 </div>
             </div>
@@ -132,7 +132,9 @@
     <script type="text/javascript">
         var urls = urls || {};
         urls.AddCarrinho = '@Url.Action("_AddToCarrinho", "CarrinhoCompra")';
+        urls.FinalizarCompra = '@Url.Action("FinalizarCompra","CarrinhoCompra")';
     </script>
     <script src="~/js/Shared/AddToCarrinho.js"></script>
+    <script src="~/js/Carrinho/ComprarAgora.js"></script>
 
 }

@@ -3,6 +3,7 @@ using LES.Models;
 using LES.Models.Entity;
 using LES.Negocio.Strategy;
 using LES.Negócio.Strategy.ClienteStrategy;
+using LES.Negócio.Strategy.PedidoStrategy;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -46,6 +47,11 @@ namespace LES.Controllers.Facade
                     new ValidarTelefoneStrategy()
                 },
                 [typeof(Carrinho).Name] = new List<IStrategy>(),
+                [typeof(Pedido).Name] = new List<IStrategy>
+                {
+                    new ValidarValoresCartao(),
+                    new ValidarValorTotal()
+                },
                 [typeof(Livro).Name] = new List<IStrategy>()
             };
         }

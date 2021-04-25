@@ -6,15 +6,16 @@ using System.Threading.Tasks;
 
 namespace LES.Models.ViewModel.Carrinho
 {
-    public class ListaCartoesPedidoModel
+    public class ItemListaCartoesPedidoModel
     {
         [Display(Name="Usar?")]
         public bool Ativado { get; set; }
-        public string Id { get; set; }
+        public int Id { get; set; }
         public double Valor { get; set; }
 
         //Propriedade de Exibição
-        public string Codgio { get; set; }
+        public string Bandeira { get; set; }
+        public string UltimosDigitos { get; set; }
         public DateTime DtVencimento { get; set; }
 
     }
