@@ -2,6 +2,8 @@ import time
 import json
 from selenium import webdriver
 import ctypes
+from pyautogui import locateCenterOnScreen
+import pyautogui as pyg
 
 
 def Mbox(*, title="Teste", text, style=1):
@@ -41,6 +43,61 @@ class Timer:
     def at(self):
         # print("The timer is running. Self.at: " + str(time.perf_counter() - self.start))
         return time.perf_counter() - self.start
+    
+    
+class Image:
+    def __init__(self, *, img_path, confidence=0.95):
+        self.image_path = img_path
+        self.accuracy = confidence
+
+    def find(self):
+        position = None
+        try:
+            position = pyg.locateCenterOnScreen(self.image_path, confidence=self.accuracy)
+            if position is not None:
+                position = (position[0], position[1])
+        except OSError:
+            pass
+        return position
+
+    def wait_image(self, *, timeout=10, rtn_pos=True):
+        start = time.perf_counter()
+        while True:
+            if time.perf_counter() - start > timeout:
+                return -1
+            rtn_find = self.find()
+            if rtn_find is not None:
+                if rtn_pos:
+                    return rtn_find
+                else:
+                    return 0
+
+    def click(self, *, btn="rigth", clicks=1, x=0, y=0):
+        return self.Click(props=self, btn=btn, clicks=clicks, x=x, y=y)
+
+    class Click:
+        def __init__(self, *, props, btn, clicks, x, y):
+            self.props = props
+            self.button = btn
+            self.clicks = clicks
+            self.pos_x = x
+            self.pos_y = y
+
+        def execute(self):
+            rtn_pos = self.props.find()
+            if rtn_pos is not None:
+                pyg.click(rtn_pos[0]+self.pos_x, rtn_pos[1]+self.pos_y, clicks=self.clicks)
+                return 0
+            else:
+                return -1
+
+        def wait_ready(self, timeout=15):
+            rtn_pos = self.props.wait_image(timeout=timeout)
+            if isinstance(rtn_pos, tuple):
+                pyg.click(rtn_pos[0] + self.pos_x, rtn_pos[1] + self.pos_y, clicks=self.clicks)
+                return 0
+            else:
+                return -1
 
 
 class ChromeBrowser:

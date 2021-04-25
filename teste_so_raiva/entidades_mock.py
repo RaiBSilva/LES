@@ -22,6 +22,16 @@ class Cartao:
         self.mes = "maio"
         self.ano = "2027"
         self.mastercard = "Mastercard"
+        
+        
+class Cartao2:
+    def __init__(self):
+        self.nome = "John Price"
+        self.codigo = "1235567891239999"
+        self.cvv = "253"
+        self.mes = "maio"
+        self.ano = "2026"
+        self.mastercard = "Visa"
 
 
 class Endereco:
@@ -40,7 +50,7 @@ class Endereco:
 class User:
     def __init__(self):
         self.nome = "John Price"
-        self.data_nascimento = "12/08/1996"
+        self.data_nascimento = "12081996"
         self.cpf = "42069024185"
         self.email = "bravo6goingdark@gmail.com"
         self.senha = "CODww@sucks"
