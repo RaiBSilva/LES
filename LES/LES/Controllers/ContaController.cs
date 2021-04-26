@@ -68,6 +68,9 @@ namespace LES.Views.Conta
                     if (GerenciadorLogin.comparaSenha(usuario.Senha, clienteDb.Usuario.Senha)) 
                     {
                         HttpContext.SignInAsync(GerenciadorLogin.FazerLogin(clienteDb));
+
+                        if(HttpContext.User.IsInRole("1") || HttpContext.User.IsInRole("2"))
+                            return RedirectToAction("Home", "Admin");
                         return RedirectToAction("Index", "Home");
                     }
                     return View(new PaginaLoginModel
