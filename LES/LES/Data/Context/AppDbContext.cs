@@ -283,6 +283,11 @@ namespace LES.Models
                 .IsRequired();
 
             modelBuilder.Entity<Cupom>()
+                .Property(c => c.Inativo)
+                .HasColumnName($"{tri}_usado")
+                .IsRequired();
+
+            modelBuilder.Entity<Cupom>()
                 .HasOne(c => c.Cliente)
                 .WithMany(c => c.Cupons)
                 .HasForeignKey(c => c.ClienteId)
@@ -652,10 +657,10 @@ namespace LES.Models
 
             tri = "lip";
 
-            modelBuilder.Entity<LivroPedido>().ToTable("LIVROS_PEDIDOS");
+            modelBuilder = configBasico<LivroPedido>(modelBuilder, "LIVROS_PEDIDOS", tri);
 
-            modelBuilder.Entity<LivroPedido>().HasKey(l => new { l.LivroId, l.PedidoId })
-                .HasName("PK_" + tri.ToUpper());
+            modelBuilder.Entity<LivroPedido>()
+                .Ignore(l => l.Inativo);
 
             modelBuilder.Entity<LivroPedido>()
                 .Property(l => l.LivroId)
@@ -665,11 +670,6 @@ namespace LES.Models
             modelBuilder.Entity<LivroPedido>()
                 .Property(l => l.PedidoId)
                 .HasColumnName(tri + "_ped_id")
-                .IsRequired();
-
-            modelBuilder.Entity<LivroPedido>()
-                .Property(l => l.Quantia)
-                .HasColumnName(tri + "_quantia")
                 .IsRequired();
 
             modelBuilder.Entity<LivroPedido>()
@@ -811,6 +811,41 @@ namespace LES.Models
 
             #endregion
 
+            #region Troca
+
+            tri = "tro";
+
+            modelBuilder = configBasico<Troca>(modelBuilder, "TROCAS", tri);
+
+            modelBuilder.Entity<Troca>()
+                .Property(t => t.ClienteId)
+                .HasColumnName(tri + "_cli_id")
+                .IsRequired();
+
+            modelBuilder.Entity<Troca>()
+                .Property(t => t.LivroPedidoId)
+                .HasColumnName(tri + "_lip_id")
+                .IsRequired();
+
+            modelBuilder.Entity<Troca>()
+                .Property(t => t.StatusTroca)
+                .HasColumnName(tri + "_status")
+                .IsRequired();
+
+            modelBuilder.Entity<Troca>()
+                .HasOne(t => t.Cliente)
+                .WithMany(c => c.Trocas)
+                .HasForeignKey(t => t.ClienteId)
+                .HasConstraintName("FK_" + tri.ToUpper() + "_CLI");
+
+            modelBuilder.Entity<Troca>()
+                .HasOne(t => t.LivroPedido)
+                .WithOne(l => l.Troca)
+                .HasForeignKey<Troca>(t => t.LivroPedidoId)
+                .HasConstraintName("FK_" + tri.ToUpper() + "_LIP");
+
+            #endregion  
+
             #region Usuario
 
             tri = "usu";
@@ -861,6 +896,7 @@ namespace LES.Models
         public DbSet<Telefone> Telefones { get; set; }
         public DbSet<TipoEndereco> TipoEnderecos { get; set; }
         public DbSet<TipoTelefone> TipoTelefones { get; set; }
+        public DbSet<Troca> Trocas { get; set; }
         public DbSet<Usuario> Usuarios { get; set; }
 
         private ModelBuilder configBasico<T>  (ModelBuilder mb, string nomeTabela, string trigrama)

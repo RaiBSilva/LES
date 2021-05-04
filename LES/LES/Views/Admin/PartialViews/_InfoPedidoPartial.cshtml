@@ -5,12 +5,9 @@
 
     statusInfo[(StatusPedidos)0] = new string[] { "text-info", "Em processamento." };
     statusInfo[(StatusPedidos)1] = new string[] { statusInfo[(StatusPedidos)0][0], "Em trânsito..." };
-    statusInfo[(StatusPedidos)2] = new string[] { statusInfo[(StatusPedidos)0][0], "Troca em processamento..." };
-    statusInfo[(StatusPedidos)3] = new string[] { statusInfo[(StatusPedidos)0][0], "Troca autorizada!" };
-    statusInfo[(StatusPedidos)4] = new string[] { statusInfo[(StatusPedidos)0][0], "Aprovado!" };
-    statusInfo[(StatusPedidos)5] = new string[] { "text-success", "Trocado!" };
-    statusInfo[(StatusPedidos)6] = new string[] { statusInfo[(StatusPedidos)5][0], "Entregue!" };
-    statusInfo[(StatusPedidos)7] = new string[] { "text-danger", "Negado." };
+    statusInfo[(StatusPedidos)2] = new string[] { "text-success", "Aprovado!" };
+    statusInfo[(StatusPedidos)3] = new string[] { statusInfo[(StatusPedidos)2][0], "Entregue!" };
+    statusInfo[(StatusPedidos)4] = new string[] { "text-danger", "Negado." };
 
 }
 
@@ -25,8 +22,9 @@
             </tr>
         </thead>
         <tbody>
-            @foreach (var livro in Model.Livros)
+            @foreach (var entry in Model.Livros)
             {
+                var livro = entry.Value;
                 <tr>
                     <th scope="row">@livro.CodigoBarras</th>
                     <td>@livro.Titulo</td>
@@ -50,11 +48,11 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach (var cupom in Model.Cupons)
+                    @if(Model.Cupom != null)
                     {
                         <tr>
-                            <th scope="row">@cupom.Codigo</th>
-                            <td>R$ @cupom.Valor.ToString("0.00").Replace(".", ",")</td>
+                            <th scope="row">@Model.Cupom.Codigo</th>
+                            <td>R$ @Model.Cupom.Valor.ToString("0.00").Replace(".", ",")</td>
                         </tr>
                     }
                 </tbody>

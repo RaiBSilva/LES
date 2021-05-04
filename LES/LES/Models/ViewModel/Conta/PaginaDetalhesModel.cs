@@ -13,6 +13,7 @@ namespace LES.Models.ViewModel.Conta
         public IList<DetalhesTelefoneModel> Telefones { get; set; }
         public IList<DetalhesCartaoModel> Cartoes { get; set; }
         public IList<PedidoModel> Pedidos { get; set; }
+        public IList<TrocaModel> Trocas { get; set; }
         public IList<CupomModel> Cupons { get; set; }
 
         public PaginaDetalhesModel()

@@ -3,6 +3,18 @@
 @{
     ViewData["Title"] = "Finalizar Compra";
     Layout = "~/Views/Shared/_Layout.cshtml";
+
+    double valorTotal = 0, valorFinal = 0;
+    foreach(var livro in Model.Pedido.Livros)
+        valorTotal += livro.Preco;
+
+    double valCupom = 0;
+
+    if (Model.Cupom != null)
+        valCupom = Model.Cupom.Valor;
+
+    valorFinal = valorTotal - valCupom;
+
 }
 
 <div class="row text-center"><h3>Finalizar Compra</h3></div>
@@ -31,6 +43,12 @@
                 </tr>
             }
         </tbody>
+        <tfoot class="thead-dark">
+            <tr>
+                <td>Valor de todos os itens:</td>
+                <td>R$ @valorTotal.ToString("0.00").Replace('.',',')</td>
+            </tr>
+        </tfoot>
     </table>
     <div class="col-md-4 border rounded bg-light align-content-center p-3">
         @if (Model.Cupom == null)
@@ -54,15 +72,24 @@
                 </div>
             </div>
             <div class="row">
-                <div class="col-lg-5">
-                    Desconto de:
+                <div class="col-lg-3">
+                    <small>Desconto de:</small>
                 </div>
                 <div class="col-lg-7 text-right font-weight-bold">
                     <h5>R$ @Model.Cupom.Valor.ToString("0.00").Replace(".", ",")</h5>
                 </div>
+                <div class="col-lg-2 text-right font-weight-bold">
+                    <button type="button" class="btn btn-danger">
+                        <small>&times;</small>
+                    </button>
+                </div>
             </div>
         }
     </div>
+</div>
+<div class="row text-center">
+    <div class="col-12 text-center"><h5>Valor final: </h5></div>
+    <div class="col-12 text-center font-weight-bold"><h4>R$ @valorFinal.ToString("0.00").Replace(".", ",")</h4></div>
 </div>
 <div class="row">
     <div class="col-6 border-right p-3 justify-content-center">

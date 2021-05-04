@@ -1,10 +1,13 @@
-﻿using LES.Models.Entity;
+﻿using LES.Controllers.Facade;
+using LES.Models.Entity;
+using LES.Models.ViewHelpers.Admin;
 using LES.Models.ViewModel.Admin;
 using LES.Models.ViewModel.Conta;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Data.SqlClient.DataClassification;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,9 +17,15 @@ namespace LES.Controllers
 {
     public class AdminController : BaseController
     {
-        public AdminController()
-        {
+        IFacadeCrud<Pedido> _facadePedidos { get; set; }
+        IFacadeCrud<Troca> _facadeTrocas { get; set; }
 
+        public AdminController(
+            IFacadeCrud<Pedido> facadePedidos,
+            IFacadeCrud<Troca> facadeTrocas)
+        {
+            _facadePedidos = facadePedidos;
+            _facadeTrocas = facadeTrocas;
         }
 
         public IActionResult Home()
@@ -32,7 +41,117 @@ namespace LES.Controllers
 
         public IActionResult Pedidos()
         {
-            return View();
+            IEnumerable<Pedido> pedidos = _facadePedidos.ListAllInclude()
+                .Where(p => p.Status != StatusPedidos.NaoFinalizado && !p.Inativo);
+
+            IEnumerable<Troca> trocas = _facadeTrocas.ListAllInclude();
+
+            _vh = new PaginaPedidosViewHelper 
+            {
+                Entidades = new Dictionary<string, object>
+                {
+                    [typeof(IList<Pedido>).FullName] = pedidos.Take(10).ToList(),
+                    [nameof(ListaPedidosAdminModel.PagAtual)] = 1,
+                    [nameof(ListaPedidosAdminModel.PagMax)] = (pedidos.Count() / 10) + 1,
+                    [typeof(IList<Troca>).FullName] = trocas.Take(10).ToList(),
+                    [nameof(ListaTrocasAdminModel.PagAtual)] = 1,
+                    [nameof(ListaTrocasAdminModel.PagMax)] = (trocas.Count() / 10) + 1
+                }
+            };
+
+            return View(_vh.ViewModel);
+        }
+
+        [HttpPost]
+        public IActionResult _PedidosBusca(string json)
+        {
+            JObject o = JObject.Parse(json);
+
+            FiltrosPedidosAdminModel filtros = o.ToObject<FiltrosPedidosAdminModel>();
+
+            IEnumerable<Pedido> pedidos = _facadePedidos.ListAllInclude()
+                .Where(p => p.Status != StatusPedidos.NaoFinalizado && !p.Inativo);
+
+            if (filtros.Id != null)
+                pedidos = pedidos.Where(p => p.Id == filtros.Id);
+
+            if (!String.IsNullOrEmpty(filtros.Nome))
+                pedidos = pedidos.Where(p => p.Cliente.Nome.Contains(filtros.Nome));
+
+            if (filtros.DtMin != null)
+                pedidos = pedidos.Where(p => p.DtCadastro > filtros.DtMin);
+
+            if (filtros.DtMax != null)
+                pedidos = pedidos.Where(p => p.DtCadastro < filtros.DtMax);
+
+            if (filtros.ValorMin > 0)
+                pedidos = pedidos.Where(p => p.ValorTotal > filtros.ValorMin);
+
+            if (filtros.ValorMax > 0)
+                pedidos = pedidos.Where(p => p.ValorTotal < filtros.ValorMax);
+
+            pedidos = !String.IsNullOrEmpty(filtros.Status) ? 
+                pedidos.Where(p => p.Status == (StatusPedidos)Convert.ToInt32(filtros.Status)) : pedidos;
+
+            if (filtros.PagAtual > 0)
+                pedidos = pedidos.Skip((filtros.PagAtual - 1) * 10);
+
+            _vh = new PaginaPedidosViewHelper
+            {
+                Entidades = new Dictionary<string, object>
+                {
+                    [typeof(IList<Pedido>).FullName] = pedidos.Take(10).ToList(),
+                    [nameof(ListaPedidosAdminModel.PagAtual)] = 1,
+                    [nameof(ListaPedidosAdminModel.PagMax)] = (pedidos.Count() / 10) + 1
+                }
+            };
+
+            PaginaPedidosModel vm = (PaginaPedidosModel)_vh.ViewModel;
+            vm.Filtros = filtros;
+
+            return PartialView();
+        }
+
+        [HttpPost]
+        public IActionResult _TrocasBusca(string json)
+        {
+            JObject o = JObject.Parse(json);
+
+            FiltrosPedidosAdminModel filtros = o.ToObject<FiltrosPedidosAdminModel>();
+
+            IEnumerable<Troca> trocas = _facadeTrocas.ListAllInclude();
+            
+            trocas = filtros.Id != null ? trocas.Where(t => t.Id == filtros.Id) : trocas;
+            
+            trocas = !String.IsNullOrEmpty(filtros.Nome) ? trocas.Where(t => t.Cliente.Nome.Contains(filtros.Nome)) : trocas;
+
+            trocas = filtros.DtMin != null ? trocas.Where(t => t.DtCadastro > filtros.DtMin) : trocas;
+
+            trocas = filtros.DtMax != null ? trocas.Where(t => t.DtCadastro < filtros.DtMax) : trocas;
+
+            trocas = filtros.ValorMin > 0 ? trocas.Where(t => t.LivroPedido.Livro.Valor > filtros.ValorMin) : trocas;
+
+            trocas = filtros.ValorMax > 0 ? trocas.Where(t => t.LivroPedido.Livro.Valor < filtros.ValorMax) : trocas;
+
+            trocas = !String.IsNullOrEmpty(filtros.Status) ?
+                trocas.Where(p => p.StatusTroca == (StatusTroca)Convert.ToInt32(filtros.Status)) : trocas;
+
+            trocas = filtros.PagAtual > 0 ? trocas.Skip((filtros.PagAtual - 1) * 10) : trocas;
+
+            _vh = new PaginaPedidosViewHelper
+            {
+                Entidades = new Dictionary<string, object>
+                {
+                    [typeof(IList<Troca>).FullName] = trocas.Take(10).ToList(),
+                    [nameof(ListaTrocasAdminModel.PagAtual)] = 1,
+                    [nameof(ListaTrocasAdminModel.PagMax)] = (trocas.Count() / 10) + 1
+                }
+            };
+
+            PaginaPedidosModel vm = (PaginaPedidosModel)_vh.ViewModel;
+            vm.Filtros = filtros;
+
+            return PartialView();
         }
 
         public IActionResult ConfigLoja() {

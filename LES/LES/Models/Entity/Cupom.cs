@@ -9,7 +9,7 @@ namespace LES.Models.Entity
     {
 
         public int ClienteId { get; set; }
-        public int Codigo { get; set; }
+        public string Codigo { get; set; }
         public double Valor { get; set; }
 
         public Cliente Cliente { get; set; }

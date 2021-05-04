@@ -24,6 +24,9 @@
                 <button class="btn btn-light tablink" onclick="changeTab(event, 'Compras')" style="width:100%">Histórico de Compras</button>
             </div>
             <div>
+                <button class="btn btn-light tablink" onclick="changeTab(event, 'Trocas')" style="width:100%">Pedidos de Troca</button>
+            </div>
+            <div>
                 <button class="btn btn-light tablink" onclick="changeTab(event, 'Cupons')" style="width:100%">Meus Cupons</button>
             </div>
         </div>
@@ -59,6 +62,12 @@
             <div id="Compras" class="tab" style="display:none">
                 <div id="divPedidos">
                     <partial name="../Conta/PartialViews/_ListaPedidosPartial.cshtml" for="Pedidos">
+                </div>
+            </div>
+            <div id="Trocas" class="tab" style="display:none">
+                <div id="divPedidos">
+                    <!-- FAZER PARTIAL VIEW DE TROCAS -->
+                    <partial name="../Conta/PartialViews/_ListaTrocasPartial.cshtml" for="Trocas">
                 </div>
             </div>
             <div id="Cupons" class="tab" style="display:none">

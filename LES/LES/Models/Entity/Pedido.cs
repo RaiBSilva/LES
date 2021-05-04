@@ -1,4 +1,5 @@
 ﻿using LES.Models.ViewModel.Conta;
+using Microsoft.CodeAnalysis;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,12 +13,25 @@ namespace LES.Models.Entity
         public int? CupomId { get; set; }
         public int EnderecoId { get; set; }
         public StatusPedidos Status { get; set; }
+        public double ValorTotal { get; set; }
 
         public virtual Cliente Cliente { get; set; }
         public virtual Cupom Cupom { get; set; }
         public virtual IList<CartaoPedido> CartaoPedidos { get; set; }
         public virtual Endereco Endereco { get; set; }
         public virtual IList<LivroPedido> LivrosPedidos { get; set; }
+
+        public double CalcularValorTotal()
+        {
+            double val = 0;
+            foreach(var livro in LivrosPedidos)
+                val += livro.Livro.Valor;
+
+            if (Cupom != null)
+                val -= Cupom.Valor;
+
+            return val;
+        }
 
     }
 }

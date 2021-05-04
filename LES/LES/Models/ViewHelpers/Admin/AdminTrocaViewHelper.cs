@@ -9,37 +9,32 @@ using System.Threading.Tasks;
 
 namespace LES.Models.ViewHelpers.Admin
 {
-    public class AdminPedidoViewHelper : AbstractViewHelper, IViewHelper
+    public class AdminTrocaViewHelper : AbstractViewHelper, IViewHelper
     {
-protected override void ToEntidade()
+        protected override void ToEntidade()
         {
-            throw new NotImplementedException();
         }
 
         protected override void ToViewModel()
         {
+            Troca troca = (Troca)Entidades[typeof(Troca).Name];
 
-            Pedido p = (Pedido)Entidades[typeof(Pedido).Name];
-            Cliente cliente = p.Cliente;
-
-            PedidoViewHelper baseVh = new PedidoViewHelper
+            TrocaViewHelper baseVh = new TrocaViewHelper 
             {
                 Entidades = new Dictionary<string, object>
                 {
-                    [typeof(Pedido).Name] = p
+                    [typeof(Troca).Name] = troca
                 }
             };
 
-            AdminPedidoModel vm = (AdminPedidoModel)baseVh.ViewModel;
-
-            PaginaDetalhesViewHelper clienteVh = new PaginaDetalhesViewHelper 
+            AdminTrocaModel vm = (AdminTrocaModel)baseVh.ViewModel;
+            PaginaDetalhesViewHelper clienteVh = new PaginaDetalhesViewHelper
             {
                 Entidades = new Dictionary<string, object>
                 {
-                    [typeof(Cliente).Name] = cliente
+                    [typeof(Cliente).Name] = troca.Cliente
                 }
             };
-
             vm.Cliente = (PaginaDetalhesModel)clienteVh.ViewModel;
 
             _viewModel = vm;

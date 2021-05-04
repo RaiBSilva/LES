@@ -1,0 +1,22 @@
+﻿@model LES.Models.ViewModel.Admin.AdminPedidoModel
+@using LES.Models.Entity 
+
+@{ IDictionary<StatusPedidos, string[]> statusInfo = new Dictionary<StatusPedidos, string[]>();
+
+    statusInfo[(StatusPedidos)0] = new string[] { "text-info", "Em processamento." };
+    statusInfo[(StatusPedidos)1] = new string[] { statusInfo[(StatusPedidos)0][0], "Em trânsito..." };
+    statusInfo[(StatusPedidos)2] = new string[] { "text-success", "Aprovado!" };
+    statusInfo[(StatusPedidos)3] = new string[] { statusInfo[(StatusPedidos)2][0], "Entregue!" };
+    statusInfo[(StatusPedidos)4] = new string[] { "text-danger", "Negado." };
+}
+
+<tr>
+    <th scope="row">@Model.Id</th>
+    <td>@Model.Cliente.InfoUsuario.Nome</td>
+    <td>´@Model.DtPedido</td>
+    <td>R$ @Model.PreçoTotal.ToString("0.00").Replace('.', ',')</td>
+    <td class="@statusInfo[Model.Status][0]">@statusInfo[Model.Status][1]</td>
+    <td>
+        <button class="btn btn-outline-info btnVisualizar btn-block" data-toggle="modal" data-target="#myModal" value="@Model.Id">Visualizar/Editar</button>
+    </td>
+</tr>

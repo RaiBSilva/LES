@@ -61,12 +61,16 @@ namespace LES.Controllers.Facade
             {
                 [typeof(Cliente).Name] = new DAOCliente<Cliente>(_contexto),
                 [typeof(Carrinho).Name] = new DAOCarrinho<Carrinho>(_contexto),
-                [typeof(Livro).Name] = new DAOLivro<Livro>(_contexto)
+                [typeof(Livro).Name] = new DAOLivro<Livro>(_contexto),
+                [typeof(Pedido).Name] = new DAOPedido<Pedido>(_contexto),
+                [typeof(Troca).Name] = new DAOTroca<Troca>(_contexto)
             };
 
             _daosListIncludeAll = new Dictionary<string, IListIncludeAll>
             {
-                [typeof(Livro).Name] = new DAOLivro<Livro>(_contexto)
+                [typeof(Livro).Name] = (IListIncludeAll)_daosGetIncludeAll[typeof(Livro).Name],
+                [typeof(Pedido).Name] = (IListIncludeAll)_daosGetIncludeAll[typeof(Pedido).Name],
+                [typeof(Troca).Name] = (IListIncludeAll)_daosGetIncludeAll[typeof(Troca).Name]
             };
         }
 

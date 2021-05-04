@@ -17,7 +17,7 @@ namespace LES.Models.ViewHelpers.Conta
 
         }
 
-        protected override void ToEntidade()
+protected override void ToEntidade()
         {
             AlterarSenhaModel vm = (AlterarSenhaModel)ViewModel;
             Cliente cliente = new Cliente

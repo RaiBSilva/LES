@@ -39,6 +39,9 @@ namespace LES.Data.DAO
                 .Include(c => c.Pedidos)
                     .ThenInclude(p => p.LivrosPedidos)
                     .ThenInclude(l => l.Livro)
+                .Include(c => c.Trocas)
+                    .ThenInclude(t => t.LivroPedido)
+                    .ThenInclude(l => l.Livro)
                 .FirstOrDefault();
 
             return response;

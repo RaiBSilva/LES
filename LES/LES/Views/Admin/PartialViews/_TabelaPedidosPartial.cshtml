@@ -1,37 +1,79 @@
-﻿@model LES.Models.ViewModel.Admin.AdminPedidoModel
-@using LES.Models.Entity 
+﻿@model LES.Models.ViewModel.Admin.PaginaPedidosModel
 
-@{ IDictionary<StatusPedidos, string[]> statusInfo = new Dictionary<StatusPedidos, string[]>();
+@{ string naoFinal = "-1";}
 
-    statusInfo[(StatusPedidos)0] = new string[] { "text-info", "Em processamento." };
-    statusInfo[(StatusPedidos)1] = new string[] { statusInfo[(StatusPedidos)0][0], "Em trânsito..." };
-    statusInfo[(StatusPedidos)2] = new string[] { statusInfo[(StatusPedidos)0][0], "Troca em processamento..." };
-    statusInfo[(StatusPedidos)3] = new string[] { statusInfo[(StatusPedidos)0][0], "Troca autorizada!" };
-    statusInfo[(StatusPedidos)4] = new string[] { statusInfo[(StatusPedidos)0][0], "Aprovado!" };
-    statusInfo[(StatusPedidos)5] = new string[] { "text-success", "Trocado!" };
-    statusInfo[(StatusPedidos)6] = new string[] { statusInfo[(StatusPedidos)5][0], "Entregue!" };
-    statusInfo[(StatusPedidos)7] = new string[] { "text-danger", "Negado." };
 
-}
+    <table class="table">
+        <caption>Lista de transações efetivadas</caption>
+        <thead class="thead-dark">
+            <tr>
+                <th scope="col">Id</th>
+                <th scope="col">Usuário</th>
+                <th scope="col">Data</th>
+                <th scope="col">Valor</th>
+                <th scope="col">Status</th>
+                <th scope="col">Detalhes</th>
+            </tr>
+            <tr>
+                <th scope="col"><input asp-for="Filtros.Id" id="filtroPedId" class="form-control" placeholder="1..." /></th>
+                <th scope="col"><input asp-for="Filtros.Nome" id="filtroPedCliente" class="form-control" placeholder="José..." /></th>
+                <th scope="col">
+                    De <input asp-for="Filtros.DtMin" id="filtroPedDataMin" class="form-control" type="date" placeholder="Data mínima..." />
+                    Até <input asp-for="Filtros.DtMax" id="filtroPedDataMax" class="form-control" type="date" placeholder="Data máxima..." />
+                </th>
+                <th scope="col">
+                    De <input asp-for="Filtros.ValorMin" id="filtroPedValorMin" class="form-control" type="number" step="0.01" min="0" placeholder="R$ 13,40..." />
+                    Até <input asp-for="Filtros.ValorMax" id="filtroPedValorMax" class="form-control" type="number" step="0.01" min="0" placeholder="R$ 13,40..." />
+                </th>
+                <th scope="col">
+                    <select class="form-control" id="filtroPedStatus" asp-items="Html.GetEnumSelectList<LES.Models.Entity.StatusPedidos>().Where(s => s.Value != naoFinal)">
+                        <option label=""></option>
+                    </select>
+                </th>
+                <th scope="col">
+                    <button class="btn btn-primary btnBuscarPedido">Buscar</button>
+                </th>
+            </tr>
+        </thead>
+        <tbody id="corpoTabela">
 
-<tr>
-    <th scope="row">@Model.Codigo</th>
-    <td>@Model.Cliente.InfoUsuario.Nome</td>
-    <td>´@Model.DtPedido</td>
-    <td>R$ @Model.PreçoTotal.ToString("0.00").Replace('.', ',')</td>
-    <td class="@statusInfo[Model.Status][0]">@statusInfo[Model.Status][1]</td>
-    <td>
-        @if (Model.Status == (StatusPedidos)0 || Model.Status == (StatusPedidos)2)
-        {
+            @foreach (var pedido in Model.Pedidos.Pedidos)
+            {
+                <partial name="../PartialViews/_RowTabelaPedidosPartial.cshtml" for="@pedido" />
+            }
 
-            <button class="btn btn-success btnAprovar btn-block" data-toggle="modal" data-target="#myModal" value="@Model.Codigo">Aprovar</button>
-            <button class="btn btn-danger btnNegar btn-block" data-toggle="modal" data-target="#myModal" value="@Model.Codigo">Negar</button>
-
-        }
-        else if (Model.Status <= (StatusPedidos)4)
-        {
-            <button class="btn btn-danger btnCancelar btn-block" data-toggle="modal" data-target="#myModal" value="@Model.Codigo">Cancelar</button>
-        }
-        <button class="btn btn-outline-info btnVisualizar btn-block" data-toggle="modal" data-target="#myModal" value="@Model.Codigo">Visualizar</button>
-    </td>
-</tr>
+        </tbody>
+        <tfoot>
+            <tr>
+                <td>
+                    <nav aria-label="Paginação">
+                        <ul class="pagination justify-content-center">
+                            <li class="page-item @if (Model.Pedidos.PagAtual == 1) {<text> disabled </text> }">
+                                <button type="button" class="page-link btnPage" aria-label="Previous" value="@(Model.Pedidos.PagAtual-1)" @if (Model.Pedidos.PagAtual == 1) { <text> disabled </text> }>
+                                    <span aria-hidden="true">&laquo;</span>
+                                    <span class="sr-only">Anterior</span>
+                                </button>
+                            </li>
+                            @for (int i = 1; i <= Model.Pedidos.PagMax; i++)
+                            {
+                                string active = "";
+                                @if (i == Model.Pedidos.PagAtual) { active = "active"; }
+                                else { active = ""; }
+                                <li class="page-item @active">
+                                    <button type="button" class="page-link btnPage" value="@i"> @i </button>
+                                    @if (i == Model.Pedidos.PagAtual)
+                                    {<span class="sr-only">(current)</span>}
+                                </li>
+                            }
+                            <li class="page-item @if (Model.Pedidos.PagAtual == Model.Pedidos.PagMax) {<text> disabled </text> }">
+                                <button type="button" class="page-link btnPage" aria-label="Next" value="@(Model.Pedidos.PagAtual+1)" @if (Model.Pedidos.PagAtual == Model.Pedidos.PagMax) { <text> disabled </text> }>
+                                    <span aria-hidden="true">&raquo;</span>
+                                    <span class="sr-only">Próxima</span>
+                                </button>
+                            </li>
+                        </ul>
+                    </nav>
+                </td>
+            </tr>
+        </tfoot>
+    </table>

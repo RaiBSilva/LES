@@ -2,36 +2,25 @@
 
 @using LES.Models.Entity
 
-   @{ bool elegivelTroca = (Model.Status <= (StatusPedidos)6 && Model.Status >= (StatusPedidos)5);
-       double precoTotal = 0;}
+   @{double precoTotal = 0;}
 
 <table class="table table-striped table-hover table-sm ">
     <thead>
         <tr>
             <th scope="col">Livro</th>
             <th scope="col">Preço</th>
-            <th scope="col">Troca</th>
         </tr>
     </thead>
     <tbody>
         @if (Model.Livros.Count > 0)
         {
-            @foreach (var livro in Model.Livros)
+            @foreach (var entry in Model.Livros)
             {
+                var livro = entry.Value;
                 precoTotal += livro.Preco;
                 <tr>
                     <td>@livro.Titulo</td>
                     <td>@livro.Preco</td>
-                    <td>
-                        @if (elegivelTroca)
-                        {
-                            <button class="btn btn-info btnTroca" value="@livro.CodigoBarras" data-toggle="modal" data-target="#myModal">Solicitar</button>
-                        }
-                        else
-                        {
-                            <p>Não é elegível para troca.</p>
-                        }
-                    </td>
                 </tr>
             }
             <tr>
