@@ -19,6 +19,9 @@ namespace LES.Data.DAO
             Pedido request = (Pedido)e;
 
             return _contexto.Pedidos.Where(p => p.Id == request.Id)
+                .Include(p => p.CartaoPedidos)
+                    .ThenInclude(c => c.Cartao)
+                    .ThenInclude(c => c.Bandeira)
                 .Include(p => p.Cliente)
                 .Include(p => p.Endereco)
                     .ThenInclude(e => e.Cidade)
@@ -32,6 +35,9 @@ namespace LES.Data.DAO
         public IList<EntidadeDominio> ListIncludeAll()
         {
             return _contexto.Pedidos.Select(p => p)
+                .Include(p => p.CartaoPedidos)
+                    .ThenInclude(c => c.Cartao)
+                    .ThenInclude(c => c.Bandeira)
                 .Include(p => p.Cliente)
                 .Include(p => p.Endereco)
                     .ThenInclude(e => e.Cidade)

@@ -4,8 +4,10 @@ using LES.Data.DAO;
 using LES.Models.Entity;
 using LES.Models.ViewHelpers.CarrinhoCompra;
 using LES.Models.ViewHelpers.Conta;
+using LES.Models.ViewHelpers.Shared;
 using LES.Models.ViewModel.Carrinho;
 using LES.Models.ViewModel.Conta;
+using LES.Models.ViewModel.Shared;
 using LES.Views.Conta;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Components.Forms;
@@ -22,24 +24,28 @@ namespace LES.Views.CarrinhoCompra
     [Authorize]
     public class CarrinhoCompraController : BaseController
     {
+        IDAOTabelaRel<CarrinhoLivro> _daoCarrinhoLivro { get; set; }
+        IDAOTabelaRel<CartaoPedido> _daoCartaoPedido { get; set; }
         IFacadeCrud<BandeiraCartaoCredito> _facadeBandeiras { get; set; }
         IFacadeCrud<Carrinho> _facadeCarrinho { get; set; }
         IFacadeCrud<Cliente> _facadeCliente { get; set; }
         IFacadeCrud<Livro> _facadeLivro { get; set; }
+        IFacadeCrud<LivroPedido> _facadeLivrosPedidos { get; set; }
         IFacadeCrud<Pedido> _facadePedido { get; set; }
         IFacadeCrud<TipoEndereco> _facadeTipoEndereco { get; set; }
-        IDAOTabelaRel<CarrinhoLivro> _daoCarrinhoLivro { get; set; }
-        IDAOTabelaRel<CartaoPedido> _daoCartaoPedido { get; set; }
+        IFacadeCrud<Troca> _facadeTroca { get; set; }
 
         public CarrinhoCompraController(
+            IDAOTabelaRel<CarrinhoLivro> daoCarrinhoLivro,
+            IDAOTabelaRel<CartaoPedido> daoCartaoPedido,
             IFacadeCrud<BandeiraCartaoCredito> facadeBandeira, 
             IFacadeCrud<Carrinho> facadeCarrinho,
             IFacadeCrud<Cliente> facadeCliente,
             IFacadeCrud<Livro> facadeLivro,
+            IFacadeCrud<LivroPedido> facadeLivrosPedidos,
             IFacadeCrud<Pedido> facadePedido,
             IFacadeCrud<TipoEndereco> facadeTipoEndereco,
-            IDAOTabelaRel<CarrinhoLivro> daoCarrinhoLivro,
-            IDAOTabelaRel<CartaoPedido> daoCartaoPedio)
+            IFacadeCrud<Troca> facadeTroca)
         {
             _facadeBandeiras = facadeBandeira;
             _facadeCarrinho = facadeCarrinho;
@@ -48,7 +54,9 @@ namespace LES.Views.CarrinhoCompra
             _facadePedido = facadePedido;
             _facadeTipoEndereco = facadeTipoEndereco;
             _daoCarrinhoLivro = daoCarrinhoLivro;
-            _daoCartaoPedido = daoCartaoPedio;
+            _daoCartaoPedido = daoCartaoPedido;
+            _facadeLivrosPedidos = facadeLivrosPedidos;
+            _facadeTroca = facadeTroca;
         }
 
         public IActionResult FinalizarCompra() {
@@ -497,6 +505,41 @@ namespace LES.Views.CarrinhoCompra
             _facadeCliente.Editar(clienteDb);
             return RedirectToAction(nameof(FinalizarCompra));
         }
+        #endregion
+
+        #region Troca
+
+        public IActionResult _RealizarTrocaPartial(int id)
+        {
+            LivroPedido p = _facadeLivrosPedidos.GetEntidade(new LivroPedido { Id = id });
+            Livro l = _facadeLivro.GetAllInclude(p.Livro);
+
+            _vh = new LivroBaseViewHelper { Entidades = new Dictionary<string, object>{ [typeof(Livro).Name] = l } };
+            KeyValuePair<int, LivroBaseModel> vm = new KeyValuePair<int, LivroBaseModel>(p.Id, (LivroBaseModel)_vh.ViewModel);
+
+            return PartialView("../Conta/PartialViews/_RealizarTrocaPartial", vm);
+        }
+
+        public IActionResult RealizarTroca(int id)
+        {
+            LivroPedido p = _facadeLivrosPedidos.GetEntidade(new LivroPedido { Id = id });
+            p.Trocado = true;
+
+            Troca t = new Troca
+            {
+                Cliente = _facadeCliente.GetAllInclude(GetClienteComEmail()),
+                LivroPedido = p,
+                StatusTroca = StatusTroca.Processamento
+            };
+
+            string msg = _facadeLivrosPedidos.Editar(p);
+            msg += _facadeTroca.Cadastrar(t);
+
+            if (msg != null)
+                TempData["Alert"] = msg;
+            return RedirectToAction("Detalhes","Conta");
+        }
+
         #endregion
 
         #region Utilidades

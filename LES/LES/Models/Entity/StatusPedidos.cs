@@ -26,15 +26,15 @@ namespace LES.Models.Entity
     {
         [Display(Name = "Em processamento...")]
         Processamento,
-        [Display(Name = "Cancelada.")]
-        Cancelada,
-        [Display(Name = "Autorizada.")]
-        Autorizada,
-        [Display(Name = "Negada.")]
-        Negada,
         [Display(Name = "Em trânsito...")]
         EmTransito,
+        [Display(Name = "Autorizada.")]
+        Autorizada,
         [Display(Name = "Concluída.")]
-        Trocada
+        Trocada,
+        [Display(Name = "Cancelada.")]
+        Cancelada,
+        [Display(Name = "Negada.")]
+        Negada
     }
 }

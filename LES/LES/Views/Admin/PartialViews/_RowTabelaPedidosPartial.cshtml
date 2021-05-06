@@ -3,11 +3,12 @@
 
 @{ IDictionary<StatusPedidos, string[]> statusInfo = new Dictionary<StatusPedidos, string[]>();
 
-    statusInfo[(StatusPedidos)0] = new string[] { "text-info", "Em processamento." };
-    statusInfo[(StatusPedidos)1] = new string[] { statusInfo[(StatusPedidos)0][0], "Em trânsito..." };
-    statusInfo[(StatusPedidos)2] = new string[] { "text-success", "Aprovado!" };
-    statusInfo[(StatusPedidos)3] = new string[] { statusInfo[(StatusPedidos)2][0], "Entregue!" };
-    statusInfo[(StatusPedidos)4] = new string[] { "text-danger", "Negado." };
+    statusInfo[(StatusPedidos)0] = new string[] { "text-info", "Em processamento..." };
+    statusInfo[(StatusPedidos)1] = new string[] { statusInfo[(StatusPedidos)0][0], "Em trânsito." };
+    statusInfo[(StatusPedidos)2] = new string[] { "text-success", "Autorizada!" };
+    statusInfo[(StatusPedidos)3] = new string[] { statusInfo[(StatusPedidos)2][0], "Concluída!" };
+    statusInfo[(StatusPedidos)4] = new string[] { "text-danger", "Cancelada." };
+    statusInfo[(StatusPedidos)5] = new string[] { statusInfo[(StatusPedidos)4][0], "Negada." };
 }
 
 <tr>

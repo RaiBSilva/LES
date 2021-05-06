@@ -1,4 +1,5 @@
-﻿@model IList<PedidoModel>
+﻿
+@model IList<TrocaModel>
 
 @using LES.Models.Entity
 
@@ -7,24 +8,25 @@
         Histórico de Compras
     </h2>
 </div>
-@{ IDictionary<StatusPedidos, string[]> statusInfo = new Dictionary<StatusPedidos, string[]>();
+@{ IDictionary<StatusTroca, string[]> statusInfo = new Dictionary<StatusTroca, string[]>();
 
-    statusInfo[(StatusPedidos)0] = new string[] { "text-info", "Em processamento." };
-    statusInfo[(StatusPedidos)1] = new string[] { statusInfo[(StatusPedidos)0][0], "Em trânsito..." };
-    statusInfo[(StatusPedidos)2] = new string[] { "text-success", "Aprovado!" };
-    statusInfo[(StatusPedidos)3] = new string[] { statusInfo[(StatusPedidos)2][0], "Entregue!" };
-    statusInfo[(StatusPedidos)4] = new string[] { "text-danger", "Negado." };
+    statusInfo[(StatusTroca)0] = new string[] { "text-info", "Em processamento." };
+    statusInfo[(StatusTroca)1] = new string[] { statusInfo[(StatusTroca)0][0], "Em trânsito..." };
+    statusInfo[(StatusTroca)2] = new string[] { "text-success", "Aprovado!" };
+    statusInfo[(StatusTroca)3] = new string[] { statusInfo[(StatusTroca)2][0], "Concluída!" };
+    statusInfo[(StatusTroca)4] = new string[] { "text-danger", "Negada." };
+    statusInfo[(StatusTroca)5] = new string[] { statusInfo[(StatusTroca)4][0], "Cancalada." };
 }
 
 <div class="container">
 
     <div id="accordion" class="row justify-content-center">
         @{ int i = 1;}
-        @foreach (var pedido in Model)
+        @foreach (var troca in Model)
         {
-            string classeStatus = statusInfo[pedido.Status][0];
+            string classeStatus = statusInfo[troca.Status][0];
 
-            string displayStatus = statusInfo[pedido.Status][1];
+            string displayStatus = statusInfo[troca.Status][1];
 
             <div class="col-sm-12 card">
                 <div class="card-header btn-light btn-pedido" id="heading_@i">
@@ -32,10 +34,10 @@
                         <button class="btn col-12 btn-pedido shadow-none" data-toggle="collapse" data-target="#collapse_@i" aria-expanded="true" aria-controls="collapse_@i">
                             <div class="container">
                                 <div class="row justify-content-between">
-                                    <span class="col-sm-2">Pedido  #@pedido.Id</span>
+                                    <span class="col-sm-2">Troca  #@troca.Id</span>
                                     <span class="col-sm-10 text-right font-weight-light">
                                         <span class="@classeStatus">@displayStatus - </span>
-                                        <span>Feito em @pedido.DtPedido.ToShortDateString()</span>
+                                        <span>Feito em @troca.DtTroca.ToShortDateString()</span>
                                     </span>
                                 </div>
                             </div>
@@ -46,7 +48,7 @@
 
                 <div id="collapse_@i" class="collapse" aria-labelledby="heading_@i" data-parent="#accordion">
                     <div class="card-body">
-                        <partial name="../PartialViews/_TablePedidos.cshtml" for="@pedido">
+                        <partial name="../PartialViews/TableTrocas.cshtml" for="@troca">
                     </div>
                 </div>
 

@@ -16,6 +16,7 @@ namespace LES.Data.DAO
         {
             return _contexto.Trocas.Where(t => t.Id == e.Id)
                 .Include(t => t.Cliente)
+                    .ThenInclude(c => c.Usuario)
                 .Include(t => t.LivroPedido)
                     .ThenInclude(t => t.Livro)
                 .Include(t => t.LivroPedido)
@@ -27,6 +28,7 @@ namespace LES.Data.DAO
         {
             return _contexto.Trocas.Select(t => t)
                 .Include(t => t.Cliente)
+                    .ThenInclude(c => c.Usuario)
                 .Include(t => t.LivroPedido)
                     .ThenInclude(t => t.Livro)
                 .Include(t => t.LivroPedido)

@@ -10,7 +10,9 @@ namespace LES.Models.ViewModel.Conta
 {
     public class TrocaModel : IViewModel
     {
+        public int Id { get; set; }
         public int LivroPedidoId { get; set; }
+        public DateTime DtTroca { get; set; }
         public AdminLivroModel Livro { get; set; }
         public StatusTroca Status { get; set; }
 

@@ -3,6 +3,7 @@ using LES.Models.Entity;
 using LES.Models.ViewHelpers.Admin;
 using LES.Models.ViewModel.Admin;
 using LES.Models.ViewModel.Conta;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Data.SqlClient.DataClassification;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
@@ -15,6 +16,7 @@ using System.Threading.Tasks;
 
 namespace LES.Controllers
 {
+    [Authorize(Roles = "1,2")]
     public class AdminController : BaseController
     {
         IFacadeCrud<Pedido> _facadePedidos { get; set; }
@@ -59,8 +61,18 @@ namespace LES.Controllers
                 }
             };
 
+            if (TempData["Alert"] != null) ViewData["Alert"] = TempData["Alert"];
+
             return View(_vh.ViewModel);
         }
+
+        public IActionResult ConfigLoja() {
+
+
+            return View();
+        }
+
+        #region Pedidos
 
         [HttpPost]
         public IActionResult _PedidosBusca(string json)
@@ -90,7 +102,7 @@ namespace LES.Controllers
             if (filtros.ValorMax > 0)
                 pedidos = pedidos.Where(p => p.ValorTotal < filtros.ValorMax);
 
-            pedidos = !String.IsNullOrEmpty(filtros.Status) ? 
+            pedidos = !String.IsNullOrEmpty(filtros.Status) ?
                 pedidos.Where(p => p.Status == (StatusPedidos)Convert.ToInt32(filtros.Status)) : pedidos;
 
             if (filtros.PagAtual > 0)
@@ -112,6 +124,35 @@ namespace LES.Controllers
             return PartialView();
         }
 
+        public IActionResult _VisualizarPedidoPartial(int id)
+        {
+            _vh = new AdminPedidoViewHelper
+            {
+                Entidades = new Dictionary<string, object>
+                {
+                    [typeof(Pedido).Name] = _facadePedidos.GetAllInclude(new Pedido { Id = id })
+                }
+            };
+            return PartialView("../Admin/PartialViews/_VisualizarPedidoPartial", _vh.ViewModel);
+        }
+
+        [HttpPost]
+        public IActionResult StatusPedido(AdminPedidoModel pedido)
+        {
+            Pedido p = _facadePedidos.GetEntidade(new Pedido { Id = Convert.ToInt32(pedido.Id) });
+            p.Status = pedido.Status;
+
+            string msg = _facadePedidos.Editar(p);
+
+            if (msg != null)
+                TempData["Alert"] = msg;
+            return RedirectToAction(nameof(Pedidos));
+        }
+
+        #endregion
+
+        #region Troca    
+
         [HttpPost]
         public IActionResult _TrocasBusca(string json)
         {
@@ -120,9 +161,9 @@ namespace LES.Controllers
             FiltrosPedidosAdminModel filtros = o.ToObject<FiltrosPedidosAdminModel>();
 
             IEnumerable<Troca> trocas = _facadeTrocas.ListAllInclude();
-            
+
             trocas = filtros.Id != null ? trocas.Where(t => t.Id == filtros.Id) : trocas;
-            
+
             trocas = !String.IsNullOrEmpty(filtros.Nome) ? trocas.Where(t => t.Cliente.Nome.Contains(filtros.Nome)) : trocas;
 
             trocas = filtros.DtMin != null ? trocas.Where(t => t.DtCadastro > filtros.DtMin) : trocas;
@@ -154,56 +195,36 @@ namespace LES.Controllers
             return PartialView();
         }
 
-        public IActionResult ConfigLoja() {
-
-
-            return View();
+        public IActionResult _VisualizarTrocaPartial(int id)
+        {
+            _vh = new AdminTrocaViewHelper
+            {
+                Entidades = new Dictionary<string, object>
+                {
+                    [typeof(Troca).Name] = _facadeTrocas.GetAllInclude(new Troca { Id = id })
+                }
+            };
+            return PartialView("../Admin/PartialViews/_VisualizarPedidoPartial", _vh.ViewModel);
         }
 
-        #region Pedidos
-        public IActionResult _AprovarPedidoPartial(int id) 
+        [HttpPost]
+        public IActionResult StatusTroca(AdminTrocaModel troca)
         {
-            ViewBag.Operacao = "Aprovar";
-            return PartialView("../Admin/PartialViews/_ProcessarPedidoPartial");
-        }
+            Troca t = _facadeTrocas.GetAllInclude(new Troca { Id = troca.Id });
+            t.StatusTroca = troca.Status;
 
-        public IActionResult AprovarPedido(int id)
-        {
+            string msg = _facadeTrocas.Editar(t);
+
+            if (msg != null)
+                TempData["Alert"] = msg;
             return RedirectToAction(nameof(Pedidos));
         }
 
-        public IActionResult _NegarPedidoPartial(int id)
-        {
-            ViewBag.Operacao = "Negar";
-            return PartialView("../Admin/PartialViews/_ProcessarPedidoPartial");
-        }
-
-        public IActionResult NegarPedido(int id)
-        {
-            return RedirectToAction(nameof(Pedidos));
-        }
-
-        public IActionResult _CancelarPedidoPartial(int id)
-        {
-            ViewBag.Operacao = "Cancelar";
-            return PartialView("../Admin/PartialViews/_ProcessarPedidoPartial");
-        }
-
-        public IActionResult CancelarPedido(int id)
-        {
-            return RedirectToAction(nameof(Pedidos));
-        }
-
-        public IActionResult _VisualizarPedidoPartial(int id)
-        {
-            return PartialView("../Admin/PartialViews/_VisualizarPedidoPartial");
-        }
-
-        #endregion
+    #endregion
 
         #region Clientes
 
-        public IActionResult _InativarReativarClientePartial(int id) {
+    public IActionResult _InativarReativarClientePartial(int id) {
             return PartialView("../Admin/PartialViews/_InativarReativarClientePartial");
         }
 

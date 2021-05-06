@@ -756,20 +756,6 @@ namespace LES.Views.Conta
 
         #endregion
 
-        #region Troca
-
-        public IActionResult _RealizarTrocaPartial(int id)
-        {
-            return PartialView("../Conta/PartialViews/_RealizarTrocaPartial"/*, ClienteDemo.Pedidos[0].Livros[0]*/);
-        }
-
-        public IActionResult RealizarTroca(int id)
-        {
-            return RedirectToAction(nameof(Detalhes));
-        }
-
-        #endregion
-
         #region Utilidades
 
 

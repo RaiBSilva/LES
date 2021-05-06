@@ -1,0 +1,79 @@
+﻿@model LES.Models.ViewModel.Admin.PaginaTroidosModel
+
+@{ string naoFinal = "-1";}
+
+
+<table class="table">
+    <caption>Lista de transações efetivadas</caption>
+    <thead class="thead-dark">
+        <tr>
+            <th scope="col">Id</th>
+            <th scope="col">Usuário</th>
+            <th scope="col">Data</th>
+            <th scope="col">Valor</th>
+            <th scope="col">Status</th>
+            <th scope="col">Detalhes</th>
+        </tr>
+        <tr>
+            <th scope="col"><input asp-for="Filtros.Id" id="filtroTroId" class="form-control" placeholder="1..." /></th>
+            <th scope="col"><input asp-for="Filtros.Nome" id="filtroTroCliente" class="form-control" placeholder="José..." /></th>
+            <th scope="col">
+                De <input asp-for="Filtros.DtMin" id="filtroTroDataMin" class="form-control" type="date" placeholder="Data mínima..." />
+                Até <input asp-for="Filtros.DtMax" id="filtroTroDataMax" class="form-control" type="date" placeholder="Data máxima..." />
+            </th>
+            <th scope="col">
+                De <input asp-for="Filtros.ValorMin" id="filtroTroValorMin" class="form-control" type="number" step="0.01" min="0" placeholder="R$ 13,40..." />
+                Até <input asp-for="Filtros.ValorMax" id="filtroTroValorMax" class="form-control" type="number" step="0.01" min="0" placeholder="R$ 13,40..." />
+            </th>
+            <th scope="col">
+                <select class="form-control" id="filtroTroStatus" asp-items="Html.GetEnumSelectList<LES.Models.Entity.StatusTroca>().Where(s => s.Value != naoFinal)">
+                    <option label=""></option>
+                </select>
+            </th>
+            <th scope="col">
+                <button class="btn btn-primary btnBuscarTroido">Buscar</button>
+            </th>
+        </tr>
+    </thead>
+    <tbody id="corpoTabela">
+
+        @foreach (var pedido in Model.Trocas.Trocas)
+        {
+            <partial name="../PartialViews/_RowTabelaTrocasPartial.cshtml" for="@pedido" />
+        }
+
+    </tbody>
+    <tfoot>
+        <tr>
+            <td>
+                <nav aria-label="Paginação">
+                    <ul class="pagination justify-content-center">
+                        <li class="page-item @if (Model.Trocas.PagAtual == 1) {<text> disabled </text> }">
+                            <button type="button" class="page-link btnPage" aria-label="Previous" value="@(Model.Trocas.PagAtual-1)" @if (Model.Trocas.PagAtual == 1) { <text> disabled </text> }>
+                                <span aria-hidden="true">&laquo;</span>
+                                <span class="sr-only">Anterior</span>
+                            </button>
+                        </li>
+                        @for (int i = 1; i <= Model.Trocas.PagMax; i++)
+                        {
+                            string active = "";
+                            @if (i == Model.Trocas.PagAtual) { active = "active"; }
+                            else { active = ""; }
+                            <li class="page-item @active">
+                                <button type="button" class="page-link btnPage" value="@i"> @i </button>
+                                @if (i == Model.Trocas.PagAtual)
+                                {<span class="sr-only">(current)</span>}
+                            </li>
+                        }
+                        <li class="page-item @if (Model.Trocas.PagAtual == Model.Trocas.PagMax) {<text> disabled </text> }">
+                            <button type="button" class="page-link btnPage" aria-label="Next" value="@(Model.Trocas.PagAtual+1)" @if (Model.Trocas.PagAtual == Model.Trocas.PagMax) { <text> disabled </text> }>
+                                <span aria-hidden="true">&raquo;</span>
+                                <span class="sr-only">Próxima</span>
+                            </button>
+                        </li>
+                    </ul>
+                </nav>
+            </td>
+        </tr>
+    </tfoot>
+</table>

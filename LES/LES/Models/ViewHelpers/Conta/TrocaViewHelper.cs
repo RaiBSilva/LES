@@ -24,7 +24,9 @@ namespace LES.Models.ViewHelpers.Conta
             TrocaModel vm = new TrocaModel
             {
                 Status = t.StatusTroca,
-                LivroPedidoId = t.LivroPedido.Id
+                LivroPedidoId = t.LivroPedido.Id,
+                Id = t.Id,
+                DtTroca = t.DtCadastro
             };
 
             AdminLivroViewHelper livroVh = new AdminLivroViewHelper
