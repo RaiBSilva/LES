@@ -81,9 +81,9 @@ namespace LES.Controllers
         #region Pedidos
 
         [HttpPost]
-        public IActionResult _PedidosBusca(string json)
+        public IActionResult _PedidosBusca(string filtro)
         {
-            JObject o = JObject.Parse(json);
+            JObject o = JObject.Parse(filtro);
 
             FiltrosPedidosAdminModel filtros = o.ToObject<FiltrosPedidosAdminModel>();
 
@@ -96,10 +96,10 @@ namespace LES.Controllers
             if (!String.IsNullOrEmpty(filtros.Nome))
                 pedidos = pedidos.Where(p => p.Cliente.Nome.Contains(filtros.Nome));
 
-            if (filtros.DtMin != null)
+            if (filtros.DtMin != null && filtros.DtMin != new DateTime())
                 pedidos = pedidos.Where(p => p.DtCadastro > filtros.DtMin);
 
-            if (filtros.DtMax != null)
+            if (filtros.DtMax != null && filtros.DtMax != new DateTime())
                 pedidos = pedidos.Where(p => p.DtCadastro < filtros.DtMax);
 
             if (filtros.ValorMin > 0)
@@ -127,7 +127,7 @@ namespace LES.Controllers
             PaginaPedidosModel vm = (PaginaPedidosModel)_vh.ViewModel;
             vm.Filtros = filtros;
 
-            return PartialView();
+            return PartialView("../Admin/PartialViews/_TabelaPedidosPartial", vm);
         }
 
         public IActionResult _VisualizarPedidoPartial(int id)
@@ -198,7 +198,7 @@ namespace LES.Controllers
             PaginaPedidosModel vm = (PaginaPedidosModel)_vh.ViewModel;
             vm.Filtros = filtros;
 
-            return PartialView();
+            return PartialView("../Admin/PartialViews/_TabelaTrocasPartial", vm);
         }
 
         public IActionResult _VisualizarTrocaPartial(int id)

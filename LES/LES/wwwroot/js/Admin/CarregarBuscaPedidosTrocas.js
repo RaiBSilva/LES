@@ -1,9 +1,13 @@
 ﻿function atualizarLista(pag, tabela) {
     if (pag === undefined) pag = 1;
 
+    alert(tabela);
+
     var divTabela = $("#" + tabela);
 
     var trigrama = tabela.substring(0, 3);
+
+    var Pesquisar = tabela == "Pedidos" ? urls.BuscarPedidos : urls.BuscarTrocas;
 
     var filtros = JSON.stringify({
         Id: $("#filtro"+ trigrama +"Id").val(),
@@ -15,7 +19,7 @@
         Status: $("#filtro" + trigrama + "Status").val(),
         PaginaAtual: pag
     });
-    divTabela.load(urls.Pesquisar,
+    divTabela.load(Pesquisar,
         {
             filtro: filtros
         });
