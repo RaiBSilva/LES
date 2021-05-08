@@ -49,7 +49,8 @@ namespace LES.Models.ViewHelpers.Conta
             }
 
             DetalhesCartaoViewHelper cartaoVh = new DetalhesCartaoViewHelper();
-            foreach(var cartao in pedido.CartaoPedidos)
+            if(pedido.CartaoPedidos != null)
+                foreach(var cartao in pedido.CartaoPedidos)
             {
                 cartaoVh.Entidades = new Dictionary<string, object>
                 {

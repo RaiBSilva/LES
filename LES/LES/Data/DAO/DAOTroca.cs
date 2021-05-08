@@ -19,6 +19,7 @@ namespace LES.Data.DAO
                     .ThenInclude(c => c.Usuario)
                 .Include(t => t.LivroPedido)
                     .ThenInclude(t => t.Livro)
+                    .ThenInclude(l => l.Editora)
                 .Include(t => t.LivroPedido)
                     .ThenInclude(t => t.Pedido)
                 .FirstOrDefault();
@@ -31,6 +32,7 @@ namespace LES.Data.DAO
                     .ThenInclude(c => c.Usuario)
                 .Include(t => t.LivroPedido)
                     .ThenInclude(t => t.Livro)
+                    .ThenInclude(l => l.Editora)
                 .Include(t => t.LivroPedido)
                     .ThenInclude(t => t.Pedido)
                 .Cast<EntidadeDominio>()

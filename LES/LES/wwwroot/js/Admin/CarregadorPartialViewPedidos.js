@@ -13,11 +13,21 @@ function carregarVisualizarPedido(id) {
     carregarPartialView(endereco);
 }
 
+function carregarVisualizarTroca(id) {
+    var endereco = urls.VisualizarTroca + "/" + id;
+    carregarPartialView(endereco);
+}
+
 $('#myModal').on('hidden.bs.modal', function () {
     $(this).empty();
 });
 
-$(".btnVisualizar").on("click", function (e) {
+$(".btnVisualizarPedido").on("click", function (e) {
     var id = $(this).val();
     carregarVisualizarPedido(id);
+});
+
+$(".btnVisualizarTroca").on("click", function (e) {
+    var id = $(this).val();
+    carregarVisualizarTroca(id);
 });
