@@ -19,14 +19,13 @@ namespace LES.Models.ViewHelpers.Livros
 
         protected override void ToViewModel()
         {
-            PaginaLojaViewHelper vm = new PaginaLojaViewHelper();
-            PaginaLojaModel model = new PaginaLojaModel();
+            PaginaLojaModel vm = new PaginaLojaModel();
             LojaFiltrosModel filtrosModel = new LojaFiltrosModel();
             ListaCardLivrosModel listaCardModel = new ListaCardLivrosModel();
 
             if (Entidades == null) 
             {
-                _viewModel = model;
+                _viewModel = vm;
                 return;
             }
 
@@ -79,10 +78,10 @@ namespace LES.Models.ViewHelpers.Livros
             if (Entidades.ContainsKey(Categorias))
                 filtrosModel.Categorias = (string)Entidades[Categorias];
 
-            model.Filtros = filtrosModel;
-            model.Livros = listaCardModel;
+            vm.Filtros = filtrosModel;
+            vm.Livros = listaCardModel;
 
-            _viewModel = model;
+            _viewModel = vm;
 
         }
     }

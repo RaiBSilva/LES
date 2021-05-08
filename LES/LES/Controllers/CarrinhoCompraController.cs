@@ -1,12 +1,13 @@
 ﻿using LES.Controllers;
 using LES.Controllers.Facade;
 using LES.Data.DAO;
-using LES.Migrations;
 using LES.Models.Entity;
 using LES.Models.ViewHelpers.CarrinhoCompra;
 using LES.Models.ViewHelpers.Conta;
+using LES.Models.ViewHelpers.Shared;
 using LES.Models.ViewModel.Carrinho;
 using LES.Models.ViewModel.Conta;
+using LES.Models.ViewModel.Shared;
 using LES.Views.Conta;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Components.Forms;
@@ -23,25 +24,28 @@ namespace LES.Views.CarrinhoCompra
     [Authorize]
     public class CarrinhoCompraController : BaseController
     {
-
+        IDAOTabelaRel<CarrinhoLivro> _daoCarrinhoLivro { get; set; }
+        IDAOTabelaRel<CartaoPedido> _daoCartaoPedido { get; set; }
         IFacadeCrud<BandeiraCartaoCredito> _facadeBandeiras { get; set; }
         IFacadeCrud<Carrinho> _facadeCarrinho { get; set; }
         IFacadeCrud<Cliente> _facadeCliente { get; set; }
         IFacadeCrud<Livro> _facadeLivro { get; set; }
+        IFacadeCrud<LivroPedido> _facadeLivrosPedidos { get; set; }
         IFacadeCrud<Pedido> _facadePedido { get; set; }
         IFacadeCrud<TipoEndereco> _facadeTipoEndereco { get; set; }
-        IDAOTabelaRel<CarrinhoLivro> _daoCarrinhoLivro { get; set; }
-        IDAOTabelaRel<CartaoPedido> _daoCartaoPedido { get; set; }
+        IFacadeCrud<Troca> _facadeTroca { get; set; }
 
         public CarrinhoCompraController(
+            IDAOTabelaRel<CarrinhoLivro> daoCarrinhoLivro,
+            IDAOTabelaRel<CartaoPedido> daoCartaoPedido,
             IFacadeCrud<BandeiraCartaoCredito> facadeBandeira, 
             IFacadeCrud<Carrinho> facadeCarrinho,
             IFacadeCrud<Cliente> facadeCliente,
             IFacadeCrud<Livro> facadeLivro,
+            IFacadeCrud<LivroPedido> facadeLivrosPedidos,
             IFacadeCrud<Pedido> facadePedido,
             IFacadeCrud<TipoEndereco> facadeTipoEndereco,
-            IDAOTabelaRel<CarrinhoLivro> daoCarrinhoLivro,
-            IDAOTabelaRel<CartaoPedido> daoCartaoPedio)
+            IFacadeCrud<Troca> facadeTroca)
         {
             _facadeBandeiras = facadeBandeira;
             _facadeCarrinho = facadeCarrinho;
@@ -50,7 +54,9 @@ namespace LES.Views.CarrinhoCompra
             _facadePedido = facadePedido;
             _facadeTipoEndereco = facadeTipoEndereco;
             _daoCarrinhoLivro = daoCarrinhoLivro;
-            _daoCartaoPedido = daoCartaoPedio;
+            _daoCartaoPedido = daoCartaoPedido;
+            _facadeLivrosPedidos = facadeLivrosPedidos;
+            _facadeTroca = facadeTroca;
         }
 
         public IActionResult FinalizarCompra() {
@@ -89,13 +95,13 @@ namespace LES.Views.CarrinhoCompra
             pedNaoFinalizado.Inativo = false;
             pedNaoFinalizado.LivrosPedidos = new List<LivroPedido>();
             foreach (var entry in carrinho.CarrinhoLivro)
-                pedNaoFinalizado.LivrosPedidos.Add(new LivroPedido
-                {
-                    Livro = entry.Livro,
-                    Pedido = pedNaoFinalizado,
-                    Quantia = entry.Quantia,
-                    Trocado = false
-                });
+                for(int i = 0; i < entry.Quantia; i++)
+                    pedNaoFinalizado.LivrosPedidos.Add(new LivroPedido
+                    {
+                        Livro = entry.Livro,
+                        Pedido = pedNaoFinalizado,
+                        Trocado = false
+                    });
             pedNaoFinalizado.Status = StatusPedidos.NaoFinalizado;
 
             if(naoTemPedido)
@@ -130,7 +136,7 @@ namespace LES.Views.CarrinhoCompra
 
         public IActionResult Comprar()
         {
-            Cliente clienteDb = _facadeCliente.GetAllInclude(GetClienteComEmail());
+            Cliente clienteDb = GetClienteDb();
             Pedido p = GetPedidoNaoFinalizado(clienteDb);
             Carrinho c = GetCarrinho();
 
@@ -140,10 +146,27 @@ namespace LES.Views.CarrinhoCompra
                 return RedirectToAction(nameof(FinalizarCompra));
             }
 
+            //Limpar Carrinho (feito decrescente pois estou removendo da lista)
             int lastIndex = c.CarrinhoLivro.Count() - 1;
 
             for (int i = lastIndex; i >= 0; i--)
                 _daoCarrinhoLivro.Remove(c.CarrinhoLivro[i]);
+
+            IEnumerable<Livro> livros = p.LivrosPedidos.Select(l => l.Livro).Distinct();
+
+            p.ValorTotal = p.CalcularValorTotal();
+
+            //Cupom
+            if (p.Cupom != null)
+                p.ValorTotal -= p.Cupom.Valor;
+
+            //Atualização estoque
+            foreach(var livro in livros)
+            {
+                var quantiaPedido = p.LivrosPedidos.Where(l => l.LivroId == livro.Id).Count();
+                livro.EstoqueBloqueado -= quantiaPedido;
+                livro.Estoque -= quantiaPedido;
+            }
 
             p.Status = StatusPedidos.Processamento;
             string msg = _facadePedido.Editar(p);
@@ -157,7 +180,7 @@ namespace LES.Views.CarrinhoCompra
 
         public IActionResult _SelecionarEndereco()
         {
-            Cliente clienteDb = _facadeCliente.GetAllInclude(GetClienteComEmail());
+            Cliente clienteDb = GetClienteDb();
 
             _vh = new SelecionarEnderecoViewHelper
             {
@@ -183,7 +206,7 @@ namespace LES.Views.CarrinhoCompra
             };
 
             int id = ((Endereco)_vh.Entidades[typeof(Endereco).Name]).Id;
-            Cliente clienteDb = _facadeCliente.GetAllInclude(GetClienteComEmail());
+            Cliente clienteDb = GetClienteDb();
             Endereco e = clienteDb.Enderecos.Where(e => e.Id == id).FirstOrDefault();
             Pedido p = GetPedidoNaoFinalizado(clienteDb);
 
@@ -197,7 +220,7 @@ namespace LES.Views.CarrinhoCompra
 
         public IActionResult _SelecionarCartao()
         {
-            Cliente clienteDb = _facadeCliente.GetAllInclude(GetClienteComEmail());
+            Cliente clienteDb = GetClienteDb();
             IList<CartaoPedido> cartaoPedido = GetPedidoNaoFinalizado(clienteDb).CartaoPedidos;
             IList<CartaoCredito> cartoes = clienteDb.Cartoes;
 
@@ -227,7 +250,7 @@ namespace LES.Views.CarrinhoCompra
 
             IList<CartaoPedido> cartaoPedidos = (IList<CartaoPedido>)_vh.Entidades[typeof(IList<CartaoPedido>).Name];
 
-            Cliente clienteDb = _facadeCliente.GetAllInclude(GetClienteComEmail());
+            Cliente clienteDb = GetClienteDb();
             Pedido pedido = GetPedidoNaoFinalizado(clienteDb);
 
             int lastIndex = pedido.CartaoPedidos.Count() - 1;
@@ -262,7 +285,7 @@ namespace LES.Views.CarrinhoCompra
             Endereco endereco = (Endereco)_vh.Entidades[typeof(Endereco).Name];
             endereco.TipoEndereco = _facadeTipoEndereco.GetEntidade(endereco.TipoEndereco);
 
-            Cliente clienteDb = _facadeCliente.GetAllInclude(GetClienteComEmail());
+            Cliente clienteDb = GetClienteDb();
             clienteDb.Enderecos.Add(endereco);
 
             string msg = _facadeCliente.Editar(clienteDb);
@@ -284,7 +307,7 @@ namespace LES.Views.CarrinhoCompra
             CartaoCredito cartao = (CartaoCredito)_vh.Entidades[typeof(CartaoCredito).Name];
             cartao.Bandeira = _facadeBandeiras.GetEntidade(cartao.Bandeira);
 
-            Cliente clienteDb = _facadeCliente.GetAllInclude(GetClienteComEmail());
+            Cliente clienteDb = GetClienteDb();
             clienteDb.Cartoes.Add(cartao);
 
             string msg = _facadeCliente.Editar(clienteDb);
@@ -323,7 +346,7 @@ namespace LES.Views.CarrinhoCompra
             Livro livro = _facadeLivro.GetAllInclude(new Livro { CodigoBarras = codBar});
             IEnumerable<CarrinhoLivro> carrinhoLivro = c.CarrinhoLivro.Where(c => c.LivroId == livro.Id);
 
-            if (quantia > livro.Estoque)
+            if (quantia > livro.Estoque - livro.EstoqueBloqueado)
             {
                 return Json(new { valor = false, ex = "Estoque insuficiente.\n" });
             }
@@ -344,7 +367,7 @@ namespace LES.Views.CarrinhoCompra
                 carrinhoLivro.FirstOrDefault().Quantia+= 1;
             }
 
-            livro.Estoque -= quantia;
+            livro.EstoqueBloqueado += quantia;
 
             string msg = _facadeCarrinho.Editar(c);
             msg += _facadeLivro.Editar(livro);
@@ -355,46 +378,7 @@ namespace LES.Views.CarrinhoCompra
                 return Json(new { valor = true });
             return Json(new { valor = false, ex = msg });
         }
-
-        [HttpPost]
-        public IActionResult _MaisQuantiaNoCarrinho(string codBar)
-        {
-            return RedirectToAction(nameof(_AlterarQuantiaNoCarrinho), new { codBar, op = "+" });
-        }
-        [HttpPost]
-        public IActionResult _MenosQuantiaNoCarrinho(string codBar)
-        {
-            return RedirectToAction(nameof(_AlterarQuantiaNoCarrinho), new { codBar, op = "-" });
-        }
-
-        public IActionResult _AlterarQuantiaNoCarrinho(string codBar, string op) 
-        {
-            Carrinho c = GetCarrinho();
-            CarrinhoLivro carrinhoLivro = c.CarrinhoLivro.Where(l => l.Livro.CodigoBarras == codBar).FirstOrDefault();
-
-            IDictionary<string, int> operacoes = new Dictionary<string, int>
-            {
-                ["+"] = 1,
-                ["-"] = -1
-            };
-
-            if (carrinhoLivro == null)
-                return Json(new { valor = false, ex = "Livro não está no carrinho.\n" });
-
-            if (carrinhoLivro.Livro.Estoque == 0 && op == "+")
-                return Json(new { valor = false, ex = "Estoque insuficiente.\n" });
-
-            carrinhoLivro.Quantia += operacoes[op];
-            carrinhoLivro.Livro.Estoque -= 1;
-
-            string msg = _facadeCarrinho.Editar(c);
-
-            //INSERIR MÉTODO DE DESATIVAÇÃO AUTOMÁTICA AQUI
-
-            if (msg == "")
-                return Json(new { valor = true });
-            return Json(new { valor = false, ex = msg });
-        }
+        
 
         [HttpPost]
         public IActionResult _RemoverDoCarrinho(string codBar)
@@ -415,7 +399,7 @@ namespace LES.Views.CarrinhoCompra
                 return Json(new { valor = false, ex = "O livro não está no carrinho.\n" });
             }
 
-            livro.Estoque += carrinhoLivro.Quantia;
+            livro.EstoqueBloqueado -= carrinhoLivro.Quantia;
             c.CarrinhoLivro.Remove(carrinhoLivro);
 
             string msg = _daoCarrinhoLivro.Remove(carrinhoLivro);
@@ -425,7 +409,45 @@ namespace LES.Views.CarrinhoCompra
                 return Json(new { valor = true });
             return Json(new { valor = false, ex = msg });
         }
+        public IActionResult _AlterarQuantiaNoCarrinho(string codBar, string op) 
+        {
+            Carrinho c = GetCarrinho();
+            CarrinhoLivro carrinhoLivro = c.CarrinhoLivro.Where(l => l.Livro.CodigoBarras == codBar).FirstOrDefault();
 
+            IDictionary<string, int> operacoes = new Dictionary<string, int>
+            {
+                ["+"] = 1,
+                ["-"] = -1
+            };
+
+            if (carrinhoLivro == null)
+                return Json(new { valor = false, ex = "Livro não está no carrinho.\n" });
+
+            if (carrinhoLivro.Livro.EstoqueBloqueado == carrinhoLivro.Livro.Estoque && op == "+")
+                return Json(new { valor = false, ex = "Estoque insuficiente.\n" });
+
+            carrinhoLivro.Quantia += operacoes[op];
+            carrinhoLivro.Livro.EstoqueBloqueado += operacoes[op];
+
+            string msg = _facadeCarrinho.Editar(c);
+
+            //INSERIR MÉTODO DE DESATIVAÇÃO AUTOMÁTICA AQUI
+
+            if (msg == "")
+                return Json(new { valor = true });
+            return Json(new { valor = false, ex = msg });
+        }
+
+        [HttpPost]
+        public IActionResult _MaisQuantiaNoCarrinho(string codBar)
+        {
+            return RedirectToAction(nameof(_AlterarQuantiaNoCarrinho), new { codBar, op = "+" });
+        }
+        [HttpPost]
+        public IActionResult _MenosQuantiaNoCarrinho(string codBar)
+        {
+            return RedirectToAction(nameof(_AlterarQuantiaNoCarrinho), new { codBar, op = "-" });
+        }
         #endregion
 
         #region Calcular Frete
@@ -440,16 +462,105 @@ namespace LES.Views.CarrinhoCompra
         #region Usar Cupom
         public IActionResult _UsarCupomPartial()
         {
-            return PartialView("../CarrinhoCompra/PartialViews/_UsarCupomPartial");
+            IList<Cupom> cupons = _facadeCliente.GetAllInclude(GetClienteComEmail()).Cupons
+                .Where(c => c.Inativo == false)
+                .OrderBy(c => c.Codigo)
+                .ToList();
+
+            _vh = new UsarCupomViewHelper
+            {
+                Entidades = new Dictionary<string, object>
+                {
+                    [typeof(IList<Cupom>).Name] = cupons
+                }
+            };
+
+
+            return PartialView("../CarrinhoCompra/PartialViews/_UsarCupomPartial", _vh.ViewModel);
         }
 
         public IActionResult UsarCupom(string cod) 
         {
+            Cliente clienteDb = GetClienteDb();
+            Cupom cupom = clienteDb.Cupons.Where(c => c.Inativo == false && c.Codigo == cod).FirstOrDefault();
+            Pedido pedido = GetPedidoNaoFinalizado(clienteDb);
+            
+            if(cupom == null)
+                TempData["Alert"] = "Ocorreu um erro. Tente novamente. \n";
+            else { 
+                pedido.Cupom = cupom;
+                _facadeCliente.Editar(clienteDb);
+            }
+
+            return RedirectToAction(nameof(FinalizarCompra));
+        }
+
+        public IActionResult RemoverCupom()
+        {
+            Cliente clienteDb = GetClienteDb();
+            Pedido pedido = GetPedidoNaoFinalizado(clienteDb);
+
+            pedido.CupomId = null;
+            pedido.Cupom = null;
+            _facadeCliente.Editar(clienteDb);
             return RedirectToAction(nameof(FinalizarCompra));
         }
         #endregion
 
+        #region Troca
+
+        public IActionResult _RealizarTrocaPartial(int id)
+        {
+            LivroPedido p = _facadeLivrosPedidos.GetEntidade(new LivroPedido { Id = id });
+            Livro l = _facadeLivro.GetAllInclude(p.Livro);
+
+            _vh = new LivroBaseViewHelper { Entidades = new Dictionary<string, object>{ [typeof(Livro).Name] = l } };
+            KeyValuePair<int, LivroBaseModel> vm = new KeyValuePair<int, LivroBaseModel>(p.Id, (LivroBaseModel)_vh.ViewModel);
+
+            return PartialView("../Conta/PartialViews/_RealizarTrocaPartial", vm);
+        }
+
+        public IActionResult RealizarTroca(int id)
+        {
+            LivroPedido p = _facadeLivrosPedidos.GetEntidade(new LivroPedido { Id = id });
+            p.Trocado = true;
+
+            Troca t = new Troca
+            {
+                Cliente = _facadeCliente.GetAllInclude(GetClienteComEmail()),
+                LivroPedido = p,
+                StatusTroca = StatusTroca.Processamento
+            };
+
+            string msg = _facadeLivrosPedidos.Editar(p);
+            msg += _facadeTroca.Cadastrar(t);
+
+            if (msg != null)
+                TempData["Alert"] = msg;
+            return RedirectToAction("Detalhes","Conta");
+        }
+
+        public IActionResult CancelarTroca(int id)
+        {
+            Troca t = _facadeTroca.GetAllInclude(new Troca { Id = id });
+
+            t.StatusTroca = StatusTroca.Cancelada;
+
+            string msg = _facadeTroca.Editar(t);
+
+            if (msg != null)
+                TempData["Alert"] = msg;
+            return RedirectToAction("Detalhes", "Conta");
+        }
+
+        #endregion
+
         #region Utilidades
+
+        private Cliente GetClienteDb() 
+        {
+            return _facadeCliente.GetAllInclude(GetClienteComEmail());
+        }
 
         private Carrinho GetCarrinho()
         {

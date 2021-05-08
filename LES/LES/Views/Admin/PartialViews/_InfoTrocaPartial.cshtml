@@ -1,0 +1,44 @@
+﻿@model LES.Models.ViewModel.Admin.AdminTrocaModel
+@using LES.Models.Entity
+
+@{ IDictionary<StatusTroca, string[]> statusInfo = new Dictionary<StatusTroca, string[]>();
+
+    statusInfo[(StatusTroca)0] = new string[] { "text-info", "Em processamento." };
+    statusInfo[(StatusTroca)1] = new string[] { statusInfo[(StatusTroca)0][0], "Em trânsito..." };
+    statusInfo[(StatusTroca)2] = new string[] { "text-success", "Aprovado!" };
+    statusInfo[(StatusTroca)3] = new string[] { statusInfo[(StatusTroca)2][0], "Entregue!" };
+    statusInfo[(StatusTroca)4] = new string[] { "text-danger", "Negado." };
+
+}
+
+
+<div class="container justify-content-center">
+    <div class="row">
+        <table class="table table-sm table-borderless table-hover">
+            <thead class="thead-dark">
+                <tr>
+                    <th scope="col">Id</th>
+                    <th scope="col">Livro</th>
+                    <th scope="col">Valor</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <th scope="row">@Model.Livro.CodigoBarras</th>
+                    <td>@Model.Livro.Titulo</td>
+                    <td>R$ @Model.Livro.Preco.ToString("0.00").Replace(".", ",")</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="row justify-content-center">
+        <div class="col-sm-6">
+            <partial name="../PartialViews/_DlInfoPessoais.cshtml" for="@Model.Cliente.InfoUsuario" />
+        </div>
+        <div class="col-sm-6">
+            <h5 class="modal-title">Status do Pedido.</h5>
+            <h6 class="@statusInfo[Model.Status][0]">@statusInfo[Model.Status][1]</h6>
+        </div>
+    </div>
+</div>

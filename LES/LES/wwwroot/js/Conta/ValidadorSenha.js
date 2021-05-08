@@ -42,7 +42,6 @@ function validaSenha() {
     var boolEspeciais = containsSpecialChar(senhaValor);
 
     if (((boolCaracteres) && (boolMinusculas)) && ((boolMaiusculas)) && (boolEspeciais)) {
-        confirmaInput.disabled = false;
         senhaInput.style.borderColor = "green";
         requisitos.style.color = "green";
         caracteres.style.color = "green";
@@ -52,7 +51,6 @@ function validaSenha() {
         return confirmaSenha();
 
     } else {
-        confirmaInput.disabled = true;
         senhaInput.style.borderColor = "red";
         requisitos.style.color = "red";
 

@@ -30,7 +30,7 @@ namespace LES.Models.ViewHelpers.Conta
             DetalhesEnderecoViewHelper enderecoVH = new DetalhesEnderecoViewHelper();
             DetalhesTelefoneViewHelper telefoneVH = new DetalhesTelefoneViewHelper();
             CupomViewHelper cupomVH = new CupomViewHelper();
-            //PedidoViewHelper pedidoVh = new PedidoViewHelper();
+            PedidoViewHelper pedidoVh = new PedidoViewHelper();
 
             Cliente cliente = (Cliente)infoVH.Entidades[typeof(Cliente).Name];
 
@@ -72,18 +72,27 @@ namespace LES.Models.ViewHelpers.Conta
                     [typeof(Cliente).Name] = cliente
                 }
             };
+
             DetalhesCartaoViewHelper cartaoVH = new DetalhesCartaoViewHelper();
-            DetalhesEnderecoViewHelper enderecoVH = new DetalhesEnderecoViewHelper();
-            DetalhesTelefoneViewHelper telefoneVH = new DetalhesTelefoneViewHelper();
             CupomViewHelper cupomVH = new CupomViewHelper();
-            //PedidoViewHelper pedidoVh = new PedidoViewHelper();
+            DetalhesEnderecoViewHelper enderecoVH = new DetalhesEnderecoViewHelper();
+            PedidoViewHelper pedidoVh = new PedidoViewHelper();
+            DetalhesTelefoneViewHelper telefoneVH = new DetalhesTelefoneViewHelper();
+            TrocaViewHelper trocaVh = new TrocaViewHelper();
 
             PaginaDetalhesModel vm = new PaginaDetalhesModel 
             {
                 InfoUsuario = (DetalhesInfoModel) infoVH.ViewModel
             };
 
-            foreach(var cartao in cliente.Cartoes)
+            IList<CartaoCredito> cartoes = cliente.Cartoes ?? new List<CartaoCredito>();
+            IList<Cupom> cupons  = cliente.Cupons ?? new List<Cupom>();
+            IList<Endereco> enderecos = cliente.Enderecos ?? new List<Endereco>();
+            IList<Pedido> pedidos = cliente.Pedidos ?? new List<Pedido>();
+            IList<Telefone> telefones = cliente.Telefones ?? new List<Telefone>();
+            IList<Troca> trocas = cliente.Trocas ?? new List<Troca>();
+
+            foreach(var cartao in cartoes)
             {
                 cartaoVH.Entidades = new Dictionary<string, object>
                 {
@@ -93,7 +102,17 @@ namespace LES.Models.ViewHelpers.Conta
                 vm.Cartoes.Add((DetalhesCartaoModel)cartaoVH.ViewModel);
             }
 
-            foreach(var endereco in cliente.Enderecos)
+            foreach (var cupom in cupons)
+            {
+                cupomVH.Entidades = new Dictionary<string, object>
+                {
+                    [typeof(Cupom).Name] = cupom
+                };
+
+                vm.Cupons.Add((CupomModel)cupomVH.ViewModel);
+            }
+
+            foreach (var endereco in enderecos)
             {
                 enderecoVH.Entidades = new Dictionary<string, object>
                 {
@@ -103,7 +122,17 @@ namespace LES.Models.ViewHelpers.Conta
                 vm.Enderecos.Add((DetalhesEnderecoModel)enderecoVH.ViewModel);
             }
 
-            foreach (var telefone in cliente.Telefones)
+            foreach(var pedido in pedidos)
+            {
+                pedidoVh.Entidades = new Dictionary<string, object>
+                {
+                    [typeof(Pedido).Name] = pedido
+                };
+
+                vm.Pedidos.Add((PedidoModel)pedidoVh.ViewModel);
+            }
+
+            foreach (var telefone in telefones)
             {
                 telefoneVH.Entidades = new Dictionary<string, object>
                 {
@@ -113,14 +142,13 @@ namespace LES.Models.ViewHelpers.Conta
                 vm.Telefones.Add((DetalhesTelefoneModel)telefoneVH.ViewModel);
             }
 
-            foreach (var cupom in cliente.Cupons)
+            foreach (var troca in trocas)
             {
-                cupomVH.Entidades = new Dictionary<string, object>
+                trocaVh.Entidades = new Dictionary<string, object>
                 {
-                    [typeof(Cupom).Name] = cupom
+                    [typeof(Troca).Name] = troca
                 };
-
-                vm.Cupons.Add((CupomModel)cupomVH.ViewModel);
+                vm.Trocas.Add((TrocaModel)trocaVh.ViewModel);
             }
 
             _viewModel = vm;

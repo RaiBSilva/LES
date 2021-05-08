@@ -41,9 +41,11 @@ namespace LES.Models.ViewHelpers.Conta
                 Id = telefone.Id.ToString(),
                 Ddd = telefone.Ddd,
                 NumeroTelefone = telefone.Numero,
-                TipoTelefone = telefone.TipoTelefone.Nome,
                 EPreferencial = telefone.EFavorito
             };
+
+            if (telefone.TipoTelefone != null)
+                vm.TipoTelefone = telefone.TipoTelefone.Nome;
 
             _viewModel = vm;
         }

@@ -104,15 +104,16 @@ namespace LES.Controllers
                 livros = livros.Where(l => l.DtLancamento.Date <= dataMax.Date);
             }
 
-            IList<Livro> listaLivro = livros.ToList();
+            if (filtros.PaginaAtual > 0)
+                livros = livros.Skip((filtros.PaginaAtual - 1) * 8);
 
             _vh = new ListaCardLivrosViewHelper
             {
                 Entidades = new Dictionary<string, object>
                 {
-                    [typeof(IList<Livro>).Name] = listaLivro.Take(8).ToList(),
+                    [typeof(IList<Livro>).Name] = livros.Take(8).ToList(),
                     [nameof(ListaCardLivrosModel.PagAtual)] = filtros.PaginaAtual,
-                    [nameof(ListaCardLivrosModel.PagMax)] = (listaLivro.Count / 10) + 1
+                    [nameof(ListaCardLivrosModel.PagMax)] = (livros.Count() / 8) + 1
                 }
             };
 

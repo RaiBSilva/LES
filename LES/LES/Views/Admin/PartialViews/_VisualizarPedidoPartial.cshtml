@@ -1,5 +1,6 @@
 ﻿@model LES.Models.ViewModel.Admin.AdminPedidoModel
 
+@{ string naoFinal = "-1";}
 
 <div class="modal-content">
     <!-- Modal content-->
@@ -9,6 +10,19 @@
     </div>
     <div class="modal-body">
         <partial name="../PartialViews/_InfoPedidoPartial.cshtml" for="@Model" />
+        <form asp-action="StatusPedido" asp-controller="Admin">
+            <div class="row">
+                <input asp-for="Id" readonly style="display:none" hidden />
+                <div class="col-md-8">
+                    <label asp-for="Status"></label>
+                    <select asp-for="Status" asp-items="Html.GetEnumSelectList<LES.Models.Entity.StatusPedidos>().Where(s => s.Value != naoFinal)">
+                    </select>
+                </div>
+                <div class="col-md-4">
+                    <input type="submit" value="Mudar Status" class="btn btn-primary" id="btn" />
+                </div>
+            </div>
+        </form>
         <div class="modal-footer">
             <div class="row">
                 <div class="col-12">

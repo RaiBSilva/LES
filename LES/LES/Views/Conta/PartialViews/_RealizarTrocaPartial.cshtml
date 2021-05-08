@@ -1,4 +1,4 @@
-﻿@model LES.Models.ViewModel.Shared.LivroBaseModel
+﻿@model KeyValuePair<int, LES.Models.ViewModel.Shared.LivroBaseModel>
 
 <div class="modal-content">
 
@@ -25,15 +25,15 @@
                 </thead>
                 <tbody>
                     <tr>
-                        <td><img src="@Url.Action("Livro","Imagem")?id=@Model.CodigoBarras" class="img-fluid img-thumbnail" style="max-height:16rem" /></td>
-                        <td>@Model.Titulo</td>
-                        <td>R$ @Model.Preco.ToString("0.00")</td>
+                        <td><img src="@Url.Action("Livro","Imagem")?id=@Model.Value.CodigoBarras" class="img-fluid img-thumbnail" style="max-height:16rem" /></td>
+                        <td>@Model.Value.Titulo</td>
+                        <td>R$ @Model.Value.Preco.ToString("0.00")</td>
                     </tr>
                 </tbody>
             </table>
 
                 <div class="form-group">
-                    <button type="submit" value="@Model.CodigoBarras" class="btn btn-info col-12" id="btn" onclick="window.location.href='@Url.Action("RealizarTroca","Conta", Model.CodigoBarras)'">
+                    <button type="submit" class="btn btn-info col-12" id="btn" onclick="window.location.href='@(Url.Action("RealizarTroca","CarrinhoCompra"))?id=@(Model.Key)'">
                         Pedir troca
                     </button>
                 </div>

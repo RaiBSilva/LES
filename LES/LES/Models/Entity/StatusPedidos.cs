@@ -14,17 +14,27 @@ namespace LES.Models.Entity
         Processamento,
         [Display(Name ="Em trânsito...")]
         EmTransito,
-        [Display(Name = "Troca em processamento...")]
-        EmTroca,
-        [Display(Name = "Troca autorizada!")]
-        TrocaAutorizada,
         [Display(Name = "Aprovado!")]
         Aprovado,
-        [Display(Name = "Trocado!")]
-        Trocado,
         [Display(Name = "Entregue!")]
         Entregue,
         [Display(Name = "Negado.")]
         Negado
+    }
+
+    public enum StatusTroca
+    {
+        [Display(Name = "Em processamento...")]
+        Processamento,
+        [Display(Name = "Em trânsito...")]
+        EmTransito,
+        [Display(Name = "Autorizada.")]
+        Autorizada,
+        [Display(Name = "Concluída.")]
+        Trocada,
+        [Display(Name = "Cancelada.")]
+        Cancelada,
+        [Display(Name = "Negada.")]
+        Negada
     }
 }

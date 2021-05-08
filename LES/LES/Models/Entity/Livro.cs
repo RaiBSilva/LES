@@ -18,6 +18,7 @@ namespace LES.Models.Entity
         public int Edicao { get; set; }
         public int EditoraId { get; set; }
         public int Estoque { get; set; }
+        public int EstoqueBloqueado { get; set; }
         public int GrupoPrecoId { get; set; }
         public string Isbn { get; set; }
         public int Largura { get; set; }
@@ -27,12 +28,12 @@ namespace LES.Models.Entity
         public double Valor { get; set; }
 
         public virtual IList<Ativacao> Ativacoes { get; set; } = new List<Ativacao>();
-        public virtual IList<CarrinhoLivro> CarrinhoLivro { get; set; }
-        public virtual IList<LivroCategoriaLivro> LivrosCategoriaLivros { get; set; }
-        public virtual IList<LivroPedido> LivroPedidos { get; set; }
+        public virtual IList<CarrinhoLivro> CarrinhoLivro { get; set; } = new List<CarrinhoLivro>();
+        public virtual IList<LivroCategoriaLivro> LivrosCategoriaLivros { get; set; } = new List<LivroCategoriaLivro>();
+        public virtual IList<LivroPedido> LivroPedidos { get; set; } = new List<LivroPedido>();
         public virtual Editora Editora { get; set; }
         public virtual GrupoPreco GrupoPreco { get; set; }
-        public virtual IList<Inativacao> Inativacoes { get; set; }
+        public virtual IList<Inativacao> Inativacoes { get; set; } = new List<Inativacao>();
 
     }
 

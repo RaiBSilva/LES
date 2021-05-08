@@ -51,34 +51,19 @@
       <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
     </Content>
-    <Content Update="Views\Admin\PartialViews\_SenhaPartial.cshtml">
-      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
-      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
-    </Content>
     <Content Update="Views\Admin\PartialViews\_CardTabelaPedidos.cshtml">
       <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
     </Content>
-    <Content Update="Views\Admin\PartialViews\_TelefonePartial.cshtml">
-      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
-      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
-    </Content>
   </ItemGroup>
 
   <ItemGroup>
-    <_ContentIncludedByDefault Remove="Views\Admin\PartialViews\_CartaoPartial.cshtml" />
     <_ContentIncludedByDefault Remove="Views\Admin\PartialViews\_DlCartoesPartial.cshtml" />
     <_ContentIncludedByDefault Remove="Views\Admin\PartialViews\_DlEnderecoPartial.cshtml" />
     <_ContentIncludedByDefault Remove="Views\Admin\PartialViews\_DlTelefonePartial.cshtml" />
-    <_ContentIncludedByDefault Remove="Views\Admin\PartialViews\_EnderecoPartial.cshtml" />
-    <_ContentIncludedByDefault Remove="Views\Admin\PartialViews\_InfoPessoaisPartial.cshtml" />
     <_ContentIncludedByDefault Remove="Views\Admin\PartialViews\_ListaCartoesPartial.cshtml" />
     <_ContentIncludedByDefault Remove="Views\Admin\PartialViews\_ListaEnderecosPartial.cshtml" />
     <_ContentIncludedByDefault Remove="Views\Admin\PartialViews\_ListaPedidosPartial.cshtml" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <UpToDateCheckInput Remove="Views\Admin\PartialViews\_CartaoPartial.cshtml" />
   </ItemGroup>
 
   <ItemGroup>
@@ -91,14 +76,6 @@
 
   <ItemGroup>
     <UpToDateCheckInput Remove="Views\Admin\PartialViews\_DlTelefonePartial.cshtml" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <UpToDateCheckInput Remove="Views\Admin\PartialViews\_EnderecoPartial.cshtml" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <UpToDateCheckInput Remove="Views\Admin\PartialViews\_InfoPessoaisPartial.cshtml" />
   </ItemGroup>
 
   <ItemGroup>

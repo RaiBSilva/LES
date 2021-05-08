@@ -32,10 +32,11 @@ namespace LES.Models.Entity
 
         public virtual Carrinho Carrinho { get; set; } = new Carrinho();
         public virtual IList<CartaoCredito> Cartoes { get; set; } = new List<CartaoCredito>();
+        public virtual IList<Cupom> Cupons { get; set; } = new List<Cupom>();
         public virtual IList<Endereco> Enderecos { get; set; } = new List<Endereco>();
         public virtual IList<Pedido> Pedidos { get; set; } = new List<Pedido>();
         public virtual IList<Telefone> Telefones { get; set; } = new List<Telefone>();
-        public virtual IList<Cupom> Cupons { get; set; } = new List<Cupom>();
+        public virtual IList<Troca> Trocas { get; set; } = new List<Troca>();
         public virtual Usuario Usuario { get; set; } = new Usuario();
         #endregion
 

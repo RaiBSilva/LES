@@ -11,11 +11,6 @@ namespace LES.Models.ViewHelpers.Conta
     public class CupomViewHelper : AbstractViewHelper, IViewHelper
     {
 
-        public CupomViewHelper() : base()
-        {
-
-        }
-
         protected override void ToEntidade()
         {
             CupomModel vm = (CupomModel)ViewModel;
@@ -23,7 +18,7 @@ namespace LES.Models.ViewHelpers.Conta
             Entidades[typeof(Cupom).Name] = new Cupom
             {
                 Valor = vm.Valor,
-                Codigo = Convert.ToInt32(vm.Codigo)
+                Codigo = vm.Codigo
             };
         }
 

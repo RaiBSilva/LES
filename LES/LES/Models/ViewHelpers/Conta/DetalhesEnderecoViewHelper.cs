@@ -62,22 +62,32 @@ namespace LES.Models.ViewHelpers.Conta
         {
             Endereco endereco = (Endereco)Entidades[typeof(Endereco).Name];
 
-            DetalhesEnderecoModel vm = new DetalhesEnderecoModel();
-
-            vm.ECobranca = endereco.ECobranca;
-            vm.EEntrega = endereco.EEntrega;
-            vm.EPreferencial = endereco.EFavorito;
-            vm.Cidade = endereco.Cidade.Nome;
-            vm.Cep = endereco.Cep;
-            vm.Complemento = endereco.Complemento;
-            vm.Estado = endereco.Cidade.Estado.Nome;
-            vm.Logradouro = endereco.Logradouro;
-            vm.TipoEndereco = endereco.TipoEndereco.Nome;
-            vm.Id = endereco.Id.ToString();
-            vm.Numero = endereco.Numero;
-            vm.Observacoes = endereco.Observacoes;
-            vm.NomeEndereco = endereco.NomeEndereco;
-            vm.Pais = endereco.Cidade.Estado.Pais.Nome;
+            DetalhesEnderecoModel vm = new DetalhesEnderecoModel
+            {
+                ECobranca = endereco.ECobranca,
+                EEntrega = endereco.EEntrega,
+                EPreferencial = endereco.EFavorito,
+                Cep = endereco.Cep,
+                Complemento = endereco.Complemento,
+                Logradouro = endereco.Logradouro,
+                Id = endereco.Id.ToString(),
+                Numero = endereco.Numero,
+                Observacoes = endereco.Observacoes,
+                NomeEndereco = endereco.NomeEndereco
+            };
+            
+            if(endereco.TipoEndereco != null)
+                vm.TipoEndereco = endereco.TipoEndereco.Nome;
+            if (endereco.Cidade != null)
+            {
+                vm.Cidade = endereco.Cidade.Nome;
+                if (endereco.Cidade.Estado != null)
+                {
+                    vm.Estado = endereco.Cidade.Estado.Nome;
+                    if (endereco.Cidade.Estado.Pais != null)
+                        vm.Pais = endereco.Cidade.Estado.Pais.Nome;
+                }
+            }
 
             _viewModel = vm;
         }

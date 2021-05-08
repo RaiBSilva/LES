@@ -1,10 +1,14 @@
-﻿using LES.Models.Entity;
+﻿using LES.Controllers.Facade;
+using LES.Models.Entity;
+using LES.Models.ViewHelpers.Admin;
 using LES.Models.ViewModel.Admin;
 using LES.Models.ViewModel.Conta;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Data.SqlClient.DataClassification;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,11 +16,24 @@ using System.Threading.Tasks;
 
 namespace LES.Controllers
 {
+    [Authorize(Roles = "1,2")]
     public class AdminController : BaseController
     {
-        public AdminController()
-        {
+        IFacadeCrud<Cliente> _facadeClientes { get; set; }
+        IFacadeCrud<Pedido> _facadePedidos { get; set; }
+        IFacadeCrud<Troca> _facadeTrocas { get; set; }
+        IFacadeCrud<Cupom> _facadeCupons { get; set; }
 
+        public AdminController(
+            IFacadeCrud<Pedido> facadePedidos,
+            IFacadeCrud<Troca> facadeTrocas,
+            IFacadeCrud<Cupom> facadeCupons,
+            IFacadeCrud<Cliente> facadeClientes)
+        {
+            _facadePedidos = facadePedidos;
+            _facadeTrocas = facadeTrocas;
+            _facadeCupons = facadeCupons;
+            _facadeClientes = facadeClientes;
         }
 
         public IActionResult Home()
@@ -32,7 +49,27 @@ namespace LES.Controllers
 
         public IActionResult Pedidos()
         {
-            return View();
+            IEnumerable<Pedido> pedidos = _facadePedidos.ListAllInclude()
+                .Where(p => p.Status != StatusPedidos.NaoFinalizado && !p.Inativo).ToList();
+
+            IEnumerable<Troca> trocas = _facadeTrocas.ListAllInclude();
+
+            _vh = new PaginaPedidosViewHelper 
+            {
+                Entidades = new Dictionary<string, object>
+                {
+                    [typeof(IList<Pedido>).FullName] = pedidos.Take(10).ToList(),
+                    [nameof(ListaPedidosAdminModel.PagAtual)] = 1,
+                    [nameof(ListaPedidosAdminModel.PagMax)] = (pedidos.Count() / 10) + 1,
+                    [typeof(IList<Troca>).FullName] = trocas.Take(10).ToList(),
+                    [nameof(ListaTrocasAdminModel.PagAtual)] = 1,
+                    [nameof(ListaTrocasAdminModel.PagMax)] = (trocas.Count() / 10) + 1
+                }
+            };
+
+            if (TempData["Alert"] != null) ViewData["Alert"] = TempData["Alert"];
+
+            return View(_vh.ViewModel);
         }
 
         public IActionResult ConfigLoja() {
@@ -42,49 +79,166 @@ namespace LES.Controllers
         }
 
         #region Pedidos
-        public IActionResult _AprovarPedidoPartial(int id) 
-        {
-            ViewBag.Operacao = "Aprovar";
-            return PartialView("../Admin/PartialViews/_ProcessarPedidoPartial");
-        }
 
-        public IActionResult AprovarPedido(int id)
+        [HttpPost]
+        public IActionResult _PedidosBusca(string json)
         {
-            return RedirectToAction(nameof(Pedidos));
-        }
+            JObject o = JObject.Parse(json);
 
-        public IActionResult _NegarPedidoPartial(int id)
-        {
-            ViewBag.Operacao = "Negar";
-            return PartialView("../Admin/PartialViews/_ProcessarPedidoPartial");
-        }
+            FiltrosPedidosAdminModel filtros = o.ToObject<FiltrosPedidosAdminModel>();
 
-        public IActionResult NegarPedido(int id)
-        {
-            return RedirectToAction(nameof(Pedidos));
-        }
+            IEnumerable<Pedido> pedidos = _facadePedidos.ListAllInclude()
+                .Where(p => p.Status != StatusPedidos.NaoFinalizado && !p.Inativo);
 
-        public IActionResult _CancelarPedidoPartial(int id)
-        {
-            ViewBag.Operacao = "Cancelar";
-            return PartialView("../Admin/PartialViews/_ProcessarPedidoPartial");
-        }
+            if (filtros.Id != null)
+                pedidos = pedidos.Where(p => p.Id == filtros.Id);
 
-        public IActionResult CancelarPedido(int id)
-        {
-            return RedirectToAction(nameof(Pedidos));
+            if (!String.IsNullOrEmpty(filtros.Nome))
+                pedidos = pedidos.Where(p => p.Cliente.Nome.Contains(filtros.Nome));
+
+            if (filtros.DtMin != null)
+                pedidos = pedidos.Where(p => p.DtCadastro > filtros.DtMin);
+
+            if (filtros.DtMax != null)
+                pedidos = pedidos.Where(p => p.DtCadastro < filtros.DtMax);
+
+            if (filtros.ValorMin > 0)
+                pedidos = pedidos.Where(p => p.ValorTotal > filtros.ValorMin);
+
+            if (filtros.ValorMax > 0)
+                pedidos = pedidos.Where(p => p.ValorTotal < filtros.ValorMax);
+
+            pedidos = !String.IsNullOrEmpty(filtros.Status) ?
+                pedidos.Where(p => p.Status == (StatusPedidos)Convert.ToInt32(filtros.Status)) : pedidos;
+
+            if (filtros.PagAtual > 0)
+                pedidos = pedidos.Skip((filtros.PagAtual - 1) * 10);
+
+            _vh = new PaginaPedidosViewHelper
+            {
+                Entidades = new Dictionary<string, object>
+                {
+                    [typeof(IList<Pedido>).FullName] = pedidos.Take(10).ToList(),
+                    [nameof(ListaPedidosAdminModel.PagAtual)] = 1,
+                    [nameof(ListaPedidosAdminModel.PagMax)] = (pedidos.Count() / 10) + 1
+                }
+            };
+
+            PaginaPedidosModel vm = (PaginaPedidosModel)_vh.ViewModel;
+            vm.Filtros = filtros;
+
+            return PartialView();
         }
 
         public IActionResult _VisualizarPedidoPartial(int id)
         {
-            return PartialView("../Admin/PartialViews/_VisualizarPedidoPartial");
+            _vh = new AdminPedidoViewHelper
+            {
+                Entidades = new Dictionary<string, object>
+                {
+                    [typeof(Pedido).Name] = _facadePedidos.GetAllInclude(new Pedido { Id = id })
+                }
+            };
+            return PartialView("../Admin/PartialViews/_VisualizarPedidoPartial", _vh.ViewModel);
+        }
+
+        [HttpPost]
+        public IActionResult StatusPedido(AdminPedidoModel pedido)
+        {
+            Pedido p = _facadePedidos.GetAllInclude(new Pedido { Id = Convert.ToInt32(pedido.Id) });
+            p.Status = pedido.Status;
+
+            string msg = _facadePedidos.Editar(p);
+
+            if (msg != "")
+                TempData["Alert"] = msg;
+            return RedirectToAction(nameof(Pedidos));
         }
 
         #endregion
 
+        #region Troca    
+
+        [HttpPost]
+        public IActionResult _TrocasBusca(string json)
+        {
+            JObject o = JObject.Parse(json);
+
+            FiltrosPedidosAdminModel filtros = o.ToObject<FiltrosPedidosAdminModel>();
+
+            IEnumerable<Troca> trocas = _facadeTrocas.ListAllInclude();
+
+            trocas = filtros.Id != null ? trocas.Where(t => t.Id == filtros.Id) : trocas;
+
+            trocas = !String.IsNullOrEmpty(filtros.Nome) ? trocas.Where(t => t.Cliente.Nome.Contains(filtros.Nome)) : trocas;
+
+            trocas = filtros.DtMin != null ? trocas.Where(t => t.DtCadastro > filtros.DtMin) : trocas;
+
+            trocas = filtros.DtMax != null ? trocas.Where(t => t.DtCadastro < filtros.DtMax) : trocas;
+
+            trocas = filtros.ValorMin > 0 ? trocas.Where(t => t.LivroPedido.Livro.Valor > filtros.ValorMin) : trocas;
+
+            trocas = filtros.ValorMax > 0 ? trocas.Where(t => t.LivroPedido.Livro.Valor < filtros.ValorMax) : trocas;
+
+            trocas = !String.IsNullOrEmpty(filtros.Status) ?
+                trocas.Where(p => p.StatusTroca == (StatusTroca)Convert.ToInt32(filtros.Status)) : trocas;
+
+            trocas = filtros.PagAtual > 0 ? trocas.Skip((filtros.PagAtual - 1) * 10) : trocas;
+
+            _vh = new PaginaPedidosViewHelper
+            {
+                Entidades = new Dictionary<string, object>
+                {
+                    [typeof(IList<Troca>).FullName] = trocas.Take(10).ToList(),
+                    [nameof(ListaTrocasAdminModel.PagAtual)] = 1,
+                    [nameof(ListaTrocasAdminModel.PagMax)] = (trocas.Count() / 10) + 1
+                }
+            };
+
+            PaginaPedidosModel vm = (PaginaPedidosModel)_vh.ViewModel;
+            vm.Filtros = filtros;
+
+            return PartialView();
+        }
+
+        public IActionResult _VisualizarTrocaPartial(int id)
+        {
+            _vh = new AdminTrocaViewHelper
+            {
+                Entidades = new Dictionary<string, object>
+                {
+                    [typeof(Troca).Name] = _facadeTrocas.GetAllInclude(new Troca { Id = id })
+                }
+            };
+            return PartialView("../Admin/PartialViews/_VisualizarTrocaPartial", _vh.ViewModel);
+        }
+
+        [HttpPost]
+        public IActionResult StatusTroca(AdminTrocaModel troca)
+        {
+            Troca t = _facadeTrocas.GetAllInclude(new Troca { Id = troca.Id });
+            t.StatusTroca = troca.Status;
+            Cliente c = null;
+            if (t.StatusTroca == Models.Entity.StatusTroca.Trocada && t.LivroPedido.Trocado == false)
+            {
+                c = _facadeClientes.GetAllInclude(t.Cliente);
+                addCupom(c, t.LivroPedido);
+            }
+
+            string msg = _facadeTrocas.Editar(t);
+            if (c != null)
+                msg += _facadeClientes.Editar(c);
+
+            if (msg != "")
+                TempData["Alert"] = msg;
+            return RedirectToAction(nameof(Pedidos));
+        }
+
+    #endregion
+
         #region Clientes
 
-        public IActionResult _InativarReativarClientePartial(int id) {
+    public IActionResult _InativarReativarClientePartial(int id) {
             return PartialView("../Admin/PartialViews/_InativarReativarClientePartial");
         }
 
@@ -291,6 +445,35 @@ namespace LES.Controllers
             };
 
             return Json(chart);
+        }
+
+        #endregion
+
+        #region Utilidades
+
+        public void addCupom(Cliente c, LivroPedido l)
+        {
+            Cupom cupom = new Cupom { Cliente = c, Valor = l.Livro.Valor };
+
+            Random rnd = new Random();
+
+            while (true)
+            {
+                int codigo = rnd.Next(0, 1000000);
+                var items = _facadeCupons.Query(
+                    c => Convert.ToInt32(c.Codigo) == codigo,
+                    c => c);
+
+                if (items.Count() == 0) 
+                { 
+                    cupom.Codigo = codigo.ToString("D7");
+                    break;
+                }
+                codigo = rnd.Next(0, 1000000); ;
+            }
+
+            c.Cupons.Add(cupom);
+            l.Trocado = true;
         }
 
         #endregion

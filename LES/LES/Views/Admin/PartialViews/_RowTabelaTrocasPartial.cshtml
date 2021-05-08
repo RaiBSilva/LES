@@ -1,0 +1,23 @@
+﻿@model LES.Models.ViewModel.Admin.AdminTrocaModel
+@using LES.Models.Entity
+
+@{ IDictionary<StatusTroca, string[]> statusInfo = new Dictionary<StatusTroca, string[]>();
+
+    statusInfo[(StatusTroca)0] = new string[] { "text-info", "Em processamento." };
+    statusInfo[(StatusTroca)1] = new string[] { statusInfo[(StatusTroca)0][0], "Em trânsito..." };
+    statusInfo[(StatusTroca)2] = new string[] { "text-success", "Aprovado!" };
+    statusInfo[(StatusTroca)3] = new string[] { statusInfo[(StatusTroca)2][0], "Concluída!" };
+    statusInfo[(StatusTroca)4] = new string[] { "text-danger", "Negada." };
+    statusInfo[(StatusTroca)5] = new string[] { statusInfo[(StatusTroca)4][0], "Cancalada." };
+}
+
+<tr>
+    <th scope="row">@Model.Id</th>
+    <td>@Model.Cliente.InfoUsuario.Nome</td>
+    <td>´@Model.DtTroca</td>
+    <td>R$ @Model.Livro.Preco.ToString("0.00").Replace('.', ',')</td>
+    <td class="@statusInfo[Model.Status][0]">@statusInfo[Model.Status][1]</td>
+    <td>
+        <button class="btn btn-outline-info btnVisualizar btn-block" data-toggle="modal" data-target="#myModal" value="@Model.Id">Visualizar/Editar</button>
+    </td>
+</tr>

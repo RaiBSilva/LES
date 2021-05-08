@@ -5,39 +5,72 @@
 
     statusInfo[(StatusPedidos)0] = new string[] { "text-info", "Em processamento." };
     statusInfo[(StatusPedidos)1] = new string[] { statusInfo[(StatusPedidos)0][0], "Em trânsito..." };
-    statusInfo[(StatusPedidos)2] = new string[] { statusInfo[(StatusPedidos)0][0], "Troca em processamento..." };
-    statusInfo[(StatusPedidos)3] = new string[] { statusInfo[(StatusPedidos)0][0], "Troca autorizada!" };
-    statusInfo[(StatusPedidos)4] = new string[] { statusInfo[(StatusPedidos)0][0], "Aprovado!" };
-    statusInfo[(StatusPedidos)5] = new string[] { "text-success", "Trocado!" };
-    statusInfo[(StatusPedidos)6] = new string[] { statusInfo[(StatusPedidos)5][0], "Entregue!" };
-    statusInfo[(StatusPedidos)7] = new string[] { "text-danger", "Negado." };
+    statusInfo[(StatusPedidos)2] = new string[] { "text-success", "Aprovado!" };
+    statusInfo[(StatusPedidos)3] = new string[] { statusInfo[(StatusPedidos)2][0], "Entregue!" };
+    statusInfo[(StatusPedidos)4] = new string[] { "text-danger", "Negado." };
 
 }
 
 
 <div class="container justify-content-center">
-    <table class="table table-sm table-borderless table-hover">
-        <thead class="thead-dark">
-            <tr>
-                <th scope="col">Id</th>
-                <th scope="col">Livro</th>
-                <th scope="col">Valor Total</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var livro in Model.Livros)
-            {
+    <div class="row">
+        <table class="table col-lg-9 table-sm table-borderless table-hover">
+            <thead class="thead-dark">
                 <tr>
-                    <th scope="row">@livro.CodigoBarras</th>
-                    <td>@livro.Titulo</td>
-                    <td>R$ @livro.Preco.ToString("0.00").Replace(".", ",")</td>
+                    <th scope="col">Id</th>
+                    <th scope="col">Livro</th>
+                    <th scope="col">Valor Total</th>
                 </tr>
-            }
-        </tbody>
-    </table>
-    <span>Total da compra:</span>
-    <span>R$ 67,38</span>
-    <div class="m-3"></div>
+            </thead>
+            <tbody>
+                @foreach (var entry in Model.Livros)
+                {
+                    var livro = entry.Value;
+                    <tr>
+                        <th scope="row">@livro.CodigoBarras</th>
+                        <td>@livro.Titulo</td>
+                        <td>R$ @livro.Preco.ToString("0.00").Replace(".", ",")</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+        <div class="col-lg-3 m-3">
+            <span>Total da compra:</span>
+            <span>@Model.PreçoTotal.ToString("0.00").Replace(".", ",")</span>
+        </div>
+    </div>
+    <div class="row">
+        <div class="4">
+            <div class="font-weight-bold">Data do pedido: </div>
+            <div>@Model.DtPedido.ToShortDateString()</div>
+        </div>
+    </div>
+
+    <div class="row">
+        <partial name="../PartialViews/_DlInfoPessoais.cshtml" for="@Model.Cliente.InfoUsuario" />
+    </div>
+
+    <div class="row">
+        <h5 class="modal-title">Cartões utilizados.</h5>
+        <table class="table col-lg-9 table-sm table-borderless table-hover">
+            <thead class="thead-dark">
+                <tr>
+                    <th scope="col">Cartão</th>
+                    <th scope="col">Valor Pago</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var entry in Model.Cartoes)
+                {
+                    var stInd = entry.Key.Codigo.Length - 3;
+                    <tr>
+                        <td>@entry.Key.Bandeira terminado em ****-****-****-** @entry.Key.Codigo.Substring(stInd, 2)</td>
+                        <td>R$ @entry.Value.ToString("0.00").Replace(".", ",")</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
 
     <div class="row justify-content-center">
         <div class="col-6">
@@ -50,17 +83,23 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach (var cupom in Model.Cupons)
+                    @if(Model.Cupom == null) 
+                    { 
+                        <tr>
+                            <td>
+                                <span class="font-weight-bold">Esse pedido não tem um cupom associado.</span>
+                            </td>
+                        </tr>
+                    }
+                     else
                     {
                         <tr>
-                            <th scope="row">@cupom.Codigo</th>
-                            <td>R$ @cupom.Valor.ToString("0.00").Replace(".", ",")</td>
+                            <th scope="row">@Model.Cupom.Codigo</th>
+                            <td>R$ @Model.Cupom.Valor.ToString("0.00").Replace(".", ",")</td>
                         </tr>
                     }
                 </tbody>
             </table>
-            <span>Total dos cupons:</span>
-            <span>R$ 11,38</span>
         </div>
         <div class="col-6">
             <h5 class="modal-title">Status do Pedido.</h5>

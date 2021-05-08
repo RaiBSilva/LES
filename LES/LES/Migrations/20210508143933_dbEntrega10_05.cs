@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace LES.Migrations
 {
-    public partial class um : Migration
+    public partial class dbEntrega10_05 : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -181,13 +181,17 @@ namespace LES.Migrations
                 {
                     liv_id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
+                    liv_titulo = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     liv_altura = table.Column<int>(type: "int", nullable: false),
                     liv_autor = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     liv_capa = table.Column<byte[]>(type: "varbinary(max)", nullable: false),
                     liv_codigo_barras = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     liv_comprimento = table.Column<int>(type: "int", nullable: false),
+                    liv_dt_lancamento = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    liv_edicao = table.Column<int>(type: "int", nullable: false),
                     liv_edi_id = table.Column<int>(type: "int", nullable: false),
                     liv_estoque = table.Column<int>(type: "int", nullable: false),
+                    liv_estoque_bloqueado = table.Column<int>(type: "int", nullable: false, defaultValue: 0),
                     liv_gpp_id = table.Column<int>(type: "int", nullable: false),
                     liv_isbn = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     liv_largura = table.Column<int>(type: "int", nullable: false),
@@ -247,7 +251,7 @@ namespace LES.Migrations
                     cli_codigo = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     cli_cpf = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     cli_dt_nascimento = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    Genero = table.Column<int>(type: "int", nullable: false),
+                    cli_genero = table.Column<int>(type: "int", nullable: false),
                     cli_nome = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     cli_nota = table.Column<int>(type: "int", nullable: false),
                     cli_usu_id = table.Column<int>(type: "int", nullable: false),
@@ -304,20 +308,21 @@ namespace LES.Migrations
                 columns: table => new
                 {
                     crl_crr_id = table.Column<int>(type: "int", nullable: false),
-                    crl_liv_id = table.Column<int>(type: "int", nullable: false)
+                    crl_liv_id = table.Column<int>(type: "int", nullable: false),
+                    crl_quantia = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_CRL", x => new { x.crl_crr_id, x.crl_liv_id });
                     table.ForeignKey(
                         name: "FK_CRL_CRR",
-                        column: x => x.crl_liv_id,
+                        column: x => x.crl_crr_id,
                         principalTable: "CARRINHOS",
                         principalColumn: "crr_id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_CRL_LIV",
-                        column: x => x.crl_crr_id,
+                        column: x => x.crl_liv_id,
                         principalTable: "LIVROS",
                         principalColumn: "liv_id",
                         onDelete: ReferentialAction.Cascade);
@@ -437,10 +442,10 @@ namespace LES.Migrations
                     cup_id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     cup_cli_id = table.Column<int>(type: "int", nullable: false),
-                    cup_codigo = table.Column<int>(type: "int", nullable: false),
+                    cup_codigo = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     cup_valor = table.Column<double>(type: "float", nullable: false),
                     cup_dt_cadastro = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    cup_inativo = table.Column<bool>(type: "bit", nullable: false)
+                    cup_usado = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -537,7 +542,9 @@ namespace LES.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     ped_cli_id = table.Column<int>(type: "int", nullable: false),
                     ped_cup_id = table.Column<int>(type: "int", nullable: true),
+                    ped_end_id = table.Column<int>(type: "int", nullable: false),
                     ped_status = table.Column<int>(type: "int", nullable: false),
+                    ped_valor_total = table.Column<double>(type: "float", nullable: false),
                     ped_dt_cadastro = table.Column<DateTime>(type: "datetime2", nullable: false),
                     ped_inativo = table.Column<bool>(type: "bit", nullable: false)
                 },
@@ -545,30 +552,62 @@ namespace LES.Migrations
                 {
                     table.PrimaryKey("PK_PED", x => x.ped_id);
                     table.ForeignKey(
+                        name: "FK_PED_CLI",
+                        column: x => x.ped_cli_id,
+                        principalTable: "CLIENTES",
+                        principalColumn: "cli_id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
                         name: "FK_PED_CUP",
                         column: x => x.ped_cup_id,
                         principalTable: "CUPONS",
                         principalColumn: "cup_id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_PED_PED",
-                        column: x => x.ped_cli_id,
-                        principalTable: "CLIENTES",
-                        principalColumn: "cli_id",
+                        name: "FK_PED_END",
+                        column: x => x.ped_end_id,
+                        principalTable: "ENDERECOS",
+                        principalColumn: "end_id");
+                });
+
+            migrationBuilder.CreateTable(
+                name: "CARTOES_PEDIDOS",
+                columns: table => new
+                {
+                    cap_car_id = table.Column<int>(type: "int", nullable: false),
+                    cap_ped_id = table.Column<int>(type: "int", nullable: false),
+                    cap_valor = table.Column<double>(type: "float", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_CAP", x => new { x.cap_car_id, x.cap_ped_id });
+                    table.ForeignKey(
+                        name: "FK_CAP_CAR",
+                        column: x => x.cap_car_id,
+                        principalTable: "CARTOES_CREDITO",
+                        principalColumn: "car_id",
                         onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_CAP_PED",
+                        column: x => x.cap_ped_id,
+                        principalTable: "PEDIDOS",
+                        principalColumn: "ped_id");
                 });
 
             migrationBuilder.CreateTable(
                 name: "LIVROS_PEDIDOS",
                 columns: table => new
                 {
+                    lip_id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
                     lip_liv_id = table.Column<int>(type: "int", nullable: false),
                     lip_ped_id = table.Column<int>(type: "int", nullable: false),
-                    lip_trocado = table.Column<bool>(type: "bit", nullable: false)
+                    lip_trocado = table.Column<bool>(type: "bit", nullable: false),
+                    lip_dt_cadastro = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_LIP", x => new { x.lip_liv_id, x.lip_ped_id });
+                    table.PrimaryKey("PK_LIP", x => x.lip_id);
                     table.ForeignKey(
                         name: "FK_LIP_LIV",
                         column: x => x.lip_liv_id,
@@ -581,6 +620,34 @@ namespace LES.Migrations
                         principalTable: "PEDIDOS",
                         principalColumn: "ped_id",
                         onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "TROCAS",
+                columns: table => new
+                {
+                    tro_id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    tro_cli_id = table.Column<int>(type: "int", nullable: false),
+                    tro_lip_id = table.Column<int>(type: "int", nullable: false),
+                    tro_status = table.Column<int>(type: "int", nullable: false),
+                    tro_dt_cadastro = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    tro_inativo = table.Column<bool>(type: "bit", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_TRO", x => x.tro_id);
+                    table.ForeignKey(
+                        name: "FK_TRO_CLI",
+                        column: x => x.tro_cli_id,
+                        principalTable: "CLIENTES",
+                        principalColumn: "cli_id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_TRO_LIP",
+                        column: x => x.tro_lip_id,
+                        principalTable: "LIVROS_PEDIDOS",
+                        principalColumn: "lip_id");
                 });
 
             migrationBuilder.CreateIndex(
@@ -607,6 +674,11 @@ namespace LES.Migrations
                 name: "IX_CARTOES_CREDITO_car_cli_id",
                 table: "CARTOES_CREDITO",
                 column: "car_cli_id");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_CARTOES_PEDIDOS_cap_ped_id",
+                table: "CARTOES_PEDIDOS",
+                column: "cap_ped_id");
 
             migrationBuilder.CreateIndex(
                 name: "IX_CIDADES_cid_pai_id",
@@ -676,6 +748,11 @@ namespace LES.Migrations
                 column: "lcl_ctl_id");
 
             migrationBuilder.CreateIndex(
+                name: "IX_LIVROS_PEDIDOS_lip_liv_id",
+                table: "LIVROS_PEDIDOS",
+                column: "lip_liv_id");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_LIVROS_PEDIDOS_lip_ped_id",
                 table: "LIVROS_PEDIDOS",
                 column: "lip_ped_id");
@@ -693,6 +770,11 @@ namespace LES.Migrations
                 filter: "[ped_cup_id] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
+                name: "IX_PEDIDOS_ped_end_id",
+                table: "PEDIDOS",
+                column: "ped_end_id");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_TELEFONES_tel_cli_id",
                 table: "TELEFONES",
                 column: "tel_cli_id");
@@ -701,6 +783,17 @@ namespace LES.Migrations
                 name: "IX_TELEFONES_tel_tpd_id",
                 table: "TELEFONES",
                 column: "tel_tpd_id");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_TROCAS_tro_cli_id",
+                table: "TROCAS",
+                column: "tro_cli_id");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_TROCAS_tro_lip_id",
+                table: "TROCAS",
+                column: "tro_lip_id",
+                unique: true);
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -712,10 +805,7 @@ namespace LES.Migrations
                 name: "CARRINHOS_LIVROS");
 
             migrationBuilder.DropTable(
-                name: "CARTOES_CREDITO");
-
-            migrationBuilder.DropTable(
-                name: "ENDERECOS");
+                name: "CARTOES_PEDIDOS");
 
             migrationBuilder.DropTable(
                 name: "INATIVACOES");
@@ -724,22 +814,16 @@ namespace LES.Migrations
                 name: "LIVROS_CATEGORIAS_LIVROS");
 
             migrationBuilder.DropTable(
-                name: "LIVROS_PEDIDOS");
+                name: "TELEFONES");
 
             migrationBuilder.DropTable(
-                name: "TELEFONES");
+                name: "TROCAS");
 
             migrationBuilder.DropTable(
                 name: "CATEGORIAS_ATIVACAO");
 
             migrationBuilder.DropTable(
-                name: "BANDEIRAS_CARTAO_CREDITO");
-
-            migrationBuilder.DropTable(
-                name: "CIDADES");
-
-            migrationBuilder.DropTable(
-                name: "TIPOS_ENDERECO");
+                name: "CARTOES_CREDITO");
 
             migrationBuilder.DropTable(
                 name: "CATEGORIAS_INATIVACAO");
@@ -748,16 +832,19 @@ namespace LES.Migrations
                 name: "CATEGORIAS_LIVRO");
 
             migrationBuilder.DropTable(
+                name: "TIPOS_TELEFONES");
+
+            migrationBuilder.DropTable(
+                name: "LIVROS_PEDIDOS");
+
+            migrationBuilder.DropTable(
+                name: "BANDEIRAS_CARTAO_CREDITO");
+
+            migrationBuilder.DropTable(
                 name: "LIVROS");
 
             migrationBuilder.DropTable(
                 name: "PEDIDOS");
-
-            migrationBuilder.DropTable(
-                name: "TIPOS_TELEFONES");
-
-            migrationBuilder.DropTable(
-                name: "ESTADOS");
 
             migrationBuilder.DropTable(
                 name: "EDITORAS");
@@ -769,16 +856,28 @@ namespace LES.Migrations
                 name: "CUPONS");
 
             migrationBuilder.DropTable(
-                name: "PAISES");
+                name: "ENDERECOS");
+
+            migrationBuilder.DropTable(
+                name: "CIDADES");
 
             migrationBuilder.DropTable(
                 name: "CLIENTES");
+
+            migrationBuilder.DropTable(
+                name: "TIPOS_ENDERECO");
+
+            migrationBuilder.DropTable(
+                name: "ESTADOS");
 
             migrationBuilder.DropTable(
                 name: "CARRINHOS");
 
             migrationBuilder.DropTable(
                 name: "USUARIOS");
+
+            migrationBuilder.DropTable(
+                name: "PAISES");
         }
     }
 }

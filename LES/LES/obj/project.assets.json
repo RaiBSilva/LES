@@ -8601,19 +8601,19 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\Elite\\.nuget\\packages\\": {}
+    "C:\\Users\\raibs\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\DESENVOLVIMENTO\\LES\\LES\\LES\\LES.csproj",
+      "projectUniqueName": "C:\\Programming\\LES\\LES\\LES\\LES.csproj",
       "projectName": "LES",
-      "projectPath": "D:\\DESENVOLVIMENTO\\LES\\LES\\LES\\LES.csproj",
-      "packagesPath": "C:\\Users\\Elite\\.nuget\\packages\\",
-      "outputPath": "D:\\DESENVOLVIMENTO\\LES\\LES\\LES\\obj\\",
+      "projectPath": "C:\\Programming\\LES\\LES\\LES\\LES.csproj",
+      "packagesPath": "C:\\Users\\raibs\\.nuget\\packages\\",
+      "outputPath": "C:\\Programming\\LES\\LES\\LES\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\Elite\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\raibs\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -8625,7 +8625,6 @@
       },
       "frameworks": {
         "netcoreapp3.1": {
-          "targetAlias": "netcoreapp3.1",
           "projectReferences": {}
         }
       },
@@ -8637,7 +8636,6 @@
     },
     "frameworks": {
       "netcoreapp3.1": {
-        "targetAlias": "netcoreapp3.1",
         "dependencies": {
           "Microsoft.CodeAnalysis.Analyzers": {
             "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
@@ -8682,7 +8680,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.202\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.201\\RuntimeIdentifierGraph.json"
       }
     }
   }

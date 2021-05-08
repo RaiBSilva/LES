@@ -22,6 +22,14 @@
                     <ul class="navbar-nav">
                         <partial name="_ContaPartial" />
                     </ul>
+                    @if (User.IsInRole("1") || User.IsInRole("2"))
+                    {
+                        <ul class="navbar-nav">
+                            <li>
+                                <a class="btn btn-dark nav-link navbar-item" asp-action="Pedidos" asp-controller="Admin">Área do Admin</a>
+                            </li>
+                        </ul>
+                    }
                     <ul class="navbar-nav">
                         <li class="nav-item">
                             <a class="nav-link navbar-item" asp-action="Loja" asp-controller="Livros">Livros</a>

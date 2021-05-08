@@ -39,6 +39,9 @@ namespace LES.Views.Conta
         //GET /Conta/Login
         public IActionResult Login()
         {
+            if (HttpContext.User.Identity.IsAuthenticated)
+                return RedirectToAction("Index", "Home");
+
             return View();
         }
 
@@ -46,40 +49,44 @@ namespace LES.Views.Conta
         [HttpPost]
         public IActionResult Login(PaginaLoginModel usuario)
         {
-            if (ModelState.IsValid) 
-            { 
-            
-                _vh = new PaginaLoginViewHelper
-                {
-                    ViewModel = usuario
-                };
-
-                Cliente clienteLogin = new Cliente
-                {
-                    Usuario = (Usuario)_vh.Entidades[typeof(Usuario).Name]
-                };
-
-                Cliente clienteDb = _facadeClientes.Query(
-                    c => c.Usuario.Email == clienteLogin.Usuario.Email, 
-                    c => c,
-                    c => c.Usuario).FirstOrDefault();
-
-                if (clienteDb != null) {  
-                    if (GerenciadorLogin.comparaSenha(usuario.Senha, clienteDb.Usuario.Senha)) 
-                    {
-                        HttpContext.SignInAsync(GerenciadorLogin.FazerLogin(clienteDb));
-
-                        if(HttpContext.User.IsInRole("1") || HttpContext.User.IsInRole("2"))
-                            return RedirectToAction("Home", "Admin");
-                        return RedirectToAction("Index", "Home");
-                    }
-                    return View(new PaginaLoginModel
-                    {
-                        Username = clienteLogin.Usuario.Email,
-                        Falhou = true
-                    });
-                }
+            if (String.IsNullOrEmpty(usuario.Senha) || String.IsNullOrEmpty(usuario.Username))
+            {
+                ViewData["Alert"] = "Username e/ou senha incorreta.";
+                return View(new PaginaLoginModel { Falhou = true });
             }
+
+            _vh = new PaginaLoginViewHelper
+            {
+                ViewModel = usuario
+            };
+
+            Cliente clienteLogin = new Cliente
+            {
+                Usuario = (Usuario)_vh.Entidades[typeof(Usuario).Name]
+            };
+
+            Cliente clienteDb = _facadeClientes.Query(
+                c => c.Usuario.Email == clienteLogin.Usuario.Email, 
+                c => c,
+                c => c.Usuario).FirstOrDefault();
+
+            if (clienteDb != null) {  
+                if (GerenciadorLogin.comparaSenha(usuario.Senha, clienteDb.Usuario.Senha)) 
+                {
+                    HttpContext.SignInAsync(GerenciadorLogin.FazerLogin(clienteDb));
+
+                    if(HttpContext.User.IsInRole("1") || HttpContext.User.IsInRole("2"))
+                        return RedirectToAction("Home", "Admin");
+                    return RedirectToAction("Index", "Home");
+                }
+                ViewData["Alert"] = "Senha incorreta.";
+                return View(new PaginaLoginModel
+                {
+                    Username = clienteLogin.Usuario.Email,
+                    Falhou = true
+                });
+            }
+            ViewData["Alert"] = "Username e/ou senha incorreta.";
             return View(new PaginaLoginModel { Falhou = true});
         }
 
@@ -756,20 +763,6 @@ namespace LES.Views.Conta
 
         #endregion
 
-        #region Troca
-
-        public IActionResult _RealizarTrocaPartial(int id)
-        {
-            return PartialView("../Conta/PartialViews/_RealizarTrocaPartial"/*, ClienteDemo.Pedidos[0].Livros[0]*/);
-        }
-
-        public IActionResult RealizarTroca(int id)
-        {
-            return RedirectToAction(nameof(Detalhes));
-        }
-
-        #endregion
-
         #region Utilidades
 
 
@@ -796,7 +789,7 @@ namespace LES.Views.Conta
                 c => Convert.ToInt32(c.Codigo) == codigo,
                 c => c);
 
-            if (items.Count() == 0) return codigo.ToString("D6");
+            if (items.Count() == 0) return codigo.ToString("D7");
             codigo = rnd.Next(0, 1000000); ;
         } while (naoExiste);
 
