@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "VskRL2l0RWj1l0SJH9Txoeuy+TKhrvwpQLZvR3J8g66VjwgZpd3JJDKRmPrtDaiPMB56FS85RaqzvZP4VzgB9A==",
+  "dgSpecHash": "Y5ON6NtIC2wiL5SToLs2XPm8ynDuUgyoxDQb3hs/TPJ2ayNOg9ic1JC3POdk6ls9i/CnvWlmSKg1fcu0KIy5mA==",
   "success": true,
-  "projectFilePath": "D:\\DEVELOPMENT\\LES\\LES\\LES\\LES.csproj",
+  "projectFilePath": "D:\\DESENVOLVIMENTO\\LES\\LES\\LES\\LES.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Elite\\.nuget\\packages\\humanizer.core\\2.8.26\\humanizer.core.2.8.26.nupkg.sha512",
     "C:\\Users\\Elite\\.nuget\\packages\\microsoft.aspnetcore.html.abstractions\\2.2.0\\microsoft.aspnetcore.html.abstractions.2.2.0.nupkg.sha512",
@@ -160,8 +160,7 @@
     "C:\\Users\\Elite\\.nuget\\packages\\system.xml.readerwriter\\4.3.0\\system.xml.readerwriter.4.3.0.nupkg.sha512",
     "C:\\Users\\Elite\\.nuget\\packages\\system.xml.xdocument\\4.3.0\\system.xml.xdocument.4.3.0.nupkg.sha512",
     "C:\\Users\\Elite\\.nuget\\packages\\system.xml.xmldocument\\4.3.0\\system.xml.xmldocument.4.3.0.nupkg.sha512",
-    "C:\\Users\\Elite\\.nuget\\packages\\system.xml.xmlserializer\\4.3.0\\system.xml.xmlserializer.4.3.0.nupkg.sha512",
-    "C:\\Users\\Elite\\.nuget\\packages\\microsoft.netcore.app.host.win-x64\\3.1.13\\microsoft.netcore.app.host.win-x64.3.1.13.nupkg.sha512"
+    "C:\\Users\\Elite\\.nuget\\packages\\system.xml.xmlserializer\\4.3.0\\system.xml.xmlserializer.4.3.0.nupkg.sha512"
   ],
   "logs": []
 }

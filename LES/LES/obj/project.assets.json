@@ -8606,11 +8606,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\DEVELOPMENT\\LES\\LES\\LES\\LES.csproj",
+      "projectUniqueName": "D:\\DESENVOLVIMENTO\\LES\\LES\\LES\\LES.csproj",
       "projectName": "LES",
-      "projectPath": "D:\\DEVELOPMENT\\LES\\LES\\LES\\LES.csproj",
+      "projectPath": "D:\\DESENVOLVIMENTO\\LES\\LES\\LES\\LES.csproj",
       "packagesPath": "C:\\Users\\Elite\\.nuget\\packages\\",
-      "outputPath": "D:\\DEVELOPMENT\\LES\\LES\\LES\\obj\\",
+      "outputPath": "D:\\DESENVOLVIMENTO\\LES\\LES\\LES\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\Elite\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -8674,12 +8674,6 @@
         ],
         "assetTargetFallback": true,
         "warn": true,
-        "downloadDependencies": [
-          {
-            "name": "Microsoft.NETCore.App.Host.win-x64",
-            "version": "[3.1.13, 3.1.13]"
-          }
-        ],
         "frameworkReferences": {
           "Microsoft.AspNetCore.App": {
             "privateAssets": "none"
@@ -8688,7 +8682,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.104\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.202\\RuntimeIdentifierGraph.json"
       }
     }
   }
