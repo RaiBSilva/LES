@@ -150,7 +150,7 @@ namespace LES.Controllers
 
             string msg = _facadePedidos.Editar(p);
 
-            if (msg != null)
+            if (msg != "")
                 TempData["Alert"] = msg;
             return RedirectToAction(nameof(Pedidos));
         }
@@ -229,7 +229,7 @@ namespace LES.Controllers
             if (c != null)
                 msg += _facadeClientes.Editar(c);
 
-            if (msg != null)
+            if (msg != "")
                 TempData["Alert"] = msg;
             return RedirectToAction(nameof(Pedidos));
         }
