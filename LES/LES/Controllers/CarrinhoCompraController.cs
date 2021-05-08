@@ -158,10 +158,13 @@ namespace LES.Views.CarrinhoCompra
 
             //Cupom
             if (p.Cupom != null)
+            { 
                 p.ValorTotal -= p.Cupom.Valor;
+                p.Cupom.Inativo = true;
+            }
 
             //Atualização estoque
-            foreach(var livro in livros)
+            foreach (var livro in livros)
             {
                 var quantiaPedido = p.LivrosPedidos.Where(l => l.LivroId == livro.Id).Count();
                 livro.EstoqueBloqueado -= quantiaPedido;
@@ -221,7 +224,8 @@ namespace LES.Views.CarrinhoCompra
         public IActionResult _SelecionarCartao()
         {
             Cliente clienteDb = GetClienteDb();
-            IList<CartaoPedido> cartaoPedido = GetPedidoNaoFinalizado(clienteDb).CartaoPedidos;
+            Pedido p = GetPedidoNaoFinalizado(clienteDb);
+            IList<CartaoPedido> cartaoPedido = p.CartaoPedidos;
             IList<CartaoCredito> cartoes = clienteDb.Cartoes;
 
             _vh = new SelecionarCartaoViewHelper
@@ -235,7 +239,7 @@ namespace LES.Views.CarrinhoCompra
             SelecionarCartaoModel vm = (SelecionarCartaoModel)_vh.ViewModel;
             vm.Bandeiras = _facadeBandeiras.Listar().OrderBy(b => b.Nome).ToList();
             vm.Vencimento = DateTime.Now;
-            vm.ValorTotal = GetCarrinho().PrecoTotal();
+            vm.ValorTotal = p.CalcularValorTotal();
 
             return PartialView("../CarrinhoCompra/PartialViews/_SelecionarCartaoPartial", _vh.ViewModel);
         }
@@ -511,8 +515,14 @@ namespace LES.Views.CarrinhoCompra
 
         public IActionResult _RealizarTrocaPartial(int id)
         {
-            LivroPedido p = _facadeLivrosPedidos.GetEntidade(new LivroPedido { Id = id });
+            LivroPedido p = _facadeLivrosPedidos.Query(p => p.Id == id, p => p, p=>p.Livro).FirstOrDefault();
             Livro l = _facadeLivro.GetAllInclude(p.Livro);
+
+            if (p.Trocado) 
+            {
+                ViewData["ErrorMessage"] = "Esse livro tem uma troca ativa associada.";
+                return PartialView("../Conta/PartialViews/_ErroPartial");
+            }
 
             _vh = new LivroBaseViewHelper { Entidades = new Dictionary<string, object>{ [typeof(Livro).Name] = l } };
             KeyValuePair<int, LivroBaseModel> vm = new KeyValuePair<int, LivroBaseModel>(p.Id, (LivroBaseModel)_vh.ViewModel);
@@ -522,7 +532,8 @@ namespace LES.Views.CarrinhoCompra
 
         public IActionResult RealizarTroca(int id)
         {
-            LivroPedido p = _facadeLivrosPedidos.GetEntidade(new LivroPedido { Id = id });
+            LivroPedido p = _facadeLivrosPedidos.Query(p => p.Id == id,
+                p => p).FirstOrDefault();
             p.Trocado = true;
 
             Troca t = new Troca
@@ -535,7 +546,7 @@ namespace LES.Views.CarrinhoCompra
             string msg = _facadeLivrosPedidos.Editar(p);
             msg += _facadeTroca.Cadastrar(t);
 
-            if (msg != null)
+            if (msg != "")
                 TempData["Alert"] = msg;
             return RedirectToAction("Detalhes","Conta");
         }
@@ -543,12 +554,16 @@ namespace LES.Views.CarrinhoCompra
         public IActionResult CancelarTroca(int id)
         {
             Troca t = _facadeTroca.GetAllInclude(new Troca { Id = id });
+            LivroPedido p = _facadeLivrosPedidos.Query(p => t.LivroPedidoId == p.Id,
+                p => p).FirstOrDefault();
 
             t.StatusTroca = StatusTroca.Cancelada;
+            p.Trocado = false;
 
             string msg = _facadeTroca.Editar(t);
+            msg += _facadeLivrosPedidos.Editar(p);
 
-            if (msg != null)
+            if (msg != "")
                 TempData["Alert"] = msg;
             return RedirectToAction("Detalhes", "Conta");
         }

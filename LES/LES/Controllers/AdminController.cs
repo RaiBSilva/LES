@@ -160,9 +160,9 @@ namespace LES.Controllers
         #region Troca    
 
         [HttpPost]
-        public IActionResult _TrocasBusca(string json)
+        public IActionResult _TrocasBusca(string filtro)
         {
-            JObject o = JObject.Parse(json);
+            JObject o = JObject.Parse(filtro);
 
             FiltrosPedidosAdminModel filtros = o.ToObject<FiltrosPedidosAdminModel>();
 
@@ -170,15 +170,20 @@ namespace LES.Controllers
 
             trocas = filtros.Id != null ? trocas.Where(t => t.Id == filtros.Id) : trocas;
 
-            trocas = !String.IsNullOrEmpty(filtros.Nome) ? trocas.Where(t => t.Cliente.Nome.Contains(filtros.Nome)) : trocas;
+            trocas = !String.IsNullOrEmpty(filtros.Nome) ? 
+                trocas.Where(t => t.Cliente.Nome.Contains(filtros.Nome)) : trocas;
 
-            trocas = filtros.DtMin != null ? trocas.Where(t => t.DtCadastro > filtros.DtMin) : trocas;
+            trocas = (filtros.DtMin != null && filtros.DtMin != new DateTime()) ? 
+                trocas.Where(t => t.DtCadastro > filtros.DtMin) : trocas;
 
-            trocas = filtros.DtMax != null ? trocas.Where(t => t.DtCadastro < filtros.DtMax) : trocas;
+            trocas = (filtros.DtMax != null && filtros.DtMax != new DateTime()) ? 
+                trocas.Where(t => t.DtCadastro < filtros.DtMax ) : trocas;
 
-            trocas = filtros.ValorMin > 0 ? trocas.Where(t => t.LivroPedido.Livro.Valor > filtros.ValorMin) : trocas;
+            trocas = filtros.ValorMin > 0 ? 
+                trocas.Where(t => t.LivroPedido.Livro.Valor > filtros.ValorMin) : trocas;
 
-            trocas = filtros.ValorMax > 0 ? trocas.Where(t => t.LivroPedido.Livro.Valor < filtros.ValorMax) : trocas;
+            trocas = filtros.ValorMax > 0 ? 
+                trocas.Where(t => t.LivroPedido.Livro.Valor < filtros.ValorMax) : trocas;
 
             trocas = !String.IsNullOrEmpty(filtros.Status) ?
                 trocas.Where(p => p.StatusTroca == (StatusTroca)Convert.ToInt32(filtros.Status)) : trocas;
@@ -219,7 +224,7 @@ namespace LES.Controllers
             Troca t = _facadeTrocas.GetAllInclude(new Troca { Id = troca.Id });
             t.StatusTroca = troca.Status;
             Cliente c = null;
-            if (t.StatusTroca == Models.Entity.StatusTroca.Trocada && t.LivroPedido.Trocado == false)
+            if (t.StatusTroca == Models.Entity.StatusTroca.Trocada)
             {
                 c = _facadeClientes.GetAllInclude(t.Cliente);
                 addCupom(c, t.LivroPedido);

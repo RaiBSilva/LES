@@ -72,14 +72,14 @@
                 </div>
             </div>
             <div class="row">
-                <div class="col-lg-3">
+                <div class="col-lg-4">
                     <small>Desconto de:</small>
                 </div>
-                <div class="col-lg-7 text-right font-weight-bold">
+                <div class="col-lg-6 text-right font-weight-bold">
                     <h5>R$ @Model.Cupom.Valor.ToString("0.00").Replace(".", ",")</h5>
                 </div>
                 <div class="col-lg-2 text-right font-weight-bold">
-                    <button type="button" class="btn btn-danger">
+                    <button type="button" class="btn btn-danger" onclick="window.location.href='@Url.Action("RemoverCupom","CarrinhoCompra")'">
                         <small>&times;</small>
                     </button>
                 </div>

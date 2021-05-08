@@ -19,7 +19,7 @@
             <td>
                 @if (cancelavel)
                 {
-                    <button class="btn btn-warning btnTroca" value="@Model.Livro.CodigoBarras" onclick="window.location.href='@(Url.Action("CancelarTroca","CarrinhoCompra"))?id=@(Model.Id)'">
+                    <button class="btn btn-warning" value="@Model.Livro.CodigoBarras" onclick="window.location.href='@(Url.Action("CancelarTroca","CarrinhoCompra"))?id=@(Model.Id)'">
                         Cancelar
                     </button>
                 }

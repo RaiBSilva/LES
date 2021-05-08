@@ -28,7 +28,7 @@ protected override void ToEntidade()
             {
                 trocaVh.Entidades = new Dictionary<string, object>
                 {
-                    [typeof(Pedido).Name] = troca
+                    [typeof(Troca).Name] = troca
                 };
                 vm.Trocas.Add((AdminTrocaModel)trocaVh.ViewModel);
             }

@@ -25,7 +25,7 @@
                 </thead>
                 <tbody>
                     <tr>
-                        <td><img src="@Url.Action("Livro","Imagem")?id=@Model.Value.CodigoBarras" class="img-fluid img-thumbnail" style="max-height:16rem" /></td>
+                        <td><img src="@Url.Action("Livro","Imagem")?codBar=@Model.Value.CodigoBarras" class="img-fluid img-thumbnail" style="max-height:16rem" /></td>
                         <td>@Model.Value.Titulo</td>
                         <td>R$ @Model.Value.Preco.ToString("0.00")</td>
                     </tr>

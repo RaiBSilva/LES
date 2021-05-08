@@ -19,15 +19,23 @@ namespace LES.Models.ViewHelpers.Admin
         {
             Troca troca = (Troca)Entidades[typeof(Troca).Name];
 
-            TrocaViewHelper baseVh = new TrocaViewHelper 
+            AdminTrocaModel vm = new AdminTrocaModel{
+                Status = troca.StatusTroca,
+                LivroPedidoId = troca.LivroPedido.Id,
+                Id = troca.Id,
+                DtTroca = troca.DtCadastro
+            };
+
+            AdminLivroViewHelper livroVh = new AdminLivroViewHelper
             {
                 Entidades = new Dictionary<string, object>
                 {
-                    [typeof(Troca).Name] = troca
+                    [typeof(Livro).Name] = troca.LivroPedido.Livro
                 }
             };
 
-            AdminTrocaModel vm = (AdminTrocaModel)baseVh.ViewModel;
+            vm.Livro = (AdminLivroModel)livroVh.ViewModel;
+
             PaginaDetalhesViewHelper clienteVh = new PaginaDetalhesViewHelper
             {
                 Entidades = new Dictionary<string, object>
