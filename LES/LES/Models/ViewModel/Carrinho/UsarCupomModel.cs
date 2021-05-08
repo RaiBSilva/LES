@@ -8,6 +8,6 @@ namespace LES.Models.ViewModel.Carrinho
 {
     public class UsarCupomModel : IViewModel
     {
-        public IList<CupomModel> Cupons { get; set; } = new List<CupomModel>():
+        public IList<CupomModel> Cupons { get; set; } = new List<CupomModel>();
     }
 }

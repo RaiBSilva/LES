@@ -29,6 +29,7 @@ namespace LES.Data.DAO
                     .ThenInclude(e => e.Pais)
                 .Include(p => p.LivrosPedidos)
                     .ThenInclude(l => l.Livro)
+                    .ThenInclude(l => l.Editora)
                 .FirstOrDefault();
         }
 
@@ -39,12 +40,24 @@ namespace LES.Data.DAO
                     .ThenInclude(c => c.Cartao)
                     .ThenInclude(c => c.Bandeira)
                 .Include(p => p.Cliente)
+                    .ThenInclude(c => c.Carrinho)
+                    .ThenInclude(c => c.CarrinhoLivro)
+                    .ThenInclude(c => c.Livro)
+                .Include(p => p.Cliente)
+                    .ThenInclude(c => c.Cartoes)
+                    .ThenInclude(c => c.Bandeira)
+                .Include(p => p.Cliente)
+                    .ThenInclude(c => c.Enderecos)
+                    .ThenInclude(e => e.Cidade)
+                    .ThenInclude(c => c.Estado)
+                    .ThenInclude(e => e.Pais)
                 .Include(p => p.Endereco)
                     .ThenInclude(e => e.Cidade)
                     .ThenInclude(c => c.Estado)
                     .ThenInclude(e => e.Pais)
                 .Include(p => p.LivrosPedidos)
                     .ThenInclude(l => l.Livro)
+                    .ThenInclude(l => l.Editora)
                 .Cast<EntidadeDominio>()
                 .ToList();
         }

@@ -322,6 +322,11 @@ namespace LES.Models
                 .IsRequired();
 
             modelBuilder.Entity<Cliente>()
+                .Property(c => c.Genero)
+                .HasColumnName(tri + "_genero")
+                .IsRequired();
+
+            modelBuilder.Entity<Cliente>()
                 .Property(c => c.Nome)
                 .HasColumnName(tri + "_nome")
                 .IsRequired();
@@ -567,6 +572,12 @@ namespace LES.Models
                 .IsRequired();
 
             modelBuilder.Entity<Livro>()
+                .Property(l => l.EstoqueBloqueado)
+                .HasColumnName(tri + "_estoque_bloqueado")
+                .IsRequired()
+                .HasDefaultValue(0);
+
+            modelBuilder.Entity<Livro>()
                 .Property(l => l.GrupoPrecoId)
                 .HasColumnName(tri + "_gpp_id")
                 .IsRequired();
@@ -730,6 +741,11 @@ namespace LES.Models
                 .IsRequired();
 
             modelBuilder.Entity<Pedido>()
+                .Property(p => p.ValorTotal)
+                .HasColumnName(tri + "_valor_total")
+                .IsRequired();
+
+            modelBuilder.Entity<Pedido>()
                 .HasOne(p => p.Cliente)
                 .WithMany(c => c.Pedidos)
                 .HasForeignKey(c => c.ClienteId)
@@ -842,7 +858,8 @@ namespace LES.Models
                 .HasOne(t => t.LivroPedido)
                 .WithOne(l => l.Troca)
                 .HasForeignKey<Troca>(t => t.LivroPedidoId)
-                .HasConstraintName("FK_" + tri.ToUpper() + "_LIP");
+                .HasConstraintName("FK_" + tri.ToUpper() + "_LIP")
+                .OnDelete(DeleteBehavior.NoAction);
 
             #endregion  
 

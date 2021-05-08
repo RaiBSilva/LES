@@ -23,11 +23,10 @@
             </div>
         </div>
         <div id="Pedidos" class="tab row">
-            <partial name="../Admin/PartialViews/TabelaPedidosPartial.cshtml" for="@Model">
+            <partial name="../Admin/PartialViews/_TabelaPedidosPartial.cshtml" for="@Model">
         </div>
         <div id="Trocas" class="tab row" style="display:none">
-            <!-- FAZER PARTIAL VIEW DE TABELA DE TROCAS -->
-            <partial name="../Admin/PartialViews/TabelaTrocasPartial.cshtml" for="@Model">
+            <partial name="../Admin/PartialViews/_TabelaTrocasPartial.cshtml" for="@Model">
         </div>
         <div class="modal fade" id="myModal">
             <div class="modal-dialog modal-xl">
@@ -43,10 +42,7 @@
     <script type="text/javascript">
     var urls = urls || {};
     urls.VisualizarPedido = '@Url.Action("_VisualizarPedidoPartial", "Admin")';
-    urls.AprovarPedido = '@Url.Action("_AprovarPedidoPartial", "Admin")';
-    urls.NegarPedido = '@Url.Action("_NegarPedidoPartial", "Admin")';
-    urls.CancelarPedido = '@Url.Action("_CancelarPedidoPartial", "Admin")';
-
+    urls.VisualizarTroca = '@Url.Action("_VisualizarTrocaPartial", "Admin")';
     </script>
     <script src="~/js/Admin/CarregadorPartialViewPedidos.js"></script>
 }

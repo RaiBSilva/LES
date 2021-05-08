@@ -19,15 +19,21 @@ namespace LES.Controllers
     [Authorize(Roles = "1,2")]
     public class AdminController : BaseController
     {
+        IFacadeCrud<Cliente> _facadeClientes { get; set; }
         IFacadeCrud<Pedido> _facadePedidos { get; set; }
         IFacadeCrud<Troca> _facadeTrocas { get; set; }
+        IFacadeCrud<Cupom> _facadeCupons { get; set; }
 
         public AdminController(
             IFacadeCrud<Pedido> facadePedidos,
-            IFacadeCrud<Troca> facadeTrocas)
+            IFacadeCrud<Troca> facadeTrocas,
+            IFacadeCrud<Cupom> facadeCupons,
+            IFacadeCrud<Cliente> facadeClientes)
         {
             _facadePedidos = facadePedidos;
             _facadeTrocas = facadeTrocas;
+            _facadeCupons = facadeCupons;
+            _facadeClientes = facadeClientes;
         }
 
         public IActionResult Home()
@@ -44,7 +50,7 @@ namespace LES.Controllers
         public IActionResult Pedidos()
         {
             IEnumerable<Pedido> pedidos = _facadePedidos.ListAllInclude()
-                .Where(p => p.Status != StatusPedidos.NaoFinalizado && !p.Inativo);
+                .Where(p => p.Status != StatusPedidos.NaoFinalizado && !p.Inativo).ToList();
 
             IEnumerable<Troca> trocas = _facadeTrocas.ListAllInclude();
 
@@ -139,7 +145,7 @@ namespace LES.Controllers
         [HttpPost]
         public IActionResult StatusPedido(AdminPedidoModel pedido)
         {
-            Pedido p = _facadePedidos.GetEntidade(new Pedido { Id = Convert.ToInt32(pedido.Id) });
+            Pedido p = _facadePedidos.GetAllInclude(new Pedido { Id = Convert.ToInt32(pedido.Id) });
             p.Status = pedido.Status;
 
             string msg = _facadePedidos.Editar(p);
@@ -204,7 +210,7 @@ namespace LES.Controllers
                     [typeof(Troca).Name] = _facadeTrocas.GetAllInclude(new Troca { Id = id })
                 }
             };
-            return PartialView("../Admin/PartialViews/_VisualizarPedidoPartial", _vh.ViewModel);
+            return PartialView("../Admin/PartialViews/_VisualizarTrocaPartial", _vh.ViewModel);
         }
 
         [HttpPost]
@@ -212,8 +218,16 @@ namespace LES.Controllers
         {
             Troca t = _facadeTrocas.GetAllInclude(new Troca { Id = troca.Id });
             t.StatusTroca = troca.Status;
+            Cliente c = null;
+            if (t.StatusTroca == Models.Entity.StatusTroca.Trocada && t.LivroPedido.Trocado == false)
+            {
+                c = _facadeClientes.GetAllInclude(t.Cliente);
+                addCupom(c, t.LivroPedido);
+            }
 
             string msg = _facadeTrocas.Editar(t);
+            if (c != null)
+                msg += _facadeClientes.Editar(c);
 
             if (msg != null)
                 TempData["Alert"] = msg;
@@ -431,6 +445,35 @@ namespace LES.Controllers
             };
 
             return Json(chart);
+        }
+
+        #endregion
+
+        #region Utilidades
+
+        public void addCupom(Cliente c, LivroPedido l)
+        {
+            Cupom cupom = new Cupom { Cliente = c, Valor = l.Livro.Valor };
+
+            Random rnd = new Random();
+
+            while (true)
+            {
+                int codigo = rnd.Next(0, 1000000);
+                var items = _facadeCupons.Query(
+                    c => Convert.ToInt32(c.Codigo) == codigo,
+                    c => c);
+
+                if (items.Count() == 0) 
+                { 
+                    cupom.Codigo = codigo.ToString("D7");
+                    break;
+                }
+                codigo = rnd.Next(0, 1000000); ;
+            }
+
+            c.Cupons.Add(cupom);
+            l.Trocado = true;
         }
 
         #endregion

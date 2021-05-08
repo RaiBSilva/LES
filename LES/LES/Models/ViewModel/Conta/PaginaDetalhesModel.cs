@@ -8,23 +8,16 @@ namespace LES.Models.ViewModel.Conta
 {
     public class PaginaDetalhesModel : IViewModel
     {
-        public DetalhesInfoModel InfoUsuario { get; set; }
-        public IList<DetalhesEnderecoModel> Enderecos { get;set; }
-        public IList<DetalhesTelefoneModel> Telefones { get; set; }
-        public IList<DetalhesCartaoModel> Cartoes { get; set; }
-        public IList<PedidoModel> Pedidos { get; set; }
-        public IList<TrocaModel> Trocas { get; set; }
-        public IList<CupomModel> Cupons { get; set; }
+        public DetalhesInfoModel InfoUsuario { get; set; } = new DetalhesInfoModel { NotaUsuario = 0};
+        public IList<DetalhesEnderecoModel> Enderecos { get; set; } = new List<DetalhesEnderecoModel>();
+        public IList<DetalhesTelefoneModel> Telefones { get; set; } = new List<DetalhesTelefoneModel>();
+        public IList<DetalhesCartaoModel> Cartoes { get; set; } = new List<DetalhesCartaoModel>();
+        public IList<PedidoModel> Pedidos { get; set; } = new List<PedidoModel>();
+        public IList<TrocaModel> Trocas { get; set; } = new List<TrocaModel>();
+        public IList<CupomModel> Cupons { get; set; } = new List<CupomModel>();
 
         public PaginaDetalhesModel()
         {
-            InfoUsuario = new DetalhesInfoModel();
-            InfoUsuario.NotaUsuario = 0;
-            Enderecos = new List<DetalhesEnderecoModel>();
-            Telefones = new List<DetalhesTelefoneModel>();
-            Cartoes = new List<DetalhesCartaoModel>();
-            Pedidos = new List<PedidoModel>();
-            Cupons = new List<CupomModel>();
         }
     }
 

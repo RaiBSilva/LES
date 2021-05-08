@@ -22,15 +22,44 @@ protected override void ToEntidade()
             Pedido p = (Pedido)Entidades[typeof(Pedido).Name];
             Cliente cliente = p.Cliente;
 
-            PedidoViewHelper baseVh = new PedidoViewHelper
-            {
-                Entidades = new Dictionary<string, object>
-                {
-                    [typeof(Pedido).Name] = p
-                }
+            AdminPedidoModel vm = new AdminPedidoModel {
+                DtPedido = p.DtCadastro,
+                Id = p.Id.ToString(),
+                PreçoTotal = p.CalcularValorTotal(),
+                Status = p.Status
             };
 
-            AdminPedidoModel vm = (AdminPedidoModel)baseVh.ViewModel;
+            AdminLivroViewHelper livroVh = new AdminLivroViewHelper();
+            foreach (var livro in p.LivrosPedidos)
+            {
+                livroVh.Entidades = new Dictionary<string, object>
+                {
+                    [typeof(Livro).Name] = livro.Livro
+                };
+                vm.Livros[livro.Id] = (AdminLivroModel)livroVh.ViewModel;
+            }
+
+            DetalhesCartaoViewHelper cartaoVh = new DetalhesCartaoViewHelper();
+            foreach (var cartao in p.CartaoPedidos)
+            {
+                cartaoVh.Entidades = new Dictionary<string, object>
+                {
+                    [typeof(CartaoCredito).Name] = cartao.Cartao
+                };
+                vm.Cartoes[(CartaoBaseModel)cartaoVh.ViewModel] = cartao.Valor;
+            }
+
+            if (p.Cupom != null)
+            {
+                CupomViewHelper cupomVh = new CupomViewHelper
+                {
+                    Entidades = new Dictionary<string, object>
+                    {
+                        [typeof(Cupom).Name] = p.Cupom
+                    }
+                };
+                vm.Cupom = (CupomModel)cupomVh.ViewModel;
+            }
 
             PaginaDetalhesViewHelper clienteVh = new PaginaDetalhesViewHelper 
             {

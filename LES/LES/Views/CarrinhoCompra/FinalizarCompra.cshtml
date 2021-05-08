@@ -6,7 +6,7 @@
 
     double valorTotal = 0, valorFinal = 0;
     foreach(var livro in Model.Pedido.Livros)
-        valorTotal += livro.Preco;
+        valorTotal += livro.Preco * livro.Quantia;
 
     double valCupom = 0;
 
@@ -57,7 +57,7 @@
                 <h5 class="col-12 text-center">Você não está usando um cupom.</h5>
                 <span class="font-weight-lighter col-12 text-center">Deseja mudar isso?</span>
                 <div class="col-12 justify-content-center text-center">
-                    <button type="button" class="btn btn-outline-secondary" data-toggle="modal" data-target="#myModal">Usar um cupom!</button>
+                    <button type="button" class="btn btn-outline-secondary btnCupom" data-toggle="modal" data-target="#myModal">Usar um cupom!</button>
                 </div>
             </div>
         }
@@ -137,6 +137,7 @@
         var urls = urls || {};
         urls.SelecionarEndereco = '@Url.Action("_SelecionarEndereco", "CarrinhoCompra")';
         urls.SelecionarCartao = '@Url.Action("_SelecionarCartao", "CarrinhoCompra")';
+        urls.UsarCupom = '@Url.Action("_UsarCupomPartial", "CarrinhoCompra")';
     </script>
     <script src="~/js/Carrinho/CarregadorPartialViewsFinalizarCompra.js"></script>
 }

@@ -38,15 +38,18 @@ namespace LES.Models.ViewHelpers.Conta
         {
             CartaoCredito card = (CartaoCredito)Entidades[typeof(CartaoCredito).Name];
 
-            DetalhesCartaoModel vm = new DetalhesCartaoModel();
+            DetalhesCartaoModel vm = new DetalhesCartaoModel
+            {
+                Codigo = card.Codigo,
+                Cvv = card.Cvv,
+                EPreferencial = card.EFavorito,
+                Nome = card.NomeImpresso,
+                Vencimento = card.Vencimento,
+                Id = card.Id.ToString()
+            };
 
-            vm.Bandeira = card.Bandeira.Id.ToString();
-            vm.Codigo = card.Codigo;
-            vm.Cvv = card.Cvv;
-            vm.EPreferencial = card.EFavorito;
-            vm.Nome = card.NomeImpresso;
-            vm.Vencimento = card.Vencimento;
-            vm.Id = card.Id.ToString();
+            if(card.Bandeira != null)
+                vm.Bandeira = card.Bandeira.Id.ToString();
 
             _viewModel = vm;
         }

@@ -12,8 +12,8 @@ namespace LES.Models.Entity
         public string Codigo { get; set; }
         public double Valor { get; set; }
 
-        public Cliente Cliente { get; set; }
-        public Pedido Pedido { get; set; }
+        public virtual Cliente Cliente { get; set; }
+        public virtual Pedido Pedido { get; set; }
 
     }
 }

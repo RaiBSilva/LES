@@ -2,8 +2,7 @@
 
 @using LES.Models.Entity
 
-@{ bool cancelado = Model.Status == StatusTroca.Cancelada;
-    double precoTotal = 0;}
+@{ bool cancelavel = (int)Model.Status <= 2;}
 
 <table class="table table-striped table-hover table-sm ">
     <thead>
@@ -18,15 +17,26 @@
             <td>@Model.Livro.Titulo</td>
             <td>@Model.Livro.Preco</td>
             <td>
-                @if (cancelado)
+                @if (cancelavel)
                 {
-                    <p class="text-warning">Troca cancelada.</p>
+                    <button class="btn btn-warning btnTroca" value="@Model.Livro.CodigoBarras" onclick="window.location.href='@(Url.Action("CancelarTroca","CarrinhoCompra"))?id=@(Model.Id)'">
+                        Cancelar
+                    </button>
                 }
                 else
                 {
-                    <button class="btn btn-warning btnTroca" value="@Model.Livro.CodigoBarras" data-toggle="modal" data-target="#myModal">
-                        Cancelar
-                    </button>
+                    if (Model.Status == StatusTroca.Negada)
+                    {
+                        <p class="text-warning">Troca negada.</p>
+                    }
+                    if (Model.Status == StatusTroca.Trocada)
+                    {
+                        <p class="text-success">Troca concluída.</p>
+                    }
+                    if (Model.Status == StatusTroca.Cancelada)
+                    {
+                        <p class="text-warning">Troca cancelada.</p>
+                    }
                 }
             </td>
         </tr>

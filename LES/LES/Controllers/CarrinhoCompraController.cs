@@ -367,7 +367,7 @@ namespace LES.Views.CarrinhoCompra
                 carrinhoLivro.FirstOrDefault().Quantia+= 1;
             }
 
-            livro.Estoque -= quantia;
+            livro.EstoqueBloqueado += quantia;
 
             string msg = _facadeCarrinho.Editar(c);
             msg += _facadeLivro.Editar(livro);
@@ -378,35 +378,7 @@ namespace LES.Views.CarrinhoCompra
                 return Json(new { valor = true });
             return Json(new { valor = false, ex = msg });
         }
-
-        public IActionResult _AlterarQuantiaNoCarrinho(string codBar, string op) 
-        {
-            Carrinho c = GetCarrinho();
-            CarrinhoLivro carrinhoLivro = c.CarrinhoLivro.Where(l => l.Livro.CodigoBarras == codBar).FirstOrDefault();
-
-            IDictionary<string, int> operacoes = new Dictionary<string, int>
-            {
-                ["+"] = 1,
-                ["-"] = -1
-            };
-
-            if (carrinhoLivro == null)
-                return Json(new { valor = false, ex = "Livro não está no carrinho.\n" });
-
-            if (carrinhoLivro.Livro.Estoque == 0 && op == "+")
-                return Json(new { valor = false, ex = "Estoque insuficiente.\n" });
-
-            carrinhoLivro.Quantia += operacoes[op];
-            carrinhoLivro.Livro.EstoqueBloqueado += operacoes[op];
-
-            string msg = _facadeCarrinho.Editar(c);
-
-            //INSERIR MÉTODO DE DESATIVAÇÃO AUTOMÁTICA AQUI
-
-            if (msg == "")
-                return Json(new { valor = true });
-            return Json(new { valor = false, ex = msg });
-        }
+        
 
         [HttpPost]
         public IActionResult _RemoverDoCarrinho(string codBar)
@@ -432,6 +404,34 @@ namespace LES.Views.CarrinhoCompra
 
             string msg = _daoCarrinhoLivro.Remove(carrinhoLivro);
             msg += _facadeLivro.Editar(livro);
+
+            if (msg == "")
+                return Json(new { valor = true });
+            return Json(new { valor = false, ex = msg });
+        }
+        public IActionResult _AlterarQuantiaNoCarrinho(string codBar, string op) 
+        {
+            Carrinho c = GetCarrinho();
+            CarrinhoLivro carrinhoLivro = c.CarrinhoLivro.Where(l => l.Livro.CodigoBarras == codBar).FirstOrDefault();
+
+            IDictionary<string, int> operacoes = new Dictionary<string, int>
+            {
+                ["+"] = 1,
+                ["-"] = -1
+            };
+
+            if (carrinhoLivro == null)
+                return Json(new { valor = false, ex = "Livro não está no carrinho.\n" });
+
+            if (carrinhoLivro.Livro.EstoqueBloqueado == carrinhoLivro.Livro.Estoque && op == "+")
+                return Json(new { valor = false, ex = "Estoque insuficiente.\n" });
+
+            carrinhoLivro.Quantia += operacoes[op];
+            carrinhoLivro.Livro.EstoqueBloqueado += operacoes[op];
+
+            string msg = _facadeCarrinho.Editar(c);
+
+            //INSERIR MÉTODO DE DESATIVAÇÃO AUTOMÁTICA AQUI
 
             if (msg == "")
                 return Json(new { valor = true });
@@ -538,6 +538,19 @@ namespace LES.Views.CarrinhoCompra
             if (msg != null)
                 TempData["Alert"] = msg;
             return RedirectToAction("Detalhes","Conta");
+        }
+
+        public IActionResult CancelarTroca(int id)
+        {
+            Troca t = _facadeTroca.GetAllInclude(new Troca { Id = id });
+
+            t.StatusTroca = StatusTroca.Cancelada;
+
+            string msg = _facadeTroca.Editar(t);
+
+            if (msg != null)
+                TempData["Alert"] = msg;
+            return RedirectToAction("Detalhes", "Conta");
         }
 
         #endregion

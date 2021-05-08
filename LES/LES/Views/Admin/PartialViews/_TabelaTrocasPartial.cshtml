@@ -1,4 +1,4 @@
-﻿@model LES.Models.ViewModel.Admin.PaginaTroidosModel
+﻿@model LES.Models.ViewModel.Admin.PaginaPedidosModel
 
 @{ string naoFinal = "-1";}
 
@@ -31,7 +31,7 @@
                 </select>
             </th>
             <th scope="col">
-                <button class="btn btn-primary btnBuscarTroido">Buscar</button>
+                <button class="btn btn-primary btnBuscarTroca">Buscar</button>
             </th>
         </tr>
     </thead>
@@ -49,7 +49,7 @@
                 <nav aria-label="Paginação">
                     <ul class="pagination justify-content-center">
                         <li class="page-item @if (Model.Trocas.PagAtual == 1) {<text> disabled </text> }">
-                            <button type="button" class="page-link btnPage" aria-label="Previous" value="@(Model.Trocas.PagAtual-1)" @if (Model.Trocas.PagAtual == 1) { <text> disabled </text> }>
+                            <button type="button" class="page-link btnPageTro" aria-label="Previous" value="@(Model.Trocas.PagAtual-1)" @if (Model.Trocas.PagAtual == 1) { <text> disabled </text> }>
                                 <span aria-hidden="true">&laquo;</span>
                                 <span class="sr-only">Anterior</span>
                             </button>
@@ -60,13 +60,13 @@
                             @if (i == Model.Trocas.PagAtual) { active = "active"; }
                             else { active = ""; }
                             <li class="page-item @active">
-                                <button type="button" class="page-link btnPage" value="@i"> @i </button>
+                                <button type="button" class="page-link btnPageTro" value="@i"> @i </button>
                                 @if (i == Model.Trocas.PagAtual)
                                 {<span class="sr-only">(current)</span>}
                             </li>
                         }
                         <li class="page-item @if (Model.Trocas.PagAtual == Model.Trocas.PagMax) {<text> disabled </text> }">
-                            <button type="button" class="page-link btnPage" aria-label="Next" value="@(Model.Trocas.PagAtual+1)" @if (Model.Trocas.PagAtual == Model.Trocas.PagMax) { <text> disabled </text> }>
+                            <button type="button" class="page-link btnPageTro" aria-label="Next" value="@(Model.Trocas.PagAtual+1)" @if (Model.Trocas.PagAtual == Model.Trocas.PagMax) { <text> disabled </text> }>
                                 <span aria-hidden="true">&raquo;</span>
                                 <span class="sr-only">Próxima</span>
                             </button>

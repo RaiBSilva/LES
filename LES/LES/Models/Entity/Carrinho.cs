@@ -18,7 +18,7 @@ namespace LES.Models.Entity
             double soma = 0;
             if (CarrinhoLivro != null)
                 foreach(var item in CarrinhoLivro) 
-                    soma += item.Livro.Valor;
+                    soma += item.Livro.Valor * item.Quantia;
             return soma;
         }
     }

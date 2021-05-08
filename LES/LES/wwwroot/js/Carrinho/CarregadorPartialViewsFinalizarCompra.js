@@ -45,9 +45,8 @@ function carregarPartialView(endereco) {
             updateValor(id, check);
             somaValores();
         });
-
-
         $(".valorInput").on("input", somaValores);
+
     });
     divModal.appendChild(newDivForm);
 }
@@ -60,6 +59,10 @@ function carregarAddCartao() {
     carregarPartialView(urls.SelecionarCartao);
 }
 
+function carregarUsarCupom() {
+    carregarPartialView(urls.UsarCupom);
+}
+
 $('#myModal').on('hidden.bs.modal', function () {
     $(this).empty();
 });
@@ -70,4 +73,8 @@ $(".addEndereco").on("click", function (e) {
 
 $(".addCartao").on("click", function (e) {
     carregarAddCartao();
+});
+
+$(".btnCupom").on("click", function (e) {
+    carregarUsarCupom();
 });

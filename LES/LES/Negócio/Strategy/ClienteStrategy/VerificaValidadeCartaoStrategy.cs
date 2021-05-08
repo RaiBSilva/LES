@@ -13,10 +13,16 @@ namespace LES.Negócio.Strategy.ClienteStrategy
         {
             Cliente cliente = (Cliente)e;
 
-            DateTime dataVencimento = cliente.Cartoes.FirstOrDefault().DtCadastro;
-            DateTime dataAtual = DateTime.Now;
+            bool invalido = false;
 
-            if (dataAtual >= dataVencimento) return "Data do cartão é inválida.";
+            foreach(var cartao in cliente.Cartoes) { 
+                DateTime dataVencimento = cartao.DtCadastro;
+                DateTime dataAtual = DateTime.Now;
+
+                if (dataAtual >= dataVencimento) invalido = true;
+            }
+
+            if (invalido) return "Data do cartão é inválida.";
 
             return "";
         }

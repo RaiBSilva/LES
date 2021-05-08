@@ -19,20 +19,24 @@ protected override void ToEntidade()
         {
             Livro livro = (Livro)Entidades[typeof(Livro).Name];
 
-            AdminLivroModel vm = new AdminLivroModel();
-
-            LivroBaseViewHelper baseVh = new LivroBaseViewHelper 
+            AdminLivroModel vm = new AdminLivroModel
             {
-                Entidades = new Dictionary<string, object>
-                {
-                    [typeof(Livro).Name] = livro
-                }
+                Altura = livro.Altura,
+                Autor = livro.Autor,
+                CodigoBarras = livro.CodigoBarras,
+                Comprimento = livro.Comprimento,
+                DtLancamento = livro.DtLancamento,
+                Edicao = livro.Edicao,
+                Editora = livro.Editora.Nome,
+                Isbn = livro.Isbn,
+                Largura = livro.Largura,
+                Paginas = livro.Paginas,
+                Preco = livro.Valor,
+                Sinopse = livro.Sinopse,
+                Titulo = livro.Titulo,
+                Estoque = livro.Estoque,
+                Id = livro.Id
             };
-
-            vm = (AdminLivroModel)baseVh.ViewModel;
-
-            vm.Estoque = livro.Estoque;
-            vm.Id = livro.Id;
 
             _viewModel = vm;
         }

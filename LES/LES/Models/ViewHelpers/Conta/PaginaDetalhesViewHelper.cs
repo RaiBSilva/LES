@@ -85,12 +85,12 @@ namespace LES.Models.ViewHelpers.Conta
                 InfoUsuario = (DetalhesInfoModel) infoVH.ViewModel
             };
 
-            IList<CartaoCredito> cartoes = cliente.Cartoes != null ? cliente.Cartoes : new List<CartaoCredito>();
-            IList<Cupom> cupons  = cliente.Cupons != null ? cliente.Cupons : new List<Cupom>();
-            IList<Endereco> enderecos = cliente.Enderecos != null ? cliente.Enderecos : new List<Endereco>();
-            IList<Pedido> pedidos = cliente.Pedidos != null ? cliente.Pedidos : new List<Pedido>();
-            IList<Telefone> telefones = cliente.Telefones != null ? cliente.Telefones : new List<Telefone>();
-            IList<Troca> trocas = cliente.Trocas != null ? cliente.Trocas : new List<Troca>();
+            IList<CartaoCredito> cartoes = cliente.Cartoes ?? new List<CartaoCredito>();
+            IList<Cupom> cupons  = cliente.Cupons ?? new List<Cupom>();
+            IList<Endereco> enderecos = cliente.Enderecos ?? new List<Endereco>();
+            IList<Pedido> pedidos = cliente.Pedidos ?? new List<Pedido>();
+            IList<Telefone> telefones = cliente.Telefones ?? new List<Telefone>();
+            IList<Troca> trocas = cliente.Trocas ?? new List<Troca>();
 
             foreach(var cartao in cartoes)
             {
@@ -129,7 +129,7 @@ namespace LES.Models.ViewHelpers.Conta
                     [typeof(Pedido).Name] = pedido
                 };
 
-                vm.Pedidos.Add((PedidoModel)cupomVH.ViewModel);
+                vm.Pedidos.Add((PedidoModel)pedidoVh.ViewModel);
             }
 
             foreach (var telefone in telefones)
