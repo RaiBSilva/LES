@@ -103,7 +103,7 @@ class Image:
 class ChromeBrowser:
     def __init__(self):
         self.chrome_id = "chrome_id.json"
-        self.chrome_exe = r"D:\DEVELOPMENT\WebDrivers\chromedriver.exe"
+        self.chrome_exe = r"D:\DESENVOLVIMENTO\WebDrivers\chromedriver.exe"
 
     def new(self):
         global driver

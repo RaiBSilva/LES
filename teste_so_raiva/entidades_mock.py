@@ -57,3 +57,14 @@ class User:
         self.ddd = "011"
         self.telefone = "942458998"
         
+        
+class UserSuper:
+    def __init__(self):
+        self.nome = "John Price"
+        self.data_nascimento = "12081996"
+        self.cpf = "42069024100"
+        self.email = "admin@admin"
+        self.senha = "ABCabc123!"
+        self.ddd = "011"
+        self.telefone = "942458998"
+        
