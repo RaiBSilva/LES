@@ -26,43 +26,20 @@ namespace LES.Views.CarrinhoCompra
     {
         IDAOTabelaRel<CarrinhoLivro> _daoCarrinhoLivro { get; set; }
         IDAOTabelaRel<CartaoPedido> _daoCartaoPedido { get; set; }
-        IFacadeCrud<BandeiraCartaoCredito> _facadeBandeiras { get; set; }
-        IFacadeCrud<Carrinho> _facadeCarrinho { get; set; }
-        IFacadeCrud<Cliente> _facadeCliente { get; set; }
-        IFacadeCrud<Livro> _facadeLivro { get; set; }
-        IFacadeCrud<LivroPedido> _facadeLivrosPedidos { get; set; }
-        IFacadeCrud<Pedido> _facadePedido { get; set; }
-        IFacadeCrud<TipoEndereco> _facadeTipoEndereco { get; set; }
-        IFacadeCrud<Troca> _facadeTroca { get; set; }
+        IFacadeCrud _facade { get; set; }
 
         public CarrinhoCompraController(
             IDAOTabelaRel<CarrinhoLivro> daoCarrinhoLivro,
             IDAOTabelaRel<CartaoPedido> daoCartaoPedido,
-            IFacadeCrud<BandeiraCartaoCredito> facadeBandeira, 
-            IFacadeCrud<Carrinho> facadeCarrinho,
-            IFacadeCrud<Cliente> facadeCliente,
-            IFacadeCrud<Livro> facadeLivro,
-            IFacadeCrud<LivroPedido> facadeLivrosPedidos,
-            IFacadeCrud<Pedido> facadePedido,
-            IFacadeCrud<TipoEndereco> facadeTipoEndereco,
-            IFacadeCrud<Troca> facadeTroca)
+            IFacadeCrud facade)
         {
-            _facadeBandeiras = facadeBandeira;
-            _facadeCarrinho = facadeCarrinho;
-            _facadeCliente = facadeCliente;
-            _facadeLivro = facadeLivro;
-            _facadePedido = facadePedido;
-            _facadeTipoEndereco = facadeTipoEndereco;
-            _daoCarrinhoLivro = daoCarrinhoLivro;
-            _daoCartaoPedido = daoCartaoPedido;
-            _facadeLivrosPedidos = facadeLivrosPedidos;
-            _facadeTroca = facadeTroca;
+            _facade = facade;
         }
 
         public IActionResult FinalizarCompra() {
 
             Cliente c = GetClienteComEmail();
-            Cliente clienteDb = _facadeCliente.GetAllInclude(c);
+            Cliente clienteDb = _facade.GetAllInclude(c);
             Carrinho carrinho = clienteDb.Carrinho;
 
             if (carrinho == null || carrinho.CarrinhoLivro.Count == 0) 
@@ -106,7 +83,7 @@ namespace LES.Views.CarrinhoCompra
 
             if(naoTemPedido)
                 clienteDb.Pedidos.Add(pedNaoFinalizado);
-            _facadeCliente.Editar(clienteDb);
+            _facade.Editar(clienteDb);
 
             //PREPARAÇÃO DO VIEWMODEL
 
@@ -172,7 +149,7 @@ namespace LES.Views.CarrinhoCompra
             }
 
             p.Status = StatusPedidos.Processamento;
-            string msg = _facadePedido.Editar(p);
+            string msg = _facade.Editar(p);
 
             if (msg != "")
                 TempData["Alert"] = msg;
@@ -194,7 +171,7 @@ namespace LES.Views.CarrinhoCompra
             };
 
             SelecionarEnderecoModel vm = (SelecionarEnderecoModel)_vh.ViewModel;
-            vm.TiposEnderecos = _facadeTipoEndereco.Listar().OrderBy(t => t.Nome).ToList();
+            vm.TiposEnderecos = _facade.Listar<TipoEndereco>().OrderBy(t => t.Nome).ToList();
             vm.EnderecoId = GetPedidoNaoFinalizado(clienteDb).EnderecoId;
 
             return PartialView("../CarrinhoCompra/PartialViews/_SelecionarEndereçoPartial", vm);
@@ -214,7 +191,7 @@ namespace LES.Views.CarrinhoCompra
             Pedido p = GetPedidoNaoFinalizado(clienteDb);
 
             p.Endereco = e;
-            string msg = _facadePedido.Editar(p);
+            string msg = _facade.Editar(p);
 
             if (msg != "")
                 TempData["Alert"] = msg;
@@ -237,7 +214,7 @@ namespace LES.Views.CarrinhoCompra
                 }
             };
             SelecionarCartaoModel vm = (SelecionarCartaoModel)_vh.ViewModel;
-            vm.Bandeiras = _facadeBandeiras.Listar().OrderBy(b => b.Nome).ToList();
+            vm.Bandeiras = _facade.Listar<BandeiraCartaoCredito>().OrderBy(b => b.Nome).ToList();
             vm.Vencimento = DateTime.Now;
             vm.ValorTotal = p.CalcularValorTotal();
 
@@ -271,7 +248,7 @@ namespace LES.Views.CarrinhoCompra
                 pedido.CartaoPedidos.Add(cartaoPedidos[i]);
             }
 
-            string msg = _facadePedido.Editar(pedido);
+            string msg = _facade.Editar(pedido);
 
             if (msg != "")
                 TempData["Alert"] = msg;
@@ -287,12 +264,12 @@ namespace LES.Views.CarrinhoCompra
             };
 
             Endereco endereco = (Endereco)_vh.Entidades[typeof(Endereco).Name];
-            endereco.TipoEndereco = _facadeTipoEndereco.GetEntidade(endereco.TipoEndereco);
+            endereco.TipoEndereco = _facade.GetEntidade(endereco.TipoEndereco);
 
             Cliente clienteDb = GetClienteDb();
             clienteDb.Enderecos.Add(endereco);
 
-            string msg = _facadeCliente.Editar(clienteDb);
+            string msg = _facade.Editar(clienteDb);
 
             if (msg != "")
                 TempData["Alert"] = msg;
@@ -309,12 +286,12 @@ namespace LES.Views.CarrinhoCompra
             };
 
             CartaoCredito cartao = (CartaoCredito)_vh.Entidades[typeof(CartaoCredito).Name];
-            cartao.Bandeira = _facadeBandeiras.GetEntidade(cartao.Bandeira);
+            cartao.Bandeira = _facade.GetEntidade(cartao.Bandeira);
 
             Cliente clienteDb = GetClienteDb();
             clienteDb.Cartoes.Add(cartao);
 
-            string msg = _facadeCliente.Editar(clienteDb);
+            string msg = _facade.Editar(clienteDb);
 
             if (msg != "") 
                 TempData["Alert"] = msg;
@@ -347,7 +324,7 @@ namespace LES.Views.CarrinhoCompra
         public IActionResult _AddToCarrinho(string codBar, int quantia = 1)
         {
             Carrinho c = GetCarrinho();
-            Livro livro = _facadeLivro.GetAllInclude(new Livro { CodigoBarras = codBar});
+            Livro livro = _facade.GetAllInclude(new Livro { CodigoBarras = codBar});
             IEnumerable<CarrinhoLivro> carrinhoLivro = c.CarrinhoLivro.Where(c => c.LivroId == livro.Id);
 
             if (quantia > livro.Estoque - livro.EstoqueBloqueado)
@@ -359,7 +336,7 @@ namespace LES.Views.CarrinhoCompra
             {
                 CarrinhoLivro livroNovo = new CarrinhoLivro
                 {
-                    Livro = _facadeLivro.GetEntidade(livro),
+                    Livro = _facade.GetEntidade(livro),
                     Carrinho = c,
                     Quantia = quantia
                 };
@@ -373,8 +350,8 @@ namespace LES.Views.CarrinhoCompra
 
             livro.EstoqueBloqueado += quantia;
 
-            string msg = _facadeCarrinho.Editar(c);
-            msg += _facadeLivro.Editar(livro);
+            string msg = _facade.Editar(c);
+            msg += _facade.Editar(livro);
 
             //INSERIR MÉTODO DE DESATIVAÇÃO AUTOMÁTICA AQUI
 
@@ -388,7 +365,7 @@ namespace LES.Views.CarrinhoCompra
         public IActionResult _RemoverDoCarrinho(string codBar)
         {
             Carrinho c = GetCarrinho();
-            Livro livro = _facadeLivro.Query(l => l.CodigoBarras == codBar,
+            Livro livro = _facade.Query<Livro>(l => l.CodigoBarras == codBar,
                 l => l).FirstOrDefault();
 
             if (livro == null) 
@@ -407,7 +384,7 @@ namespace LES.Views.CarrinhoCompra
             c.CarrinhoLivro.Remove(carrinhoLivro);
 
             string msg = _daoCarrinhoLivro.Remove(carrinhoLivro);
-            msg += _facadeLivro.Editar(livro);
+            msg += _facade.Editar(livro);
 
             if (msg == "")
                 return Json(new { valor = true });
@@ -433,7 +410,7 @@ namespace LES.Views.CarrinhoCompra
             carrinhoLivro.Quantia += operacoes[op];
             carrinhoLivro.Livro.EstoqueBloqueado += operacoes[op];
 
-            string msg = _facadeCarrinho.Editar(c);
+            string msg = _facade.Editar(c);
 
             //INSERIR MÉTODO DE DESATIVAÇÃO AUTOMÁTICA AQUI
 
@@ -466,7 +443,7 @@ namespace LES.Views.CarrinhoCompra
         #region Usar Cupom
         public IActionResult _UsarCupomPartial()
         {
-            IList<Cupom> cupons = _facadeCliente.GetAllInclude(GetClienteComEmail()).Cupons
+            IList<Cupom> cupons = _facade.GetAllInclude(GetClienteComEmail()).Cupons
                 .Where(c => c.Inativo == false)
                 .OrderBy(c => c.Codigo)
                 .ToList();
@@ -493,7 +470,7 @@ namespace LES.Views.CarrinhoCompra
                 TempData["Alert"] = "Ocorreu um erro. Tente novamente. \n";
             else { 
                 pedido.Cupom = cupom;
-                _facadeCliente.Editar(clienteDb);
+                _facade.Editar(clienteDb);
             }
 
             return RedirectToAction(nameof(FinalizarCompra));
@@ -506,7 +483,7 @@ namespace LES.Views.CarrinhoCompra
 
             pedido.CupomId = null;
             pedido.Cupom = null;
-            _facadeCliente.Editar(clienteDb);
+            _facade.Editar(clienteDb);
             return RedirectToAction(nameof(FinalizarCompra));
         }
         #endregion
@@ -515,8 +492,8 @@ namespace LES.Views.CarrinhoCompra
 
         public IActionResult _RealizarTrocaPartial(int id)
         {
-            LivroPedido p = _facadeLivrosPedidos.Query(p => p.Id == id, p => p, p=>p.Livro).FirstOrDefault();
-            Livro l = _facadeLivro.GetAllInclude(p.Livro);
+            LivroPedido p = _facade.Query<LivroPedido>(p => p.Id == id, p => p, p=>p.Livro).FirstOrDefault();
+            Livro l = _facade.GetAllInclude(p.Livro);
 
             if (p.Trocado) 
             {
@@ -532,19 +509,19 @@ namespace LES.Views.CarrinhoCompra
 
         public IActionResult RealizarTroca(int id)
         {
-            LivroPedido p = _facadeLivrosPedidos.Query(p => p.Id == id,
+            LivroPedido p = _facade.Query<LivroPedido>(p => p.Id == id,
                 p => p).FirstOrDefault();
             p.Trocado = true;
 
             Troca t = new Troca
             {
-                Cliente = _facadeCliente.GetAllInclude(GetClienteComEmail()),
+                Cliente = _facade.GetAllInclude(GetClienteComEmail()),
                 LivroPedido = p,
                 StatusTroca = StatusTroca.Processamento
             };
 
-            string msg = _facadeLivrosPedidos.Editar(p);
-            msg += _facadeTroca.Cadastrar(t);
+            string msg = _facade.Editar(p);
+            msg += _facade.Cadastrar(t);
 
             if (msg != "")
                 TempData["Alert"] = msg;
@@ -553,15 +530,15 @@ namespace LES.Views.CarrinhoCompra
 
         public IActionResult CancelarTroca(int id)
         {
-            Troca t = _facadeTroca.GetAllInclude(new Troca { Id = id });
-            LivroPedido p = _facadeLivrosPedidos.Query(p => t.LivroPedidoId == p.Id,
+            Troca t = _facade.GetAllInclude(new Troca { Id = id });
+            LivroPedido p = _facade.Query<LivroPedido>(p => t.LivroPedidoId == p.Id,
                 p => p).FirstOrDefault();
 
             t.StatusTroca = StatusTroca.Cancelada;
             p.Trocado = false;
 
-            string msg = _facadeTroca.Editar(t);
-            msg += _facadeLivrosPedidos.Editar(p);
+            string msg = _facade.Editar(t);
+            msg += _facade.Editar(p);
 
             if (msg != "")
                 TempData["Alert"] = msg;
@@ -574,12 +551,12 @@ namespace LES.Views.CarrinhoCompra
 
         private Cliente GetClienteDb() 
         {
-            return _facadeCliente.GetAllInclude(GetClienteComEmail());
+            return _facade.GetAllInclude(GetClienteComEmail());
         }
 
         private Carrinho GetCarrinho()
         {
-            return _facadeCarrinho.GetAllInclude(new Carrinho { Cliente = GetClienteComEmail() });
+            return _facade.GetAllInclude(new Carrinho { Cliente = GetClienteComEmail() });
 
         }
 

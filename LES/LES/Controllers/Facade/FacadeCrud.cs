@@ -14,15 +14,12 @@ using System.Threading.Tasks;
 
 namespace LES.Controllers.Facade
 {
-    public class FacadeCrud<T> : IFacadeCrud<T> where T : EntidadeDominio
+    public class FacadeCrud : IFacadeCrud
     {
-
-        private IDAO<T> _dao;
         private AppDbContext _contexto;
 
-        public FacadeCrud(IDAO<T> dao, AppDbContext context)
+        public FacadeCrud(AppDbContext context)
         {
-            _dao = dao;
             _contexto = context;
             DefinirStrategies();
             DefinirDAOs();
@@ -77,7 +74,7 @@ namespace LES.Controllers.Facade
             };
         }
 
-        private string ExecutarRegras(T e)
+        private string ExecutarRegras(EntidadeDominio e)
         {
             string nmClasse = e.GetType().Name;
 
@@ -97,51 +94,56 @@ namespace LES.Controllers.Facade
 
         }
 
-        public string Cadastrar(T e)
+        public string Cadastrar<T>(T e) where T : EntidadeDominio
         {
             string msg = ExecutarRegras(e);
-
             if (msg == "")
             {
-                return _dao.Add(e);
+                IDAO<T> dao = new DAO<T>(_contexto);
+                return dao.Add(e);
             }
 
             return msg;
         }
 
-        public string Deletar(T e)
+        public string Deletar<T>(T e) where T : EntidadeDominio
         {
-            return _dao.Delete(e.Id);
+            IDAO<T> dao = new DAO<T>(_contexto);
+            return dao.Delete(e.Id);
         }
 
-        public string Editar(T e)
+        public string Editar<T>(T e) where T : EntidadeDominio
         {
             string msg = ExecutarRegras(e);
 
             if (msg == "")
             {
-                return _dao.Edit(e);
+                IDAO<T> dao = new DAO<T>(_contexto);
+                return dao.Edit(e);
             }
 
             return msg;
         }
 
-        public T GetEntidade(T e)
+        public T GetEntidade<T>(T e) where T : EntidadeDominio
         {
-            return _dao.Get(e.Id);
+            IDAO<T> dao = new DAO<T>(_contexto);
+            return dao.Get(e.Id);
         }
 
-        public IList<T> Listar()
+        public IList<T> Listar<T>() where T : EntidadeDominio
         {
-            return _dao.List();
+            IDAO<T> dao = new DAO<T>(_contexto);
+            return dao.List();
         }
 
-        public IEnumerable<TType> Query<TType>(Expression<Func<T, bool>> where, Expression<Func<T, TType>> select,
-            params Expression<Func<TType, object>>[] include) where TType : class
-        { 
-            return _dao.Get(where, select, include);
+        public IEnumerable<T> Query<T>(Expression<Func<T, bool>> where, Expression<Func<T, T>> select,
+            params Expression<Func<T, object>>[] include) where T : EntidadeDominio
+        {
+            IDAO<T> dao = new DAO<T>(_contexto);
+            return dao.Get(where, select, include);
         }
-        public T GetAllInclude(T e)
+        public T GetAllInclude<T>(T e) where T : EntidadeDominio
         {
             string nmClasse = typeof(T).Name;
 
@@ -150,7 +152,7 @@ namespace LES.Controllers.Facade
 
         }
 
-        public IList<T> ListAllInclude()
+        public IList<T> ListAllInclude<T>() where T : EntidadeDominio
         {
             string nmClasse = typeof(T).Name;
 

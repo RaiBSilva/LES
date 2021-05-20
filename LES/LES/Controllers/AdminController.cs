@@ -7,10 +7,12 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Data.SqlClient.DataClassification;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
+using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -19,21 +21,12 @@ namespace LES.Controllers
     [Authorize(Roles = "1,2")]
     public class AdminController : BaseController
     {
-        IFacadeCrud<Cliente> _facadeClientes { get; set; }
-        IFacadeCrud<Pedido> _facadePedidos { get; set; }
-        IFacadeCrud<Troca> _facadeTrocas { get; set; }
-        IFacadeCrud<Cupom> _facadeCupons { get; set; }
+        IFacadeCrud _facade { get; set; }
 
         public AdminController(
-            IFacadeCrud<Pedido> facadePedidos,
-            IFacadeCrud<Troca> facadeTrocas,
-            IFacadeCrud<Cupom> facadeCupons,
-            IFacadeCrud<Cliente> facadeClientes)
+            IFacadeCrud facade)
         {
-            _facadePedidos = facadePedidos;
-            _facadeTrocas = facadeTrocas;
-            _facadeCupons = facadeCupons;
-            _facadeClientes = facadeClientes;
+            _facade = facade;
         }
 
         public IActionResult Home()
@@ -49,10 +42,10 @@ namespace LES.Controllers
 
         public IActionResult Pedidos()
         {
-            IEnumerable<Pedido> pedidos = _facadePedidos.ListAllInclude()
+            IEnumerable<Pedido> pedidos = _facade.ListAllInclude<Pedido>()
                 .Where(p => p.Status != StatusPedidos.NaoFinalizado && !p.Inativo).ToList();
 
-            IEnumerable<Troca> trocas = _facadeTrocas.ListAllInclude();
+            IEnumerable<Troca> trocas = _facade.ListAllInclude<Troca>();
 
             _vh = new PaginaPedidosViewHelper 
             {
@@ -87,7 +80,7 @@ namespace LES.Controllers
 
             FiltrosPedidosAdminModel filtros = o.ToObject<FiltrosPedidosAdminModel>();
 
-            IEnumerable<Pedido> pedidos = _facadePedidos.ListAllInclude()
+            IEnumerable<Pedido> pedidos = _facade.ListAllInclude<Pedido>()
                 .Where(p => p.Status != StatusPedidos.NaoFinalizado && !p.Inativo);
 
             if (filtros.Id != null)
@@ -136,7 +129,7 @@ namespace LES.Controllers
             {
                 Entidades = new Dictionary<string, object>
                 {
-                    [typeof(Pedido).Name] = _facadePedidos.GetAllInclude(new Pedido { Id = id })
+                    [typeof(Pedido).Name] = _facade.GetAllInclude(new Pedido { Id = id })
                 }
             };
             return PartialView("../Admin/PartialViews/_VisualizarPedidoPartial", _vh.ViewModel);
@@ -145,10 +138,10 @@ namespace LES.Controllers
         [HttpPost]
         public IActionResult StatusPedido(AdminPedidoModel pedido)
         {
-            Pedido p = _facadePedidos.GetAllInclude(new Pedido { Id = Convert.ToInt32(pedido.Id) });
+            Pedido p = _facade.GetAllInclude(new Pedido { Id = Convert.ToInt32(pedido.Id) });
             p.Status = pedido.Status;
 
-            string msg = _facadePedidos.Editar(p);
+            string msg = _facade.Editar(p);
 
             if (msg != "")
                 TempData["Alert"] = msg;
@@ -166,7 +159,7 @@ namespace LES.Controllers
 
             FiltrosPedidosAdminModel filtros = o.ToObject<FiltrosPedidosAdminModel>();
 
-            IEnumerable<Troca> trocas = _facadeTrocas.ListAllInclude();
+            IEnumerable<Troca> trocas = _facade.ListAllInclude<Troca>();
 
             trocas = filtros.Id != null ? trocas.Where(t => t.Id == filtros.Id) : trocas;
 
@@ -212,7 +205,7 @@ namespace LES.Controllers
             {
                 Entidades = new Dictionary<string, object>
                 {
-                    [typeof(Troca).Name] = _facadeTrocas.GetAllInclude(new Troca { Id = id })
+                    [typeof(Troca).Name] = _facade.GetAllInclude(new Troca { Id = id })
                 }
             };
             return PartialView("../Admin/PartialViews/_VisualizarTrocaPartial", _vh.ViewModel);
@@ -221,18 +214,18 @@ namespace LES.Controllers
         [HttpPost]
         public IActionResult StatusTroca(AdminTrocaModel troca)
         {
-            Troca t = _facadeTrocas.GetAllInclude(new Troca { Id = troca.Id });
+            Troca t = _facade.GetAllInclude(new Troca { Id = troca.Id });
             t.StatusTroca = troca.Status;
             Cliente c = null;
             if (t.StatusTroca == Models.Entity.StatusTroca.Trocada)
             {
-                c = _facadeClientes.GetAllInclude(t.Cliente);
+                c = _facade.GetAllInclude(t.Cliente);
                 addCupom(c, t.LivroPedido);
             }
 
-            string msg = _facadeTrocas.Editar(t);
+            string msg = _facade.Editar(t);
             if (c != null)
-                msg += _facadeClientes.Editar(c);
+                msg += _facade.Editar(c);
 
             if (msg != "")
                 TempData["Alert"] = msg;
@@ -400,49 +393,78 @@ namespace LES.Controllers
         #endregion
 
         #region Jsons
-
-        public IActionResult _MaisVendidosMesJson() {
-
-            string[] labels = new string[] { "Janeiro", "Fevereiro", "Março" };
-            JsonData[] datasets = {
-                new JsonData{ label ="Livro1", 
-                            data = new int[]{100, 200, 150 }, 
-                            backgroundColor = "rgba(94, 140, 95, 0.5)",
-                            fill= true},
-                new JsonData{ label ="Livro2", data = new int[]{50, 20, 100 }, backgroundColor = "rgba(140, 94, 95, 0.5)"},
-                new JsonData{ label ="Livro3", data = new int[]{123, 52, 231 }, backgroundColor = "rgba(95, 94, 140, 0.5)"},
-            };
-            JsonChart chart = new JsonChart
-            {
-                labels = labels,
-                datasets = datasets
-            };
-
-            return Json(chart);
-
-        }
-
-        public IActionResult _VendasMesJson()
+        public IActionResult _VendasJson(string json)
         {
+            PaginaAdminHomeModel model;
+            JObject o;
 
-            string[] labels = new string[] { "Janeiro", "Fevereiro", "Março" };
-            JsonData[] datasets = {
-                new JsonData{
-                    label ="Livro1", 
-                    data = new int[]{100, 200, 150 }, 
-                    backgroundColor = "rgba(94, 140, 95, 0.5)",
-                    fill = false},
-                new JsonData{ 
-                    label ="Livro2", 
-                    data = new int[]{50, 20, 100 }, 
-                    backgroundColor = "rgba(140, 94, 95, 0.5)",
-                    fill = false},
-                new JsonData{ 
-                    label ="Livro3", 
-                    data = new int[]{123, 52, 231 }, 
-                    backgroundColor = "rgba(95, 94, 140, 0.5)",
-                    fill = false},
-            };
+            if (json == null)
+                model = new PaginaAdminHomeModel();
+            else { 
+                o = JObject.Parse(json);
+                model = o.ToObject<PaginaAdminHomeModel>();
+            }
+
+            IEnumerable<Livro> livros = _facade.ListAllInclude<Livro>();
+            IList<string> meses = new List<string>();
+
+            if (!String.IsNullOrEmpty(model.Nome))
+                livros = livros.Where(l => l.Titulo.Contains(model.Nome));
+
+            if (!String.IsNullOrEmpty(model.Categorias))
+            {
+                string[] ctgs = model.Categorias.Split(" ");
+                IEnumerable<CategoriaLivro> categoriaLivros = _facade.Query<CategoriaLivro>(c => ctgs.Contains(c.Nome),
+                    c => c);
+
+                IEnumerable<LivroCategoriaLivro> livCtl = livros.SelectMany(c => c.LivrosCategoriaLivros);
+
+                IEnumerable<int> ids = livCtl.Where(l => categoriaLivros.Select(c => c.Id).Contains(l.CategoriaLivroId))
+                    .Select(l => l.LivroId).Distinct();
+
+                livros = livros.Where(l => ids.Contains(l.Id));
+            }
+
+            var listaMeses = MonthsBetween(model.Comeco, model.Fim);
+            foreach (var (Month, Year) in listaMeses)
+                meses.Add(Month + "/" + Year);
+
+            IEnumerable<JsonData> dados = new List<JsonData>();
+
+            IList<JsonData> listaDatasets = new List<JsonData>();
+            var dateTimeFormat = CultureInfo.CurrentCulture.DateTimeFormat;
+
+            foreach (var livro in livros)
+            {
+                Random r = new Random();
+
+                string cor = "rgba(" + r.Next(0, 255) + ", " + r.Next(0, 255) + ", " + r.Next(0, 255) + ", 0.5)";
+
+                JsonData dataset = new JsonData
+                {
+                    label = livro.Titulo,
+                    backgroundColor = cor,
+                    borderColor = cor,
+                    fill = false
+                };
+
+                IList<int> data = new List<int>();
+                foreach(var (Month, Year) in listaMeses)
+                {
+                    int contagem = livro.LivroPedidos
+                        .Where(l => dateTimeFormat.GetMonthName(l.DtCadastro.Month) == Month && l.DtCadastro.Year == Year)
+                        .Count();
+                    data.Add(contagem);
+                }
+
+                dataset.data = data.ToArray();
+
+                listaDatasets.Add(dataset); 
+            }
+
+            string[] labels = meses.ToArray();
+            JsonData[] datasets = listaDatasets.ToArray();
+
             JsonChart chart = new JsonChart
             {
                 labels = labels,
@@ -465,7 +487,7 @@ namespace LES.Controllers
             while (true)
             {
                 int codigo = rnd.Next(0, 1000000);
-                var items = _facadeCupons.Query(
+                var items = _facade.Query<Cupom>(
                     c => Convert.ToInt32(c.Codigo) == codigo,
                     c => c);
 
@@ -479,6 +501,36 @@ namespace LES.Controllers
 
             c.Cupons.Add(cupom);
             l.Trocado = true;
+        }
+
+        public static IEnumerable<(string Month, int Year)> MonthsBetween(
+        DateTime startDate,
+        DateTime endDate)
+        {
+            DateTime iterator;
+            DateTime limit;
+
+            if (endDate > startDate)
+            {
+                iterator = new DateTime(startDate.Year, startDate.Month, 1);
+                limit = endDate;
+            }
+            else
+            {
+                iterator = new DateTime(endDate.Year, endDate.Month, 1);
+                limit = startDate;
+            }
+
+            var dateTimeFormat = CultureInfo.CurrentCulture.DateTimeFormat;
+            while (iterator <= limit)
+            {
+                yield return (
+                    dateTimeFormat.GetMonthName(iterator.Month),
+                    iterator.Year
+                );
+
+                iterator = iterator.AddMonths(1);
+            }
         }
 
         #endregion
