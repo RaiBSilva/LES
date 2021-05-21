@@ -40,7 +40,7 @@ namespace LES
                 options => options.UseSqlServer(Configuration.GetConnectionString("DefaultSqlServer"))
                 );
 
-            services.AddScoped(typeof(IFacadeCrud<>), typeof(FacadeCrud<>));
+            services.AddScoped(typeof(IFacadeCrud), typeof(FacadeCrud));
             services.AddScoped(typeof(IDAO<>), typeof(DAO<>));
             services.AddScoped(typeof(IDAOTabelaRel<>), typeof(DAOTabelaRel<>));
         }

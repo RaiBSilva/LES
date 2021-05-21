@@ -18,19 +18,16 @@ namespace LES.Controllers
     public class LivrosController : BaseController
     {
         
-        IFacadeCrud<Livro> _facadeLivro { get; set; }
-        IFacadeCrud<CategoriaLivro> _facadeCtgLivro { get; set; }
+        IFacadeCrud _facade { get; set; }
 
-        public LivrosController(IFacadeCrud<Livro> facadeLivro,
-            IFacadeCrud<CategoriaLivro> facadeCtgLivro)
+        public LivrosController(IFacadeCrud facade)
         {
-            _facadeLivro = facadeLivro;
-            _facadeCtgLivro = facadeCtgLivro;
+            _facade = facade;
         }
 
         public IActionResult Loja()
         {
-            IList<Livro> livros = _facadeLivro.ListAllInclude().OrderBy(l => l.Titulo).ToList();
+            IList<Livro> livros = _facade.ListAllInclude<Livro>().OrderBy(l => l.Titulo).ToList();
 
             _vh = new PaginaLojaViewHelper 
             {
@@ -56,7 +53,7 @@ namespace LES.Controllers
 
             LojaFiltrosModel filtros = o.ToObject<LojaFiltrosModel>();
 
-            IEnumerable<Livro> livros = _facadeLivro.ListAllInclude()
+            IEnumerable<Livro> livros = _facade.ListAllInclude<Livro>()
                 .Where(l => l.Inativo == false)
                 .OrderBy(l => l.Titulo);
 
@@ -75,7 +72,7 @@ namespace LES.Controllers
             if (!String.IsNullOrEmpty(filtros.Categorias)) 
             {
                 string[] ctgs = filtros.Categorias.Split(" ");
-                IEnumerable<CategoriaLivro> categoriaLivros = _facadeCtgLivro.Query(c => ctgs.Contains(c.Nome),
+                IEnumerable<CategoriaLivro> categoriaLivros = _facade.Query<CategoriaLivro>(c => ctgs.Contains(c.Nome),
                     c => c);
 
                 IEnumerable<LivroCategoriaLivro> livCtl = livros.SelectMany(c => c.LivrosCategoriaLivros);
@@ -122,7 +119,7 @@ namespace LES.Controllers
 
         public IActionResult Descricao(string codBar)
         {
-            Livro livro = _facadeLivro.GetAllInclude(new Livro { CodigoBarras = codBar });
+            Livro livro = _facade.GetAllInclude(new Livro { CodigoBarras = codBar });
 
             _vh = new LivroBaseViewHelper
             {

@@ -19,20 +19,11 @@ namespace LES.Views.Conta
 {
     public class ContaController : BaseController
     {
-        private IFacadeCrud<Cliente> _facadeClientes { get; set; }
-        private IFacadeCrud<BandeiraCartaoCredito> _facadeBandeiras { get; set; }
-        private IFacadeCrud<TipoTelefone> _facadeTipoTelefone { get; set; }
-        private IFacadeCrud<TipoEndereco> _facadeTipoEndereco { get; set; }
+        private IFacadeCrud _facade { get; set; }
 
-        public ContaController(IFacadeCrud<Cliente> facadeClientes,
-            IFacadeCrud<BandeiraCartaoCredito> facadeBandeira,
-            IFacadeCrud<TipoTelefone> facadeTipoTelefone,
-            IFacadeCrud<TipoEndereco> facadeTipoEndereco)
+        public ContaController(IFacadeCrud facade)
         {
-            _facadeClientes = facadeClientes;
-            _facadeBandeiras = facadeBandeira;
-            _facadeTipoTelefone = facadeTipoTelefone;
-            _facadeTipoEndereco = facadeTipoEndereco;
+            _facade = facade;
         }
 
         #region Login, Registro, Logout e Detalhes
@@ -65,7 +56,7 @@ namespace LES.Views.Conta
                 Usuario = (Usuario)_vh.Entidades[typeof(Usuario).Name]
             };
 
-            Cliente clienteDb = _facadeClientes.Query(
+            Cliente clienteDb = _facade.Query<Cliente>(
                 c => c.Usuario.Email == clienteLogin.Usuario.Email, 
                 c => c,
                 c => c.Usuario).FirstOrDefault();
@@ -130,16 +121,16 @@ namespace LES.Views.Conta
             };
 
             Cliente cliente = (Cliente)_vh.Entidades[typeof(Cliente).Name];
-            cliente.Cartoes[0].Bandeira = _facadeBandeiras.GetEntidade(cliente.Cartoes[0].Bandeira);
-            cliente.Enderecos[0].TipoEndereco = _facadeTipoEndereco.GetEntidade(cliente.Enderecos[0].TipoEndereco);
-            cliente.Telefones[0].TipoTelefone = _facadeTipoTelefone.GetEntidade(cliente.Telefones[0].TipoTelefone);
+            cliente.Cartoes[0].Bandeira = _facade.GetEntidade(cliente.Cartoes[0].Bandeira);
+            cliente.Enderecos[0].TipoEndereco = _facade.GetEntidade(cliente.Enderecos[0].TipoEndereco);
+            cliente.Telefones[0].TipoTelefone = _facade.GetEntidade(cliente.Telefones[0].TipoTelefone);
             cliente.Codigo = GeraCodigoCliente();
             cliente.Carrinho = new Carrinho
             {
                 TimeoutDate = DateTime.Now.AddDays(7)
             };
 
-            string msg = _facadeClientes.Cadastrar(cliente);
+            string msg = _facade.Cadastrar(cliente);
 
             if (msg == "")  return RedirectToAction(nameof(Login));
             TempData["Alert"] = msg;
@@ -152,7 +143,7 @@ namespace LES.Views.Conta
         {
             Cliente cliente = GetClienteComEmail();
 
-            var clienteDb = _facadeClientes.GetAllInclude(cliente);
+            var clienteDb = _facade.GetAllInclude(cliente);
 
             clienteDb.Cartoes = clienteDb.Cartoes.Where(c => c.Inativo == false).ToList();
             clienteDb.Enderecos = clienteDb.Enderecos.Where(e => e.Inativo == false).ToList();
@@ -188,7 +179,7 @@ namespace LES.Views.Conta
         //GET Conta/_EditarInfoPessoalPartial
         public IActionResult _EditarInfoPessoalPartial(int id)
         {
-            Cliente cliente = _facadeClientes.Query(c => c.Codigo == id.ToString(),
+            Cliente cliente = _facade.Query<Cliente>(c => c.Codigo == id.ToString(),
                 c => c,
                 c => c.Usuario).FirstOrDefault();
 
@@ -221,7 +212,7 @@ namespace LES.Views.Conta
 
             Cliente clienteRequest = (Cliente)_vh.Entidades[typeof(Cliente).Name];
 
-            Cliente clienteDb = _facadeClientes.Query<Cliente>(c => c.Codigo == clienteRequest.Codigo,
+            Cliente clienteDb = _facade.Query<Cliente>(c => c.Codigo == clienteRequest.Codigo,
                 c => c,
                 c => c.Usuario).FirstOrDefault();
 
@@ -231,7 +222,7 @@ namespace LES.Views.Conta
             clienteDb.Nome = clienteRequest.Nome;
             clienteDb.Usuario.Email = clienteRequest.Usuario.Email;
 
-            string msg = _facadeClientes.Editar(clienteDb);
+            string msg = _facade.Editar(clienteDb);
 
             if(msg == "") return RedirectToAction(nameof(Detalhes));
             TempData["Alert"] = msg;
@@ -242,7 +233,7 @@ namespace LES.Views.Conta
         //GET Conta/_EditarSenhaPartial
         public IActionResult _EditarSenhaPartial(int id) 
         {
-            string codigo = _facadeClientes.Query(c => c.Codigo == id.ToString(),
+            string codigo = _facade.Query<Cliente>(c => c.Codigo == id.ToString(),
                 c => c,
                 c => c.Usuario).FirstOrDefault().Codigo;
 
@@ -266,7 +257,7 @@ namespace LES.Views.Conta
 
             var email = HttpContext.User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.Email)?.Value;
 
-            Cliente clienteDb = _facadeClientes.Query<Cliente>(c => c.Usuario.Email == email,
+            Cliente clienteDb = _facade.Query<Cliente>(c => c.Usuario.Email == email,
                 c => c,
                 c => c.Usuario).FirstOrDefault();
 
@@ -284,7 +275,7 @@ namespace LES.Views.Conta
             if(GerenciadorLogin.comparaSenha(senhaVelha, clienteDb.Usuario.Senha)) 
             {
                 clienteDb.Usuario.Senha = senhaNova;
-                string msg = _facadeClientes.Editar(clienteDb);
+                string msg = _facade.Editar(clienteDb);
                 if (msg == "") return RedirectToAction(nameof(Detalhes));
                 TempData["Alert"] = msg;
             }
@@ -318,7 +309,7 @@ namespace LES.Views.Conta
 
             Endereco endNovo = (Endereco)_vh.Entidades[typeof(Endereco).Name];
 
-            Cliente c = _facadeClientes.GetAllInclude(GetClienteComEmail());
+            Cliente c = _facade.GetAllInclude(GetClienteComEmail());
 
             var endDb = c.Enderecos.Where(e => e.Id == endNovo.Id).FirstOrDefault();
 
@@ -333,9 +324,9 @@ namespace LES.Views.Conta
             endDb.NomeEndereco = endNovo.NomeEndereco;
             endDb.Numero = endNovo.Numero;
             endDb.Observacoes = endNovo.Observacoes;
-            endDb.TipoEndereco = _facadeTipoEndereco.GetEntidade(endNovo.TipoEndereco);
+            endDb.TipoEndereco = _facade.GetEntidade(endNovo.TipoEndereco);
 
-            string msg = _facadeClientes.Editar(c);
+            string msg = _facade.Editar(c);
 
             if (msg != "")
                 TempData["Alert"] = msg;
@@ -368,16 +359,16 @@ namespace LES.Views.Conta
 
             Telefone telNovo = (Telefone)_vh.Entidades[typeof(Telefone).Name];
 
-            Cliente c = _facadeClientes.GetAllInclude(GetClienteComEmail());
+            Cliente c = _facade.GetAllInclude(GetClienteComEmail());
 
             var telDb = c.Telefones.Where(t => t.Id == telNovo.Id).FirstOrDefault();
 
             telDb.Ddd = telNovo.Ddd;
             telDb.EFavorito = telNovo.EFavorito;
             telDb.Numero = telNovo.Numero;
-            telDb.TipoTelefone = _facadeTipoTelefone.GetEntidade(telNovo.TipoTelefone);
+            telDb.TipoTelefone = _facade.GetEntidade(telNovo.TipoTelefone);
 
-            string msg = _facadeClientes.Editar(c);
+            string msg = _facade.Editar(c);
 
             if (msg != "")
                 TempData["Alert"] = msg;
@@ -410,18 +401,18 @@ namespace LES.Views.Conta
 
             CartaoCredito carNovo = (CartaoCredito)_vh.Entidades[typeof(CartaoCredito).Name];
 
-            Cliente c = _facadeClientes.GetAllInclude(GetClienteComEmail());
+            Cliente c = _facade.GetAllInclude(GetClienteComEmail());
 
             var carDb = c.Cartoes.Where(t => t.Id == carNovo.Id).FirstOrDefault();
 
-            carDb.Bandeira = _facadeBandeiras.GetEntidade(carNovo.Bandeira);
+            carDb.Bandeira = _facade.GetEntidade(carNovo.Bandeira);
             carDb.Codigo = carNovo.Codigo;
             carDb.Cvv = carNovo.Cvv;
             carDb.EFavorito = carNovo.EFavorito;
             carDb.NomeImpresso = carNovo.NomeImpresso;
             carDb.Vencimento = carNovo.Vencimento;
 
-            string msg = _facadeClientes.Editar(c);
+            string msg = _facade.Editar(c);
 
             if (msg != "")
                 TempData["Alert"] = msg;
@@ -434,9 +425,9 @@ namespace LES.Views.Conta
         #region Adicionar
         public IActionResult _AdicionarNovoEnderecoPartial() 
         {
-            IList<Endereco> enderecos = _facadeClientes.Query(
+            IList<Endereco> enderecos = _facade.Query<Cliente>(
                 c => c.Usuario.Email == GetClienteComEmail().Usuario.Email,
-                c => c.Enderecos).FirstOrDefault();
+                c => c).FirstOrDefault().Enderecos;
 
             enderecos = enderecos.Where(e => e.Inativo == false).ToList();
 
@@ -463,12 +454,12 @@ namespace LES.Views.Conta
             };
 
             Endereco endereco = (Endereco)_vh.Entidades[typeof(Endereco).Name];
-            endereco.TipoEndereco = _facadeTipoEndereco.GetEntidade(endereco.TipoEndereco);
+            endereco.TipoEndereco = _facade.GetEntidade(endereco.TipoEndereco);
 
-            Cliente clienteDb = _facadeClientes.GetAllInclude(GetClienteComEmail());
+            Cliente clienteDb = _facade.GetAllInclude(GetClienteComEmail());
             clienteDb.Enderecos.Add(endereco);
 
-            string msg = _facadeClientes.Editar(clienteDb);
+            string msg = _facade.Editar(clienteDb);
 
             if (msg == "") return RedirectToAction(nameof(Detalhes));
             TempData["Alert"] = msg;
@@ -478,9 +469,9 @@ namespace LES.Views.Conta
 
         public IActionResult _AdicionarNovoTelefonePartial()
         {
-            IList<Telefone> telefones = _facadeClientes.Query(
+            IList<Telefone> telefones = _facade.Query<Cliente>(
                    c => c.Usuario.Email == GetClienteComEmail().Usuario.Email,
-                   c => c.Telefones).FirstOrDefault();
+                   c => c).FirstOrDefault().Telefones;
 
             telefones = telefones.Where(e => e.Inativo == false).ToList();
 
@@ -507,12 +498,12 @@ namespace LES.Views.Conta
             };
 
             Telefone telefone = (Telefone)_vh.Entidades[typeof(Telefone).Name];
-            telefone.TipoTelefone = _facadeTipoTelefone.GetEntidade(telefone.TipoTelefone);
+            telefone.TipoTelefone = _facade.GetEntidade(telefone.TipoTelefone);
 
-            Cliente clienteDb = _facadeClientes.GetAllInclude(GetClienteComEmail());
+            Cliente clienteDb = _facade.GetAllInclude(GetClienteComEmail());
             clienteDb.Telefones.Add(telefone);
 
-            string msg = _facadeClientes.Editar(clienteDb);
+            string msg = _facade.Editar(clienteDb);
 
             if (msg == "") return RedirectToAction(nameof(Detalhes));
             TempData["Alert"] = msg;
@@ -522,9 +513,9 @@ namespace LES.Views.Conta
 
         public IActionResult _AdicionarNovoCartaoPartial()
         {
-            IList<CartaoCredito> cartoes = _facadeClientes.Query(
+            IList<CartaoCredito> cartoes = _facade.Query<Cliente>(
                    c => c.Usuario.Email == GetClienteComEmail().Usuario.Email,
-                   c => c.Cartoes).FirstOrDefault();
+                   c => c).FirstOrDefault().Cartoes;
 
             cartoes = cartoes.Where(e => e.Inativo == false).ToList();
 
@@ -551,12 +542,12 @@ namespace LES.Views.Conta
             };
 
             CartaoCredito cartao = (CartaoCredito)_vh.Entidades[typeof(Telefone).Name];
-            cartao.Bandeira = _facadeBandeiras.GetEntidade(cartao.Bandeira);
+            cartao.Bandeira = _facade.GetEntidade(cartao.Bandeira);
 
-            Cliente clienteDb = _facadeClientes.GetAllInclude(GetClienteComEmail());
+            Cliente clienteDb = _facade.GetAllInclude(GetClienteComEmail());
             clienteDb.Cartoes.Add(cartao);
 
-            string msg = _facadeClientes.Editar(clienteDb);
+            string msg = _facade.Editar(clienteDb);
 
             if (msg == "") return RedirectToAction(nameof(Detalhes));
             TempData["Alert"] = msg;
@@ -582,7 +573,7 @@ namespace LES.Views.Conta
 
         public IActionResult RemoverEndereco(int id)
         {
-            Cliente clienteDb = _facadeClientes.GetAllInclude(GetClienteComEmail());
+            Cliente clienteDb = _facade.GetAllInclude(GetClienteComEmail());
 
             IList<Endereco> enderecos = clienteDb.Enderecos.Where(e => e.Inativo == false).ToList();
 
@@ -593,7 +584,7 @@ namespace LES.Views.Conta
             enderecoRem.EFavorito = false;
             enderecoRem.Inativo = true;
 
-            string msg = _facadeClientes.Editar(clienteDb);
+            string msg = _facade.Editar(clienteDb);
 
             if (msg != "")
                 TempData["Alert"] = msg;
@@ -615,7 +606,7 @@ namespace LES.Views.Conta
         public IActionResult RemoverTelefone(int id)
         {
 
-            Cliente clienteDb = _facadeClientes.GetAllInclude(GetClienteComEmail());
+            Cliente clienteDb = _facade.GetAllInclude(GetClienteComEmail());
 
             IList<Telefone> telefones = clienteDb.Telefones.Where(t => t.Inativo == false).ToList();
 
@@ -626,7 +617,7 @@ namespace LES.Views.Conta
             telefoneRem.EFavorito = false;
             telefoneRem.Inativo = true;
 
-            string msg = _facadeClientes.Editar(clienteDb);
+            string msg = _facade.Editar(clienteDb);
 
             if (msg != "")
                 TempData["Alert"] = msg;
@@ -648,7 +639,7 @@ namespace LES.Views.Conta
 
         public IActionResult RemoverCartao(int id)
         {
-            Cliente clienteDb = _facadeClientes.GetAllInclude(GetClienteComEmail());
+            Cliente clienteDb = _facade.GetAllInclude(GetClienteComEmail());
 
             IList<CartaoCredito> cartoes = clienteDb.Cartoes.Where(c => c.Inativo == false).ToList();
 
@@ -659,7 +650,7 @@ namespace LES.Views.Conta
             cartaoRem.EFavorito = false;
             cartaoRem.Inativo = true;
 
-            string msg = _facadeClientes.Editar(clienteDb);
+            string msg = _facade.Editar(clienteDb);
 
             if (msg != "")
                 TempData["Alert"] = msg;
@@ -681,7 +672,7 @@ namespace LES.Views.Conta
         public IActionResult FavoritarEndereco(int id)
         {
 
-            Cliente clienteDb = _facadeClientes.GetAllInclude(GetClienteComEmail());
+            Cliente clienteDb = _facade.GetAllInclude(GetClienteComEmail());
 
             IList<Endereco> enderecos = clienteDb.Enderecos.Where(e => e.Inativo == false).ToList();
 
@@ -691,7 +682,7 @@ namespace LES.Views.Conta
 
             enderecoFav.EFavorito = true;
 
-            string msg = _facadeClientes.Editar(clienteDb);
+            string msg = _facade.Editar(clienteDb);
 
             if (msg != "")
                 TempData["Alert"] = msg;
@@ -711,7 +702,7 @@ namespace LES.Views.Conta
 
         public IActionResult FavoritarTelefone(int id)
         {
-            Cliente clienteDb = _facadeClientes.GetAllInclude(GetClienteComEmail());
+            Cliente clienteDb = _facade.GetAllInclude(GetClienteComEmail());
 
             IList<Telefone> telefones = clienteDb.Telefones.Where(e => e.Inativo == false).ToList();
 
@@ -721,7 +712,7 @@ namespace LES.Views.Conta
 
             telefoneFav.EFavorito = true;
 
-            string msg = _facadeClientes.Editar(clienteDb);
+            string msg = _facade.Editar(clienteDb);
 
             if (msg != "")
                 TempData["Alert"] = msg;
@@ -743,7 +734,7 @@ namespace LES.Views.Conta
 
         public IActionResult FavoritarCartao(int id)
         {
-            Cliente clienteDb = _facadeClientes.GetAllInclude(GetClienteComEmail());
+            Cliente clienteDb = _facade.GetAllInclude(GetClienteComEmail());
 
             IList<CartaoCredito> cartoes = clienteDb.Cartoes.Where(e => e.Inativo == false).ToList();
 
@@ -753,7 +744,7 @@ namespace LES.Views.Conta
 
             cartaoFav.EFavorito = true;
 
-            string msg = _facadeClientes.Editar(clienteDb);
+            string msg = _facade.Editar(clienteDb);
 
             if (msg != "")
                 TempData["Alert"] = msg;
@@ -769,7 +760,7 @@ namespace LES.Views.Conta
         [HttpPost]
         public IActionResult ChecaEmail(string email)
         {
-            var clienteDb = _facadeClientes.Query<Cliente>(
+            var clienteDb = _facade.Query<Cliente>(
                 c => c.Usuario.Email == email,
                 c => c);
 
@@ -785,7 +776,7 @@ namespace LES.Views.Conta
         bool naoExiste = true;
         do
         {
-            var items = _facadeClientes.Query(
+            var items = _facade.Query<Cliente>(
                 c => Convert.ToInt32(c.Codigo) == codigo,
                 c => c);
 
@@ -798,22 +789,22 @@ namespace LES.Views.Conta
 
         private IList<BandeiraCartaoCredito> GetBandeiras() 
         {
-            return _facadeBandeiras.Listar().OrderBy(b => b.Nome).ToList();
+            return _facade.Listar<BandeiraCartaoCredito>().OrderBy(b => b.Nome).ToList();
         }
 
         private IList<TipoEndereco> GetTipoEnderecos() 
         {
-            return _facadeTipoEndereco.Listar().OrderBy(b => b.Nome).ToList();
+            return _facade.Listar<TipoEndereco>().OrderBy(b => b.Nome).ToList();
         }
 
         private IList<TipoTelefone> GetTipoTelefones()
         {
-            return _facadeTipoTelefone.Listar().OrderBy(b => b.Nome).ToList();
+            return _facade.Listar<TipoTelefone>().OrderBy(b => b.Nome).ToList();
         }
 
         private IViewModel GetEnderecoVm(int id)
         {
-            Endereco e = _facadeClientes.GetAllInclude(GetClienteComEmail()).Enderecos
+            Endereco e = _facade.GetAllInclude(GetClienteComEmail()).Enderecos
                 .Where(e => e.Id == id).FirstOrDefault();
 
             if (e == null)
@@ -836,7 +827,7 @@ namespace LES.Views.Conta
 
         private IViewModel GetTelefoneVm(int id) 
         {
-            Telefone t = _facadeClientes.GetAllInclude(GetClienteComEmail()).Telefones
+            Telefone t = _facade.GetAllInclude(GetClienteComEmail()).Telefones
                 .Where(t => t.Id == id).FirstOrDefault();
 
             if (t == null)
@@ -859,7 +850,7 @@ namespace LES.Views.Conta
 
         private IViewModel GetCartaoVm(int id) 
         {
-            CartaoCredito c = _facadeClientes.GetAllInclude(GetClienteComEmail()).Cartoes
+            CartaoCredito c = _facade.GetAllInclude(GetClienteComEmail()).Cartoes
                    .Where(c => c.Id == id).FirstOrDefault();
 
             if (c == null)
