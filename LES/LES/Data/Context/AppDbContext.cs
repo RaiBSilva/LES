@@ -80,6 +80,10 @@ namespace LES.Models
                 .HasColumnName($"{tri}_dt_timeout")
                 .IsRequired();
 
+            modelBuilder.Entity<Carrinho>()
+                .Property(c => c.JobKeyStr)
+                .HasColumnName(tri + "_job_key");
+
             #endregion
 
             #region CarrinhoLivro

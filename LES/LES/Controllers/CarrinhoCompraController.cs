@@ -2,6 +2,7 @@
 using LES.Controllers.Facade;
 using LES.Data.DAO;
 using LES.Models.Entity;
+using LES.Models.Schedulers;
 using LES.Models.ViewHelpers.CarrinhoCompra;
 using LES.Models.ViewHelpers.Conta;
 using LES.Models.ViewHelpers.Shared;
@@ -24,6 +25,7 @@ namespace LES.Views.CarrinhoCompra
     [Authorize]
     public class CarrinhoCompraController : BaseController
     {
+        ScheduleCarrinho scheduleCarrinho = new ScheduleCarrinho();
         IDAOTabelaRel<CarrinhoLivro> _daoCarrinhoLivro { get; set; }
         IDAOTabelaRel<CartaoPedido> _daoCartaoPedido { get; set; }
         IFacadeCrud _facade { get; set; }
