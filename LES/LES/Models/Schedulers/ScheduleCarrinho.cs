@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace LES.Models.Schedulers
 {
-    public class ScheduleCarrinho
+    public class ScheduleCarrinho : IAgendarJob
     {
         private static StdSchedulerFactory schedulerFactory = new StdSchedulerFactory();
         private static IScheduler scheduler { get; set; }
@@ -16,21 +16,21 @@ namespace LES.Models.Schedulers
             CriarScheduler();
         }
 
-        private static async void CriarScheduler()
+        private async void CriarScheduler()
         {
             scheduler = await schedulerFactory.GetScheduler();
         }
 
-        private static async void CancelaJob(String keyStr)
+        public async void CancelaJob(string keyStr)
         {
-            IList<String> parametros = keyStr.Split(".");
+            IList<string> parametros = keyStr.Split(".");
 
             JobKey chave = new JobKey(parametros[0], parametros[1]);
 
             await scheduler.DeleteJob(chave);
         }
 
-        private static async void AgendarJob(DateTime dataExecucao, int idCarrinho, String emailCliente)
+        public async void AgendarJob(DateTime dataExecucao, int idCarrinho, string emailCliente)
         {
             IJobDetail job = JobBuilder.Create<ApagaCarrinhoJob>()
                 .WithIdentity(idCarrinho.ToString(), emailCliente)

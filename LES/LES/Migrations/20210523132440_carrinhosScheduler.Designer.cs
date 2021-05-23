@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace LES.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20210522134347_carrinhos")]
-    partial class carrinhos
+    [Migration("20210523132440_carrinhosScheduler")]
+    partial class carrinhosScheduler
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {

@@ -25,19 +25,21 @@ namespace LES.Views.CarrinhoCompra
     [Authorize]
     public class CarrinhoCompraController : BaseController
     {
-        ScheduleCarrinho scheduleCarrinho = new ScheduleCarrinho();
         IDAOTabelaRel<CarrinhoLivro> _daoCarrinhoLivro { get; set; }
         IDAOTabelaRel<CartaoPedido> _daoCartaoPedido { get; set; }
         IFacadeCrud _facade { get; set; }
+        IAgendarJob _scheduleCarrinho { get; set; }
 
         public CarrinhoCompraController(
             IDAOTabelaRel<CarrinhoLivro> daoCarrinhoLivro,
             IDAOTabelaRel<CartaoPedido> daoCartaoPedido,
-            IFacadeCrud facade)
+            IFacadeCrud facade,
+            IAgendarJob scheduleCarrinho)
         {
             _daoCarrinhoLivro = daoCarrinhoLivro;
             _daoCartaoPedido = daoCartaoPedido;
             _facade = facade;
+            _scheduleCarrinho = scheduleCarrinho;
         }
 
         public IActionResult FinalizarCompra() {

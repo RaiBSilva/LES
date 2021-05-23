@@ -2,7 +2,7 @@
 
 namespace LES.Migrations
 {
-    public partial class carrinhos : Migration
+    public partial class carrinhosScheduler : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
