@@ -31,7 +31,7 @@ namespace LES.Controllers
 
         public IActionResult Home()
         {
-            return View();
+            return View(new PaginaAdminHomeModel());
         }
 
         public IActionResult Clientes()
@@ -393,6 +393,7 @@ namespace LES.Controllers
         #endregion
 
         #region Jsons
+        [HttpPost]
         public IActionResult _VendasJson(string json)
         {
             PaginaAdminHomeModel model;
@@ -400,7 +401,8 @@ namespace LES.Controllers
 
             if (json == null)
                 model = new PaginaAdminHomeModel();
-            else { 
+            else
+            {
                 o = JObject.Parse(json);
                 model = o.ToObject<PaginaAdminHomeModel>();
             }

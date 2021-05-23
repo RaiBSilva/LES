@@ -23,14 +23,14 @@
                 </div>
                 <div class="form-group col-sm-12">
                     Categorias:
-                    <input asp-for="Comeco" id="inputComeco"class="form-check"  />
+                    <input asp-for="Comeco" type="date" id="inputComeco"class="form-check"  />
                 </div>
                 <div class="form-group col-sm-12">
                     Categorias:
-                    <input asp-for="Fim" id="inputFim"class="form-check"  />
+                    <input asp-for="Fim" type="date" id="inputFim"class="form-check"  />
                 </div>
                 <div class="form-group col-sm-12">
-                    <input type="button" onclick="" value="Buscar" class="btn btn-primary btnFazerPesquisa" style="margin-left:0px 0px 10px 15px" id="btn" />
+                    <input type="button" onclick="fazGrafico()" value="Buscar" class="btn btn-primary btnFazerPesquisa" style="margin-left:0px 0px 10px 15px" id="btn" />
                 </div>
             </div>
         </div>
@@ -40,7 +40,6 @@
     </div>
 
 @section Scripts{
-
     <script src="~/lib/Chart.js-2.9.4/dist/Chart.js"></script>
     
     <script type="text/javascript">

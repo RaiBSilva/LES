@@ -3,39 +3,45 @@
 
     var endereco = urls.Vendas;
     var data = JSON.stringify({
-        Nome: $("#inputTitulo").val,
-        Categorias: $("#inputCategorias").val,
-        Comeco: $("#inputComeco").val,
-        Fim: $("#inputFim").val,
-    }
-    );
+        Nome: $("#inputTitulo")[0].value,
+        Categorias: $("#inputCategorias")[0].value,
+        Comeco: $("#inputComeco")[0].value,
+        Fim: $("#inputFim")[0].value
+    });
 
-    $.getJSON(endereco, data, function (dados) {
-        new Chart(graph, {
-            type: 'line',
-            data: {
-                labels: dados.labels,
-                datasets: dados.datasets
-            },
-            options: {
-                title: {
-                    display: true,
-                    text: "Vendas nos últimos "+ dados.labels.length +" meses",
+    $.ajax({
+        url: endereco,
+        method: 'POST',
+        data: { json: data },
+        success: function (dados) {
+
+            new Chart(graph, {
+                type: 'line',
+                data: {
+                    labels: dados.labels,
+                    datasets: dados.datasets
                 },
-                scales: {
-                    yAxes: [{
-                        ticks: {
-                            beginAtZero: true
+                options: {
+                    title: {
+                        display: true,
+                        text: "Vendas nos últimos " + dados.labels.length + " meses",
+                    },
+                    scales: {
+                        yAxes: [{
+                            ticks: {
+                                beginAtZero: true
+                            }
+                        }]
+                    },
+                    legend: {
+                        labels: {
+                            defaultFontSize: 20
                         }
-                    }]
-                },
-                legend: {
-                    labels: {
-                        defaultFontSize: 20
                     }
                 }
-            }
-        });
+            });
+
+        }, 
     })
 
     

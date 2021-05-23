@@ -33,6 +33,8 @@ namespace LES.Views.CarrinhoCompra
             IDAOTabelaRel<CartaoPedido> daoCartaoPedido,
             IFacadeCrud facade)
         {
+            _daoCarrinhoLivro = daoCarrinhoLivro;
+            _daoCartaoPedido = daoCartaoPedido;
             _facade = facade;
         }
 
