@@ -1,5 +1,13 @@
-﻿function fazGrafico() {
+﻿function fazGrafico(primeiravez) {
+    if (primeiravez === undefined)
+        primeiravez = false;
+
     var graph = $("#myChart");
+
+    if (!primeiravez)
+        Chart.helpers.each(Chart.instances, function (instance) {
+            instance.destroy();
+        })
 
     var endereco = urls.Vendas;
     var data = JSON.stringify({
@@ -48,5 +56,5 @@
 }
 
 $(document).ready(function () {
-    fazGrafico();
+    fazGrafico(true);
 });
