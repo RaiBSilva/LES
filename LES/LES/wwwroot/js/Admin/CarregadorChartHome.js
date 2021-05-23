@@ -47,4 +47,6 @@
     
 }
 
-fazGrafico();
+$(document).ready(function () {
+    fazGrafico();
+});
