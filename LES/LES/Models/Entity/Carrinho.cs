@@ -10,6 +10,8 @@ namespace LES.Models.Entity
     {
         public DateTime TimeoutDate { get; set; }
 
+        public String JobKeyStr { get; set; }
+
         public virtual IList<CarrinhoLivro> CarrinhoLivro { get; set; }
         public virtual Cliente Cliente { get; set; }
 
