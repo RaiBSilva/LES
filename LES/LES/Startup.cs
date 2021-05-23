@@ -6,6 +6,7 @@ using LES.Controllers;
 using LES.Controllers.Facade;
 using LES.Data.DAO;
 using LES.Models;
+using LES.Models.Schedulers;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -43,6 +44,7 @@ namespace LES
             services.AddScoped(typeof(IFacadeCrud), typeof(FacadeCrud));
             services.AddScoped(typeof(IDAO<>), typeof(DAO<>));
             services.AddScoped(typeof(IDAOTabelaRel<>), typeof(DAOTabelaRel<>));
+            services.AddScoped(typeof(IAgendarJob), typeof(ScheduleCarrinho));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

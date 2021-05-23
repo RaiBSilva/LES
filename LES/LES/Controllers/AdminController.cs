@@ -43,7 +43,7 @@ namespace LES.Controllers
         public IActionResult Pedidos()
         {
             IEnumerable<Pedido> pedidos = _facade.ListAllInclude<Pedido>()
-                .Where(p => p.Status != StatusPedidos.NaoFinalizado && !p.Inativo).ToList();
+                .Where(p => p.Status != StatusPedidos.NaoFinalizado && !p.Inativo);
 
             IEnumerable<Troca> trocas = _facade.ListAllInclude<Troca>();
 
@@ -236,7 +236,7 @@ namespace LES.Controllers
 
         #region Clientes
 
-    public IActionResult _InativarReativarClientePartial(int id) {
+        public IActionResult _InativarReativarClientePartial(int id) {
             return PartialView("../Admin/PartialViews/_InativarReativarClientePartial");
         }
 
