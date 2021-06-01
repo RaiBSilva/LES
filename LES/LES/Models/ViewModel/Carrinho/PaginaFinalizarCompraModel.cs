@@ -12,6 +12,7 @@ namespace LES.Models.ViewModel.Carrinho
         public DetalhesEnderecoModel Endereco { get; set; }
         public IDictionary<DetalhesCartaoModel, double> Cartoes { get; set; } = new Dictionary<DetalhesCartaoModel, double>();
         public CupomModel Cupom { get; set; }
+        public CodigoPromocionalModel CodigoPromo { get; set; }
         public CarrinhoModel Pedido {get;set;}
 
     }
