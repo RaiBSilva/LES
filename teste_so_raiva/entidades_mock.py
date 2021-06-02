@@ -52,8 +52,8 @@ class User:
         self.nome = "John Price"
         self.data_nascimento = "12081996"
         self.cpf = "42069024185"
-        self.email = "bravo6goingdark@gmail.com"
-        self.senha = "CODww@sucks"
+        self.email = "john6dark@gmail.com"
+        self.senha = "CODww@supax"
         self.ddd = "011"
         self.telefone = "942458998"
         

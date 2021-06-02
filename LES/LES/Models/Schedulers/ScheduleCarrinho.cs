@@ -36,8 +36,9 @@ namespace LES.Models.Schedulers
                 .WithIdentity(idCarrinho.ToString(), emailCliente)
                 .Build();
 
-            ISimpleTrigger trigger = (ISimpleTrigger)TriggerBuilder.Create()
+            ITrigger trigger = TriggerBuilder.Create()
             .StartAt(dataExecucao)
+            .WithSchedule(CronScheduleBuilder.CronSchedule(String.Format("{0} {1} {2} * * ?", dataExecucao.Second, dataExecucao.Minute, dataExecucao.Hour)))
             .Build();
 
             await scheduler.ScheduleJob(job, trigger);
