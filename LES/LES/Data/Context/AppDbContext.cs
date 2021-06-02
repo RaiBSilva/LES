@@ -265,6 +265,34 @@ namespace LES.Models
 
             #endregion
 
+            #region CodigoPromocional
+
+            tri = "cod";
+
+            modelBuilder = configBasico<CodigoPromocional>(modelBuilder, "CODIGOS", tri);
+
+            modelBuilder.Entity<CodigoPromocional>()
+                .Property(c => c.Codigo)
+                .HasColumnName($"{tri}_codigo")
+                .IsRequired();
+
+            modelBuilder.Entity<CodigoPromocional>()
+                .Property(c => c.DtValidade)
+                .HasColumnName($"{tri}_dt_validade")
+                .IsRequired();
+
+            modelBuilder.Entity<CodigoPromocional>()
+                .Property(c => c.UsosRestantes)
+                .HasColumnName($"{tri}_usos_restantes")
+                .IsRequired();
+
+            modelBuilder.Entity<CodigoPromocional>()
+                .Property(c => c.Valor)
+                .HasColumnName($"{tri}_valor")
+                .IsRequired();
+
+            #endregion
+
             #region Cupom
 
             tri = "cup";
@@ -731,6 +759,10 @@ namespace LES.Models
                 .IsRequired();
 
             modelBuilder.Entity<Pedido>()
+                .Property(c => c.CodigoId)
+                .HasColumnName($"{tri}_ped_id");
+
+            modelBuilder.Entity<Pedido>()
                 .Property(p => p.CupomId)
                 .HasColumnName(tri + "_cup_id");
 
@@ -754,6 +786,12 @@ namespace LES.Models
                 .WithMany(c => c.Pedidos)
                 .HasForeignKey(c => c.ClienteId)
                 .HasConstraintName("FK_" + tri.ToUpper() + "_CLI");
+
+            modelBuilder.Entity<Pedido>()
+                .HasOne(p => p.CodigoPromocional)
+                .WithOne(c => c.Pedido)
+                .HasForeignKey<Pedido>(p => p.CodigoId)
+                .HasConstraintName("FK_" + tri.ToUpper() + "_COD");
 
             modelBuilder.Entity<Pedido>()
                 .HasOne(p => p.Endereco)
@@ -903,6 +941,7 @@ namespace LES.Models
         public DbSet<CategoriaLivro> CategoriaLivros { get; set; }
         public DbSet<Cidade> Cidades { get; set; }
         public DbSet<Cliente> Clientes { get; set; }
+        public DbSet<CodigoPromocional> CodigosPromocionais { get; set; }
         public DbSet<Cupom> Cupons { get; set; }
         public DbSet<Editora> Editoras { get; set; }
         public DbSet<Endereco> Enderecos { get; set; }

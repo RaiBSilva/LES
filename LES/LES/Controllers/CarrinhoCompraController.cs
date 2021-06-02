@@ -112,7 +112,7 @@ namespace LES.Views.CarrinhoCompra
             };
 
             ViewData["FinalizarCompra"] = true;
-            if (TempData["Alert"] != null) ViewData["Alert"] = TempData["Alert"];
+            if (!String.IsNullOrEmpty((string)TempData["Alert"])) ViewData["Alert"] = TempData["Alert"];
 
             return View(_vh.ViewModel); 
         }
@@ -492,6 +492,49 @@ namespace LES.Views.CarrinhoCompra
             _facade.Editar(clienteDb);
             return RedirectToAction(nameof(FinalizarCompra));
         }
+
+        public IActionResult UsarCodigo(string cod)
+        {
+            Cliente clienteDb = GetClienteDb();
+            Pedido pedido = GetPedidoNaoFinalizado(clienteDb);
+            CodigoPromocional codigo = _facade.Query<CodigoPromocional>(c => c.Codigo == cod,
+                c => c).FirstOrDefault();
+            string msg = "";
+
+            if(codigo == null)
+            {
+                TempData["Alert"] = "Código inválido. \n";
+            }
+            else { 
+
+                if (codigo.UsosRestantes <= 0)
+                    TempData["Alert"] = "Esse código expirou. Tente outro código. \n";
+                else
+                {
+                    codigo.UsosRestantes -= 1;
+                    pedido.CodigoPromocional = codigo;
+                    msg = _facade.Editar(pedido);
+                }
+
+            }
+
+            if (msg != "")
+                TempData["Alert"] = msg;
+
+            return RedirectToAction(nameof(FinalizarCompra));
+        }
+
+        public IActionResult RemoverCodigo()
+        {
+            Cliente clienteDb = GetClienteDb();
+            Pedido pedido = GetPedidoNaoFinalizado(clienteDb);
+
+            pedido.CodigoPromocional = null;
+            pedido.CodigoId = null;
+            string msg = _facade.Editar(clienteDb);
+            return RedirectToAction(nameof(FinalizarCompra));
+        }
+
         #endregion
 
         #region Troca

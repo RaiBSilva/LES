@@ -10,12 +10,14 @@ namespace LES.Models.Entity
     public class Pedido : EntidadeDominio
     {
         public int ClienteId { get; set; }
+        public int? CodigoId { get; set; }
         public int? CupomId { get; set; }
         public int EnderecoId { get; set; }
         public StatusPedidos Status { get; set; }
         public double ValorTotal { get; set; }
 
         public virtual Cliente Cliente { get; set; }
+        public virtual CodigoPromocional CodigoPromocional { get; set; }
         public virtual Cupom Cupom { get; set; }
         public virtual IList<CartaoPedido> CartaoPedidos { get; set; }
         public virtual Endereco Endereco { get; set; }
@@ -29,6 +31,9 @@ namespace LES.Models.Entity
 
             if (Cupom != null)
                 val -= Cupom.Valor;
+
+            if (CodigoPromocional != null)
+                val -= CodigoPromocional.Valor;
 
             return val;
         }

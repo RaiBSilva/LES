@@ -25,9 +25,21 @@ namespace LES.Models.ViewHelpers.CarrinhoCompra
             Endereco endereco = (Endereco)Entidades[typeof(Endereco).Name];
             IDictionary<CartaoCredito, double> cartoes = (IDictionary<CartaoCredito, double>)Entidades[typeof(IDictionary<CartaoCredito, double>).Name];
             Cupom cupom = null;
+            CodigoPromocional codigoPromo = null;
             if(Entidades.ContainsKey(typeof(Cupom).Name))
                 cupom = (Cupom)Entidades[typeof(Cupom).Name];
+            if (Entidades.ContainsKey(typeof(CodigoPromocional).Name))
+                codigoPromo = (CodigoPromocional)Entidades[typeof(CodigoPromocional).Name];
             Carrinho carrinho = (Carrinho)Entidades[typeof(Carrinho).Name];
+
+            CarrinhoViewHelper carrinhoVh = new CarrinhoViewHelper
+            {
+                Entidades = new Dictionary<string, object>
+                {
+                    [typeof(Carrinho).Name] = carrinho
+                }
+            };
+            vm.Pedido = (CarrinhoModel)carrinhoVh.ViewModel;
 
             DetalhesEnderecoViewHelper enderecoVh = new DetalhesEnderecoViewHelper
             {
@@ -50,22 +62,30 @@ namespace LES.Models.ViewHelpers.CarrinhoCompra
 
             if(cupom != null)
             {
-                CupomViewHelper cupomVh = new CupomViewHelper();
-                cupomVh.Entidades = new Dictionary<string, object>
+                CupomViewHelper cupomVh = new CupomViewHelper
                 {
-                    [typeof(Cupom).Name] = cupom
+                    Entidades = new Dictionary<string, object>
+                    {
+                        [typeof(Cupom).Name] = cupom
+                    }
                 };
                 vm.Cupom = (CupomModel)cupomVh.ViewModel;
+                vm.Pedido.PrecoTotal -= vm.Cupom.Valor;
             }
 
-            CarrinhoViewHelper carrinhoVh = new CarrinhoViewHelper 
+            if(codigoPromo != null)
             {
-                Entidades = new Dictionary<string, object>
+                CodigoPromocionalViewHelper codigoVh = new CodigoPromocionalViewHelper
                 {
-                    [typeof(Carrinho).Name] = carrinho
-                }
-            };
-            vm.Pedido = (CarrinhoModel)carrinhoVh.ViewModel;
+                    Entidades = new Dictionary<string, object>
+                    {
+                        [typeof(CodigoPromocional).Name] = codigoPromo
+                    }
+                };
+                vm.CodigoPromo = (CodigoPromocionalModel)codigoVh.ViewModel;
+                vm.Pedido.PrecoTotal -= vm.CodigoPromo.Valor;
+            }
+
             _viewModel = vm;
         }
     }
