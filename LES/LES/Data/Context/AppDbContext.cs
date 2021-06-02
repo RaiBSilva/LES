@@ -335,8 +335,7 @@ namespace LES.Models
 
             modelBuilder.Entity<Cliente>()
                 .Property(c => c.CarrinhoId)
-                .HasColumnName(tri + "_crr_id")
-                .IsRequired();
+                .HasColumnName(tri + "_crr_id");
 
             modelBuilder.Entity<Cliente>()
                 .Property(c => c.Codigo)

@@ -1,0 +1,54 @@
+﻿@model CodigoPromocionalModel
+@*
+    For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
+*@
+
+@{ string erro = (string)ViewData["Error"] ?? "Algo deu errado. Tente novamente com outro código.";}
+
+    <div class="modal-content">
+
+        <!-- Modal content-->
+        <div class="modal-header">
+            <h4 class="modal-title">Adicionar Novo Cartão</h4>
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+        </div>
+        <div class="modal-body">
+            @if (Model != null)
+            {
+                <div class="row">
+                    <table class="table col-12">
+                        <thead class="thead-dark">
+                            <tr>
+                                <th> Código do Cupom: </th>
+                                <th> Valor do Cupom: </th>
+                                <th> Ação: </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                                <tr>
+                                    <td>
+                                        @Model.Codigo
+                                    </td>
+                                    <td>
+                                        R$ @Model.Valor.ToString("0.00").Replace(".", ",")
+                                    </td>
+                                    <td>
+                                        <button class="btn btn-outline-success" onclick="window.location.href='@Url.Action("UsarCodigo","CarrinhoCompra")?cod=@(Model.Codigo)'">Usar este cupom</button>
+                                    </td>
+                                </tr>
+                        </tbody>
+                    </table>
+                </div>
+            }
+            else
+            {
+                <div class="row justify-content-center">
+                    <h3 class="col-12 text-center">@erro</h3>
+                </div>
+            }
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+        </div>
+
+    </div>

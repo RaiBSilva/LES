@@ -129,12 +129,6 @@ namespace LES.Views.CarrinhoCompra
                 return RedirectToAction(nameof(FinalizarCompra));
             }
 
-            //Limpar Carrinho (feito decrescente pois estou removendo da lista)
-            int lastIndex = c.CarrinhoLivro.Count() - 1;
-
-            for (int i = lastIndex; i >= 0; i--)
-                _daoCarrinhoLivro.Remove(c.CarrinhoLivro[i]);
-
             IEnumerable<Livro> livros = p.LivrosPedidos.Select(l => l.Livro).Distinct();
 
             p.ValorTotal = p.CalcularValorTotal();
@@ -142,8 +136,17 @@ namespace LES.Views.CarrinhoCompra
             //Cupom
             if (p.Cupom != null)
             { 
-                p.ValorTotal -= p.Cupom.Valor;
                 p.Cupom.Inativo = true;
+            }
+
+            //Codigo
+            if(p.CodigoPromocional != null)
+            {
+                p.CodigoPromocional.UsosRestantes -= 1;
+                if(p.CodigoPromocional.UsosRestantes == 0)
+                {
+                    p.CodigoPromocional.Inativo = true;
+                }
             }
 
             //Atualização estoque
@@ -156,6 +159,9 @@ namespace LES.Views.CarrinhoCompra
 
             p.Status = StatusPedidos.Processamento;
             string msg = _facade.Editar(p);
+
+            //Limpar Carrinho (feito decrescente pois estou removendo da lista)
+            _facade.Deletar(c);
 
             if (msg != "")
                 TempData["Alert"] = msg;
@@ -493,11 +499,40 @@ namespace LES.Views.CarrinhoCompra
             return RedirectToAction(nameof(FinalizarCompra));
         }
 
+        public IActionResult _UsarCodigoPromocional(string cod)
+        {
+            CodigoPromocional codigo = _facade.Query<CodigoPromocional>(c => c.Codigo == cod && !c.Inativo,
+                c => c).FirstOrDefault();
+
+            CodigoPromocionalModel vm = null;
+
+            if (codigo == null)
+                ViewData["Error"] = "O código não existe.";
+            else
+            {
+                if(codigo.UsosRestantes <= 0)
+                    ViewData["Error"] = "Esse código expirou. Tente outro código. \n";
+                else
+                {
+                    _vh = new CodigoPromocionalViewHelper
+                    {
+                        Entidades = new Dictionary<string, object>
+                        {
+                            [typeof(CodigoPromocional).Name] = codigo
+                        }
+                    };
+                    vm = (CodigoPromocionalModel)_vh.ViewModel;
+                }
+            }
+
+            return PartialView("../CarrinhoCompra/PartialViews/_UsarCodigoPartial", vm);
+        }
+
         public IActionResult UsarCodigo(string cod)
         {
             Cliente clienteDb = GetClienteDb();
             Pedido pedido = GetPedidoNaoFinalizado(clienteDb);
-            CodigoPromocional codigo = _facade.Query<CodigoPromocional>(c => c.Codigo == cod,
+            CodigoPromocional codigo = _facade.Query<CodigoPromocional>(c => c.Codigo == cod && !c.Inativo,
                 c => c).FirstOrDefault();
             string msg = "";
 
@@ -511,7 +546,6 @@ namespace LES.Views.CarrinhoCompra
                     TempData["Alert"] = "Esse código expirou. Tente outro código. \n";
                 else
                 {
-                    codigo.UsosRestantes -= 1;
                     pedido.CodigoPromocional = codigo;
                     msg = _facade.Editar(pedido);
                 }
@@ -605,8 +639,18 @@ namespace LES.Views.CarrinhoCompra
 
         private Carrinho GetCarrinho()
         {
-            return _facade.GetAllInclude(new Carrinho { Cliente = GetClienteComEmail() });
+            Cliente clienteCookie = GetClienteComEmail();
+            Carrinho c = _facade.GetAllInclude(new Carrinho { Cliente = clienteCookie });
 
+            if (c != null)
+                return c;
+
+            c = new Carrinho();
+            Cliente clienteDb = GetClienteDb();
+            clienteDb.Carrinho = c;
+            _facade.Editar(clienteDb);
+
+            return c;
         }
 
         private Pedido GetPedidoNaoFinalizado(Cliente c)
