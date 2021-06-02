@@ -1,4 +1,6 @@
-﻿using Quartz;
+﻿using LES.Controllers.Facade;
+using LES.Models.Entity;
+using Quartz;
 using Quartz.Impl;
 using System;
 using System.Collections.Generic;
@@ -30,16 +32,18 @@ namespace LES.Models.Schedulers
             await scheduler.DeleteJob(chave);
         }
 
-        public async void AgendarJob(DateTime dataExecucao, int idCarrinho, string emailCliente)
+        public async void AgendarJob(DateTime dataExecucao, Carrinho carrinhoCli, string emailCliente)
         {
             IJobDetail job = JobBuilder.Create<ApagaCarrinhoJob>()
-                .WithIdentity(idCarrinho.ToString(), emailCliente)
+                .WithIdentity(carrinhoCli.Id.ToString(), emailCliente)
                 .Build();
 
+            job.JobDataMap.Add("carrinho", carrinhoCli);
+
             ITrigger trigger = TriggerBuilder.Create()
-            .StartAt(dataExecucao)
-            .WithSchedule(CronScheduleBuilder.CronSchedule(String.Format("{0} {1} {2} * * ?", dataExecucao.Second, dataExecucao.Minute, dataExecucao.Hour)))
-            .Build();
+                .StartAt(dataExecucao)
+                .WithSchedule(CronScheduleBuilder.CronSchedule(String.Format("{0} {1} {2} * * ?", dataExecucao.Second, dataExecucao.Minute, dataExecucao.Hour)))
+                .Build();
 
             await scheduler.ScheduleJob(job, trigger);
 
@@ -51,9 +55,18 @@ namespace LES.Models.Schedulers
 
     public class ApagaCarrinhoJob : IJob
     {
+        IFacadeCrud _facade { get; set; }
+
+        ApagaCarrinhoJob(IFacadeCrud facade)
+        {
+            _facade = facade;
+        }
+
         public Task Execute(IJobExecutionContext context)
         {
-            Console.WriteLine("Executou o job.");
+            Carrinho carrinho = (Carrinho)context.MergedJobDataMap["carrinho"];
+
+            _facade.Deletar<Carrinho>(carrinho);
 
             return Task.FromResult(0);
         }
