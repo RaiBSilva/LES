@@ -32,13 +32,15 @@ namespace LES.Models.Schedulers
             await scheduler.DeleteJob(chave);
         }
 
-        public async void AgendarJob(DateTime dataExecucao, Carrinho carrinhoCli, string emailCliente)
+        public async void AgendarJob(DateTime dataExecucao, Carrinho carrinhoCli, string emailCliente, IFacadeCrud facade)
         {
+
             IJobDetail job = JobBuilder.Create<ApagaCarrinhoJob>()
                 .WithIdentity(carrinhoCli.Id.ToString(), emailCliente)
                 .Build();
 
             job.JobDataMap.Add("carrinho", carrinhoCli);
+            job.JobDataMap.Add("facade", facade);
 
             ITrigger trigger = TriggerBuilder.Create()
                 .StartAt(dataExecucao)
@@ -55,18 +57,13 @@ namespace LES.Models.Schedulers
 
     public class ApagaCarrinhoJob : IJob
     {
-        IFacadeCrud _facade { get; set; }
-
-        ApagaCarrinhoJob(IFacadeCrud facade)
-        {
-            _facade = facade;
-        }
-
         public Task Execute(IJobExecutionContext context)
         {
             Carrinho carrinho = (Carrinho)context.MergedJobDataMap["carrinho"];
 
-            _facade.Deletar<Carrinho>(carrinho);
+            IFacadeCrud facade = (IFacadeCrud)context.MergedJobDataMap["facade"];
+
+            facade.Deletar<Carrinho>(carrinho);
 
             return Task.FromResult(0);
         }
