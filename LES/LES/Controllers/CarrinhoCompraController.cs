@@ -650,6 +650,7 @@ namespace LES.Views.CarrinhoCompra
             clienteDb.Carrinho = c;
             _facade.Editar(clienteDb);
 
+            c = _facade.GetAllInclude(clienteDb).Carrinho;
             return c;
         }
 
