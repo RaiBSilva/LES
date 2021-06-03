@@ -63,6 +63,10 @@ function carregarUsarCupom() {
     carregarPartialView(urls.UsarCupom);
 }
 
+function carregarUsarCodigo(codigo) {
+    carregarPartialView(urls.UsarCodigo + "?cod=" + codigo);
+}
+
 $('#myModal').on('hidden.bs.modal', function () {
     $(this).empty();
 });
@@ -77,4 +81,14 @@ $(".addCartao").on("click", function (e) {
 
 $(".btnCupom").on("click", function (e) {
     carregarUsarCupom();
+});
+
+$(".btnCodigo").on("click", function (e) {
+    var codigo = document.getElementById("inputCodigo").value;
+    if (codigo == "")
+        $(".btnCodigo").css('border-color', 'red');
+    else {
+        $(".btnCodigo").removeAttr("style");
+        carregarUsarCodigo(codigo);
+    }
 });
