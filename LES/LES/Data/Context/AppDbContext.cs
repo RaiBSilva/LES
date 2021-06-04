@@ -759,7 +759,7 @@ namespace LES.Models
 
             modelBuilder.Entity<Pedido>()
                 .Property(c => c.CodigoId)
-                .HasColumnName($"{tri}_ped_id");
+                .HasColumnName($"{tri}_cod_id");
 
             modelBuilder.Entity<Pedido>()
                 .Property(p => p.CupomId)

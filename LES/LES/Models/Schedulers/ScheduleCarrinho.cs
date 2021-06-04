@@ -13,8 +13,11 @@ namespace LES.Models.Schedulers
     {
         private static StdSchedulerFactory schedulerFactory = new StdSchedulerFactory();
         private static IScheduler scheduler { get; set; }
+        private AppDbContext _contexto { get; set; }
 
-        public ScheduleCarrinho(){
+
+        public ScheduleCarrinho(AppDbContext contexto){
+            _contexto = contexto;
             CriarScheduler();
         }
 
