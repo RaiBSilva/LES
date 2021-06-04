@@ -27,7 +27,7 @@ namespace LES.Models.Schedulers
         {
             IList<string> parametros = keyStr.Split(".");
 
-            JobKey chave = new JobKey(parametros[0], parametros[1]);
+            JobKey chave = new JobKey(parametros.FirstOrDefault<string>(), parametros.LastOrDefault<string>());
 
             await scheduler.DeleteJob(chave);
         }
@@ -35,8 +35,10 @@ namespace LES.Models.Schedulers
         public async void AgendarJob(DateTime dataExecucao, Carrinho carrinhoCli, string emailCliente, IFacadeCrud facade)
         {
 
+            string comecoEmail = emailCliente.Split(".").FirstOrDefault<string>();
+
             IJobDetail job = JobBuilder.Create<ApagaCarrinhoJob>()
-                .WithIdentity(carrinhoCli.Id.ToString(), emailCliente)
+                .WithIdentity(carrinhoCli.Id.ToString(), comecoEmail)
                 .Build();
 
             job.JobDataMap.Add("carrinho", carrinhoCli);
@@ -46,6 +48,8 @@ namespace LES.Models.Schedulers
                 .StartAt(dataExecucao)
                 .WithSchedule(CronScheduleBuilder.CronSchedule(String.Format("{0} {1} {2} * * ?", dataExecucao.Second, dataExecucao.Minute, dataExecucao.Hour)))
                 .Build();
+
+            CancelaJob(String.Format("{0}.{1}", carrinhoCli.Id.ToString(), comecoEmail));
 
             await scheduler.ScheduleJob(job, trigger);
 

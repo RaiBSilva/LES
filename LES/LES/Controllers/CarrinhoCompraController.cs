@@ -362,12 +362,21 @@ namespace LES.Views.CarrinhoCompra
 
             livro.EstoqueBloqueado += quantia;
 
+            Cliente cliente = GetClienteDb();
+
+            //c.JobKeyStr = String.Format("{0}.{1}", c.Id, cliente.Usuario.Email);
+
             string msg = _facade.Editar(c);
             msg += _facade.Editar(livro);
 
             //INSERIR MÉTODO DE DESATIVAÇÃO AUTOMÁTICA AQUI
 
-            if(msg == "")
+            DateTime dataExclusao = DateTime.Now;
+            dataExclusao = dataExclusao.AddSeconds(30);
+
+            _scheduleCarrinho.AgendarJob(dataExclusao, c, cliente.Usuario.Email, _facade);
+
+            if (msg == "")
                 return Json(new { valor = true });
             return Json(new { valor = false, ex = msg });
         }
