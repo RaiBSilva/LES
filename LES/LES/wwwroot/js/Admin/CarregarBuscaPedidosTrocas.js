@@ -22,6 +22,31 @@
     divTabela.load(Pesquisar,
         {
             filtro: filtros
+        }, function () {
+            $('.btnBuscarPedido').unbind('click');
+            $('.btnPagePed').unbind('click');
+            $('.btnBuscarTroca').unbind('click');
+            $('.btnPageTro').unbind('click');
+
+            $(".btnBuscarPedido").on("click", function (e) {
+                e.preventDefault();
+                atualizarLista(1, "Pedidos");
+            });
+
+            $(".btnPagePed").on("click", function (e) {
+                var pag = $(this).val();
+                atualizarLista(pag, "Pedidos");
+            });
+
+            $(".btnBuscarTroca").on("click", function (e) {
+                e.preventDefault();
+                atualizarLista(1, "Trocas");
+            });
+
+            $(".btnPageTro").on("click", function (e) {
+                var pag = $(this).val();
+                atualizarLista(pag, "Trocas");
+            });
         });
 };
 

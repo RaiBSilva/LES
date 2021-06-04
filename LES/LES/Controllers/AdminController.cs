@@ -1,4 +1,5 @@
 ﻿using LES.Controllers.Facade;
+using LES.Data.DAO;
 using LES.Models.Entity;
 using LES.Models.ViewHelpers.Admin;
 using LES.Models.ViewModel.Admin;
@@ -36,8 +37,22 @@ namespace LES.Controllers
 
         public IActionResult Clientes()
         {
-            return View();
-            
+            IEnumerable<Cliente> clientes = _facade.ListAllInclude<Cliente>()
+            .Where(c => !c.Inativo);
+
+            _vh = new PaginaClientesViewHelper
+            {
+                Entidades = new Dictionary<string, object>
+                {
+                    [typeof(IList<Cliente>).FullName] = clientes.Take(10).ToList(),
+                    [nameof(ListaClientesModel.PagAtual)] = 1,
+                    [nameof(ListaClientesModel.PagMax)] = (clientes.Count() / 10) + 1
+                }
+            };
+
+            if (TempData["Alert"] != null) ViewData["Alert"] = TempData["Alert"];
+
+            return View(_vh.ViewModel);
         }
 
         public IActionResult Pedidos()
@@ -74,6 +89,7 @@ namespace LES.Controllers
         #region Pedidos
 
         [HttpPost]
+
         public IActionResult _PedidosBusca(string filtro)
         {
             JObject o = JObject.Parse(filtro);
@@ -122,7 +138,6 @@ namespace LES.Controllers
 
             return PartialView("../Admin/PartialViews/_TabelaPedidosPartial", vm);
         }
-
         public IActionResult _VisualizarPedidoPartial(int id)
         {
             _vh = new AdminPedidoViewHelper
@@ -232,23 +247,97 @@ namespace LES.Controllers
             return RedirectToAction(nameof(Pedidos));
         }
 
-    #endregion
+        #endregion
 
         #region Clientes
 
-        public IActionResult _InativarReativarClientePartial(int id) {
-            return PartialView("../Admin/PartialViews/_InativarReativarClientePartial");
+
+        [HttpPost]
+
+        public IActionResult _ClientesBusca(string filtro)
+        {
+            JObject o = JObject.Parse(filtro);
+
+            FiltrosClientesModel filtros = o.ToObject<FiltrosClientesModel>();
+
+            IEnumerable<Cliente> clientes = _facade.ListAllInclude<Cliente>();
+
+            if (!filtros.IncluiInativo)
+                clientes = clientes.Where(c => !c.Inativo);
+
+            if (filtros.Id != null && filtros.Id != 0)
+                clientes = clientes.Where(c => c.Id == filtros.Id);
+
+            if (!String.IsNullOrEmpty(filtros.Nome))
+                clientes = clientes.Where(c => c.Nome.Contains(filtros.Nome));
+
+            if (!String.IsNullOrEmpty(filtros.Email))
+                clientes = clientes.Where(c => c.Usuario.Email.Contains(filtros.Email));
+
+            if (filtros.PagAtual > 0)
+                clientes = clientes.Skip((filtros.PagAtual - 1) * 10);
+
+            _vh = new PaginaClientesViewHelper
+            {
+                Entidades = new Dictionary<string, object>
+                {
+                    [typeof(IList<Cliente>).FullName] = clientes.Take(10).ToList(),
+                    [nameof(ListaClientesModel.PagAtual)] = 1,
+                    [nameof(ListaClientesModel.PagMax)] = (clientes.Count() / 10) + 1
+                }
+            };
+
+            PaginaClientesModel vm = (PaginaClientesModel)_vh.ViewModel;
+            vm.Filtros = filtros;
+
+            return PartialView("../Admin/PartialViews/_TabelaClientesPartial", vm);
         }
 
-        public IActionResult InativarReativarCliente(int id)
-        {
-            return RedirectToAction(nameof(Pedidos));
+        public IActionResult _InativarReativarClientePartial(string id) {
+            Cliente clienteDb = _facade.Query<Cliente>(c => c.Codigo == id,
+                c => c,
+                c => c.Usuario).FirstOrDefault();
+
+            _vh = new AdminClienteViewHelper
+            {
+                Entidades = new Dictionary<string, object>
+                {
+                    [typeof(Cliente).Name] = clienteDb
+                }
+            };
+
+            return PartialView("../Admin/PartialViews/_InativarReativarClientePartial", _vh.ViewModel);
         }
 
-        public IActionResult _VisualizarClientePartial(int id)
+        public IActionResult InativarReativarCliente(string id)
         {
+            Cliente clienteDb = _facade.Query<Cliente>(c => c.Codigo == id,
+                c => c,
+                c => c.Usuario).FirstOrDefault();
+            clienteDb.Inativo = !clienteDb.Inativo;
+            string msg = _facade.Editar(clienteDb);
 
-            return PartialView("../Admin/PartialViews/_VisualizarClientePartial");
+            if (!String.IsNullOrEmpty(msg))
+                TempData["Alert"] = msg;
+            return RedirectToAction(nameof(Clientes));
+        }
+
+        public IActionResult _VisualizarClientePartial(string id)
+        {
+            Cliente clienteDb = _facade.Query<Cliente>(c => c.Codigo == id,
+                c => c,
+                c => c.Usuario).FirstOrDefault();
+            clienteDb = _facade.GetAllInclude(clienteDb);
+
+            _vh = new AdminClienteViewHelper
+            {
+                Entidades = new Dictionary<string, object>
+                {
+                    [typeof(Cliente).Name] = clienteDb
+                }
+            };
+
+            return PartialView("../Admin/PartialViews/_VisualizarClientePartial", _vh.ViewModel);
         }
 
         #endregion

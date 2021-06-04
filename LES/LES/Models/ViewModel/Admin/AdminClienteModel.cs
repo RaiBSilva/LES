@@ -8,12 +8,7 @@ namespace LES.Models.ViewModel.Admin
 {
     public class AdminClienteModel : PaginaDetalhesModel
     {
-        public bool Inativo { get; set; }
-
-        public AdminClienteModel() :base()
-        {
-            Inativo = false;
-        }
+        public bool Inativo { get; set; } = false;
 
     }
 }

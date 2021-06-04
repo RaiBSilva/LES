@@ -6,13 +6,11 @@ using System.Threading.Tasks;
 
 namespace LES.Models.ViewModel.Admin
 {
-    public class PaginaClientesModel
+    public class PaginaClientesModel : IViewModel
     {
-        public IList<AdminClienteModel> Clientes { get; set; }
+        public FiltrosClientesModel Filtros { get; set; } = new FiltrosClientesModel();
 
-        public PaginaClientesModel()
-        {
-            Clientes = new List<AdminClienteModel>();
-        }
+        public ListaClientesModel Clientes { get; set; } = new ListaClientesModel();
+
     }
 }

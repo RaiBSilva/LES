@@ -334,7 +334,6 @@ namespace LES.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<int?>("CarrinhoId")
-                        .IsRequired()
                         .HasColumnType("int")
                         .HasColumnName("cli_crr_id");
 
@@ -381,12 +380,52 @@ namespace LES.Migrations
                         .HasName("PK_CLI");
 
                     b.HasIndex("CarrinhoId")
-                        .IsUnique();
+                        .IsUnique()
+                        .HasFilter("[cli_crr_id] IS NOT NULL");
 
                     b.HasIndex("UsuarioId")
                         .IsUnique();
 
                     b.ToTable("CLIENTES");
+                });
+
+            modelBuilder.Entity("LES.Models.Entity.CodigoPromocional", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasColumnName("cod_id")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Codigo")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("cod_codigo");
+
+                    b.Property<DateTime>("DtCadastro")
+                        .HasColumnType("datetime2")
+                        .HasColumnName("cod_dt_cadastro");
+
+                    b.Property<DateTime>("DtValidade")
+                        .HasColumnType("datetime2")
+                        .HasColumnName("cod_dt_validade");
+
+                    b.Property<bool>("Inativo")
+                        .HasColumnType("bit")
+                        .HasColumnName("cod_inativo");
+
+                    b.Property<int>("UsosRestantes")
+                        .HasColumnType("int")
+                        .HasColumnName("cod_usos_restantes");
+
+                    b.Property<double>("Valor")
+                        .HasColumnType("float")
+                        .HasColumnName("cod_valor");
+
+                    b.HasKey("Id")
+                        .HasName("PK_COD");
+
+                    b.ToTable("CODIGOS");
                 });
 
             modelBuilder.Entity("LES.Models.Entity.Cupom", b =>
@@ -833,6 +872,10 @@ namespace LES.Migrations
                         .HasColumnType("int")
                         .HasColumnName("ped_cli_id");
 
+                    b.Property<int?>("CodigoId")
+                        .HasColumnType("int")
+                        .HasColumnName("ped_ped_id");
+
                     b.Property<int?>("CupomId")
                         .HasColumnType("int")
                         .HasColumnName("ped_cup_id");
@@ -861,6 +904,10 @@ namespace LES.Migrations
                         .HasName("PK_PED");
 
                     b.HasIndex("ClienteId");
+
+                    b.HasIndex("CodigoId")
+                        .IsUnique()
+                        .HasFilter("[ped_ped_id] IS NOT NULL");
 
                     b.HasIndex("CupomId")
                         .IsUnique()
@@ -1149,9 +1196,7 @@ namespace LES.Migrations
                     b.HasOne("LES.Models.Entity.Carrinho", "Carrinho")
                         .WithOne("Cliente")
                         .HasForeignKey("LES.Models.Entity.Cliente", "CarrinhoId")
-                        .HasConstraintName("FK_CLI_CRR")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasConstraintName("FK_CLI_CRR");
 
                     b.HasOne("LES.Models.Entity.Usuario", "Usuario")
                         .WithOne("Cliente")
@@ -1312,6 +1357,11 @@ namespace LES.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("LES.Models.Entity.CodigoPromocional", "CodigoPromocional")
+                        .WithOne("Pedido")
+                        .HasForeignKey("LES.Models.Entity.Pedido", "CodigoId")
+                        .HasConstraintName("FK_PED_COD");
+
                     b.HasOne("LES.Models.Entity.Cupom", "Cupom")
                         .WithOne("Pedido")
                         .HasForeignKey("LES.Models.Entity.Pedido", "CupomId")
@@ -1325,6 +1375,8 @@ namespace LES.Migrations
                         .IsRequired();
 
                     b.Navigation("Cliente");
+
+                    b.Navigation("CodigoPromocional");
 
                     b.Navigation("Cupom");
 
@@ -1423,6 +1475,11 @@ namespace LES.Migrations
                     b.Navigation("Telefones");
 
                     b.Navigation("Trocas");
+                });
+
+            modelBuilder.Entity("LES.Models.Entity.CodigoPromocional", b =>
+                {
+                    b.Navigation("Pedido");
                 });
 
             modelBuilder.Entity("LES.Models.Entity.Cupom", b =>

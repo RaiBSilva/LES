@@ -9,12 +9,12 @@
 }
 
 function carregarInativarCliente(id) {
-    var endereco = urls.InativarReativarCliente + "/" + id;
+    var endereco = urls.InativarReativarCliente + "?id=" + id;
     carregarPartialView(endereco);
 }
 
 function carregarVisualizarCliente(id) {
-    var endereco = urls.VisualizarCliente + "/" + id;
+    var endereco = urls.VisualizarCliente + "?id=" + id;
     carregarPartialView(endereco);
 }
 

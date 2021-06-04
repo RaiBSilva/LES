@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace LES.Migrations
 {
-    public partial class dbEntrega10_05 : Migration
+    public partial class db_entregaFinal : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -29,6 +29,7 @@ namespace LES.Migrations
                     crr_id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     crr_dt_timeout = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    crr_job_key = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     crr_dt_cadastro = table.Column<DateTime>(type: "datetime2", nullable: false),
                     crr_inativo = table.Column<bool>(type: "bit", nullable: false)
                 },
@@ -80,6 +81,24 @@ namespace LES.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_CTL", x => x.ctl_id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "CODIGOS",
+                columns: table => new
+                {
+                    cod_id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    cod_codigo = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    cod_dt_validade = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    cod_usos_restantes = table.Column<int>(type: "int", nullable: false),
+                    cod_valor = table.Column<double>(type: "float", nullable: false),
+                    cod_dt_cadastro = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    cod_inativo = table.Column<bool>(type: "bit", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_COD", x => x.cod_id);
                 });
 
             migrationBuilder.CreateTable(
@@ -247,7 +266,7 @@ namespace LES.Migrations
                 {
                     cli_id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    cli_crr_id = table.Column<int>(type: "int", nullable: false),
+                    cli_crr_id = table.Column<int>(type: "int", nullable: true),
                     cli_codigo = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     cli_cpf = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     cli_dt_nascimento = table.Column<DateTime>(type: "datetime2", nullable: false),
@@ -266,7 +285,7 @@ namespace LES.Migrations
                         column: x => x.cli_crr_id,
                         principalTable: "CARRINHOS",
                         principalColumn: "crr_id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_CLI_USU",
                         column: x => x.cli_usu_id,
@@ -541,6 +560,7 @@ namespace LES.Migrations
                     ped_id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     ped_cli_id = table.Column<int>(type: "int", nullable: false),
+                    ped_ped_id = table.Column<int>(type: "int", nullable: true),
                     ped_cup_id = table.Column<int>(type: "int", nullable: true),
                     ped_end_id = table.Column<int>(type: "int", nullable: false),
                     ped_status = table.Column<int>(type: "int", nullable: false),
@@ -557,6 +577,12 @@ namespace LES.Migrations
                         principalTable: "CLIENTES",
                         principalColumn: "cli_id",
                         onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_PED_COD",
+                        column: x => x.ped_ped_id,
+                        principalTable: "CODIGOS",
+                        principalColumn: "cod_id",
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_PED_CUP",
                         column: x => x.ped_cup_id,
@@ -689,7 +715,8 @@ namespace LES.Migrations
                 name: "IX_CLIENTES_cli_crr_id",
                 table: "CLIENTES",
                 column: "cli_crr_id",
-                unique: true);
+                unique: true,
+                filter: "[cli_crr_id] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
                 name: "IX_CLIENTES_cli_usu_id",
@@ -775,6 +802,13 @@ namespace LES.Migrations
                 column: "ped_end_id");
 
             migrationBuilder.CreateIndex(
+                name: "IX_PEDIDOS_ped_ped_id",
+                table: "PEDIDOS",
+                column: "ped_ped_id",
+                unique: true,
+                filter: "[ped_ped_id] IS NOT NULL");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_TELEFONES_tel_cli_id",
                 table: "TELEFONES",
                 column: "tel_cli_id");
@@ -851,6 +885,9 @@ namespace LES.Migrations
 
             migrationBuilder.DropTable(
                 name: "GRUPO_PRECOS");
+
+            migrationBuilder.DropTable(
+                name: "CODIGOS");
 
             migrationBuilder.DropTable(
                 name: "CUPONS");
