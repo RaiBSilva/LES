@@ -68,6 +68,7 @@ namespace LES.Controllers.Facade
 
             _daosListIncludeAll = new Dictionary<string, IListIncludeAll>
             {
+                [typeof(Cliente).Name] = (IListIncludeAll)_daosGetIncludeAll[typeof(Cliente).Name],
                 [typeof(Livro).Name] = (IListIncludeAll)_daosGetIncludeAll[typeof(Livro).Name],
                 [typeof(Pedido).Name] = (IListIncludeAll)_daosGetIncludeAll[typeof(Pedido).Name],
                 [typeof(Troca).Name] = (IListIncludeAll)_daosGetIncludeAll[typeof(Troca).Name]

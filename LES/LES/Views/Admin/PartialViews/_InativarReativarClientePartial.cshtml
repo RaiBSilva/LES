@@ -14,7 +14,7 @@
         <div class="modal-body">
             <partial name="../PartialViews/_DlInfoPessoais.cshtml" for="@Model.InfoUsuario" />
             <div class="modal-footer">
-                <button type="button" class="btn @corCliente" onclick="window.location.href='@Url.Action("InativarReativarCliente","Admin", Model.InfoUsuario.Codigo)">@statusCliente</button>
+                <button type="button" class="btn @corCliente" onclick="window.location.href='@Url.Action("InativarReativarCliente","Admin")?id=@Model.InfoUsuario.Codigo'">@statusCliente</button>
                 <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
             </div>
         </div>

@@ -714,3 +714,5 @@ D:\DESENVOLVIMENTO\LES\LES\LES\obj\Debug\netcoreapp3.1\LES.pdb
 D:\DESENVOLVIMENTO\LES\LES\LES\obj\Debug\netcoreapp3.1\LES.genruntimeconfig.cache
 D:\DESENVOLVIMENTO\LES\LES\LES\bin\Debug\netcoreapp3.1\Quartz.dll
 C:\Programming\LES\LES\LES\bin\Debug\netcoreapp3.1\Quartz.dll
+C:\Programming\LES\LES\LES\obj\Debug\netcoreapp3.1\Razor\Views\Admin\PartialViews\_TabelaClientesPartial.cshtml.g.cs
+C:\Programming\LES\LES\LES\obj\Debug\netcoreapp3.1\Razor\Views\CarrinhoCompra\PartialViews\_UsarCodigoPartial.cshtml.g.cs

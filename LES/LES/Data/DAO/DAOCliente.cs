@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace LES.Data.DAO
 {
-    public class DAOCliente<T> : DAO<T>,  IGetIncludeAll where T : Cliente
+    public class DAOCliente<T> : DAO<T>,  IGetIncludeAll, IListIncludeAll  where T : Cliente
     {
         public DAOCliente(AppDbContext contexto) : base(contexto)
         {
@@ -48,5 +48,33 @@ namespace LES.Data.DAO
             return response;
         }
 
+        public IList<EntidadeDominio> ListIncludeAll()
+        {
+            return _contexto.Clientes.Select(c => c)
+                .Include(c => c.Carrinho)
+                    .ThenInclude(c => c.CarrinhoLivro)
+                    .ThenInclude(c => c.Livro)
+                .Include(c => c.Cartoes).ThenInclude(c => c.Bandeira)
+                .Include(c => c.Enderecos)
+                    .ThenInclude(e => e.Cidade)
+                    .ThenInclude(c => c.Estado)
+                    .ThenInclude(e => e.Pais)
+                .Include(c => c.Enderecos)
+                    .ThenInclude(e => e.TipoEndereco)
+                .Include(c => c.Telefones).ThenInclude(t => t.TipoTelefone)
+                .Include(c => c.Usuario)
+                .Include(c => c.Cupons)
+                .Include(c => c.Pedidos)
+                    .ThenInclude(p => p.CartaoPedidos)
+                .Include(c => c.Pedidos)
+                    .ThenInclude(p => p.LivrosPedidos)
+                    .ThenInclude(l => l.Livro)
+                    .ThenInclude(l => l.Editora)
+                .Include(c => c.Trocas)
+                    .ThenInclude(t => t.LivroPedido)
+                    .ThenInclude(l => l.Livro)
+                .Cast<EntidadeDominio>()
+                .ToList();
+        }
     }
 }
