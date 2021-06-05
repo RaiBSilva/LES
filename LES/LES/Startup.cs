@@ -58,8 +58,7 @@ namespace LES
             services.AddScoped<ApagaCarrinhoJob>();
             services.AddSingleton(new JobSchedule(
                 jobType: typeof(ApagaCarrinhoJob),
-                cronExpression: "0/5 * * * * ?",
-                dataExecucao: DateTime.Now));
+                cronExpression: "0 1-2 0 ? * * *"));
 
         }
 

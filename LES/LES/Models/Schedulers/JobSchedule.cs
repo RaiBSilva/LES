@@ -8,15 +8,13 @@ namespace LES.Models.Schedulers
 {
     public class JobSchedule
     {
-        public JobSchedule(Type jobType, string cronExpression, DateTime dataExecucao)
+        public JobSchedule(Type jobType, string cronExpression)
         {
             JobType = jobType;
             CronExpression = cronExpression;
-            DataExecucao = dataExecucao;
         }
 
         public Type JobType { get; }
-        public DateTime DataExecucao { get; }
         public string CronExpression { get; }
     }
 }

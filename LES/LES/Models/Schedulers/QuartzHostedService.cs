@@ -65,8 +65,6 @@ namespace LES.Models.Schedulers
                 .WithCronSchedule(schedule.CronExpression)
                 .WithDescription(schedule.CronExpression)
                 .Build();
-
-            //.StartAt(schedule.DataExecucao)
         }
     }
 }

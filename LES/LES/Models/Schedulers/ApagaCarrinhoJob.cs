@@ -48,6 +48,7 @@ namespace LES.Models.Schedulers
                     try
                     {
                         dbContext.SaveChanges();
+
                     }catch(Exception e){
                         _logger.LogInformation("Mensagem Exception: " + e.Message);
                     }
