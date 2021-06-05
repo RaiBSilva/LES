@@ -376,7 +376,8 @@ namespace LES.Models
                 .HasOne(c => c.Carrinho)
                 .WithOne(u => u.Cliente)
                 .HasForeignKey<Cliente>(c => c.CarrinhoId)
-                .HasConstraintName("FK_"+ tri.ToUpper() +"_CRR");
+                .HasConstraintName("FK_"+ tri.ToUpper() +"_CRR")
+                .OnDelete(DeleteBehavior.SetNull);
 
             modelBuilder.Entity<Cliente>()
                 .HasOne(c => c.Usuario)
