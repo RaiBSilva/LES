@@ -22,6 +22,7 @@ namespace LES.Models.Entity
         public int GrupoPrecoId { get; set; }
         public string Isbn { get; set; }
         public int Largura { get; set; }
+        public double? MaiorCusto { get; set; }
         public int Paginas { get; set; }
         public double Peso { get; set; }
         public string Sinopse { get; set; }

@@ -125,10 +125,7 @@ namespace LES.Views.Conta
             cliente.Enderecos[0].TipoEndereco = _facade.GetEntidade(cliente.Enderecos[0].TipoEndereco);
             cliente.Telefones[0].TipoTelefone = _facade.GetEntidade(cliente.Telefones[0].TipoTelefone);
             cliente.Codigo = GeraCodigoCliente();
-            cliente.Carrinho = new Carrinho
-            {
-                TimeoutDate = DateTime.Now.AddDays(7)
-            };
+            cliente.Carrinho = new Carrinho();
 
             string msg = _facade.Cadastrar(cliente);
 

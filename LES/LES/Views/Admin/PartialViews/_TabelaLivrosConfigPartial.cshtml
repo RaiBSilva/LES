@@ -1,4 +1,4 @@
-﻿@model IList<LES.Models.ViewModel.Admin.AdminLivroModel>
+﻿@model LES.Models.ViewModel.Admin.ListaAdminLivroModel
 
 <div class="row mb-2">
     <div class="col-sm-12">
@@ -8,7 +8,7 @@
     </div>
 </div>
 <div class="row">
-    @if (Model.Count > 0)
+    @if (Model.Livros.Count > 0)
     {
         <table class="table table-striped">
             <thead class="thead-dark">
@@ -28,7 +28,7 @@
                     <th scope="col">
                     </th>
                     <th scope="col">
-                        <input id="filtroLivrosTitulo" class="form-control" placeholder="Memórias Póstumas..." />
+                        <input id="filtroLivrosTitulo" class="form-control" placeholder="Memórias Póstumas.../Machado de Assis..." />
                     </th>
                     <th scope="col">
                         De <input id="filtroValorMin" class="form-control" type="number" step="0.01" min="0" placeholder="R$ 13,40..." />
@@ -49,14 +49,14 @@
             </thead>
             <tbody>
 
-                @foreach (var livro in Model)
+                @foreach (var livro in Model.Livros)
                 {
                     <tr>
                         <th scope="row">@livro.Id</th>
                         <td>
                             <img src="~/img/the-Winds-of-Winter-cover.jpg" style="max-height:2rem" />
                         </td>
-                        <td>@livro.Titulo</td>
+                        <td><span class="font-weight-bold">@livro.Titulo</span> por @livro.Autor</td>
                         <td>R$ @livro.Preco.ToString("0.00").Replace(".", ".")</td>
                         <td><small class="font-weight-lighter">x</small>@livro.Estoque</td>
                         <td>

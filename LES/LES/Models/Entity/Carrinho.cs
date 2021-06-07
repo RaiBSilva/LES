@@ -8,7 +8,7 @@ namespace LES.Models.Entity
 {
     public class Carrinho : EntidadeDominio
     {
-        public DateTime TimeoutDate { get; set; }
+        public DateTime TimeoutDate { get; set; } = DateTime.Now.AddDays(7);
 
         public String JobKeyStr { get; set; }
 

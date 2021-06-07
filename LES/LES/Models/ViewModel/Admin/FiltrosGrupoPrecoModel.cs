@@ -1,17 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
 namespace LES.Models.ViewModel.Admin
 {
-    public class AdminGrupoPrecoModel
+    public class FiltrosGrupoPrecoModel
     {
         public int Id { get; set; }
         public string Nome { get; set; }
-        [Display(Name = "Margem de lucro")]
-        public double MargemLucro { get; set; }
-        public bool Inativo { get; set; }
+        public double MargemMin { get; set; }
+        public double MargemMax { get; set; }
+        public bool IncluiInativo { get; set; }
     }
 }

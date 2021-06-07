@@ -1,4 +1,6 @@
-﻿using LES.Models.ViewModel.Shared;
+﻿using LES.Models.Entity;
+using LES.Models.ViewModel.Shared;
+using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -13,7 +15,13 @@ namespace LES.Models.ViewModel.Admin
         public int Id { get; set; }
 
         [Display(Name ="Grupo de preços")]
-        public AdminGrupoPrecoModel GrupoPreco { get; set; }
+        public int GrupoPrecoId { get; set; }
+        [Display(Name ="Categorias")]
+        public IEnumerable<int> CategoriasIds { get; set; }
+        public IFormFile Capa { get; set; }
+
+        public IList<GrupoPreco> SelectGrupoPrecos { get; set; }
+        public IList<CategoriaLivro> SelectCategorias { get; set; } 
 
     }
 }

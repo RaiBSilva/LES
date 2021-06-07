@@ -3,19 +3,13 @@ using LES.Data.DAO;
 using LES.Models.Entity;
 using LES.Models.ViewHelpers.Admin;
 using LES.Models.ViewModel.Admin;
-using LES.Models.ViewModel.Conta;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Data.SqlClient.DataClassification;
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
-using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
-using System.Threading.Tasks;
 
 namespace LES.Controllers
 {
@@ -81,9 +75,22 @@ namespace LES.Controllers
         }
 
         public IActionResult ConfigLoja() {
+            IList<Livro> livros = _facade.ListAllInclude<Livro>();
+            IList<CategoriaLivro> categorias = _facade.Listar<CategoriaLivro>();
+            IList<GrupoPreco> grupos = _facade.Listar<GrupoPreco>();
 
+            _vh = new PaginaConfigLojaViewHelper
+            {
+                Entidades = new Dictionary<string, object>
+                {
+                    [typeof(IList<Livro>).FullName] = livros,
+                    [typeof(IList<CategoriaLivro>).FullName] = categorias,
+                    [typeof(IList<GrupoPreco>).FullName] = grupos
+                }
+            };
+            if (TempData["Alert"] != null) ViewData["Alert"] = TempData["Alert"];
 
-            return View();
+            return View(_vh.ViewModel);
         }
 
         #region Pedidos
@@ -350,53 +357,257 @@ namespace LES.Controllers
         {
             ViewBag.Operacao = "add";
 
-            return PartialView("../Admin/PartialViews/_ConfigLivroPartial");
+            AdminLivroModel vm = new AdminLivroModel { 
+                DtLancamento = DateTime.Now, 
+                SelectGrupoPrecos = _facade.Listar<GrupoPreco>(),
+                SelectCategorias = _facade.Listar<CategoriaLivro>()
+            };
+
+            return PartialView("../Admin/PartialViews/_ConfigLivroPartial", vm);
         }
 
         [HttpPost]
-        public IActionResult AdicionarLivro(ConfigLojaLivroModel configLoja)
+        public IActionResult AdicionarLivro(AdminLivroModel livro)
         {
+            _vh = new AdminLivroViewHelper { ViewModel = livro };
+
+            Livro livroNovo = (Livro)_vh.Entidades[typeof(Livro).Name];
+            Editora editora = _facade.Query<Editora>(e => e.Nome == livroNovo.Editora.Nome,
+                e => e).FirstOrDefault();
+            if(editora != null)
+            {
+                livroNovo.Editora = editora;
+            }
+            livroNovo.CodigoBarras = GeraCodigoLivro();
+
+            string msg = _facade.Cadastrar(livroNovo);
+
+            if (!String.IsNullOrEmpty(msg))
+                TempData["Alert"] = msg;
+
             return RedirectToAction(nameof(ConfigLoja));
         }
 
-        public IActionResult _EntradaEstoqueLivroPartial(int id)
+        public IActionResult _EntradaEstoqueLivroPartial(string cod)
         {
-            return PartialView("../Admin/PartialViews/_EntradaEstoqueLivroPartial");
+            Livro l = _facade.Query<Livro>(l => l.CodigoBarras == cod,
+                l => l).FirstOrDefault();
+
+            _vh = new EntradaEstoqueViewHelper
+            {
+                Entidades = new Dictionary<string, object>
+                {
+                    [typeof(Livro).Name] = l
+                }
+            };
+
+            return PartialView("../Admin/PartialViews/_EntradaEstoqueLivroPartial", _vh.ViewModel);
         }
 
         public IActionResult EntradaEstoque(EntradaEstoqueModel entrada)
         {
+            Livro l = _facade.Query<Livro>(l => l.CodigoBarras == entrada.CodigoBarras,
+                l => l).FirstOrDefault();
+
+            #region
+            if (entrada.Quantia == 0)
+            {
+                TempData["Alert"] = "Quantia numa entrada de estoque não pode ser 0.";
+                RedirectToAction(nameof(ConfigLoja));
+            }
+            if (String.IsNullOrEmpty(entrada.Fornecedor))
+            {
+                TempData["Alert"] = "Fornecedor não pode ser vazio";
+                RedirectToAction(nameof(ConfigLoja));
+            }
+            if(entrada.Custo <= 0)
+            {
+                TempData["Alert"] = "Custo deve ser um valor válido.";
+                RedirectToAction(nameof(ConfigLoja));
+            }
+            #endregion
+
+            if(l.MaiorCusto < entrada.Custo)
+            {
+                l.MaiorCusto = entrada.Custo;
+            }
+
+            l.Estoque += entrada.Quantia;
+            string msg = _facade.Editar(l);
+
+            if (!string.IsNullOrEmpty(msg))
+                TempData["Alert"] = msg;
+
             return RedirectToAction(nameof(ConfigLoja));
         }
 
-        public IActionResult _VisualizarLivroPartial(int id)
+        public IActionResult _VisualizarLivroPartial(string cod)
         {
-            return PartialView("../Admin/PartialViews/_VisualizarLivroPartial");
+            Livro l = _facade.Query<Livro>(l => l.CodigoBarras == cod,
+                l => l).FirstOrDefault();
+
+            _vh = new AdminLivroViewHelper
+            {
+                Entidades = new Dictionary<string, object>
+                {
+                    [typeof(Livro).Name] = l
+                }
+            };
+
+            return PartialView("../Admin/PartialViews/_VisualizarLivroPartial", _vh.ViewModel);
         }
 
-        public IActionResult _EditarLivroPartial(int id)
+        public IActionResult _EditarLivroPartial(string cod)
         {
             ViewBag.Operacao = "edit";
 
-            return PartialView("../Admin/PartialViews/_ConfigLivroPartial");
+            Livro l = _facade.Query<Livro>(l => l.CodigoBarras == cod,
+                l => l).FirstOrDefault();
+
+            _vh = new AdminLivroViewHelper
+            {
+                Entidades = new Dictionary<string, object>
+                {
+                    [typeof(Livro).Name] = l
+                }
+            };
+
+            return PartialView("../Admin/PartialViews/_ConfigLivroPartial", _vh.ViewModel);
         }
 
         [HttpPost]
-        public IActionResult EditarLivro(ConfigLojaLivroModel configLoja)
+        public IActionResult EditarLivro(AdminLivroModel livro)
         {
+            _vh = new AdminLivroViewHelper { ViewModel = livro };
+
+            Livro ln = (Livro)_vh.Entidades[typeof(Livro).Name];
+            Livro l = _facade.GetAllInclude(ln);
+            Editora editora = _facade.Query<Editora>(e => e.Nome == ln.Editora.Nome,
+                e => e).FirstOrDefault();
+            if (editora == null)
+            {
+                ln.Editora = editora;
+            }
+
+            l.Altura = ln.Altura;
+            l.Autor = ln.Autor;
+            l.Capa = ln.Capa;
+            l.Comprimento = ln.Comprimento;
+            l.DtLancamento = ln.DtLancamento;
+            l.Edicao = ln.Edicao;
+            l.Editora = ln.Editora;
+            l.GrupoPrecoId = ln.GrupoPrecoId;
+            l.Isbn = ln.Isbn;
+            l.Largura = ln.Largura;
+            l.MaiorCusto = ln.MaiorCusto;
+            l.Paginas = ln.Paginas;
+            l.Peso = ln.Peso;
+            l.Sinopse = ln.Sinopse;
+            l.Titulo = ln.Titulo;
+            l.Valor = ln.Valor;
+
+            string msg = _facade.Editar(l);
+
+            if (!String.IsNullOrEmpty(msg))
+                TempData["Alert"] = msg;
             return RedirectToAction(nameof(ConfigLoja));
         }
 
-        public IActionResult _InativarReativarLivroPartial(int id)
+        public IActionResult _InativarReativarLivroPartial(string cod)
         {
 
-            return PartialView("../Admin/PartialViews/_InativarReativarLivroPartial");
+            Livro l = _facade.Query<Livro>(l => l.CodigoBarras == cod,
+                l => l).FirstOrDefault();
+
+            InativarLivroModel model = new InativarLivroModel
+            {
+                CodigoBarras = l.CodigoBarras,
+                Inativo = !l.Inativo,
+                CategoriasAtivacao = _facade.Listar<CategoriaAtivacao>(),
+                CategoriasInativacao = _facade.Listar<CategoriaInativacao>()
+            };
+
+            return PartialView("../Admin/PartialViews/_InativarReativarLivroPartial", model);
         }
 
         [HttpPost]
         public IActionResult InativarReativarLivro(InativarLivroModel model)
         {
+            Livro l = _facade.GetAllInclude(new Livro { CodigoBarras = model.CodigoBarras});
+
+            if (l.Inativo)
+                l.Ativacoes.Add(new Ativacao { CategoriaId = model.Motivo, LivroId = l.Id});
+            else
+                l.Inativacoes.Add(new Inativacao { CategoriaId = model.Motivo, LivroId = l.Id, });
+
+            l.Inativo = !l.Inativo;
+
+            string msg = _facade.Editar(l);
+
+            if (!String.IsNullOrEmpty(msg))
+                TempData["Alert"] = msg;
             return RedirectToAction(nameof(ConfigLoja));
+        }
+
+        [HttpPost]
+        public IActionResult _LivrosBusca(string json) 
+        {
+            JObject o = JObject.Parse(json);
+
+            FiltrosAdminLivroModel f = o.ToObject<FiltrosAdminLivroModel>();
+
+            IEnumerable<Livro> livros = _facade.ListAllInclude<Livro>();
+
+            livros = f.Id != 0 ? livros.Where(t => t.Id == f.Id) : livros;
+
+            if (!String.IsNullOrEmpty(f.TituloAutor))
+            {
+                livros = livros.Where(l => l.Titulo
+                .Contains(f.TituloAutor))
+                .Concat(livros
+                    .Where(l => l.Autor.Contains(f.TituloAutor))
+                .Distinct());
+            }
+
+            if (!String.IsNullOrEmpty(f.Categorias))
+            {
+                string[] ctgs = f.Categorias.Split(" ");
+                IEnumerable<CategoriaLivro> categoriaLivros = _facade.Query<CategoriaLivro>(c => ctgs.Contains(c.Nome),
+                    c => c);
+
+                IEnumerable<LivroCategoriaLivro> livCtl = livros.SelectMany(c => c.LivrosCategoriaLivros);
+
+                IEnumerable<int> ids = livCtl.Where(l => categoriaLivros.Select(c => c.Id).Contains(l.CategoriaLivroId))
+                    .Select(l => l.LivroId).Distinct();
+
+                livros = livros.Where(l => ids.Contains(l.Id));
+            }
+
+            livros = f.ValorMin > 0 ?
+                livros.Where(l => l.Valor > f.ValorMin) : livros;
+
+            livros = f.ValorMax > 0 ?
+                livros.Where(l => l.Valor < f.ValorMax) : livros;
+
+            livros = f.IncluiInativos ?
+                livros : livros.Where(l => !l.Inativo);
+
+            livros = f.PagAtual > 0 ? livros.Skip((f.PagAtual - 1) * 10) : livros;
+
+            _vh = new ListaAdminLivroViewHelper
+            {
+                Entidades = new Dictionary<string, object>
+                {
+                    [typeof(IList<Livro>).FullName] = livros.Take(10).ToList(),
+                    [nameof(ListaAdminLivroModel.PagAtual)] = 1,
+                    [nameof(ListaAdminLivroModel.PagMax)] = (livros.Count() / 10) + 1
+                }
+            };
+
+            ListaAdminLivroModel vm = (ListaAdminLivroModel)_vh.ViewModel;
+            vm.Filtros = f;
+
+            return PartialView("../Admin/PartialViews/_TabelaTrocasPartial", vm);
         }
 
         #endregion
@@ -412,29 +623,82 @@ namespace LES.Controllers
         [HttpPost]
         public IActionResult AdicionarCategoria(CategoriaLivroModel categoria)
         {
+            _vh = new CategoriaLivroViewHelper
+            {
+                ViewModel = categoria
+            };
+
+            CategoriaLivro ctgNova = (CategoriaLivro)_vh.Entidades[typeof(CategoriaLivro).Name];
+            string msg = _facade.Cadastrar(ctgNova);
+
+            if (!String.IsNullOrEmpty(msg))
+                TempData["Alert"] = msg;
+
             return RedirectToAction(nameof(ConfigLoja));
         }
 
         public IActionResult _EditarCategoriaPartial(int id)
         {
             ViewBag.Operacao = "edit";
-            return PartialView("../Admin/PartialViews/_ConfigCategoriaPartial");
+
+            CategoriaLivro ctg = _facade.GetEntidade(new CategoriaLivro { Id = id });
+            _vh = new CategoriaLivroViewHelper
+            {
+                Entidades = new Dictionary<string, object>
+                {
+                    [typeof(CategoriaLivro).Name] = ctg
+                }
+            };
+
+            return PartialView("../Admin/PartialViews/_ConfigCategoriaPartial", _vh.ViewModel);
         }
 
         [HttpPost]
         public IActionResult EditarCategoria(CategoriaLivroModel categoria)
         {
+            _vh = new CategoriaLivroViewHelper
+            {
+                ViewModel = categoria
+            };
+
+            CategoriaLivro ctgNova = (CategoriaLivro)_vh.Entidades[typeof(CategoriaLivro).Name];
+            CategoriaLivro ctgDb = _facade.GetEntidade(ctgNova);
+
+            ctgDb.Nome = ctgNova.Nome;
+
+            string msg = _facade.Editar(ctgDb);
+
+            if (!String.IsNullOrEmpty(msg))
+                TempData["Alert"] = msg;
+
             return RedirectToAction(nameof(ConfigLoja));
         }
 
         public IActionResult _InativarReativarCategoriaPartial(int id)
         {
-            return PartialView("../Admin/PartialViews/_InativarReativarCategoriaPartial");
+            CategoriaLivro ctg = _facade.GetEntidade(new CategoriaLivro { Id = id });
+            _vh = new CategoriaLivroViewHelper
+            {
+                Entidades = new Dictionary<string, object>
+                {
+                    [typeof(CategoriaLivro).Name] = ctg
+                }
+            };
+            return PartialView("../Admin/PartialViews/_InativarReativarCategoriaPartial", _vh.ViewModel);
         }
 
         [HttpPost]
-        public IActionResult InativarReativarCategoria(CategoriaLivroModel categoria)
+        public IActionResult InativarReativarCategoria(int id)
         {
+            CategoriaLivro ctgDb = _facade.GetEntidade(new CategoriaLivro { Id = id });
+
+            ctgDb.Inativo = !ctgDb.Inativo; 
+
+            string msg = _facade.Editar(ctgDb);
+
+            if (!String.IsNullOrEmpty(msg))
+                TempData["Alert"] = msg;
+
             return RedirectToAction(nameof(ConfigLoja));
         }
 
@@ -449,31 +713,99 @@ namespace LES.Controllers
         }
 
         [HttpPost]
-        public IActionResult AdicionarGrupoPreco(AdminGrupoPrecoModel categoria)
+        public IActionResult AdicionarGrupoPreco(GrupoPrecoModel grp)
         {
+            _vh = new GrupoPrecoViewHelper
+            {
+                ViewModel = grp
+            };
+
+            GrupoPreco grpNovo = (GrupoPreco)_vh.Entidades[typeof(GrupoPreco).Name];
+            string msg = _facade.Cadastrar(grpNovo);
+
+            if (!String.IsNullOrEmpty(msg))
+                TempData["Alert"] = msg;
             return RedirectToAction(nameof(ConfigLoja));
         }
 
         public IActionResult _EditarGrupoPrecoPartial(int id)
         {
+            GrupoPreco grp = _facade.GetEntidade(new GrupoPreco { Id = id });
+            _vh = new GrupoPrecoViewHelper
+            {
+                Entidades = new Dictionary<string, object>
+                {
+                    [typeof(GrupoPreco).Name] = grp
+                }
+            };
+
             ViewBag.Operacao = "edit";
-            return PartialView("../Admin/PartialViews/_ConfigGrupoPrecoPartial");
+
+            return PartialView("../Admin/PartialViews/_ConfigGrupoPrecoPartial", _vh.ViewModel);
         }
 
         [HttpPost]
-        public IActionResult EditarGrupoPreco(AdminGrupoPrecoModel grupoPreco)
+        public IActionResult EditarGrupoPreco(GrupoPrecoModel grp)
         {
+            _vh = new GrupoPrecoViewHelper
+            {
+                ViewModel = grp
+            };
+
+            GrupoPreco grpNovo = (GrupoPreco)_vh.Entidades[typeof(GrupoPreco).Name];
+            GrupoPreco grpDb = _facade.GetAllInclude(grpNovo);
+
+            //Calcula novos preços baseados na margem de lucro
+            foreach(var livro in grpDb.Livros)
+            {
+                if (livro.MaiorCusto.HasValue)
+                {
+                    double custo = livro.MaiorCusto ?? 0;
+                    livro.Valor = custo * grpDb.MargemLucro;
+                }
+                else
+                {
+                    livro.Inativo = true;
+                }
+            }
+
+            string msg = _facade.Editar(grpDb);
+
+            if (!String.IsNullOrEmpty(msg))
+                TempData["Alert"] = msg;
+
             return RedirectToAction(nameof(ConfigLoja));
         }
 
         public IActionResult _InativarReativarGrupoPrecoPartial(int id)
         {
-            return PartialView("../Admin/PartialViews/_InativarReativarGrupoPrecoPartial");
+            GrupoPreco grp = _facade.GetEntidade(new GrupoPreco { Id = id });
+
+            _vh = new GrupoPrecoViewHelper {
+                Entidades = new Dictionary<string, object>
+                {
+                    [typeof(GrupoPreco).Name] = grp
+                }
+            };
+
+            return PartialView("../Admin/PartialViews/_InativarReativarGrupoPrecoPartial", _vh.ViewModel);
         }
 
         [HttpPost]
-        public IActionResult InativarReativarGrupoPreco(AdminGrupoPrecoModel grupoPreco)
+        public IActionResult InativarReativarGrupoPreco(int id)
         {
+            GrupoPreco grpDb = _facade.GetAllInclude(new GrupoPreco { Id = id });
+
+            if (!grpDb.Inativo)
+                foreach (var livro in grpDb.Livros)
+                {
+                    livro.Inativo = true;
+                    _facade.Cadastrar(new Inativacao { LivroId = livro.Id, CategoriaId = 2 });
+                }
+
+            grpDb.Inativo = !grpDb.Inativo;
+            string msg = _facade.Editar(grpDb);
+
             return RedirectToAction(nameof(ConfigLoja));
         }
 
@@ -622,6 +954,28 @@ namespace LES.Controllers
 
                 iterator = iterator.AddMonths(1);
             }
+        }
+
+        private string GeraCodigoLivro()
+        {
+            Random rnd = new Random();
+
+            string chars = "0123456789";
+
+            var codigo = new char[12];
+            for(int i = 0; i < codigo.Length; i++)
+                codigo[i] = chars[rnd.Next(chars.Length)];
+
+            do
+            {
+                var items = _facade.Query<Livro>(
+                    l => l.CodigoBarras == new string(codigo),
+                    l => l);
+
+                if (items.Count() == 0) return new string(codigo);
+                for (int i = 0; i < codigo.Length; i++)
+                    codigo[i] = chars[rnd.Next(chars.Length)];
+            } while (true);
         }
 
         #endregion
