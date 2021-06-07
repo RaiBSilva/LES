@@ -28,18 +28,15 @@ namespace LES.Views.CarrinhoCompra
         IDAOTabelaRel<CarrinhoLivro> _daoCarrinhoLivro { get; set; }
         IDAOTabelaRel<CartaoPedido> _daoCartaoPedido { get; set; }
         IFacadeCrud _facade { get; set; }
-        IAgendarJob _scheduleCarrinho { get; set; }
 
         public CarrinhoCompraController(
             IDAOTabelaRel<CarrinhoLivro> daoCarrinhoLivro,
             IDAOTabelaRel<CartaoPedido> daoCartaoPedido,
-            IFacadeCrud facade,
-            IAgendarJob scheduleCarrinho)
+            IFacadeCrud facade)
         {
             _daoCarrinhoLivro = daoCarrinhoLivro;
             _daoCartaoPedido = daoCartaoPedido;
             _facade = facade;
-            _scheduleCarrinho = scheduleCarrinho;
         }
 
         public IActionResult FinalizarCompra() {
@@ -367,7 +364,7 @@ namespace LES.Views.CarrinhoCompra
 
             //INSERIR MÉTODO DE DESATIVAÇÃO AUTOMÁTICA AQUI
 
-            if(msg == "")
+            if (msg == "")
                 return Json(new { valor = true });
             return Json(new { valor = false, ex = msg });
         }

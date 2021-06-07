@@ -14,6 +14,9 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Quartz;
+using Quartz.Impl;
+using Quartz.Spi;
 
 namespace LES
 {
@@ -44,7 +47,19 @@ namespace LES
             services.AddScoped(typeof(IFacadeCrud), typeof(FacadeCrud));
             services.AddScoped(typeof(IDAO<>), typeof(DAO<>));
             services.AddScoped(typeof(IDAOTabelaRel<>), typeof(DAOTabelaRel<>));
-            services.AddScoped(typeof(IAgendarJob), typeof(ScheduleCarrinho));
+
+            services.AddHostedService<QuartzHostedService>();
+
+            services.AddSingleton<ISchedulerFactory, StdSchedulerFactory>();
+            services.AddSingleton<IJobFactory, JobFactory>();
+            services.AddSingleton<ApagaCarrinhoJob>();
+            services.AddSingleton<QuartzJobRunner>();
+
+            services.AddScoped<ApagaCarrinhoJob>();
+            services.AddSingleton(new JobSchedule(
+                jobType: typeof(ApagaCarrinhoJob),
+                cronExpression: "0 1-2 0 ? * * *"));
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
