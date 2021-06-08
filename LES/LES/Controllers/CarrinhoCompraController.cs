@@ -18,7 +18,9 @@ using Microsoft.EntityFrameworkCore.Query.Internal;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
+using System.Xml;
 
 namespace LES.Views.CarrinhoCompra
 {
@@ -628,6 +630,77 @@ namespace LES.Views.CarrinhoCompra
         #endregion
 
         #region Utilidades
+
+        public static Dictionary<string, string> GetFretePrazo(Pedido pedido)
+        {
+            double peso = pedido.LivrosPedidos.FirstOrDefault().Livro.Peso;
+            double comprimento = pedido.LivrosPedidos.FirstOrDefault().Livro.Comprimento;
+            double altura = pedido.LivrosPedidos.FirstOrDefault().Livro.Altura;
+            double largura = pedido.LivrosPedidos.FirstOrDefault().Livro.Largura;
+
+            // VALIDAÇÃO DE PESO MÍNIMO
+            if (peso < 1) peso = 1;
+
+            // VALIDAÇÃO DE COMPRIMENTO MÁXIMO E MÍNIMO
+            if (comprimento < 15)
+            {
+                comprimento = 15;
+            }else if (comprimento > 100)
+            {
+                comprimento = 100;
+            }
+
+            // VALIDAÇÃO DE ALTURA MÁXIMA E MÍNIMA
+            if (altura < 1)
+            {
+                altura = 1;
+            }else if (altura > 100)
+            {
+                altura = 100;
+            }
+
+            // VALIDAÇÃO DE LARGURA MÁXIMA E MÍNIMA
+            if (largura < 10)
+            {
+                largura = 10;
+            }
+            else if (largura > 100)
+            {
+                largura = 100;
+            }
+
+
+            StringBuilder sb = new StringBuilder("http://ws.correios.com.br/calculador/CalcPrecoPrazo.aspx?");
+            sb.Append("nCdEmpresa=");
+            sb.Append("&sDsSenha=");
+            sb.Append("&nCdServico=04014");
+            sb.Append("&sCepOrigem=08773600");
+            sb.Append(String.Format("&sCepDestino={0}", pedido.Endereco.Cep));
+            sb.Append(String.Format("&nVlPeso={0}", peso));
+            sb.Append("&nCdFormato=1");
+            sb.Append(String.Format("&nVlComprimento={0}", comprimento));
+            sb.Append(String.Format("&nVlAltura={0}", altura));
+            sb.Append(String.Format("&nVlLargura={0}", largura));
+            sb.Append("&nVlDiametro=1");
+            sb.Append("&sCdMaoPropria=N");
+            sb.Append("&nVlValorDeclarado=0");
+            sb.Append("&sCdAvisoRecebimento=N");
+            sb.Append("&StrRetorno=xml");
+            sb.Append("&nIndicaCalculo=3");
+
+            XmlDocument myXml = new XmlDocument();
+            myXml.Load(sb.ToString());
+
+            XmlNodeList frete = myXml.GetElementsByTagName("Valor");
+            XmlNodeList prazo = myXml.GetElementsByTagName("PrazoEntrega");
+
+            Dictionary<string, string> parametros = new Dictionary<string, string>();
+
+            parametros.Add("Frete", frete.Item(0).InnerText);
+            parametros.Add("Prazo", prazo.Item(0).InnerText);
+
+            return parametros;
+        }
 
         private Cliente GetClienteDb() 
         {
