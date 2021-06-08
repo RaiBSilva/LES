@@ -42,11 +42,17 @@
                     <td><small>x</small>@item.Quantia </td>
                 </tr>
             }
+            <tr>
+                <td>Frete </td>
+                <td>R$ @Model.Frete.ToString("0.00").Replace('.', ',') </td>
+                <td><small>N/A</small></td>
+            </tr>
         </tbody>
         <tfoot class="thead-dark">
             <tr>
                 <td>Valor de todos os itens:</td>
                 <td>R$ @valorTotal.ToString("0.00").Replace('.', ',')</td>
+                <td><small>Quantia de livros: @Model.Pedido.Livros.Count</small></td>
             </tr>
         </tfoot>
     </table>

@@ -78,6 +78,7 @@ namespace LES.Controllers
             IList<Livro> livros = _facade.ListAllInclude<Livro>();
             IList<CategoriaLivro> categorias = _facade.Listar<CategoriaLivro>();
             IList<GrupoPreco> grupos = _facade.Listar<GrupoPreco>();
+            IList<CodigoPromocional> codigos = _facade.Listar<CodigoPromocional>();
 
             _vh = new PaginaConfigLojaViewHelper
             {
@@ -85,7 +86,8 @@ namespace LES.Controllers
                 {
                     [typeof(IList<Livro>).FullName] = livros,
                     [typeof(IList<CategoriaLivro>).FullName] = categorias,
-                    [typeof(IList<GrupoPreco>).FullName] = grupos
+                    [typeof(IList<GrupoPreco>).FullName] = grupos,
+                    [typeof(IList<CodigoPromocional>).FullName] = codigos
                 }
             };
             if (TempData["Alert"] != null) ViewData["Alert"] = TempData["Alert"];
@@ -378,6 +380,17 @@ namespace LES.Controllers
             {
                 livroNovo.Editora = editora;
             }
+            GrupoPreco grp = _facade.GetEntidade(livroNovo.GrupoPreco);
+            if(livroNovo.Valor < livroNovo.MaiorCusto + ( livroNovo.MaiorCusto * grp.MargemLucro) && 
+                !HttpContext.User.IsInRole("2"))
+            {
+                TempData["Alert"] = "Você tentou inserir um valor inferior a margem de lucro desse livro. A margem de lucro" +
+                    $"do grupo de preço {grp.Nome} é {grp.MargemLucro}%, logo o preço mínimo " +
+                    $"deste livro é {livroNovo.MaiorCusto + (livroNovo.MaiorCusto * grp.MargemLucro)}. " +
+                    $"Tente novamente.";
+                return RedirectToAction(nameof(ConfigLoja));
+            }
+
             livroNovo.CodigoBarras = GeraCodigoLivro();
 
             string msg = _facade.Cadastrar(livroNovo);
@@ -883,6 +896,120 @@ namespace LES.Controllers
             vm.Filtros = f;
 
             return PartialView("../Admin/PartialViews/_TabelaGrupoPrecosConfigPartial", vm);
+        }
+
+        #endregion
+
+        #region CodigosPromocionais
+
+        public IActionResult _AdicionarCodigoPromoPartial()
+        {
+            ViewBag.Operacao = "add";
+            return PartialView("../Admin/PartialViews/_ConfigCodigoPromoPartial");
+        }
+
+        [HttpPost]
+        public IActionResult AdicionarCodigoPromo(CodigoPromocional cod)
+        {
+            if (_facade.Query<CodigoPromocional>(c => c.Codigo == cod.Codigo, c => c).Count() > 0)
+            {
+                TempData["Alert"] = "Um código promocional com o código " + cod.Codigo + " já existe. Favor usar outro.";
+                return RedirectToAction(nameof(ConfigLoja));
+            }
+            string msg = _facade.Cadastrar(cod);
+
+            if (!String.IsNullOrEmpty(msg))
+                TempData["Alert"] = msg;
+
+            return RedirectToAction(nameof(ConfigLoja));
+        }
+
+        public IActionResult _EditarCodigoPromoPartial(string cod)
+        {
+            ViewBag.Operacao = "edit";
+
+            CodigoPromocional codigoPromo = _facade.Query<CodigoPromocional>(c => c.Codigo == cod, c => c).FirstOrDefault();
+
+            return PartialView("../Admin/PartialViews/_ConfigCodigoPromoPartial", codigoPromo);
+        }
+
+        [HttpPost]
+        public IActionResult EditarCodigoPromo(CodigoPromocional cod)
+        {
+            CodigoPromocional codDb = _facade.GetEntidade(cod);
+
+            codDb.Valor = codDb.Valor;
+            codDb.UsosRestantes = cod.UsosRestantes;
+
+            string msg = _facade.Editar(codDb);
+
+            if (!String.IsNullOrEmpty(msg))
+                TempData["Alert"] = msg;
+
+            return RedirectToAction(nameof(ConfigLoja));
+        }
+
+        public IActionResult _InativarReativarCodigoPromoPartial(string cod)
+        {
+            CodigoPromocional codigoPromo = _facade.Query<CodigoPromocional>(c => c.Codigo == cod, c => c).FirstOrDefault();
+
+            return PartialView("../Admin/PartialViews/_InativarReativarCodigoPartial", codigoPromo);
+        }
+
+        [HttpPost]
+        public IActionResult InativarReativarCodigoPromo(string cod)
+        {
+            CodigoPromocional codigoPromo = _facade.Query<CodigoPromocional>(c => c.Codigo == cod, c => c).FirstOrDefault();
+
+            codigoPromo.Inativo = !codigoPromo.Inativo;
+
+            string msg = _facade.Editar(codigoPromo);
+
+            if (!String.IsNullOrEmpty(msg))
+                TempData["Alert"] = msg;
+
+            return RedirectToAction(nameof(ConfigLoja));
+        }
+
+        [HttpPost]
+        public IActionResult _CodigoPromoBusca(string json)
+        {
+            JObject o = JObject.Parse(json);
+
+            FiltrosCodigoPromoModel f = o.ToObject<FiltrosCodigoPromoModel>();
+
+            IEnumerable<CodigoPromocional> cdgs = _facade.Listar<CodigoPromocional>();
+
+            cdgs = f.Id != 0 ? cdgs.Where(t => t.Id == f.Id) : cdgs;
+
+            cdgs = !string.IsNullOrEmpty(f.Codigo) ?
+                cdgs.Where(c => c.Codigo.Contains(f.Codigo)) : cdgs;
+
+            cdgs = f.ValorMin > 0 ?
+                cdgs.Where(c => c.Valor >= f.ValorMin) : cdgs;
+
+            cdgs = f.ValorMax > 0 ?
+                cdgs.Where(c => c.Valor <= f.ValorMax) : cdgs;
+
+            cdgs = f.IncluiInativos ?
+                cdgs : cdgs.Where(l => !l.Inativo);
+
+            cdgs = f.PagAtual > 0 ? cdgs.Skip((f.PagAtual - 1) * 10) : cdgs;
+
+            _vh = new ListaCodigosPromoViewHelper
+            {
+                Entidades = new Dictionary<string, object>
+                {
+                    [typeof(IList<CodigoPromocional>).FullName] = cdgs.Take(10).ToList(),
+                    [nameof(ListaCodigosPromoModel.PagAtual)] = 1,
+                    [nameof(ListaCodigosPromoModel.PagMax)] = (cdgs.Count() / 10) + 1
+                }
+            };
+
+            ListaCodigosPromoModel vm = (ListaCodigosPromoModel)_vh.ViewModel;
+            vm.Filtros = f;
+
+            return PartialView("../Admin/PartialViews/_TabelaCodigosPromoConfigPartial", vm);
         }
 
         #endregion

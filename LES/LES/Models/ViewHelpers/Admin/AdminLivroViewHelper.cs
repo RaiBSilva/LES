@@ -83,6 +83,14 @@ namespace LES.Models.ViewHelpers.Admin
                 Id = livro.Id
             };
 
+            vm.GrupoPreco = (GrupoPrecoModel)new GrupoPrecoViewHelper 
+            { 
+                Entidades = new Dictionary<string, object> 
+                { 
+                    [typeof(GrupoPreco).Name] = livro.GrupoPreco 
+                } 
+            }.ViewModel;
+
             vm.Capa = new FormFile(new MemoryStream(livro.Capa), 0, livro.Capa.Length, "Capa", "capa.png");
 
             _viewModel = vm;

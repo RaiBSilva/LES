@@ -718,3 +718,6 @@ C:\Programming\LES\LES\LES\obj\Debug\netcoreapp3.1\Razor\Views\Admin\PartialView
 C:\Programming\LES\LES\LES\obj\Debug\netcoreapp3.1\Razor\Views\CarrinhoCompra\PartialViews\_UsarCodigoPartial.cshtml.g.cs
 D:\DESENVOLVIMENTO\LES\LES\LES\obj\Debug\netcoreapp3.1\Razor\Views\Admin\PartialViews\_TabelaClientesPartial.cshtml.g.cs
 D:\DESENVOLVIMENTO\LES\LES\LES\obj\Debug\netcoreapp3.1\Razor\Views\CarrinhoCompra\PartialViews\_UsarCodigoPartial.cshtml.g.cs
+C:\Programming\LES\LES\LES\obj\Debug\netcoreapp3.1\Razor\Views\Admin\PartialViews\_ConfigCodigoPromoPartial.cshtml.g.cs
+C:\Programming\LES\LES\LES\obj\Debug\netcoreapp3.1\Razor\Views\Admin\PartialViews\_InativarReativarCodigoPartial.cshtml.g.cs
+C:\Programming\LES\LES\LES\obj\Debug\netcoreapp3.1\Razor\Views\Admin\PartialViews\_TabelaCodigosPromoConfigPartial.cshtml.g.cs

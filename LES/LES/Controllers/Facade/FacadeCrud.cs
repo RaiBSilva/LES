@@ -57,7 +57,10 @@ namespace LES.Controllers.Facade
                     new ValidaDtLancamentoStrategy()
                 },
                 [typeof(LivroPedido).Name] = new List<IStrategy>(),
-                [typeof(Troca).Name] = new List<IStrategy>()
+                [typeof(Troca).Name] = new List<IStrategy>(),
+                [typeof(CategoriaLivro).Name] = new List<IStrategy>(),
+                [typeof(GrupoPreco).Name] = new List<IStrategy>(),
+                [typeof(CodigoPromocional).Name] = new List<IStrategy>()
             };
         }
         private void DefinirDAOs()

@@ -86,6 +86,8 @@ namespace LES.Models.ViewHelpers.CarrinhoCompra
                 vm.Pedido.PrecoTotal -= vm.CodigoPromo.Valor;
             }
 
+            vm.Frete = (double)Entidades[nameof(Pedido.Frete)];
+
             _viewModel = vm;
         }
     }

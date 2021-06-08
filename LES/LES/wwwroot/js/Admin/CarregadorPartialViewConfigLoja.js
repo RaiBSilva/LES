@@ -20,22 +20,22 @@ function carregarAdicionarLivro() {
 }
 
 function carregarEntradaEstoqueLivro(id) {
-    var endereco = urls.EntradaEstoqueLivro + "/" + id;
+    var endereco = urls.EntradaEstoqueLivro + "?cod=" + id;
     carregarPartialView(endereco);
 }
 
 function carregarVisualizarLivro(id) {
-    var endereco = urls.VisualizarLivro + "/" + id;
+    var endereco = urls.VisualizarLivro + "?cod=" + id;
     carregarPartialView(endereco);
 }
 
 function carregarEditarLivro(id) {
-    var endereco = urls.EditarLivro + "/" + id;
+    var endereco = urls.EditarLivro + "?cod=" + id;
     carregarPartialView(endereco);
 }
 
 function carregarInativarLivro(id) {
-    var endereco = urls.InativarLivro + "/" + id;
+    var endereco = urls.InativarLivro + "?cod=" + id;
     carregarPartialView(endereco);
 }
 
@@ -64,12 +64,29 @@ function carregarAdicionarGrupoPreco() {
 }
 
 function carregarEditarGrupoPreco(id) {
-    var endereco = urls.EditarGrupoPreco + "/" + id;
+    var endereco = urls.EditarGrupoPreco + "?cod=" + id;
     carregarPartialView(endereco);
 }
 
 function carregarInativarGrupoPreco(id) {
-    var endereco = urls.InativarGrupoPreco + "/" + id;
+    var endereco = urls.InativarGrupoPreco + "?cod=" + id;
+    carregarPartialView(endereco);
+}
+
+//CodigoPromocional
+
+function carregarAdicionarCodigo() {
+    var endereco = urls.AdicionarCodigo;
+    carregarPartialView(endereco);
+}
+
+function carregarEditarCodigo(id) {
+    var endereco = urls.EditarCodigo + "/" + id;
+    carregarPartialView(endereco);
+}
+
+function carregarInativarCodigo(id) {
+    var endereco = urls.InativarCodigo + "/" + id;
     carregarPartialView(endereco);
 }
 
@@ -130,3 +147,20 @@ $(".btnInativarGrupoPreco").on("click", function (e) {
     var id = $(this).val();
     carregarInativarGrupoPreco(id);
 });
+
+//GrupoPreço
+
+$(".btnAddCodigo").on("click", function (e) {
+    carregarAdicionarCodigo();
+});
+
+$(".btnEditarCodigo").on("click", function (e) {
+    var id = $(this).val();
+    carregarEditarCodigo(id);
+});
+
+$(".btnInativarCodigo").on("click", function (e) {
+    var id = $(this).val();
+    carregarInativarCodigo(id);
+});
+

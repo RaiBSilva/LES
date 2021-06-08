@@ -18,7 +18,10 @@
             <button class="btn btn-light tablink" onclick="changeTab(event, 'Categorias')" style="width:100%">Categorias</button>
         </div>
         <div>
-            <button class="btn btn-light tablink" onclick="changeTab(event, 'Preco')" style="width:100%">Grupos de Preço</button>
+            <button class="btn btn-light tablink" onclick="changeTab(event, 'Grupos')" style="width:100%">Grupos de Preço</button>
+        </div>
+        <div>
+            <button class="btn btn-light tablink" onclick="changeTab(event, 'Codigo')" style="width:100%">Códigos Promocionais</button>
         </div>
     </div>
     <div class="col-sm-9">
@@ -30,8 +33,12 @@
             <partial name="../Admin/PartialViews/_TabelaCategoriasConfigPartial.cshtml" for="Categorias" />
         </div>
 
-        <div id="Preco" class="tab" style="display:none">
+        <div id="Grupos" class="tab" style="display:none">
             <partial name="../Admin/PartialViews/_TabelaGrupoPrecosConfigPartial.cshtml" for="GrupoPrecos" />
+        </div>
+
+        <div id="Codigos" class="tab" style="display:none">
+            <partial name="../Admin/PartialViews/_TabelaCodigosPromoConfigPartial.cshtml" for="GrupoPrecos" />
         </div>
     </div>
 </div>
@@ -59,9 +66,14 @@
         urls.EditarGrupoPreco = '@Url.Action("_EditarGrupoPrecoPartial", "Admin")';
         urls.InativarGrupoPreco = '@Url.Action("_InativarReativarGrupoPrecoPartial", "Admin")';
 
+        urls.AdicionarCodigo = '@Url.Action("_AdicionarCodigoPromoPartial", "Admin")';
+        urls.EditarCodigo = '@Url.Action("_EditarCodigoPromoPartial", "Admin")';
+        urls.InativarCodigo  ='@Url.Action("_InativarReativarCodigoPromoPartial", "Admin")';
+
         urls.BuscarLivros = '@Url.Action("_LivrosBusca", "Admin")';
         urls.BuscarCategorias = '@Url.Action("_CategoriasBusca", "Admin")';
         urls.BuscarGrupos = '@Url.Action("_GrupoPrecosBusca", "Admin")';
+        urls.BuscarCodigo = '@Url.Action("_CodigoPromoBusca", "Admin")';
 
     </script>
     <script src="~/js/Admin/CarregadorPartialViewConfigLoja.js"></script>

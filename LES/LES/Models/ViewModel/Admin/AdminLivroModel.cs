@@ -14,6 +14,8 @@ namespace LES.Models.ViewModel.Admin
         public int Estoque { get; set; }
         public int Id { get; set; }
 
+        public GrupoPrecoModel GrupoPreco { get; set; } = new GrupoPrecoModel();
+
         [Display(Name ="Grupo de preços")]
         public int GrupoPrecoId { get; set; }
         [Display(Name ="Categorias")]

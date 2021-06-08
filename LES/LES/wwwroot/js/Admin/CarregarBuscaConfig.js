@@ -40,7 +40,19 @@
             PagAtual: pag
         });
 
-    };
+    }
+    if (tabela = "Codigos") {
+        Pesquisar = urls.BuscarGrupos
+        filtros = JSON.stringify({
+            Id: $("#filtroCodId").val(),
+            Codigo: $("#filtroCodNome").val(),
+            IncluiInativo: $("#filtroCodInativados").is(":checked"),
+            ValorMax: $("#filtroCodValorMax").val(),
+            ValorMin: $("#filtroCodValorMin").val(),
+            PagAtual: pag
+        });
+
+    }
 
     divTabela.load(Pesquisar,
         {
@@ -52,6 +64,8 @@
             $('.btnPageCat').unbind('click');
             $('.btnBuscarGrp').unbind('click');
             $('.btnPageGrp').unbind('click');
+            $('.btnBuscarCod').unbind('click');
+            $('.btnPageCod').unbind('click');
 
             $(".btnBuscarLiv").on("click", function (e) {
                 e.preventDefault();
@@ -81,6 +95,16 @@
             $(".btnPageGrp").on("click", function (e) {
                 var pag = $(this).val();
                 atualizarLista(pag, "Grupos");
+            });
+
+            $(".btnBuscarCod").on("click", function (e) {
+                e.preventDefault();
+                atualizarLista(1, "Codigos");
+            });
+
+            $(".btnPageCod").on("click", function (e) {
+                var pag = $(this).val();
+                atualizarLista(pag, "Codigos");
             });
         });
 };
@@ -113,4 +137,14 @@ $(".btnBuscarGrp").on("click", function (e) {
 $(".btnPageGrp").on("click", function (e) {
     var pag = $(this).val();
     atualizarLista(pag, "Grupos");
+});
+
+$(".btnBuscarCod").on("click", function (e) {
+    e.preventDefault();
+    atualizarLista(1, "Codigos");
+});
+
+$(".btnPageCod").on("click", function (e) {
+    var pag = $(this).val();
+    atualizarLista(pag, "Codigos");
 });

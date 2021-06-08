@@ -1,0 +1,83 @@
+﻿@model LES.Models.Entity.CodigoPromocional
+@*
+    For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
+*@
+
+@{ string operacao = ViewBag.Operacao == "add" ? "Adicionar" : "Editar"; }
+
+<div class="modal-content">
+    <!-- Modal content-->
+    <div class="modal-header">
+        <h4 class="modal-title">@operacao Livro</h4>
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+    </div>
+    <div class="modal-body">
+        @if (ViewBag.Operacao == "add")
+        {
+            <form asp-action="AdicionarCodigoPromo" asp-controller="Admin">
+                <div class="container">
+
+                    <div class="row my-2">
+                        <div class="col-4">
+                            <label class="font-weight-light">Código</label>
+                            <input asp-for="Codigo" class="form-control required" />
+                            <span asp-validation-for="Codigo" class="text-danger required"></span>
+                        </div>
+                        <div class="col-4">
+                            <label asp-for="Valor" class="font-weight-light"></label>
+                            <input asp-for="Valor" class="form-control required" />
+                            <span asp-validation-for="Valor" class="text-danger required"></span>
+                        </div>
+                        <div class="col-4">
+                            <label class="font-weight-light">Usos do código: </label>
+                            <input asp-for="UsosRestantes" class="form-control required" />
+                            <span asp-validation-for="UsosRestantes" class="text-danger required"></span>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary" data-dismiss="modal">@operacao</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Sair</button>
+                </div>
+            </form>
+        }
+        else if (ViewBag.Operacao == "edit")
+        {
+            <form asp-action="EditarCodigoPromo" asp-controller="Admin">
+                <div class="container">
+
+                    <div hidden style="display:none">
+                        <input asp-for="Id" class="form-control required" readonly />
+                    </div>
+
+                    <div class="row my-2">
+                        <div class="col-4">
+                            <label class="font-weight-light">Código</label>
+                            <input asp-for="Codigo" class="form-control required" />
+                            <span asp-validation-for="Codigo" class="text-danger required" readonly></span>
+                        </div>
+                        <div class="col-4">
+                            <label asp-for="Valor" class="font-weight-light"></label>
+                            <input asp-for="Valor" class="form-control required" />
+                            <span asp-validation-for="Valor" class="text-danger required"></span>
+                        </div>
+                        <div class="col-4">
+                            <label class="font-weight-light">Usos do código: </label>
+                            <input asp-for="UsosRestantes" class="form-control required" />
+                            <span asp-validation-for="UsosRestantes" class="text-danger required"></span>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary" data-dismiss="modal">@operacao</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Sair</button>
+                </div>
+            </form>
+        }
+    </div>
+</div>
+

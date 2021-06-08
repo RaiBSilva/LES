@@ -14,6 +14,7 @@ namespace LES.Models.ViewModel.Carrinho
         public CupomModel Cupom { get; set; }
         public CodigoPromocionalModel CodigoPromo { get; set; }
         public CarrinhoModel Pedido {get;set;}
+        public double Frete { get; set; }
 
     }
 }

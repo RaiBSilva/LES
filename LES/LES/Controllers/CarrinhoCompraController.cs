@@ -86,8 +86,12 @@ namespace LES.Views.CarrinhoCompra
                     });
             pedNaoFinalizado.Status = StatusPedidos.NaoFinalizado;
 
-            if(naoTemPedido)
+            pedNaoFinalizado.Frete = Convert.ToDouble(GetFretePrazo(pedNaoFinalizado)["Frete"]);
+
+            if (naoTemPedido)
                 clienteDb.Pedidos.Add(pedNaoFinalizado);
+
+
             _facade.Editar(clienteDb);
 
             //PREPARAÇÃO DO VIEWMODEL
@@ -100,10 +104,13 @@ namespace LES.Views.CarrinhoCompra
             {
                 [typeof(Endereco).Name] = pedNaoFinalizado.Endereco,
                 [typeof(IDictionary<CartaoCredito, double>).Name] = dicCartoes,
-                [typeof(Carrinho).Name] = carrinho
+                [typeof(Carrinho).Name] = carrinho,
+                [nameof(Pedido.Frete)] = pedNaoFinalizado.Frete
             };
             if (pedNaoFinalizado.Cupom != null)
                 entidades[typeof(Cupom).Name] = pedNaoFinalizado.Cupom;
+            if (pedNaoFinalizado.CodigoPromocional != null)
+                entidades[typeof(CodigoPromocional).Name] = pedNaoFinalizado.CodigoPromocional;
 
             _vh = new PaginaFinalizarCompraViewHelper
             {
@@ -747,10 +754,11 @@ namespace LES.Views.CarrinhoCompra
             XmlNodeList frete = myXml.GetElementsByTagName("Valor");
             XmlNodeList prazo = myXml.GetElementsByTagName("PrazoEntrega");
 
-            Dictionary<string, string> parametros = new Dictionary<string, string>();
-
-            parametros.Add("Frete", frete.Item(0).InnerText);
-            parametros.Add("Prazo", prazo.Item(0).InnerText);
+            Dictionary<string, string> parametros = new Dictionary<string, string>
+            {
+                { "Frete", frete.Item(0).InnerText },
+                { "Prazo", prazo.Item(0).InnerText }
+            };
 
             return parametros;
         }

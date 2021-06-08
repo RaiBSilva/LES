@@ -13,6 +13,7 @@ namespace LES.Models.Entity
         public int? CodigoId { get; set; }
         public int? CupomId { get; set; }
         public int EnderecoId { get; set; }
+        public double Frete { get; set; }
         public StatusPedidos Status { get; set; }
         public double ValorTotal { get; set; }
 
@@ -35,7 +36,7 @@ namespace LES.Models.Entity
             if (CodigoPromocional != null)
                 val -= CodigoPromocional.Valor;
 
-            return val;
+            return val + Frete;
         }
 
     }

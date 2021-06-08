@@ -18,6 +18,7 @@ namespace LES.Models.ViewHelpers.Admin
             IList<Livro> livros = (IList<Livro>)Entidades[typeof(IList<Livro>).FullName];
             IList<CategoriaLivro> categorias = (IList<CategoriaLivro>)Entidades[typeof(IList<CategoriaLivro>).FullName];
             IList<GrupoPreco> grupoprecos = (IList<GrupoPreco>)Entidades[typeof(IList<GrupoPreco>).FullName];
+            IList<CodigoPromocional> codigos = (IList<CodigoPromocional>)Entidades[typeof(IList<CodigoPromocional>).FullName];
 
             ListaCategoriaLivroViewHelper ctgVh = new ListaCategoriaLivroViewHelper
             {
@@ -49,11 +50,22 @@ namespace LES.Models.ViewHelpers.Admin
                 }
             };
 
+            ListaCodigosPromoViewHelper codigoVh = new ListaCodigosPromoViewHelper
+            {
+                Entidades = new Dictionary<string, object>
+                {
+                    [typeof(IList<CodigoPromocional>).FullName] = codigos,
+                    [nameof(ListaCodigosPromoModel.PagAtual)] = 1,
+                    [nameof(ListaCodigosPromoModel.PagMax)] = 1
+                }
+            };
+
             PaginaConfigLojaModel vm = new PaginaConfigLojaModel
             {
                 Categorias = (ListaCategoriaLivroModel)ctgVh.ViewModel,
                 GrupoPrecos = (ListaGrupoPrecoModel)grpVh.ViewModel,
-                Livros = (ListaAdminLivroModel)livroVh.ViewModel
+                Livros = (ListaAdminLivroModel)livroVh.ViewModel,
+                Codigos = (ListaCodigosPromoModel)codigoVh.ViewModel
             };
 
             _viewModel = vm;

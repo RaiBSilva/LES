@@ -18,6 +18,8 @@ namespace LES.Negócio.Strategy.PedidoStrategy
             foreach (var item in p.LivrosPedidos)
                 valorTotal += item.Livro.Valor;
 
+            valorTotal += p.Frete;
+
             if (p.Cupom != null)
                 valorTotal -= p.Cupom.Valor;
 

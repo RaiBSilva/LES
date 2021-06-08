@@ -12,6 +12,6 @@ namespace LES.Models.Entity
         public int UsosRestantes { get; set; }
         public double Valor { get; set; }
 
-        public virtual Pedido Pedido { get; set; }
+        public virtual IList<Pedido> Pedido { get; set; } = new List<Pedido>();
     }
 }

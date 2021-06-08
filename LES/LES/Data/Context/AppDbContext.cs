@@ -777,6 +777,11 @@ namespace LES.Models
                 .IsRequired();
 
             modelBuilder.Entity<Pedido>()
+                .Property(p => p.Frete)
+                .HasColumnName(tri + "_frete")
+                .IsRequired();
+
+            modelBuilder.Entity<Pedido>()
                 .Property(p => p.Status)
                 .HasColumnName(tri + "_status")
                 .IsRequired();
@@ -794,8 +799,8 @@ namespace LES.Models
 
             modelBuilder.Entity<Pedido>()
                 .HasOne(p => p.CodigoPromocional)
-                .WithOne(c => c.Pedido)
-                .HasForeignKey<Pedido>(p => p.CodigoId)
+                .WithMany(c => c.Pedido)
+                .HasForeignKey(p => p.CodigoId)
                 .HasConstraintName("FK_" + tri.ToUpper() + "_COD");
 
             modelBuilder.Entity<Pedido>()

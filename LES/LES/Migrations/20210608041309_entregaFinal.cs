@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace LES.Migrations
 {
-    public partial class db_entregaFinal : Migration
+    public partial class entregaFinal : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -214,6 +214,7 @@ namespace LES.Migrations
                     liv_gpp_id = table.Column<int>(type: "int", nullable: false),
                     liv_isbn = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     liv_largura = table.Column<int>(type: "int", nullable: false),
+                    liv_maior_custo = table.Column<double>(type: "float", nullable: false),
                     liv_num_pag = table.Column<int>(type: "int", nullable: false),
                     liv_peso = table.Column<double>(type: "float", nullable: false),
                     liv_sinopse = table.Column<string>(type: "nvarchar(max)", nullable: false),
@@ -285,7 +286,7 @@ namespace LES.Migrations
                         column: x => x.cli_crr_id,
                         principalTable: "CARRINHOS",
                         principalColumn: "crr_id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.SetNull);
                     table.ForeignKey(
                         name: "FK_CLI_USU",
                         column: x => x.cli_usu_id,
@@ -560,9 +561,10 @@ namespace LES.Migrations
                     ped_id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     ped_cli_id = table.Column<int>(type: "int", nullable: false),
-                    ped_ped_id = table.Column<int>(type: "int", nullable: true),
+                    ped_cod_id = table.Column<int>(type: "int", nullable: true),
                     ped_cup_id = table.Column<int>(type: "int", nullable: true),
                     ped_end_id = table.Column<int>(type: "int", nullable: false),
+                    ped_frete = table.Column<double>(type: "float", nullable: false),
                     ped_status = table.Column<int>(type: "int", nullable: false),
                     ped_valor_total = table.Column<double>(type: "float", nullable: false),
                     ped_dt_cadastro = table.Column<DateTime>(type: "datetime2", nullable: false),
@@ -579,7 +581,7 @@ namespace LES.Migrations
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_PED_COD",
-                        column: x => x.ped_ped_id,
+                        column: x => x.ped_cod_id,
                         principalTable: "CODIGOS",
                         principalColumn: "cod_id",
                         onDelete: ReferentialAction.Restrict);
@@ -790,6 +792,11 @@ namespace LES.Migrations
                 column: "ped_cli_id");
 
             migrationBuilder.CreateIndex(
+                name: "IX_PEDIDOS_ped_cod_id",
+                table: "PEDIDOS",
+                column: "ped_cod_id");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_PEDIDOS_ped_cup_id",
                 table: "PEDIDOS",
                 column: "ped_cup_id",
@@ -800,13 +807,6 @@ namespace LES.Migrations
                 name: "IX_PEDIDOS_ped_end_id",
                 table: "PEDIDOS",
                 column: "ped_end_id");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_PEDIDOS_ped_ped_id",
-                table: "PEDIDOS",
-                column: "ped_ped_id",
-                unique: true,
-                filter: "[ped_ped_id] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
                 name: "IX_TELEFONES_tel_cli_id",

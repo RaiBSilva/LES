@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace LES.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20210604004155_correcao")]
-    partial class correcao
+    [Migration("20210608041309_entregaFinal")]
+    partial class entregaFinal
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -751,6 +751,11 @@ namespace LES.Migrations
                         .HasColumnType("int")
                         .HasColumnName("liv_largura");
 
+                    b.Property<double?>("MaiorCusto")
+                        .IsRequired()
+                        .HasColumnType("float")
+                        .HasColumnName("liv_maior_custo");
+
                     b.Property<int>("Paginas")
                         .HasColumnType("int")
                         .HasColumnName("liv_num_pag");
@@ -890,6 +895,10 @@ namespace LES.Migrations
                         .HasColumnType("int")
                         .HasColumnName("ped_end_id");
 
+                    b.Property<double>("Frete")
+                        .HasColumnType("float")
+                        .HasColumnName("ped_frete");
+
                     b.Property<bool>("Inativo")
                         .HasColumnType("bit")
                         .HasColumnName("ped_inativo");
@@ -907,9 +916,7 @@ namespace LES.Migrations
 
                     b.HasIndex("ClienteId");
 
-                    b.HasIndex("CodigoId")
-                        .IsUnique()
-                        .HasFilter("[ped_cod_id] IS NOT NULL");
+                    b.HasIndex("CodigoId");
 
                     b.HasIndex("CupomId")
                         .IsUnique()
@@ -1198,7 +1205,8 @@ namespace LES.Migrations
                     b.HasOne("LES.Models.Entity.Carrinho", "Carrinho")
                         .WithOne("Cliente")
                         .HasForeignKey("LES.Models.Entity.Cliente", "CarrinhoId")
-                        .HasConstraintName("FK_CLI_CRR");
+                        .HasConstraintName("FK_CLI_CRR")
+                        .OnDelete(DeleteBehavior.SetNull);
 
                     b.HasOne("LES.Models.Entity.Usuario", "Usuario")
                         .WithOne("Cliente")
@@ -1360,8 +1368,8 @@ namespace LES.Migrations
                         .IsRequired();
 
                     b.HasOne("LES.Models.Entity.CodigoPromocional", "CodigoPromocional")
-                        .WithOne("Pedido")
-                        .HasForeignKey("LES.Models.Entity.Pedido", "CodigoId")
+                        .WithMany("Pedido")
+                        .HasForeignKey("CodigoId")
                         .HasConstraintName("FK_PED_COD");
 
                     b.HasOne("LES.Models.Entity.Cupom", "Cupom")

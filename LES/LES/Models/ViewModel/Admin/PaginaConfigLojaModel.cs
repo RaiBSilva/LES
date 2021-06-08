@@ -10,6 +10,7 @@ namespace LES.Models.ViewModel.Admin
         public ListaCategoriaLivroModel Categorias { get; set; }
         public ListaGrupoPrecoModel GrupoPrecos { get; set; }
         public ListaAdminLivroModel Livros { get; set; }
+        public ListaCodigosPromoModel Codigos { get; set; }
 
     }
 }
