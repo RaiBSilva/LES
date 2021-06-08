@@ -43,6 +43,7 @@ namespace LES.Models.ViewHelpers.Admin
                 var fileBytes = ms.ToArray();
                 l.Capa = fileBytes;
             }
+            else livro.Capa = null;
 
             IList<LivroCategoriaLivro> categorias = new List<LivroCategoriaLivro>();
 

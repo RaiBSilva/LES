@@ -3,6 +3,7 @@ using LES.Models;
 using LES.Models.Entity;
 using LES.Negocio.Strategy;
 using LES.Negócio.Strategy.ClienteStrategy;
+using LES.Negócio.Strategy.LivroStrategy;
 using LES.Negócio.Strategy.PedidoStrategy;
 using Microsoft.AspNetCore.Mvc.Formatters;
 using System;
@@ -50,7 +51,11 @@ namespace LES.Controllers.Facade
                     new ValidarValoresCartao(),
                     new ValidarValorTotal()
                 },
-                [typeof(Livro).Name] = new List<IStrategy>(),
+                [typeof(Livro).Name] = new List<IStrategy>
+                {
+                    new ValidaLivroNull(),
+                    new ValidaDtLancamentoStrategy()
+                },
                 [typeof(LivroPedido).Name] = new List<IStrategy>(),
                 [typeof(Troca).Name] = new List<IStrategy>()
             };
@@ -63,7 +68,8 @@ namespace LES.Controllers.Facade
                 [typeof(Carrinho).Name] = new DAOCarrinho<Carrinho>(_contexto),
                 [typeof(Livro).Name] = new DAOLivro<Livro>(_contexto),
                 [typeof(Pedido).Name] = new DAOPedido<Pedido>(_contexto),
-                [typeof(Troca).Name] = new DAOTroca<Troca>(_contexto)
+                [typeof(Troca).Name] = new DAOTroca<Troca>(_contexto),
+                [typeof(GrupoPreco).Name] = new DAOGrupoPreco<GrupoPreco>(_contexto)
             };
 
             _daosListIncludeAll = new Dictionary<string, IListIncludeAll>

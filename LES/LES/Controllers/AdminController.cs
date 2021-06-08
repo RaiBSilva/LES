@@ -607,7 +607,7 @@ namespace LES.Controllers
             ListaAdminLivroModel vm = (ListaAdminLivroModel)_vh.ViewModel;
             vm.Filtros = f;
 
-            return PartialView("../Admin/PartialViews/_TabelaTrocasPartial", vm);
+            return PartialView("../Admin/PartialViews/_TabelaLivrosConfigPartial", vm);
         }
 
         #endregion
@@ -700,6 +700,41 @@ namespace LES.Controllers
                 TempData["Alert"] = msg;
 
             return RedirectToAction(nameof(ConfigLoja));
+        }
+
+        [HttpPost]
+        public IActionResult _CategoriasBusca(string json)
+        {
+            JObject o = JObject.Parse(json);
+
+            FiltrosCategoriasModel f = o.ToObject<FiltrosCategoriasModel>();
+
+            IEnumerable<CategoriaLivro> ctgs = _facade.Listar<CategoriaLivro>();
+
+            ctgs = f.Id != 0 ? ctgs.Where(t => t.Id == f.Id) : ctgs;
+
+            ctgs = !string.IsNullOrEmpty(f.Nome) ?
+                ctgs.Where(c => c.Nome.Contains(f.Nome)) : ctgs;
+
+            ctgs = f.IncluiInativados ?
+                ctgs : ctgs.Where(l => !l.Inativo);
+
+            ctgs = f.PagAtual > 0 ? ctgs.Skip((f.PagAtual - 1) * 10) : ctgs;
+
+            _vh = new ListaCategoriaLivroViewHelper
+            {
+                Entidades = new Dictionary<string, object>
+                {
+                    [typeof(IList<Livro>).FullName] = ctgs.Take(10).ToList(),
+                    [nameof(ListaCategoriaLivroModel.PagAtual)] = 1,
+                    [nameof(ListaCategoriaLivroModel.PagMax)] = (ctgs.Count() / 10) + 1
+                }
+            };
+
+            ListaCategoriaLivroModel vm = (ListaCategoriaLivroModel)_vh.ViewModel;
+            vm.Filtros = f;
+
+            return PartialView("../Admin/PartialViews/_TabelaCategoriasConfigPartial", vm);
         }
 
         #endregion
@@ -807,6 +842,47 @@ namespace LES.Controllers
             string msg = _facade.Editar(grpDb);
 
             return RedirectToAction(nameof(ConfigLoja));
+        }
+
+        [HttpPost]
+        public IActionResult _GrupoPrecosBusca(string json)
+        {
+            JObject o = JObject.Parse(json);
+
+            FiltrosGrupoPrecoModel f = o.ToObject<FiltrosGrupoPrecoModel>();
+
+            IEnumerable<GrupoPreco> grps = _facade.Listar<GrupoPreco>();
+
+            grps = f.Id != 0 ? grps.Where(t => t.Id == f.Id) : grps;
+
+            grps = !string.IsNullOrEmpty(f.Nome) ?
+                grps.Where(c => c.Nome.Contains(f.Nome)) : grps;
+
+            grps = f.IncluiInativo ?
+                grps : grps.Where(l => !l.Inativo);
+
+            grps = f.MargemMin > 0 ?
+                grps.Where(g => g.MargemLucro >= f.MargemMin) : grps;
+
+            grps = f.MargemMax > 0 ?
+                grps.Where(g => g.MargemLucro <= f.MargemMax) : grps;
+
+            grps = f.PagAtual > 0 ? grps.Skip((f.PagAtual - 1) * 10) : grps;
+
+            _vh = new ListaGrupoPrecoViewHelper
+            {
+                Entidades = new Dictionary<string, object>
+                {
+                    [typeof(IList<Livro>).FullName] = grps.Take(10).ToList(),
+                    [nameof(ListaGrupoPrecoModel.PagAtual)] = 1,
+                    [nameof(ListaGrupoPrecoModel.PagMax)] = (grps.Count() / 10) + 1
+                }
+            };
+
+            ListaGrupoPrecoModel vm = (ListaGrupoPrecoModel)_vh.ViewModel;
+            vm.Filtros = f;
+
+            return PartialView("../Admin/PartialViews/_TabelaGrupoPrecosConfigPartial", vm);
         }
 
         #endregion

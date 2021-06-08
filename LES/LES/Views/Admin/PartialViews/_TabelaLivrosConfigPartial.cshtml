@@ -23,27 +23,27 @@
                 </tr>
                 <tr>
                     <th scope="col">
-                        <input id="filtroLivrosId" class="form-control" placeholder="1..." />
+                        <input id="filtroLivId" class="form-control" placeholder="1..." />
                     </th>
                     <th scope="col">
                     </th>
                     <th scope="col">
-                        <input id="filtroLivrosTitulo" class="form-control" placeholder="Memórias Póstumas.../Machado de Assis..." />
+                        <input id="filtroLivTituloAutor" class="form-control" placeholder="Memórias Póstumas.../Machado de Assis..." />
                     </th>
                     <th scope="col">
-                        De <input id="filtroValorMin" class="form-control" type="number" step="0.01" min="0" placeholder="R$ 13,40..." />
-                        Até <input id="filtroValorMax" class="form-control" type="number" step="0.01" min="0" placeholder="R$ 13,40..." />
+                        De <input id="filtroLivValorMin" class="form-control" type="number" step="0.01" min="0" placeholder="R$ 13,40..." />
+                        Até <input id="filtroLivValorMax" class="form-control" type="number" step="0.01" min="0" placeholder="R$ 13,40..." />
                     </th>
                     <th scope="col">
-                        De <input id="filtroEstoqueMin" class="form-control" type="number" min="0" placeholder="15" />
-                        Até <input id="filtroEstoqueMax" class="form-control" type="number" min="0" placeholder="30" />
+                        <label for="filtroLivCategorias" class="form-check-label">Categorias</label>
+                        <input id="filtroLivCategorias" class="form-control" placeholder="Romance..." />
                     </th>
                     <th scope="col">
-                        <input id="filtroLivrosInativado" class="form-check-input" type="checkbox" />
-                        <label for="filtroLivrosInativado" class="form-check-label">Incluir inativados?</label>
+                        <input id="filtroLivInativado" class="form-check-input" type="checkbox" />
+                        <label for="filtroLivInativado" class="form-check-label">Incluir inativados?</label>
                     </th>
                     <th scope="col">
-                        <button class="btn btn-primary btnBuscarLivro">Buscar</button>
+                        <button class="btn btn-primary btnBuscarLiv">Buscar</button>
                     </th>
                 </tr>
             </thead>
@@ -54,7 +54,7 @@
                     <tr>
                         <th scope="row">@livro.Id</th>
                         <td>
-                            <img src="~/img/the-Winds-of-Winter-cover.jpg" style="max-height:2rem" />
+                            <img src="@Url.Action("Livro","Imagem")?codBar=@livro.CodigoBarras" class="capa-carrinho" style="max-height:2rem"/>
                         </td>
                         <td><span class="font-weight-bold">@livro.Titulo</span> por @livro.Autor</td>
                         <td>R$ @livro.Preco.ToString("0.00").Replace(".", ".")</td>
@@ -70,19 +70,29 @@
             </tbody>
         </table>
         <nav aria-label="Paginação">
-            <ul class="pagination">
-                <li class="page-item">
-                    <a class="page-link" href="#" aria-label="Previous">
+            <ul class="pagination justify-content-center">
+                <li class="page-item @if (Model.PagAtual == 1) {<text> disabled </text> }">
+                    <button type="button" class="page-link btnPageLiv" aria-label="Previous" value="@(Model.PagAtual-1)" @if (Model.PagAtual == 1) { <text> disabled </text> }>
                         <span aria-hidden="true">&laquo;</span>
-                        <span class="sr-only">Previous</span>
-                    </a>
+                        <span class="sr-only">Anterior</span>
+                    </button>
                 </li>
-                <li class="page-item"><a class="page-link" href="#">1</a></li>
-                <li class="page-item">
-                    <a class="page-link" href="#" aria-label="Next">
+                @for (int i = 1; i <= Model.PagMax; i++)
+                {
+                    string active = "";
+                    @if (i == Model.PagAtual) { active = "active"; }
+                    else { active = ""; }
+                    <li class="page-item @active">
+                        <button type="button" class="page-link btnPageLiv" value="@i"> @i </button>
+                        @if (i == Model.PagAtual)
+                        {<span class="sr-only">(current)</span>}
+                    </li>
+                }
+                <li class="page-item @if (Model.PagAtual == Model.PagMax) {<text> disabled </text> }">
+                    <button type="button" class="page-link btnPageLiv" aria-label="Next" value="@(Model.PagAtual+1)" @if (Model.PagAtual == Model.PagMax) { <text> disabled </text> }>
                         <span aria-hidden="true">&raquo;</span>
-                        <span class="sr-only">Next</span>
-                    </a>
+                        <span class="sr-only">Próxima</span>
+                    </button>
                 </li>
             </ul>
         </nav>

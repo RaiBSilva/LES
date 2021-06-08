@@ -625,6 +625,11 @@ namespace LES.Models
                 .IsRequired();
 
             modelBuilder.Entity<Livro>()
+                .Property(l => l.MaiorCusto)
+                .HasColumnName(tri + "_maior_custo")
+                .IsRequired();
+
+            modelBuilder.Entity<Livro>()
                 .Property(l => l.Paginas)
                 .HasColumnName(tri + "_num_pag")
                 .IsRequired();

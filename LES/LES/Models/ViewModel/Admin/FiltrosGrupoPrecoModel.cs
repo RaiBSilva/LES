@@ -12,5 +12,6 @@ namespace LES.Models.ViewModel.Admin
         public double MargemMin { get; set; }
         public double MargemMax { get; set; }
         public bool IncluiInativo { get; set; }
+        public int PagAtual { get; set; }
     }
 }

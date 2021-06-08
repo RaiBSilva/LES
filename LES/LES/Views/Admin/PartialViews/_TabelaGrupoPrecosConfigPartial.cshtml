@@ -1,4 +1,4 @@
-﻿@model IList<LES.Models.ViewModel.Admin.AdminGrupoPrecoModel>
+﻿@model LES.Models.ViewModel.Admin.ListaGrupoPrecoModel
 
 <div class="row mb-2">
     <div class="col-sm-12">
@@ -8,7 +8,7 @@
     </div>
 </div>
 
-@if(Model.Count > 0) {
+@if(Model.GrupoPrecos.Count > 0) {
     <div class="row">
         <table class="table table-striped">
             <thead class="thead-dark">
@@ -21,18 +21,18 @@
                 </tr>
                 <tr>
                     <th>
-                        <input id="filtroGruposId" class="form-control" placeholder="1..." />
+                        <input id="filtroGrpId" class="form-control" placeholder="1..." />
                     </th>
                     <th>
-                        <input id="filtroGruposNome" class="form-control" placeholder="Best-Sellers..." />
+                        <input id="filtroGrpNome" class="form-control" placeholder="Best-Sellers..." />
                     </th>
                     <th>
-                        De <input id="filtroMargemMin" class="form-control" type="number" min="0" placeholder="1..." />%
-                        Até <input id="filtroMargemMax" class="form-control" type="number" min="0" placeholder="100..." />%
+                        De <input id="filtroGrpMargemMin" class="form-control" type="number" min="0" placeholder="1..." />%
+                        Até <input id="filtroGrpMargemMax" class="form-control" type="number" min="0" placeholder="100..." />%
                     </th>
                     <th>
-                        <input id="filtroGruposInativado" class="form-check-input" type="checkbox" />
-                        <label for="filtroGruposInativado" class="form-check-label">Incluir inativados?</label>
+                        <input id="filtroGrpInativado" class="form-check-input" type="checkbox" />
+                        <label for="filtroGrpInativado" class="form-check-label">Incluir inativados?</label>
                     </th>
                     <th>
                         <button class="btn btn-primary btnBuscarCategoria">Buscar</button>
@@ -40,7 +40,7 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach (var item in Model) {
+                @foreach (var item in Model.GrupoPrecos) {
                     <tr>
                         <th scope="row">
                             @item.Id
@@ -64,19 +64,29 @@
     </div>
     <div class="row">
         <nav aria-label="Paginação">
-            <ul class="pagination">
-                <li class="page-item">
-                    <a class="page-link" href="#" aria-label="Previous">
+            <ul class="pagination justify-content-center">
+                <li class="page-item @if (Model.PagAtual == 1) {<text> disabled </text> }">
+                    <button type="button" class="page-link btnPageGrp" aria-label="Previous" value="@(Model.PagAtual-1)" @if (Model.PagAtual == 1) { <text> disabled </text> }>
                         <span aria-hidden="true">&laquo;</span>
-                        <span class="sr-only">Previous</span>
-                    </a>
+                        <span class="sr-only">Anterior</span>
+                    </button>
                 </li>
-                <li class="page-item"><a class="page-link" href="#">1</a></li>
-                <li class="page-item">
-                    <a class="page-link" href="#" aria-label="Next">
+                @for (int i = 1; i <= Model.PagMax; i++)
+                {
+                    string active = "";
+                    @if (i == Model.PagAtual) { active = "active"; }
+                    else { active = ""; }
+                    <li class="page-item @active">
+                        <button type="button" class="page-link btnPageGrp" value="@i"> @i </button>
+                        @if (i == Model.PagAtual)
+                        {<span class="sr-only">(current)</span>}
+                    </li>
+                }
+                <li class="page-item @if (Model.PagAtual == Model.PagMax) {<text> disabled </text> }">
+                    <button type="button" class="page-link btnPageGrp" aria-label="Next" value="@(Model.PagAtual+1)" @if (Model.PagAtual == Model.PagMax) { <text> disabled </text> }>
                         <span aria-hidden="true">&raquo;</span>
-                        <span class="sr-only">Next</span>
-                    </a>
+                        <span class="sr-only">Próxima</span>
+                    </button>
                 </li>
             </ul>
         </nav>

@@ -17,7 +17,9 @@ namespace LES.Negócio.Strategy.LivroStrategy
 
             if (string.IsNullOrEmpty(book.Autor)) sb.Append("O campo Autor é obrigatório.;");
 
-            if (string.IsNullOrEmpty(book.CodigoBarras)) sb.Append("O códifo de barras é obrigatório.;");
+            if (string.IsNullOrEmpty(book.CodigoBarras)) sb.Append("O código de barras é obrigatório.;");
+
+            if (book.Capa == null || book.Capa.Length == 0) sb.Append("Por favor selecionar uma capa válida.");
 
             if (book.Editora is null) sb.Append("É necessário informar uma editora.;");
 

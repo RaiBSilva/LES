@@ -130,6 +130,29 @@ namespace LES.Views.CarrinhoCompra
 
             p.ValorTotal = p.CalcularValorTotal();
 
+            if(p.Cupom != null || p.CodigoPromocional != null)
+            {
+                Cupom cupom = p.Cupom ?? new Cupom { Valor = 0 };
+                CodigoPromocional codigo = p.CodigoPromocional ?? new CodigoPromocional { Valor = 0};
+
+                if(cupom.Valor + codigo.Valor >= p.ValorTotal)
+                {
+                    foreach(var cupomCliente in clienteDb.Cupons)
+                    {
+                        if (cupomCliente.Valor + codigo.Valor < p.ValorTotal) 
+                        {
+                            TempData["Alert"] = "Você possui um cupom de troca que não ultrapassa o valor máximo. Use ele ao invés do atual!\n.";
+                            return RedirectToAction(nameof(FinalizarCompra));
+                        }
+                    }
+                    var diferenca = cupom.Valor + codigo.Valor - p.ValorTotal;
+                    if(diferenca > 0)
+                    {
+                        addCupom(clienteDb, diferenca);
+                    }
+                }
+            }
+
             //Cupom
             if (p.Cupom != null)
             { 
@@ -152,13 +175,20 @@ namespace LES.Views.CarrinhoCompra
                 var quantiaPedido = p.LivrosPedidos.Where(l => l.LivroId == livro.Id).Count();
                 livro.EstoqueBloqueado -= quantiaPedido;
                 livro.Estoque -= quantiaPedido;
+
+                //Inativação Automática de Livros fora de estoque
+                if (livro.Estoque <= 0) 
+                { 
+                    livro.Inativo = true;
+                    livro.Inativacoes.Add(new Inativacao { CategoriaId = 1, LivroId = livro.Id });
+                }
             }
 
             p.Status = StatusPedidos.Processamento;
             string msg = _facade.Editar(p);
 
             //Limpar Carrinho (feito decrescente pois estou removendo da lista)
-            _facade.Deletar(c);
+            msg += _facade.Deletar(c);
 
             if (msg != "")
                 TempData["Alert"] = msg;
@@ -628,6 +658,29 @@ namespace LES.Views.CarrinhoCompra
         #endregion
 
         #region Utilidades
+        public void addCupom(Cliente c, double valor)
+        {
+            Cupom cupom = new Cupom { Cliente = c, Valor = valor };
+
+            Random rnd = new Random();
+
+            while (true)
+            {
+                int codigo = rnd.Next(0, 1000000);
+                var items = _facade.Query<Cupom>(
+                    c => Convert.ToInt32(c.Codigo) == codigo,
+                    c => c);
+
+                if (items.Count() == 0)
+                {
+                    cupom.Codigo = codigo.ToString("D7");
+                    break;
+                }
+                codigo = rnd.Next(0, 1000000); ;
+            }
+
+            c.Cupons.Add(cupom);
+        }
 
         private Cliente GetClienteDb() 
         {
