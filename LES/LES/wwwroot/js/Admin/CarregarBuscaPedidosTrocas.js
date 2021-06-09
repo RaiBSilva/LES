@@ -1,8 +1,6 @@
 ﻿function atualizarLista(pag, tabela) {
     if (pag === undefined) pag = 1;
 
-    alert(tabela);
-
     var divTabela = $("#" + tabela);
 
     var trigrama = tabela.substring(0, 3);

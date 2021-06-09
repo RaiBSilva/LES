@@ -2,6 +2,7 @@
 using LES.Models;
 using LES.Models.Entity;
 using LES.Negocio.Strategy;
+using LES.Negócio.Strategy.AtivacaoStrategy;
 using LES.Negócio.Strategy.ClienteStrategy;
 using LES.Negócio.Strategy.LivroStrategy;
 using LES.Negócio.Strategy.PedidoStrategy;
@@ -60,7 +61,11 @@ namespace LES.Controllers.Facade
                 [typeof(Troca).Name] = new List<IStrategy>(),
                 [typeof(CategoriaLivro).Name] = new List<IStrategy>(),
                 [typeof(GrupoPreco).Name] = new List<IStrategy>(),
-                [typeof(CodigoPromocional).Name] = new List<IStrategy>()
+                [typeof(CodigoPromocional).Name] = new List<IStrategy>(),
+                [typeof(Inativacao).Name] = new List<IStrategy>(),
+                [typeof(Ativacao).Name] = new List<IStrategy>{
+                    new ValidaEstoqueAtivacao()
+                }
             };
         }
         private void DefinirDAOs()

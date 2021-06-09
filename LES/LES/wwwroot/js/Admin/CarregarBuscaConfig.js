@@ -1,14 +1,12 @@
 ﻿function atualizarLista(pag, tabela) {
     if (pag === undefined) pag = 1;
 
-    alert(tabela);
-
     var divTabela = $("#" + tabela);
 
     var Pesquisar;
     var filtros;
 
-    if (tabela = "Livros") {
+    if (tabela == "Livros") {
         Pesquisar = urls.BuscarLivros;
         filtros = JSON.stringify({
             Id: $("#filtroLivId").val(),
@@ -16,11 +14,11 @@
             ValorMin: $("#filtroLivValorMin").val(),
             ValorMax: $("#filtroLivValorMax").val(),
             Categorias: $("#filtroLivCategorias").val(),
-            IncluiInativos: $("#filtroLivInativos").is(":checked"),
+            IncluiInativos: $("#filtroLivInativado").is(":checked"),
             PagAtual: pag
         });
     }
-    if (tabela = "Categorias") {
+    if (tabela == "Categorias") {
         Pesquisar = urls.BuscarCategorias;
         filtros = JSON.stringify({
             Id: $("#filtroCatId").val(),
@@ -29,8 +27,8 @@
             PagAtual: pag
         });
     }
-    if (tabela = "Grupos") {
-        Pesquisar = urls.BuscarGrupos
+    if (tabela == "Grupos") {
+        Pesquisar = urls.BuscarGrupos;
         filtros = JSON.stringify({
             Id: $("#filtroGrpId").val(),
             Nome: $("#filtroGrpNome").val(),
@@ -41,8 +39,8 @@
         });
 
     }
-    if (tabela = "Codigos") {
-        Pesquisar = urls.BuscarGrupos
+    if (tabela == "Codigos") {
+        Pesquisar = urls.BuscarCodigo;
         filtros = JSON.stringify({
             Id: $("#filtroCodId").val(),
             Codigo: $("#filtroCodNome").val(),
@@ -58,6 +56,8 @@
         {
             json: filtros
         }, function () {
+            criaTriggers();
+
             $('.btnBuscarLiv').unbind('click');
             $('.btnPageLiv').unbind('click');
             $('.btnBuscarCat').unbind('click');

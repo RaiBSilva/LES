@@ -562,15 +562,20 @@ namespace LES.Controllers
         public IActionResult InativarReativarLivro(InativarLivroModel model)
         {
             Livro l = _facade.GetAllInclude(new Livro { CodigoBarras = model.CodigoBarras});
+            string msg;
 
             if (l.Inativo)
-                l.Ativacoes.Add(new Ativacao { CategoriaId = model.Motivo, LivroId = l.Id});
+            {
+                l.Inativo = !l.Inativo;
+                Ativacao a = new Ativacao { CategoriaId = model.Motivo, Livro = l};
+                msg = _facade.Cadastrar(a);
+            }
             else
-                l.Inativacoes.Add(new Inativacao { CategoriaId = model.Motivo, LivroId = l.Id, });
-
-            l.Inativo = !l.Inativo;
-
-            string msg = _facade.Editar(l);
+            {
+                l.Inativo = !l.Inativo;
+                Inativacao i = new Inativacao { CategoriaId = model.Motivo, Livro = l };
+                msg = _facade.Cadastrar(i);
+            }
 
             if (!String.IsNullOrEmpty(msg))
                 TempData["Alert"] = msg;
@@ -901,7 +906,7 @@ namespace LES.Controllers
             {
                 Entidades = new Dictionary<string, object>
                 {
-                    [typeof(IList<Livro>).FullName] = grps.Take(10).ToList(),
+                    [typeof(IList<GrupoPreco>).FullName] = grps.Take(10).ToList(),
                     [nameof(ListaGrupoPrecoModel.PagAtual)] = 1,
                     [nameof(ListaGrupoPrecoModel.PagMax)] = (grps.Count() / 10) + 1
                 }
