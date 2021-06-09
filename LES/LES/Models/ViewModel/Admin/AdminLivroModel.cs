@@ -13,13 +13,13 @@ namespace LES.Models.ViewModel.Admin
     {
         public int Estoque { get; set; }
         public int Id { get; set; }
-
+        public bool Inativo { get; set; }
         public GrupoPrecoModel GrupoPreco { get; set; } = new GrupoPrecoModel();
 
         [Display(Name ="Grupo de preços")]
         public int GrupoPrecoId { get; set; }
         [Display(Name ="Categorias")]
-        public IEnumerable<int> CategoriasIds { get; set; }
+        public int[] CategoriasIds { get; set; }
         public IFormFile Capa { get; set; }
 
         public IList<GrupoPreco> SelectGrupoPrecos { get; set; }

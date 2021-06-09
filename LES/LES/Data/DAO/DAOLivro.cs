@@ -29,6 +29,7 @@ namespace LES.Data.DAO
                 .Include(l => l.Editora)
                 .Include(l => l.GrupoPreco)
                 .Include(l => l.LivroPedidos)
+                    .ThenInclude(l => l.Pedido)
                 .Include(l => l.LivrosCategoriaLivros)
                     .ThenInclude(l => l.CategoriaLivro).FirstOrDefault();
 
@@ -45,6 +46,7 @@ namespace LES.Data.DAO
                 .Include(l => l.Editora)
                 .Include(l => l.GrupoPreco)
                 .Include(l => l.LivroPedidos)
+                    .ThenInclude(l => l.Pedido)
                 .Include(l => l.LivrosCategoriaLivros)
                     .ThenInclude(l => l.CategoriaLivro).Cast<EntidadeDominio>().ToList();
 

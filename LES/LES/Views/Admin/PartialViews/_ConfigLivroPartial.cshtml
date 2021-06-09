@@ -61,7 +61,7 @@
                             </div>
                             <div class="col-4">
                                 <label asp-for="CodigoBarras" class="font-weight-light"></label>
-                                <input asp-for="CodigoBarras" class="form-control required" value="" />
+                                <input asp-for="CodigoBarras" class="form-control required" readonly>
                                 <span asp-validation-for="CodigoBarras" class="text-danger required"></span>
                             </div>
                         </div>
@@ -76,7 +76,7 @@
                     </div>
 
                     <div class="modal-footer">
-                        <button type="submit" class="btn btn-primary" data-dismiss="modal">@operacao</button>
+                        <button type="submit" class="btn btn-primary">@operacao</button>
                         <button type="button" class="btn btn-default" data-dismiss="modal">Sair</button>
                     </div>
                 </form>

@@ -27,7 +27,7 @@ namespace LES.Controllers
 
         public IActionResult Loja()
         {
-            IList<Livro> livros = _facade.ListAllInclude<Livro>().OrderBy(l => l.Titulo).ToList();
+            IList<Livro> livros = _facade.ListAllInclude<Livro>().OrderBy(l => l.Titulo).Where(l => !l.Inativo).ToList();
 
             _vh = new PaginaLojaViewHelper 
             {
@@ -54,7 +54,7 @@ namespace LES.Controllers
             LojaFiltrosModel filtros = o.ToObject<LojaFiltrosModel>();
 
             IEnumerable<Livro> livros = _facade.ListAllInclude<Livro>()
-                .Where(l => l.Inativo == false)
+                .Where(l => !l.Inativo)
                 .OrderBy(l => l.Titulo);
 
             if (!String.IsNullOrEmpty(filtros.Titulo))

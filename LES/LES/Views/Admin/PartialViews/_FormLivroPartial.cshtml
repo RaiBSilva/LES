@@ -1,9 +1,6 @@
 ﻿@model LES.Models.ViewModel.Admin.AdminLivroModel
 
 <div class="row my-2">
-    <div id="editarCapa" class="col-md-3">
-        <img src="~/img/icon-image-512.webp" style="max-width:100px" />
-    </div>
     <div class="col-md-9">
         <div class="form-group">
             <div class="col-sm-12">
@@ -24,12 +21,14 @@
             </div>
         </div>
     </div>
-    <div class="col-12">
-        <div class="form-group">
-            <input asp-for="Capa" type="file" class="custom-file-input" />
-            <label class="custom-file-label" for="editarCapa">Escolher capa</label>
+    @if(Model.Capa == null) { 
+        <div class="col-12">
+            <div class="form-group">
+                <input asp-for="Capa" type="file" class="custom-file-input" />
+                <label class="custom-file-label" for="editarCapa">Escolher capa</label>
+            </div>
         </div>
-    </div>
+    }
 </div>
 
 <div class="row mt-2">

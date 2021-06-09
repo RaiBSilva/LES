@@ -21,10 +21,11 @@ namespace LES.Models.ViewHelpers.Admin
                 Altura = livro.Altura,
                 Autor = livro.Autor,
                 Comprimento = livro.Comprimento,
+                CodigoBarras = livro.CodigoBarras,
                 DtLancamento = livro.DtLancamento,
                 Edicao = livro.Edicao,
                 Editora = new Editora { Nome = livro.Editora },
-                GrupoPreco = new GrupoPreco { Id = livro.GrupoPrecoId },
+                GrupoPrecoId = livro.GrupoPrecoId,
                 Isbn = livro.Isbn,
                 Inativo = true,
                 Largura = livro.Largura,
@@ -35,15 +36,17 @@ namespace LES.Models.ViewHelpers.Admin
                 Estoque = livro.Estoque,
                 Id = livro.Id
             };
-
-            if (livro.Capa.Length > 0 && livro.Capa.ContentType == "image/png")
-            {
-                using var ms = new MemoryStream();
-                livro.Capa.CopyTo(ms);
-                var fileBytes = ms.ToArray();
-                l.Capa = fileBytes;
+            if(livro.Capa != null) 
+            { 
+                if (livro.Capa.Length > 0 && livro.Capa.ContentType == "image/png")
+                {
+                    using var ms = new MemoryStream();
+                    livro.Capa.CopyTo(ms);
+                    var fileBytes = ms.ToArray();
+                    l.Capa = fileBytes;
+                }
+                else livro.Capa = null;
             }
-            else livro.Capa = null;
 
             IList<LivroCategoriaLivro> categorias = new List<LivroCategoriaLivro>();
 
@@ -74,6 +77,7 @@ namespace LES.Models.ViewHelpers.Admin
                 Edicao = livro.Edicao,
                 Editora = livro.Editora.Nome,
                 Isbn = livro.Isbn,
+                Inativo = livro.Inativo,
                 Largura = livro.Largura,
                 Paginas = livro.Paginas,
                 Preco = livro.Valor,
@@ -83,15 +87,25 @@ namespace LES.Models.ViewHelpers.Admin
                 Id = livro.Id
             };
 
-            vm.GrupoPreco = (GrupoPrecoModel)new GrupoPrecoViewHelper 
-            { 
-                Entidades = new Dictionary<string, object> 
+            if(livro.GrupoPreco != null)
+                vm.GrupoPreco = (GrupoPrecoModel)new GrupoPrecoViewHelper 
                 { 
-                    [typeof(GrupoPreco).Name] = livro.GrupoPreco 
-                } 
-            }.ViewModel;
+                    Entidades = new Dictionary<string, object> 
+                    { 
+                        [typeof(GrupoPreco).Name] = livro.GrupoPreco 
+                    } 
+                }.ViewModel;
 
             vm.Capa = new FormFile(new MemoryStream(livro.Capa), 0, livro.Capa.Length, "Capa", "capa.png");
+            IList<int> ids = new List<int>();
+
+            if(livro.LivrosCategoriaLivros != null)
+            {
+                foreach (var item in livro.LivrosCategoriaLivros)
+                    ids.Add(item.CategoriaLivroId);
+
+                vm.CategoriasIds = ids.ToArray();
+            }
 
             _viewModel = vm;
         }

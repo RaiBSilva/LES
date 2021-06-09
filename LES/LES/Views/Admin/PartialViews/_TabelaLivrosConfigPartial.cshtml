@@ -51,21 +51,28 @@
 
                 @foreach (var livro in Model.Livros)
                 {
-                    <tr>
-                        <th scope="row">@livro.Id</th>
-                        <td>
-                            <img src="@Url.Action("Livro","Imagem")?codBar=@livro.CodigoBarras" class="capa-carrinho" style="max-height:2rem"/>
-                        </td>
-                        <td><span class="font-weight-bold">@livro.Titulo</span> por @livro.Autor</td>
-                        <td>R$ @livro.Preco.ToString("0.00").Replace(".", ".")</td>
-                        <td><small class="font-weight-lighter">x</small>@livro.Estoque</td>
-                        <td>
-                            <button type="button" class="btn btn-outline-success btnEntradaEstoqueLivro" data-toggle="modal" data-target="#myModal" value="@livro.Id">Entrada no Estoque</button>
-                            <button type="button" class="btn btn-outline-info btnVisualizarLivro" data-toggle="modal" data-target="#myModal" value="@livro.Id">Visualizar</button>
-                            <button type="button" class="btn btn-outline-info btnEditarLivro" data-toggle="modal" data-target="#myModal" value="@livro.Id">Editar</button>
-                        </td>
-                        <td><button type="button" class="btn btn-danger btnInativarLivro" data-toggle="modal" data-target="#myModal" value="@livro.Id">Inativar</button></td>
-                    </tr>
+                <tr>
+                    <th scope="row">@livro.Id</th>
+                    <td>
+                        <img src="@Url.Action("Livro","Imagem")?codBar=@livro.CodigoBarras" class="capa-carrinho" style="max-height:2rem" />
+                    </td>
+                    <td><span class="font-weight-bold">@livro.Titulo</span> por @livro.Autor</td>
+                    <td>R$ @livro.Preco.ToString("0.00").Replace(".", ".")</td>
+                    <td><small class="font-weight-lighter">x</small>@livro.Estoque</td>
+                    <td>
+                        <button type="button" class="btn btn-outline-success btnEntradaEstoqueLivro" data-toggle="modal" data-target="#myModal" value="@livro.CodigoBarras">Entrada no Estoque</button>
+                        <button type="button" class="btn btn-outline-info btnVisualizarLivro" data-toggle="modal" data-target="#myModal" value="@livro.CodigoBarras">Visualizar</button>
+                        <button type="button" class="btn btn-outline-info btnEditarLivro" data-toggle="modal" data-target="#myModal" value="@livro.CodigoBarras">Editar</button>
+                    </td>
+                    @if (livro.Inativo)
+                    {
+                        <td><button type="button" class="btn btn-success btnInativarLivro" data-toggle="modal" data-target="#myModal" value="@livro.CodigoBarras">Reativar</button></td>
+                    }
+                    else
+                    {
+                        <td><button type="button" class="btn btn-danger btnInativarLivro" data-toggle="modal" data-target="#myModal" value="@livro.CodigoBarras">Inativar</button></td>
+                    }
+                </tr>
                 }
             </tbody>
         </table>

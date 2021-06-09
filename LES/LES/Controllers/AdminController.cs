@@ -75,10 +75,10 @@ namespace LES.Controllers
         }
 
         public IActionResult ConfigLoja() {
-            IList<Livro> livros = _facade.ListAllInclude<Livro>();
-            IList<CategoriaLivro> categorias = _facade.Listar<CategoriaLivro>();
-            IList<GrupoPreco> grupos = _facade.Listar<GrupoPreco>();
-            IList<CodigoPromocional> codigos = _facade.Listar<CodigoPromocional>();
+            IList<Livro> livros = _facade.ListAllInclude<Livro>().Where(l => !l.Inativo).ToList();
+            IList<CategoriaLivro> categorias = _facade.Listar<CategoriaLivro>().Where(c => !c.Inativo).ToList();
+            IList<GrupoPreco> grupos = _facade.Listar<GrupoPreco>().Where(c => !c.Inativo).ToList();
+            IList<CodigoPromocional> codigos = _facade.Listar<CodigoPromocional>().Where(c => !c.Inativo).ToList();
 
             _vh = new PaginaConfigLojaViewHelper
             {
@@ -365,6 +365,11 @@ namespace LES.Controllers
                 SelectCategorias = _facade.Listar<CategoriaLivro>()
             };
 
+            foreach(var item in vm.SelectGrupoPrecos)
+            {
+                item.Nome += $" (Margem de {item.MargemLucro}%)";
+            }
+
             return PartialView("../Admin/PartialViews/_ConfigLivroPartial", vm);
         }
 
@@ -381,18 +386,21 @@ namespace LES.Controllers
                 livroNovo.Editora = editora;
             }
             GrupoPreco grp = _facade.GetEntidade(livroNovo.GrupoPreco);
-            if(livroNovo.Valor < livroNovo.MaiorCusto + ( livroNovo.MaiorCusto * grp.MargemLucro) && 
+            if(livroNovo.Valor < livroNovo.MaiorCusto + ( livroNovo.MaiorCusto * (grp.MargemLucro / 100)) && 
                 !HttpContext.User.IsInRole("2"))
             {
-                TempData["Alert"] = "Você tentou inserir um valor inferior a margem de lucro desse livro. A margem de lucro" +
+                TempData["Alert"] = "Você tentou inserir um valor inferior a margem de lucro desse livro. A margem de lucro " +
                     $"do grupo de preço {grp.Nome} é {grp.MargemLucro}%, logo o preço mínimo " +
-                    $"deste livro é {livroNovo.MaiorCusto + (livroNovo.MaiorCusto * grp.MargemLucro)}. " +
+                    $"deste livro é {livroNovo.MaiorCusto + (livroNovo.MaiorCusto * (grp.MargemLucro / 100))}. " +
                     $"Tente novamente.";
                 return RedirectToAction(nameof(ConfigLoja));
             }
 
             livroNovo.CodigoBarras = GeraCodigoLivro();
-
+            if(livroNovo.Capa == null)
+            {
+                livroNovo.Capa = new byte[0];
+            }
             string msg = _facade.Cadastrar(livroNovo);
 
             if (!String.IsNullOrEmpty(msg))
@@ -403,8 +411,7 @@ namespace LES.Controllers
 
         public IActionResult _EntradaEstoqueLivroPartial(string cod)
         {
-            Livro l = _facade.Query<Livro>(l => l.CodigoBarras == cod,
-                l => l).FirstOrDefault();
+            Livro l = _facade.GetAllInclude(new Livro { CodigoBarras = cod });
 
             _vh = new EntradaEstoqueViewHelper
             {
@@ -456,8 +463,7 @@ namespace LES.Controllers
 
         public IActionResult _VisualizarLivroPartial(string cod)
         {
-            Livro l = _facade.Query<Livro>(l => l.CodigoBarras == cod,
-                l => l).FirstOrDefault();
+            Livro l = _facade.GetAllInclude(new Livro { CodigoBarras = cod});
 
             _vh = new AdminLivroViewHelper
             {
@@ -474,8 +480,7 @@ namespace LES.Controllers
         {
             ViewBag.Operacao = "edit";
 
-            Livro l = _facade.Query<Livro>(l => l.CodigoBarras == cod,
-                l => l).FirstOrDefault();
+            Livro l = _facade.GetAllInclude(new Livro { CodigoBarras = cod });
 
             _vh = new AdminLivroViewHelper
             {
@@ -485,7 +490,17 @@ namespace LES.Controllers
                 }
             };
 
-            return PartialView("../Admin/PartialViews/_ConfigLivroPartial", _vh.ViewModel);
+            AdminLivroModel vm = (AdminLivroModel)_vh.ViewModel;
+
+            vm.SelectCategorias = _facade.Listar<CategoriaLivro>();
+            vm.SelectGrupoPrecos = _facade.Listar<GrupoPreco>();
+
+            foreach (var item in vm.SelectGrupoPrecos)
+            {
+                item.Nome += $" (Margem de {item.MargemLucro}%)";
+            }
+
+            return PartialView("../Admin/PartialViews/_ConfigLivroPartial", vm);
         }
 
         [HttpPost]
@@ -504,7 +519,6 @@ namespace LES.Controllers
 
             l.Altura = ln.Altura;
             l.Autor = ln.Autor;
-            l.Capa = ln.Capa;
             l.Comprimento = ln.Comprimento;
             l.DtLancamento = ln.DtLancamento;
             l.Edicao = ln.Edicao;
@@ -512,12 +526,20 @@ namespace LES.Controllers
             l.GrupoPrecoId = ln.GrupoPrecoId;
             l.Isbn = ln.Isbn;
             l.Largura = ln.Largura;
-            l.MaiorCusto = ln.MaiorCusto;
             l.Paginas = ln.Paginas;
             l.Peso = ln.Peso;
             l.Sinopse = ln.Sinopse;
             l.Titulo = ln.Titulo;
             l.Valor = ln.Valor;
+            GrupoPreco grp = _facade.GetEntidade(new GrupoPreco { Id = ln.GrupoPrecoId });
+            if (l.Valor < l.MaiorCusto + (l.MaiorCusto * (grp.MargemLucro/100)) &&
+                !HttpContext.User.IsInRole("2"))
+            {
+                var valMin = l.MaiorCusto + l.MaiorCusto * (grp.MargemLucro / 100);
+                TempData["Alert"] = "Você tentou inserir um valor inferior a margem de lucro desse livro. A margem de lucro" +
+                    $" do grupo de preço {grp.Nome} é {grp.MargemLucro}%, logo o preço mínimo deste livro é {valMin}. Tente novamente.";
+                return RedirectToAction(nameof(ConfigLoja));
+            }
 
             string msg = _facade.Editar(l);
 
@@ -529,8 +551,7 @@ namespace LES.Controllers
         public IActionResult _InativarReativarLivroPartial(string cod)
         {
 
-            Livro l = _facade.Query<Livro>(l => l.CodigoBarras == cod,
-                l => l).FirstOrDefault();
+            Livro l = _facade.GetAllInclude(new Livro { CodigoBarras = cod });
 
             InativarLivroModel model = new InativarLivroModel
             {
@@ -1078,7 +1099,7 @@ namespace LES.Controllers
                 foreach(var (Month, Year) in listaMeses)
                 {
                     int contagem = livro.LivroPedidos
-                        .Where(l => dateTimeFormat.GetMonthName(l.DtCadastro.Month) == Month && l.DtCadastro.Year == Year)
+                        .Where(l => (dateTimeFormat.GetMonthName(l.DtCadastro.Month) == Month && l.DtCadastro.Year == Year)&&(l.Pedido.Status != StatusPedidos.NaoFinalizado))
                         .Count();
                     data.Add(contagem);
                 }

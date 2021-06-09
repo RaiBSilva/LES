@@ -151,6 +151,8 @@ namespace LES.Views.Conta
                 [typeof(Cliente).Name] = clienteDb
             };
 
+            clienteDb.Pedidos = clienteDb.Pedidos.Where(p => p.Status != StatusPedidos.NaoFinalizado).ToList();
+
             _vh = new PaginaDetalhesViewHelper
             {
                 Entidades = e
