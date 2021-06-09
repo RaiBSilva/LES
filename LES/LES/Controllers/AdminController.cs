@@ -385,22 +385,16 @@ namespace LES.Controllers
             {
                 livroNovo.Editora = editora;
             }
-            GrupoPreco grp = _facade.GetEntidade(livroNovo.GrupoPreco);
-            if(livroNovo.Valor < livroNovo.MaiorCusto + ( livroNovo.MaiorCusto * (grp.MargemLucro / 100)) && 
-                !HttpContext.User.IsInRole("2"))
-            {
-                TempData["Alert"] = "Você tentou inserir um valor inferior a margem de lucro desse livro. A margem de lucro " +
-                    $"do grupo de preço {grp.Nome} é {grp.MargemLucro}%, logo o preço mínimo " +
-                    $"deste livro é {livroNovo.MaiorCusto + (livroNovo.MaiorCusto * (grp.MargemLucro / 100))}. " +
-                    $"Tente novamente.";
-                return RedirectToAction(nameof(ConfigLoja));
-            }
+            GrupoPreco grp = _facade.GetEntidade(new GrupoPreco { Id = livroNovo.GrupoPrecoId });
 
             livroNovo.CodigoBarras = GeraCodigoLivro();
             if(livroNovo.Capa == null)
             {
                 livroNovo.Capa = new byte[0];
             }
+
+            livroNovo.Inativo = true;
+
             string msg = _facade.Cadastrar(livroNovo);
 
             if (!String.IsNullOrEmpty(msg))
@@ -426,8 +420,7 @@ namespace LES.Controllers
 
         public IActionResult EntradaEstoque(EntradaEstoqueModel entrada)
         {
-            Livro l = _facade.Query<Livro>(l => l.CodigoBarras == entrada.CodigoBarras,
-                l => l).FirstOrDefault();
+            Livro l = _facade.GetAllInclude(new Livro { CodigoBarras = entrada.CodigoBarras });
 
             #region
             if (entrada.Quantia == 0)
@@ -450,6 +443,7 @@ namespace LES.Controllers
             if(l.MaiorCusto < entrada.Custo)
             {
                 l.MaiorCusto = entrada.Custo;
+                l.Valor = entrada.Custo + entrada.Custo * (l.GrupoPreco.MargemLucro / 100);
             }
 
             l.Estoque += entrada.Quantia;

@@ -11,7 +11,7 @@
         <div class="modal-body">
             @if (ViewBag.Operacao == "add")
             {
-                <form asp-action="AdicionarLivro" asp-controller="Admin">
+                <form asp-action="AdicionarLivro" asp-controller="Admin" enctype="multipart/form-data">
                     <div class="container">
 
                         <partial name="../PartialViews/_FormLivroPartial.cshtml" for="@Model" />
@@ -28,11 +28,18 @@
                                 <span asp-validation-for="Preco" class="text-danger required"></span>
                             </div>
                         </div>
+                        <div class="row mt-2">
+                            <div class="col-12">
+                                <label asp-for="CategoriasIds" class="font-weight-light"></label>
+                                <select asp-for="CategoriasIds" class="form-control" asp-items="@(new SelectList(Model.SelectCategorias, "Id", "Nome"))">
+                                </select>
+                            </div>
+                        </div>
 
                     </div>
 
                     <div class="modal-footer">
-                        <button type="submit" class="btn btn-primary" data-dismiss="modal">@operacao</button>
+                        <button type="submit" class="btn btn-primary">@operacao</button>
                         <button type="button" class="btn btn-default" data-dismiss="modal">Sair</button>
                     </div>
                 </form>
