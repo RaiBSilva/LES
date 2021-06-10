@@ -57,6 +57,8 @@ namespace LES.Models.ViewHelpers.Admin
                     CategoriaLivroId = ctg
                 });
 
+            l.LivrosCategoriaLivros = categorias;
+
             _entidades = new Dictionary<string, object>
             {
                 [typeof(Livro).Name] = l
@@ -87,7 +89,7 @@ namespace LES.Models.ViewHelpers.Admin
                 Id = livro.Id
             };
 
-            if(livro.GrupoPreco != null)
+            if(livro.GrupoPreco != null) { 
                 vm.GrupoPreco = (GrupoPrecoModel)new GrupoPrecoViewHelper 
                 { 
                     Entidades = new Dictionary<string, object> 
@@ -95,6 +97,8 @@ namespace LES.Models.ViewHelpers.Admin
                         [typeof(GrupoPreco).Name] = livro.GrupoPreco 
                     } 
                 }.ViewModel;
+                vm.GrupoPrecoId = vm.GrupoPreco.Id;
+            }
 
             vm.Capa = new FormFile(new MemoryStream(livro.Capa), 0, livro.Capa.Length, "Capa", "capa.png");
             IList<int> ids = new List<int>();

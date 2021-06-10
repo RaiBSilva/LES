@@ -21,7 +21,7 @@ namespace LES.Models.ViewHelpers.CarrinhoCompra
                     cartoesPedidos.Add(new CartaoPedido
                     {
                         CartaoId = Convert.ToInt32(item.Id) ,
-                        Valor = item.Valor
+                        Valor = Convert.ToDouble(item.Valor.Replace('.',',').Split(new char[] { '#' }, StringSplitOptions.RemoveEmptyEntries)[0])
                     });
             }
 
@@ -45,9 +45,9 @@ namespace LES.Models.ViewHelpers.CarrinhoCompra
                 item.Id = cart.Id;
                 item.UltimosDigitos = cart.Codigo.Substring(cart.Codigo.Length - 3, 2);
                 if (item.Ativado)
-                    item.Valor = cartoesPedido.Where(c => c.CartaoId == cart.Id).FirstOrDefault().Valor;
+                    item.Valor = cartoesPedido.Where(c => c.CartaoId == cart.Id).FirstOrDefault().Valor.ToString();
                 else
-                    item.Valor = 0;
+                    item.Valor = "0";
                 vm.Cartoes.Add(item);
             }
 

@@ -525,6 +525,7 @@ namespace LES.Controllers
             l.Sinopse = ln.Sinopse;
             l.Titulo = ln.Titulo;
             l.Valor = ln.Valor;
+            l.LivrosCategoriaLivros = ln.LivrosCategoriaLivros;
             GrupoPreco grp = _facade.GetEntidade(new GrupoPreco { Id = ln.GrupoPrecoId });
             if (l.Valor < l.MaiorCusto + (l.MaiorCusto * (grp.MargemLucro/100)) &&
                 !HttpContext.User.IsInRole("2"))
@@ -552,7 +553,7 @@ namespace LES.Controllers
                 CodigoBarras = l.CodigoBarras,
                 Inativo = !l.Inativo,
                 CategoriasAtivacao = _facade.Listar<CategoriaAtivacao>(),
-                CategoriasInativacao = _facade.Listar<CategoriaInativacao>()
+                CategoriasInativacao = _facade.Listar<CategoriaInativacao>().Where(c => c.Id > 2).ToList()
             };
 
             return PartialView("../Admin/PartialViews/_InativarReativarLivroPartial", model);
@@ -829,13 +830,16 @@ namespace LES.Controllers
                 if (livro.MaiorCusto.HasValue)
                 {
                     double custo = livro.MaiorCusto ?? 0;
-                    livro.Valor = custo * grpDb.MargemLucro;
+                    livro.Valor = custo + custo * grpDb.MargemLucro/100;
                 }
                 else
                 {
                     livro.Inativo = true;
                 }
             }
+
+            grpDb.Nome = grpNovo.Nome;
+            grpDb.MargemLucro = grpNovo.MargemLucro;
 
             string msg = _facade.Editar(grpDb);
 

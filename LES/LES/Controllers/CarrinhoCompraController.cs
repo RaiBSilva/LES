@@ -58,18 +58,11 @@ namespace LES.Views.CarrinhoCompra
 
             if(naoTemPedido)
             {
-                pedNaoFinalizado = new Pedido();
-                pedNaoFinalizado.CartaoPedidos = new List<CartaoPedido>
+                pedNaoFinalizado = new Pedido
                 {
-                    new CartaoPedido
-                    {
-                        Cartao = clienteDb.Cartoes.Where(c => c.EFavorito && !c.Inativo).FirstOrDefault(),
-                        Pedido = pedNaoFinalizado,
-                        Valor = carrinho.PrecoTotal()
-                    }
+                    Endereco = clienteDb.Enderecos
+                    .Where(e => e.EFavorito && !e.Inativo).FirstOrDefault()
                 };
-                pedNaoFinalizado.Endereco = clienteDb.Enderecos
-                    .Where(e => e.EFavorito && !e.Inativo).FirstOrDefault();
             }
 
             pedNaoFinalizado.Cliente = clienteDb;
@@ -87,6 +80,17 @@ namespace LES.Views.CarrinhoCompra
             pedNaoFinalizado.Status = StatusPedidos.NaoFinalizado;
 
             pedNaoFinalizado.Frete = Convert.ToDouble(GetFretePrazo(pedNaoFinalizado)["Frete"]);
+
+            if (naoTemPedido)
+                pedNaoFinalizado.CartaoPedidos = new List<CartaoPedido>
+                {
+                    new CartaoPedido
+                    {
+                        Cartao = clienteDb.Cartoes.Where(c => c.EFavorito && !c.Inativo).FirstOrDefault(),
+                        Pedido = pedNaoFinalizado,
+                        Valor = carrinho.PrecoTotal()
+                    }
+                };
 
             if (naoTemPedido)
                 clienteDb.Pedidos.Add(pedNaoFinalizado);
@@ -535,7 +539,7 @@ namespace LES.Views.CarrinhoCompra
             return RedirectToAction(nameof(FinalizarCompra));
         }
 
-        public IActionResult _UsarCodigoPromocional(string cod)
+        public IActionResult _UsarCodigoPartial(string cod)
         {
             CodigoPromocional codigo = _facade.Query<CodigoPromocional>(c => c.Codigo == cod && !c.Inativo,
                 c => c).FirstOrDefault();
@@ -583,6 +587,21 @@ namespace LES.Views.CarrinhoCompra
                 else
                 {
                     pedido.CodigoPromocional = codigo;
+
+                    if (pedido.CartaoPedidos.Where(c => c.Valor > pedido.CodigoPromocional.Valor).Count() > 0)
+                    {
+                        pedido.CartaoPedidos.Where(c => c.Valor > pedido.CodigoPromocional.Valor).First().Valor -= pedido.CodigoPromocional.Valor;
+                    }
+                    else {
+                        pedido.CartaoPedidos = new List<CartaoPedido>
+                            {
+                                new CartaoPedido
+                                {
+                                    Cartao = clienteDb.Cartoes.Where(c => c.EFavorito && !c.Inativo).FirstOrDefault(),
+                                    Valor = pedido.ValorTotal
+                                }
+                            };
+                        }
                     msg = _facade.Editar(pedido);
                 }
 

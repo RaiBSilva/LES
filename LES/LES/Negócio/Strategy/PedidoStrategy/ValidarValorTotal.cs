@@ -13,13 +13,7 @@ namespace LES.Negócio.Strategy.PedidoStrategy
         {
             Pedido p = (Pedido)e;
 
-            double valorTotal = 0;
-
-            foreach (var item in p.LivrosPedidos)
-                valorTotal += item.Livro.Valor;
-
-            if (p.Cupom != null)
-                valorTotal -= p.Cupom.Valor;
+            double valorTotal = p.CalcularValorTotal();
 
             double valorCartoes = 0;
 

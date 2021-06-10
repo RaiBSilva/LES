@@ -64,12 +64,12 @@ function carregarAdicionarGrupoPreco() {
 }
 
 function carregarEditarGrupoPreco(id) {
-    var endereco = urls.EditarGrupoPreco + "?cod=" + id;
+    var endereco = urls.EditarGrupoPreco + "/" + id;
     carregarPartialView(endereco);
 }
 
 function carregarInativarGrupoPreco(id) {
-    var endereco = urls.InativarGrupoPreco + "?cod=" + id;
+    var endereco = urls.InativarGrupoPreco + "/" + id;
     carregarPartialView(endereco);
 }
 

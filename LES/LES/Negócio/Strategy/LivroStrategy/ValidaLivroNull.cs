@@ -41,12 +41,9 @@ namespace LES.Negócio.Strategy.LivroStrategy
 
             if (string.IsNullOrEmpty(book.Titulo)) sb.Append("É necessário informar o título do livro.;\n");
 
-            if (book.LivrosCategoriaLivros is null) sb.Append("É necessário informar a categoria do livro.;\n");
-
-            foreach (LivroCategoriaLivro categoria in book.LivrosCategoriaLivros)
-            {
-                if (string.IsNullOrEmpty(categoria.CategoriaLivro.Nome)) sb.Append("É necessário informar o nome da categoria.;\n");
-            }
+            if (book.LivrosCategoriaLivros != null)
+                if(book.LivrosCategoriaLivros.Count == 0)
+                    sb.Append("É necessário informar ao menos uma categoria do livro.;\n");
 
             return sb.ToString();
         }

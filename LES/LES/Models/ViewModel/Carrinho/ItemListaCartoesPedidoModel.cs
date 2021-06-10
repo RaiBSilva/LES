@@ -11,7 +11,7 @@ namespace LES.Models.ViewModel.Carrinho
         [Display(Name="Usar?")]
         public bool Ativado { get; set; }
         public int Id { get; set; }
-        public double Valor { get; set; }
+        public string Valor { get; set; }
 
         //Propriedade de Exibição
         public string Bandeira { get; set; }

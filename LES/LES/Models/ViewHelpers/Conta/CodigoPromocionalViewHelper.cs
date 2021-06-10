@@ -20,7 +20,7 @@ namespace LES.Models.ViewHelpers.Conta
             CodigoPromocionalModel vm = new CodigoPromocionalModel
             {
                 Codigo = cupom.Codigo.ToString(),
-                Valor = (double)cupom.Valor
+                Valor = cupom.Valor
             };
 
             _viewModel = vm;

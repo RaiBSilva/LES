@@ -8,12 +8,18 @@
     foreach(var livro in Model.Pedido.Livros)
         valorTotal += livro.Preco * livro.Quantia;
 
+    valorTotal += Model.Frete;
+
     double valCupom = 0;
+    double valCod = 0;
 
     if (Model.Cupom != null)
         valCupom = Model.Cupom.Valor;
 
-    valorFinal = valorTotal - valCupom;
+    if (Model.CodigoPromo != null)
+        valCod = Model.CodigoPromo.Valor;
+
+    valorFinal = valorTotal - valCupom - valCod;
 
 }
 

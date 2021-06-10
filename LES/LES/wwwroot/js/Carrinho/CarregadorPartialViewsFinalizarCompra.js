@@ -14,11 +14,11 @@ function somaValores(){
     soma = 0;
 
     $(".valorInput:enabled").each(function () {
-        soma += Number($(this).val());
+        soma += parseFloat($(this).val());
     })
 
-    $("#valSoma").html("R$" + soma);
-    if (soma == $("#ValorTotal").val()) {
+    $("#valSoma").html(parseFloat(soma).toFixed(2).toString().replace(".",","));
+    if (soma == parseFloat($("#ValorTotal").val())) {
         $("#btnAlteraPag").prop('disabled', false);
     } else {
         $("#btnAlteraPag").prop('disabled', true);
@@ -85,10 +85,12 @@ $(".btnCupom").on("click", function (e) {
 
 $(".btnCodigo").on("click", function (e) {
     var codigo = document.getElementById("inputCodigo").value;
-    if (codigo == "")
-        $(".btnCodigo").css('border-color', 'red');
+    if (codigo == "") {
+        $(".inputCodigo").css('border-color', 'red');
+        $('#myModal').modal('toggle');
+    }
     else {
-        $(".btnCodigo").removeAttr("style");
+        $(".inputCodigo").removeAttr("style");
         carregarUsarCodigo(codigo);
     }
 });

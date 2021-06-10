@@ -8,7 +8,8 @@ INSERT INTO les.dbo.CATEGORIAS_INATIVACAO(cti_nome, cti_dt_cadastro, cti_inativo
 VALUES
 ('AUTOMÁTICA: Esgotamento de estoque', CURRENT_TIMESTAMP, 0),
 ('AUTOMÁTICA: Inativação de Grupo de Preços', CURRENT_TIMESTAMP, 0),
-('Decisão estratégica', CURRENT_TIMESTAMP, 0);
+('Decisão estratégica', CURRENT_TIMESTAMP, 0),
+('Decisão legal', CURRENT_TIMESTAMP, 0);
 
 INSERT INTO les.dbo.TIPOS_ENDERECO (tpe_nome, tpe_dt_cadastro, tpe_inativo)
 VALUES ('Aeroporto', CURRENT_TIMESTAMP, 0),
