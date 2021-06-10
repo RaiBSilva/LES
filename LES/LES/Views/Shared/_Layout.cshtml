@@ -37,11 +37,11 @@
                         @if (User.Identity.IsAuthenticated && ViewData["FinalizarCompra"] == null)
                         {
                             <li class="nav-item">
-                                <div class="dropdown dropleft">
+                                <div class="dropdown dropright">
                                     <a class="nav-link dropdown-toggle navbar-item carrinho-update" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                         Carrinho
                                     </a>
-                                    <div id="dropdown" class="dropdown-menu" aria-labelledby="navbarDropdown" style="max-width:600px"></div>
+                                    <div id="dropdown" class="dropdown-menu" aria-labelledby="navbarDropdown" style="max-width:600px;z-index:100"></div>
                                 </div>
                             </li>
                         }

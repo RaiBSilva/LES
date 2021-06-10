@@ -1,7 +1,7 @@
 ﻿@model LES.Models.ViewModel.Carrinho.CarrinhoLivroModel
 
     <td>
-        <img src="@Url.Action("Livro","Imagem")?codBar=@Model.CodigoBarras" class="capa-carrinho" />
+        <img src="@Url.Action("Livro","Imagem")?codBar=@Model.CodigoBarras" class="capa-carrinho" style="z-index:101"/>
     </td>
     <td style="width:30%">
         <div class=""><h6>@Model.Titulo</h6></div>
@@ -12,9 +12,9 @@
         <div class="font-weight-lighter"><h4>x @Model.Quantia</h4></div>
     </td>
     <td>
-        <button type="button" class="btn btn-light mais-carrinho" value="@Model.CodigoBarras">+</button>
-        <button type="button" class="btn btn-light menos-carrinho" value="@Model.CodigoBarras">-</button>
+        <button type="button" class="btn btn-light mais-carrinho" value="@Model.CodigoBarras"style="z-index:101">+</button>
+        <button type="button" class="btn btn-light menos-carrinho" value="@Model.CodigoBarras"style="z-index:101">-</button>
     </td>
     <td>
-        <button type="button" class="btn btn-danger remover-carrinho" value="@Model.CodigoBarras">&times;</button>
+        <button type="button" class="btn btn-danger remover-carrinho" value="@Model.CodigoBarras"style="z-index:101">&times;</button>
     </td>
