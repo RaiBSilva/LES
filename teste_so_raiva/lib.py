@@ -4,8 +4,84 @@ from selenium import webdriver
 import ctypes
 from pyautogui import locateCenterOnScreen
 import pyautogui as pyg
+import autoit
+import os
 
 
+
+class Window:
+    def __init__(self, title):
+        self.title = title
+
+    def activate_window(self, *, timeout=15):
+        # Retorno 0   --Tela encontrada
+        # Retorno -1  --Timeout
+
+        timer = Timer(timeout)
+        while timer.not_expired:
+            try:
+                autoit.win_activate(self.title)
+                return 0
+            except Exception as e:
+                #print(f"[Exception]--> {e}")
+                pass
+        if timer.expired:
+            return -1
+
+    def control(self):
+        return self.Control(props=self, title=self.title)
+
+    class Control:
+        def __init__(self, props, *, title):
+            self.props = props
+            self.title = title
+
+        def set_text(self, txt:str, control:str, *, timeout=15, focus=True):
+            timer = Timer(timeout)
+            while timer.not_expired:
+                try:
+                    if focus:
+                        autoit.control_focus(self.title, control)
+                    autoit.control_set_text(self.title, control, txt)
+                    return 0
+                except Exception as e:
+                    # print(f"[Exception]--> {e}")
+                    pass
+            if timer.expired:
+                return -2
+
+        def get_text(self, control:str, *, timeout=15, focus=True):
+            ctrl_txt = None
+            timer = Timer(timeout)
+            while timer.not_expired:
+                try:
+                    if focus:
+                        autoit.control_focus(self.title, control)
+                    ctrl_txt = autoit.control_get_text(self.title, control)
+                    if isinstance(ctrl_txt, str):
+                        return ctrl_txt
+                except Exception as e:
+                    # print(f"[Exception]--> {e}")
+                    pass
+            if timer.expired:
+                return -1
+
+        def click(self, control:str, *, timeout=15, focus=True):
+            timer = Timer(timeout)
+            while timer.not_expired:
+                try:
+                    if focus:
+                        autoit.control_focus(self.title, control)
+                    autoit.control_click(self.title, control)
+                    return 0
+                except Exception as e:
+                    # print(f"[Exception]--> {e}")
+                    pass
+            if timer.expired:
+                return -1
+            
+            
+            
 def Mbox(*, title="Teste", text, style=1):
     return ctypes.windll.user32.MessageBoxW(0, text, title, style)
 
@@ -14,23 +90,18 @@ class Timer:
     def __init__(self, duration=10):
         self.duration = float(duration)
         self.start = time.perf_counter()
-        # print("The timer has started. Self.start: " + str(self.start))
-
+        
     def reset(self):
         self.start = time.perf_counter()
-        # print("The timer has been reset. Self.start: " + str(self.start))
 
     def explode(self):
         self.duration = 0
-        # print("The timer has been force-expired.")
 
     def increment(self, increment=0):
         self.duration += increment
-        # print("The timer has been incremented by " + str(increment) + " seconds")
-
+        
     @property
     def not_expired(self):
-        # duration == -1 means dev wants a infinite loop/Timer
         if self.duration == -1:
             return True
         return False if time.perf_counter() - self.start > self.duration else True
@@ -41,22 +112,23 @@ class Timer:
 
     @property
     def at(self):
-        # print("The timer is running. Self.at: " + str(time.perf_counter() - self.start))
         return time.perf_counter() - self.start
     
     
 class Image:
-    def __init__(self, *, img_path, confidence=0.95):
+    def __init__(self, img_path, *, confidence=0.95):
+        if not os.path.isfile(img_path):
+            raise Exception(f"Caminho não é um arquivo válido: {img_path}")
         self.image_path = img_path
         self.accuracy = confidence
 
     def find(self):
         position = None
         try:
-            position = pyg.locateCenterOnScreen(self.image_path, confidence=self.accuracy)
+            position = locateCenterOnScreen(self.image_path, confidence=self.accuracy)
             if position is not None:
                 position = (position[0], position[1])
-        except OSError:
+        except Exception as e:
             pass
         return position
 
@@ -72,7 +144,7 @@ class Image:
                 else:
                     return 0
 
-    def click(self, *, btn="rigth", clicks=1, x=0, y=0):
+    def click(self, *, btn="left", clicks=1, x=0, y=0):
         return self.Click(props=self, btn=btn, clicks=clicks, x=x, y=y)
 
     class Click:
@@ -86,7 +158,7 @@ class Image:
         def execute(self):
             rtn_pos = self.props.find()
             if rtn_pos is not None:
-                pyg.click(rtn_pos[0]+self.pos_x, rtn_pos[1]+self.pos_y, clicks=self.clicks)
+                pyg.click(rtn_pos[0]+self.pos_x, rtn_pos[1]+self.pos_y, button=self.button, clicks=self.clicks)
                 return 0
             else:
                 return -1
@@ -94,7 +166,7 @@ class Image:
         def wait_ready(self, timeout=15):
             rtn_pos = self.props.wait_image(timeout=timeout)
             if isinstance(rtn_pos, tuple):
-                pyg.click(rtn_pos[0] + self.pos_x, rtn_pos[1] + self.pos_y, clicks=self.clicks)
+                pyg.click(rtn_pos[0] + self.pos_x, rtn_pos[1] + self.pos_y, button=self.button, clicks=self.clicks)
                 return 0
             else:
                 return -1
