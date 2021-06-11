@@ -12,7 +12,7 @@ namespace LES.Models.ViewModel.Shared
         [Display(Name ="Título")]
         public string Titulo { get; set; }
 
-        [Display(Name = "Descrição")]
+        [Display(Name = "Autor")]
         public string Autor { get; set; }
         public string Editora { get; set; }
         public string Sinopse { get; set; }
