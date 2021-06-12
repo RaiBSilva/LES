@@ -13,6 +13,9 @@ namespace LES.Negócio.Strategy.PedidoStrategy
         {
             Pedido p = (Pedido)e;
 
+            if (p.Status == StatusPedidos.NaoFinalizado)
+                return "";
+
             double valorTotal = p.CalcularValorTotal();
 
             double valorCartoes = 0;
