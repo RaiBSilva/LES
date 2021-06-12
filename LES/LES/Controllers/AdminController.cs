@@ -108,8 +108,9 @@ namespace LES.Controllers
             IEnumerable<Pedido> pedidos = _facade.ListAllInclude<Pedido>()
                 .Where(p => p.Status != StatusPedidos.NaoFinalizado && !p.Inativo);
 
-            if (filtros.Id != null)
-                pedidos = pedidos.Where(p => p.Id == filtros.Id);
+            if (filtros.Id.HasValue)
+                if (filtros.Id > 0)
+                    pedidos = pedidos.Where(p => p.Id == filtros.Id);
 
             if (!String.IsNullOrEmpty(filtros.Nome))
                 pedidos = pedidos.Where(p => p.Cliente.Nome.Contains(filtros.Nome));
