@@ -60,7 +60,7 @@ class CodPromo:
     def __init__(self):
         self.cod = "4206924"
         self.valor = "25"
-        self.uso = "1"
+        self.uso = "2"
         
         
 class NewBook:
