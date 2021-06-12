@@ -26,6 +26,20 @@
             $('.btnBuscarTroca').unbind('click');
             $('.btnPageTro').unbind('click');
 
+
+            $(".btnVisualizarPedido").unbind('click');
+            $(".btnVisualizarTroca").unbind('click');
+
+            $(".btnVisualizarPedido").on("click", function (e) {
+                var id = $(this).val();
+                carregarVisualizarPedido(id);
+            });
+
+            $(".btnVisualizarTroca").on("click", function (e) {
+                var id = $(this).val();
+                carregarVisualizarTroca(id);
+            });
+
             $(".btnBuscarPedido").on("click", function (e) {
                 e.preventDefault();
                 atualizarLista(1, "Pedidos");

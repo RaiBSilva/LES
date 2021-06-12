@@ -108,8 +108,9 @@ namespace LES.Controllers
             IEnumerable<Pedido> pedidos = _facade.ListAllInclude<Pedido>()
                 .Where(p => p.Status != StatusPedidos.NaoFinalizado && !p.Inativo);
 
-            if (filtros.Id != null)
-                pedidos = pedidos.Where(p => p.Id == filtros.Id);
+            if (filtros.Id.HasValue)
+                if (filtros.Id > 0)
+                    pedidos = pedidos.Where(p => p.Id == filtros.Id);
 
             if (!String.IsNullOrEmpty(filtros.Nome))
                 pedidos = pedidos.Where(p => p.Cliente.Nome.Contains(filtros.Nome));
@@ -1102,7 +1103,8 @@ namespace LES.Controllers
                 foreach(var (Month, Year) in listaMeses)
                 {
                     int contagem = livro.LivroPedidos
-                        .Where(l => (dateTimeFormat.GetMonthName(l.DtCadastro.Month) == Month && l.DtCadastro.Year == Year)&&(l.Pedido.Status != StatusPedidos.Aprovado || l.Pedido.Status != StatusPedidos.Entregue || l.Pedido.Status != StatusPedidos.EmTransito))
+                        .Where(l => (dateTimeFormat.GetMonthName(l.DtCadastro.Month) == Month && l.DtCadastro.Year == Year))
+                        .Where(l => l.Pedido.Status == StatusPedidos.Aprovado || l.Pedido.Status == StatusPedidos.Entregue || l.Pedido.Status == StatusPedidos.EmTransito)
                         .Count();
                     data.Add(contagem);
                 }

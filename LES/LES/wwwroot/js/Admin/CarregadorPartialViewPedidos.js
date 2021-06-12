@@ -22,6 +22,8 @@ $('#myModal').on('hidden.bs.modal', function () {
     $(this).empty();
 });
 
+
+
 $(".btnVisualizarPedido").on("click", function (e) {
     var id = $(this).val();
     carregarVisualizarPedido(id);
