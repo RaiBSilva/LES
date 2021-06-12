@@ -59,7 +59,7 @@ class UserSuper:
 class CodPromo:
     def __init__(self):
         self.cod = "4206924"
-        self.valor = "25,00"
+        self.valor = "25"
         self.uso = "1"
         
         
@@ -71,8 +71,8 @@ class NewBook:
         self.img = r"D:\DESENVOLVIMENTO\LES\teste_so_raiva\imgs\capa_minecraft.png"
         self.ISBN = "9788581053127"
         self.editora = "Suma De Letras"
-        self.preco = "140,00"
-        self.categoria = "Aventura"
+        self.preco = "140"
+        self.categoria = "Fantasia"
         self.mes = "agosto"
         self.ano = "2015"
         self.edicao = "1"
@@ -83,6 +83,8 @@ class NewBook:
         self.fornecedor = "Saraiva"
         self.quantia = "10"
         self.custo = "50,00"
+        self.nome_margem = "Clássicos"
+        self.margem = "300"
     
     
     
