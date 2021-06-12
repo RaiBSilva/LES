@@ -1102,7 +1102,7 @@ namespace LES.Controllers
                 foreach(var (Month, Year) in listaMeses)
                 {
                     int contagem = livro.LivroPedidos
-                        .Where(l => (dateTimeFormat.GetMonthName(l.DtCadastro.Month) == Month && l.DtCadastro.Year == Year)&&(l.Pedido.Status != StatusPedidos.NaoFinalizado))
+                        .Where(l => (dateTimeFormat.GetMonthName(l.DtCadastro.Month) == Month && l.DtCadastro.Year == Year)&&(l.Pedido.Status != StatusPedidos.Aprovado || l.Pedido.Status != StatusPedidos.Entregue || l.Pedido.Status != StatusPedidos.EmTransito))
                         .Count();
                     data.Add(contagem);
                 }
