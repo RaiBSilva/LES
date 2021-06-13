@@ -12,7 +12,16 @@
                 <h6>@(Model.Autor)</h6>
                 <div class="row mt-3">
                     <div class="col-sm-12 font-weight-light" style="height:4rem">
-                        <small class="">@(Model.Sinopse.Substring(0, 60) + "...")</small>
+                        @if (Model.Sinopse.Length > 60)
+                        {
+                            <small class="">@(Model.Sinopse.Substring(0, 60) + "...")</small>
+                        }
+                        else
+                        {
+
+                            <small class="">@(Model.Sinopse)</small>
+                        }
+
                     </div>
                     <div class="col-sm-12 mt-3 text-dark">
                         <h5>R$ @(Model.Preco.ToString("0.00").Replace('.',','))</h5>

@@ -338,6 +338,7 @@ namespace LES.Controllers
                 c => c,
                 c => c.Usuario).FirstOrDefault();
             clienteDb = _facade.GetAllInclude(clienteDb);
+            clienteDb.Pedidos = clienteDb.Pedidos.Where(p => p.Status != StatusPedidos.NaoFinalizado).ToList();
 
             _vh = new AdminClienteViewHelper
             {
