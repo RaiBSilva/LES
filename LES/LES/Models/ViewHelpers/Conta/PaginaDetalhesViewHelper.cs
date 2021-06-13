@@ -30,7 +30,6 @@ namespace LES.Models.ViewHelpers.Conta
             DetalhesEnderecoViewHelper enderecoVH = new DetalhesEnderecoViewHelper();
             DetalhesTelefoneViewHelper telefoneVH = new DetalhesTelefoneViewHelper();
             CupomViewHelper cupomVH = new CupomViewHelper();
-            PedidoViewHelper pedidoVh = new PedidoViewHelper();
 
             Cliente cliente = (Cliente)infoVH.Entidades[typeof(Cliente).Name];
 
