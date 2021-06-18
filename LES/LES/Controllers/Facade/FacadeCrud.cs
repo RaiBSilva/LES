@@ -41,7 +41,6 @@ namespace LES.Controllers.Facade
                     new ValidarCepStrategy(),
                     new ValidarDataNascimentoStrategy(),
                     new ValidarCvvCartaoStrategy(),
-                    new ValidarDataNascimentoStrategy(),
                     new ValidarDddStrategy(),
                     new ValidarNumeroCartaoStrategy(),
                     new ValidarTelefoneStrategy()
